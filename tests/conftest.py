@@ -10,6 +10,9 @@ def setup(fn_isolation):
     pass
 
 
+# VyperStorage.vy and SolidityStorage.sol test configuration
+
+
 @pytest.fixture(scope="module")
 def vyper_storage(accounts, VyperStorage):
     """
@@ -24,3 +27,14 @@ def solidity_storage(accounts, SolidityStorage):
     Yield a `Contract` object for the SolidityStorage contract.
     """
     yield accounts[0].deploy(SolidityStorage)
+
+
+# CryptoChampions.sol test configuration
+
+
+@pytest.fixture(scope="module")
+def crypto_champions(accounts, CryptoChampions):
+    """
+    Yield a `Contract` object for the CryptoChampions contract.
+    """
+    yield accounts[0].deploy(CryptoChampions)
