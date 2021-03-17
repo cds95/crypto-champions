@@ -1,6 +1,18 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.6.0;
 
+struct ElderSpirit {
+    bool valid;
+    uint256 raceId;
+    uint256 classId;
+    string affinity;
+}
+
+struct Hero {
+    bool valid;
+    ElderSpirit elder;
+}
+
 interface ICryptoChampions {
     function createAffinity(string calldata tokenTicker) external;
 
