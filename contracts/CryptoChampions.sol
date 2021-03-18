@@ -151,7 +151,17 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
     /// @notice Burns the elder hero for a refund
     /// @dev This will only be able to be called by a priviledged address
     /// @param elderId The elder id
-    function burnElder(uint256 elderId) external override {}
+    function burnElder(uint256 elderId) external override {
+        require(elderId > 0 && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Cannot burn with invalid elder id.
+        require(_elderSpirits[elderId].valid); // dev: Cannot burn elder that does not exist.
+
+        // TODO: need to make sure _elderOwners[elderId] can never be address(0).
+        //     Check recipient before every token send so that we never send to address(0).
+        _burn(_elderOwners[elderId], elderId, 1);
+        eldersMinted = eldersMinted.sub(1);
+        _elderOwners[elderId] = address(0);
+        _elderSpirits[elderId].valid = false;
+    }
 
     /// @notice Burns the hero for a refund
     /// @dev This will only be able to be called from the owner of the hero
