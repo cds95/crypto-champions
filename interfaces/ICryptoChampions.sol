@@ -30,7 +30,7 @@ interface ICryptoChampions {
 
     function disburseRewards(string calldata winningAffinity) external;
 
-    function burnElder(uint256 elderId) external;
+    function burnElders() external;
 
     function burnHero(uint256 heroId) external;
 }

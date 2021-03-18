@@ -24,7 +24,7 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
 
     // The amount of elders minted
     // This amount cannot be greater than MAX_NUMBER_OF_ELDERS
-    uint256 public eldersMinted = 0;
+    uint256 public eldersInGame = 0;
 
     // The mapping of elder id to elder owner, ids can only be in the range of [1, MAX_NUMBER OF ELDERS]
     mapping(uint256 => address) private _elderOwners;
@@ -65,10 +65,10 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
         uint256 classId,
         string calldata affinity
     ) external payable override returns (uint256) {
-        require(eldersMinted < MAX_NUMBER_OF_ELDERS); // dev: Max number of elders already minted.
+        require(eldersInGame < MAX_NUMBER_OF_ELDERS); // dev: Max number of elders already minted.
 
         // Generate the elderId and make sure it doesn't already exists
-        uint256 elderId = eldersMinted.add(1);
+        uint256 elderId = eldersInGame.add(1);
         assert(_elderOwners[elderId] == address(0)); // dev: Elder with id already has owner.
         assert(_elderSpirits[elderId].valid == false); // dev: Elder spirit with id has already been generated.
 
@@ -87,7 +87,7 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
         _elderSpirits[elderId] = elder;
 
         // Increment elders minted
-        eldersMinted = eldersMinted.add(1);
+        eldersInGame = eldersInGame.add(1);
 
         return elderId;
     }
@@ -148,17 +148,27 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
     /// @param winningAffinity The winning affinity token ticker
     function disburseRewards(string calldata winningAffinity) external override {}
 
-    /// @notice Burns the elder hero for a refund
-    /// @dev This will only be able to be called by a priviledged address
+    /// @notice Burns all the elder spirits in game
+    function burnElders() external override {
+        require(eldersInGame > 0); // dev: No elders have been minted.
+        for (uint256 i = 1; i <= eldersInGame; ++i) {
+            if (_elderSpirits[i].valid) {
+                _burnElder(i);
+            }
+        }
+    }
+
+    /// @notice Burns the elder spirit
+    /// @dev This will only be able to be called by the contract
     /// @param elderId The elder id
-    function burnElder(uint256 elderId) external override {
+    function _burnElder(uint256 elderId) internal {
         require(elderId > 0 && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Cannot burn with invalid elder id.
         require(_elderSpirits[elderId].valid); // dev: Cannot burn elder that does not exist.
 
         // TODO: need to make sure _elderOwners[elderId] can never be address(0).
         //     Check recipient before every token send so that we never send to address(0).
         _burn(_elderOwners[elderId], elderId, 1);
-        eldersMinted = eldersMinted.sub(1);
+        eldersInGame = eldersInGame.sub(1);
         _elderOwners[elderId] = address(0);
         _elderSpirits[elderId].valid = false;
     }
@@ -173,6 +183,9 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
         // TODO: need to make sure _heroOwners[heroId] can never be address(0).
         //     Check recipient before every token send so that we never send to address(0).
         _burn(_heroOwners[heroId], heroId, 1);
-        // TODO:
+
+        // Reset hero values for hero id
+        _heroes[heroId].valid = false;
+        _heroes[heroId].elder.valid = false;
     }
 }
