@@ -11,16 +11,36 @@ def setup(fn_isolation):
 
 
 @pytest.fixture(scope="module")
-def vyper_storage(accounts, VyperStorage):
+def crypto_champions(accounts, CryptoChampions):
     """
-    Yield a `Contract` object for the VyperStorage contract.
+    Yield a `Contract` object for the CryptoChampions contract.
     """
-    yield accounts[0].deploy(VyperStorage)
+    yield accounts[0].deploy(CryptoChampions)
 
 
-@pytest.fixture(scope="module")
-def solidity_storage(accounts, SolidityStorage):
+@pytest.fixture
+def mint_first_elder(accounts, crypto_champions):
     """
-    Yield a `Contract` object for the SolidityStorage contract.
+    Mint the first elder for the CryptoChampions contract.
     """
-    yield accounts[0].deploy(SolidityStorage)
+    crypto_champions.mintElderSpirit(0, 0, "affinity", {"from": accounts[0]})
+
+
+@pytest.fixture
+def mint_first_hero(accounts, crypto_champions, mint_first_elder):
+    """
+    Mint the first hero for the CryptoChampions contract. Hero is based on the first elder minted.
+    """
+    mint_first_elder
+    lastMintedElderId = crypto_champions.eldersMinted()
+    crypto_champions.mintHero(lastMintedElderId, {"from": accounts[0]})
+
+
+@pytest.fixture
+def mint_max_elders(accounts, crypto_champions):
+    """
+    Mint the max amount of elders for the CryptoChampions contract. Hero is based on the first elder minted.
+    """
+    maxElders = crypto_champions.MAX_NUMBER_OF_ELDERS()
+    for i in range(maxElders):
+        crypto_champions.mintElderSpirit(0, 0, "affinity", {"from": accounts[0]})
