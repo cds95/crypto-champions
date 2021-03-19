@@ -168,6 +168,8 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
         // TODO: need to make sure _elderOwners[elderId] can never be address(0).
         //     Check recipient before every token send so that we never send to address(0).
         _burn(_elderOwners[elderId], elderId, 1);
+
+        // Reset elder values for elder id
         eldersInGame = eldersInGame.sub(1);
         _elderOwners[elderId] = address(0);
         _elderSpirits[elderId].valid = false;
@@ -185,6 +187,7 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
         _burn(_heroOwners[heroId], heroId, 1);
 
         // Reset hero values for hero id
+        _heroOwners[heroId] = address(0);
         _heroes[heroId].valid = false;
         _heroes[heroId].elder.valid = false;
     }
