@@ -20,17 +20,17 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
     uint256 public constant MAX_NUMBER_OF_HEROES = 100;
 
     // Reserved id for the in game currency
-    uint256 private constant IN_GAME_CURRENCY_ID = 0;
+    uint256 internal constant IN_GAME_CURRENCY_ID = 0;
 
     // The amount of elders minted
     // This amount cannot be greater than MAX_NUMBER_OF_ELDERS
     uint256 public eldersInGame = 0;
 
     // The mapping of elder id to elder owner, ids can only be in the range of [1, MAX_NUMBER OF ELDERS]
-    mapping(uint256 => address) private _elderOwners;
+    mapping(uint256 => address) internal _elderOwners;
 
     // The mapping of elder id to the elder spirit
-    mapping(uint256 => ElderSpirit) private _elderSpirits;
+    mapping(uint256 => ElderSpirit) internal _elderSpirits;
 
     // The amount of heros minted
     // This amount cannot be greater than MAX_NUMBER_OF_HEROS
@@ -38,10 +38,10 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
 
     // The mapping of hero id to owner, ids can only be in the range of
     // [1 + MAX_NUMBER_OF_ELDERS, MAX_NUMBER_OF_ELDERS + MAX_NUMBER_OF_HEROS]
-    mapping(uint256 => address) private _heroOwners;
+    mapping(uint256 => address) internal _heroOwners;
 
     // The mapping of hero id to the hero
-    mapping(uint256 => Hero) private _heroes;
+    mapping(uint256 => Hero) internal _heroes;
 
     // Initializes a new CryptoChampions contract
     // TODO: need to provide the proper uri
@@ -151,7 +151,7 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
     /// @notice Burns all the elder spirits in game
     function burnElders() external override {
         require(eldersInGame > 0); // dev: No elders have been minted.
-        for (uint256 i = 1; i <= eldersInGame; ++i) {
+        for (uint256 i = 1; i <= MAX_NUMBER_OF_ELDERS; ++i) {
             if (_elderSpirits[i].valid) {
                 _burnElder(i);
             }

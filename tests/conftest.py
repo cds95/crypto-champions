@@ -11,11 +11,11 @@ def setup(fn_isolation):
 
 
 @pytest.fixture(scope="module")
-def crypto_champions(accounts, CryptoChampions):
+def crypto_champions(accounts, ExposedCryptoChampions):
     """
     Yield a `Contract` object for the CryptoChampions contract.
     """
-    yield accounts[0].deploy(CryptoChampions)
+    yield accounts[0].deploy(ExposedCryptoChampions)
 
 
 @pytest.fixture
