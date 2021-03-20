@@ -2,7 +2,9 @@ import React from 'react';
 import { ItemGridTile } from '../ItemGridTile/ItemGridTile';
 import './ItemGrid.css';
 
-const defaultRenderItem = (item, isSelectable) => <ItemGridTile item={item} isSelectable={isSelectable} />;
+const defaultRenderItem = (item, isSelectable) => (
+    <ItemGridTile itemImage={item.image} itemLabel={item.label} isSelectable={isSelectable} />
+);
 
 export const ItemGrid = ({ items = [], onSelect, renderItem = defaultRenderItem }) => {
     return (

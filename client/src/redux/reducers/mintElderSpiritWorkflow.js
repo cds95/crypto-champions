@@ -1,9 +1,11 @@
-import { SET_ELDER_CLASS, SET_ELDER_RACE, SET_ELDER_STONE } from '../actions';
+import { AFFINITIES } from '../../constants';
+import { SET_AFFINITY, SET_ELDER_CLASS, SET_ELDER_RACE, SET_ELDER_STONE } from '../actions';
 
 const initialState = {
     stone: null,
     race: null,
-    elderClass: null
+    elderClass: null,
+    affinity: AFFINITIES[0]
 };
 
 export const mintElderSpiritWorkflow = (state = initialState, action) => {
@@ -22,6 +24,11 @@ export const mintElderSpiritWorkflow = (state = initialState, action) => {
             return {
                 ...state,
                 elderClass: action.elderClass
+            };
+        case SET_AFFINITY:
+            return {
+                ...state,
+                affinity: action.affinity
             };
         default:
             return state;

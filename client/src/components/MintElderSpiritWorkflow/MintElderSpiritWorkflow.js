@@ -7,9 +7,11 @@ import {
     setElderRaceAction,
     setElderStoneAction,
     setMaxStepsAction,
-    setElderClassAction
+    setElderClassAction,
+    setAffinityAction
 } from '../../redux/actions';
 import { ClassSelector } from '../ClassSelector';
+import { MintElderConfirmation } from '../MintElderConfirmation';
 import { RaceSelector } from '../RaceSelector';
 import { StoneSelector } from '../StoneSelector';
 
@@ -19,7 +21,12 @@ export const MintElderSpirintWorkflowComp = ({
     incrementCurrentStep,
     setMaxSteps,
     selectRace,
-    selectElderClass
+    selectAffinity,
+    selectElderClass,
+    selectedClass,
+    selectedRace,
+    selectedAffinity,
+    selectedStone
 }) => {
     useEffect(() => {
         const numSteps = Object.keys(MINT_ELDER_SPIRIT_STEPS).length;
@@ -35,7 +42,10 @@ export const MintElderSpirintWorkflowComp = ({
     };
     const handleOnSelectClass = (elderClass) => {
         selectElderClass(elderClass);
+        incrementCurrentStep();
     };
+    const handleOnSelectAffinity = (affinity) => selectAffinity(affinity);
+    const handleOnConfirm = () => {};
     switch (currentStep) {
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_STONE:
             return <StoneSelector onSelect={handleOnSelectStone} />;
@@ -44,6 +54,15 @@ export const MintElderSpirintWorkflowComp = ({
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_CLASS:
             return <ClassSelector onSelect={handleOnSelectClass} />;
         case MINT_ELDER_SPIRIT_STEPS.MINT:
+            return (
+                <MintElderConfirmation
+                    selectedAffinity={selectedAffinity}
+                    race={selectedRace}
+                    elderClass={selectedClass}
+                    onSelectAffinity={handleOnSelectAffinity}
+                    onConfirm={handleOnConfirm}
+                />
+            );
         default:
             return <></>;
     }
@@ -51,11 +70,16 @@ export const MintElderSpirintWorkflowComp = ({
 
 const mapStateToProps = (state) => {
     const {
-        workflow: { currentStep, maxSteps }
+        workflow: { currentStep, maxSteps },
+        mintElderSpiritWorkflow: { race, elderClass, stone, affinity }
     } = state;
     return {
         currentStep,
-        maxSteps
+        maxSteps,
+        selectedRace: race,
+        selectedClass: elderClass,
+        selectedStone: stone,
+        selectedAffinity: affinity
     };
 };
 
@@ -75,6 +99,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         selectElderClass: (elderClass) => {
             dispatch(setElderClassAction(elderClass));
+        },
+        selectAffinity: (affinity) => {
+            dispatch(setAffinityAction(affinity));
         },
         incrementCurrentStep: () => {
             dispatch(incrementActiveStepAction);

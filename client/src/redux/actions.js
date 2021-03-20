@@ -71,3 +71,11 @@ export const setElderClassAction = (elderClass) => {
         elderClass
     };
 };
+
+export const SET_AFFINITY = 'SET_AFFINITY';
+export const setAffinityAction = (affinity) => {
+    return {
+        type: SET_AFFINITY,
+        affinity
+    };
+};
