@@ -12,6 +12,10 @@ import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC115
 contract CryptoChampions is ICryptoChampions, ERC1155 {
     using SafeMath for uint256;
 
+    enum Phase { ONE, TWO }
+
+    Phase public currentPhase;
+
     // The max amount of elders that can be minted
     uint256 public constant MAX_NUMBER_OF_ELDERS = 7;
 
@@ -45,7 +49,13 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
 
     // Initializes a new CryptoChampions contract
     // TODO: need to provide the proper uri
-    constructor() public ERC1155("uri") {}
+    constructor() public ERC1155("uri") {
+        currentPhase = Phase.ONE;
+    }
+
+    function setPhase(Phase phase) external {
+        currentPhase = phase;
+    }
 
     /// @notice Creates a new token affinity
     /// @dev This will be called by a priviledged address. It will allow to create new affinities. May need to add a

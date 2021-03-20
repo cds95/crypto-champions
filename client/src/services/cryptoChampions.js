@@ -15,8 +15,9 @@ export const getMaxNumHeroes = async () => {
 };
 
 export const getPhase = async () => {
-    // TO BE IMPLEMENTED
-    return 0;
+    const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    const currentPhase = await artifact.methods.currentPhase().call();
+    return parseInt(currentPhase);
 };
 
 export const mintElderSpirit = async (raceId, classId, affinity) => {
