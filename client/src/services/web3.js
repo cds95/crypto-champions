@@ -28,4 +28,11 @@ export const getWeb3 = () =>
             }
         });
     });
+
+export const getUserAccount = async () => {
+    const web3 = await getWeb3();
+    const accounts = await await web3.eth.getAccounts();
+    return accounts[0];
+};
+
 export default getWeb3;

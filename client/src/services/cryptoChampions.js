@@ -1,5 +1,6 @@
 import { CONTRACTS } from '../constants';
 import { loadContract } from './contract';
+import getWeb3, { getUserAccount } from './web3';
 
 export const getMaxElderSpirits = async () => {
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
@@ -16,4 +17,12 @@ export const getMaxNumHeroes = async () => {
 export const getPhase = async () => {
     // TO BE IMPLEMENTED
     return 0;
+};
+
+export const mintElderSpirit = async (raceId, classId, affinity) => {
+    const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    const account = await getUserAccount();
+    await artifact.methods.mintElderSpirit(raceId, classId, affinity).send({
+        from: account
+    });
 };

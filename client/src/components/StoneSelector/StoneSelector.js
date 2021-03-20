@@ -1,4 +1,5 @@
 import React from 'react';
+import { STONES } from '../../constants';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 
 const text = {
@@ -7,33 +8,5 @@ const text = {
     caption: 'Select a stone to begin summoning an Elder Spirit'
 };
 export const StoneSelector = ({ onSelect }) => {
-    const stones = [
-        {
-            id: 0,
-            label: 'stone 1',
-            image: '../../test.png'
-        },
-        {
-            id: 1,
-            label: 'stone 2',
-            image: '../../test.png'
-        },
-        {
-            id: 2,
-            label: 'stone 3',
-            image: '../../test.png'
-        },
-        {
-            id: 3,
-            label: 'stone 3',
-            image: '../../test.png'
-        },
-        {
-            id: 4,
-            label: 'stone 3',
-            image: '../../test.png'
-        }
-    ];
-
-    return <ItemSelector title={text.title(stones.length)} caption={text.caption} items={stones} onSelect={onSelect} />;
+    return <ItemSelector title={text.title(STONES.length)} caption={text.caption} items={STONES} onSelect={onSelect} />;
 };

@@ -10,6 +10,7 @@ import {
     setElderClassAction,
     setAffinityAction
 } from '../../redux/actions';
+import { mintElderSpirit } from '../../services/cryptoChampions';
 import { ClassSelector } from '../ClassSelector';
 import { MintElderConfirmation } from '../MintElderConfirmation';
 import { RaceSelector } from '../RaceSelector';
@@ -45,7 +46,12 @@ export const MintElderSpirintWorkflowComp = ({
         incrementCurrentStep();
     };
     const handleOnSelectAffinity = (affinity) => selectAffinity(affinity);
-    const handleOnConfirm = () => {};
+    const handleOnConfirm = async () => {
+        const raceId = selectedRace.id;
+        const classId = selectedClass.id;
+        const affinity = selectedAffinity;
+        await mintElderSpirit(raceId, classId, affinity);
+    };
     switch (currentStep) {
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_STONE:
             return <StoneSelector onSelect={handleOnSelectStone} />;
