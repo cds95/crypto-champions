@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getMaxElderSpirits, getMaxNumHeroes, getPhase } from '../services/cryptoChampions';
+import { getElderSpirits, getMaxElderSpirits, getMaxNumHeroes, getPhase } from '../services/cryptoChampions';
 
 export const useGetMaxElderSpirits = () => {
     const [state, setState] = useState({
@@ -58,5 +58,23 @@ export const useGetPhase = () => {
             });
         })();
     }, []);
+    return state;
+};
+
+export const useGetElderSpirits = (maxElderSpirits) => {
+    const [state, setState] = useState({
+        isLoading: false,
+        elderSpirits: []
+    });
+    useEffect(() => {
+        (async () => {
+            setState({ ...state, isLoading: true });
+            const elderSpirits = await getElderSpirits(maxElderSpirits);
+            setState({
+                isLoading: false,
+                elderSpirits
+            });
+        })();
+    }, [maxElderSpirits]);
     return state;
 };

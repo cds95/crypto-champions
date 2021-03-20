@@ -16,7 +16,7 @@ export const LandingPageComp = () => {
                     <div className="landing-page__caption">sdfsdfs</div>
                 </div>
                 <Link
-                    to={routeDefinitions.CREATION_WORKFLOW}
+                    to={routeDefinitions.PLAY}
                     component={(props) => (
                         <Button className="landing-page__get-started" variant="contained" color="primary" {...props}>
                             Get Started

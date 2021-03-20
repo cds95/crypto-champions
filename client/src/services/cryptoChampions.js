@@ -27,3 +27,32 @@ export const mintElderSpirit = async (raceId, classId, affinity) => {
         from: account
     });
 };
+
+export const getElderSpirits = async (maxElderSpirits) => {
+    const elderSpirits = [];
+    for (let id = 1; id < maxElderSpirits; id++) {
+        const spirit = await getElderSpirit(id);
+        elderSpirits.push(spirit);
+    }
+    return elderSpirits;
+};
+
+export const getElderSpirit = async (elderSpiritId) => {
+    const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    const elderSpirit = await artifact.methods.getElderSpirit(elderSpiritId).call();
+    return {
+        id: elderSpiritId,
+        valid: elderSpirit[0],
+        raceId: parseInt(elderSpirit[1]),
+        classId: parseInt(elderSpirit[2]),
+        attribute: elderSpirit[3]
+    };
+};
+
+export const mintHero = async (elderSpiritId, heroName) => {
+    const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    const userAccount = await getUserAccount();
+    await artifact.methods.mintHero(elderSpiritId, heroName).send({
+        from: userAccount
+    });
+};

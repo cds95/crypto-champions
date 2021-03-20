@@ -79,3 +79,19 @@ export const setAffinityAction = (affinity) => {
         affinity
     };
 };
+
+export const SET_ELDER_SPIRIT_FOR_HERO = 'SET_ELDER_SPIRIT_FOR_HERO';
+export const setElderSpiritForHeroAction = (elderSpirit) => {
+    return {
+        type: SET_ELDER_SPIRIT_FOR_HERO,
+        elderSpirit
+    };
+};
+
+export const SET_HERO_NAME = 'SET_HERO_NAME';
+export const setHeroNameAction = (heroName) => {
+    return {
+        type: SET_HERO_NAME,
+        heroName
+    };
+};

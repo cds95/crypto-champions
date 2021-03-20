@@ -13,7 +13,7 @@ export const NavigationBar = () => {
                     <Link to={routeDefinitions.ROOT} className="navigation-bar__link">
                         <Typography variant="h6">Home</Typography>
                     </Link>
-                    <Link to={routeDefinitions.CREATION_WORKFLOW} className="navigation-bar__link">
+                    <Link to={routeDefinitions.PLAY} className="navigation-bar__link">
                         <Typography variant="h6">Play</Typography>
                     </Link>
                 </div>

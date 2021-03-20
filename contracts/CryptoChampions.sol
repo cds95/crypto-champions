@@ -53,6 +53,11 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
         currentPhase = Phase.ONE;
     }
 
+    modifier isValidElderSpiritId(uint elderId) {
+        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); 
+        _;
+    }
+
     function setPhase(Phase phase) external {
         currentPhase = phase;
     }
@@ -105,8 +110,7 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
     /// @notice Gets the elder owner for the given elder id
     /// @param elderId The elder id
     /// @return The owner of the elder
-    function getElderOwner(uint256 elderId) public view override returns (address) {
-        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+    function getElderOwner(uint256 elderId) isValidElderSpiritId(elderId) public view override returns (address) {
         require(_elderOwners[elderId] != address(0)); // dev: Given elder id has not been minted.
 
         return _elderOwners[elderId];
@@ -115,8 +119,7 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
     /// @notice Mints a hero based on an elder spirit
     /// @param elderId The id of the elder spirit this hero is based on
     /// @return The hero id
-    function mintHero(uint256 elderId) external payable override returns (uint256) {
-        require(elderId != 0 && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Elder id not valid.
+    function mintHero(uint256 elderId, string memory heroName) isValidElderSpiritId(elderId) external payable override returns (uint256) {
         require(heroesMinted < MAX_NUMBER_OF_HEROES); // dev: Max number of heroes already minted.
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
 
@@ -129,6 +132,7 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
         Hero memory hero;
         hero.valid = true;
         hero.elder = _elderSpirits[elderId];
+        hero.name = heroName;
 
         // Mint the NFT
         _mint(msg.sender, heroId, 1, ""); // TODO: give the URI
@@ -161,8 +165,7 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
     /// @notice Burns the elder hero for a refund
     /// @dev This will only be able to be called by a priviledged address
     /// @param elderId The elder id
-    function burnElder(uint256 elderId) external override {
-        require(elderId > 0 && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Cannot burn with invalid elder id.
+    function burnElder(uint256 elderId) isValidElderSpiritId(elderId) external override {
         require(_elderSpirits[elderId].valid); // dev: Cannot burn elder that does not exist.
 
         // TODO: need to make sure _elderOwners[elderId] can never be address(0).
@@ -177,4 +180,9 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
     /// @dev This will only be able to be called from the owner of the hero
     /// @param heroId The hero id to burn
     function burnHero(uint256 heroId) external override {}
+
+    function getElderSpirit(uint256 elderId) isValidElderSpiritId(elderId) external override view returns (bool, uint256, uint256, string memory) {
+        ElderSpirit memory elderSpirit = _elderSpirits[elderId];
+        return (elderSpirit.valid, elderSpirit.raceId, elderSpirit.classId, elderSpirit.affinity);
+    }
 }

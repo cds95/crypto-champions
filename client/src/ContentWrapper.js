@@ -20,7 +20,7 @@ export const ContentWrapperComp = ({ setMaxElderSpirits, setMaxNumHeroes }) => {
                 <Route path={routeDefinitions.ROOT} exact={true}>
                     <LandingPage />
                 </Route>
-                <Route path={routeDefinitions.CREATION_WORKFLOW}>
+                <Route path={routeDefinitions.PLAY}>
                     <Play />
                 </Route>
             </Switch>

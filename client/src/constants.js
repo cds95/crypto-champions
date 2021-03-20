@@ -7,7 +7,8 @@ export const CONTRACTS = {
 };
 
 export const PHASES = {
-    ONE: 0
+    ONE: 0,
+    TWO: 1
 };
 
 export const MINT_ELDER_SPIRIT_STEPS = {

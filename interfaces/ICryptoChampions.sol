@@ -11,6 +11,7 @@ struct ElderSpirit {
 struct Hero {
     bool valid;
     ElderSpirit elder;
+    string name;
 }
 
 interface ICryptoChampions {
@@ -24,7 +25,7 @@ interface ICryptoChampions {
 
     function getElderOwner(uint256 elderId) external view returns (address);
 
-    function mintHero(uint256 elderId) external payable returns (uint256);
+    function mintHero(uint256 elderId, string memory heroName) external payable returns (uint256);
 
     function getHeroOwner(uint256 heroId) external view returns (address);
 
@@ -33,4 +34,6 @@ interface ICryptoChampions {
     function burnElder(uint256 elderId) external;
 
     function burnHero(uint256 heroId) external;
+
+    function getElderSpirit(uint256 elderId) external view returns (bool, uint256, uint256, string memory);
 }
