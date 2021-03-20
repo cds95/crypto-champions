@@ -5,7 +5,7 @@ import { LandingPage } from './pages/LandingPage';
 import { setMaxElderSpiritsAction, setMaxNumHeroesAction } from './redux/actions';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { routeDefinitions } from './routeDefinitions';
-import { MintElderSpirintWorkflow } from './pages/MintElderSpiritWorkflow';
+import { Play } from './pages/PlayPage';
 import { NavigationBar } from './components/NavigationBar';
 
 export const ContentWrapperComp = ({ setMaxElderSpirits, setMaxNumHeroes }) => {
@@ -21,7 +21,7 @@ export const ContentWrapperComp = ({ setMaxElderSpirits, setMaxNumHeroes }) => {
                     <LandingPage />
                 </Route>
                 <Route path={routeDefinitions.CREATION_WORKFLOW}>
-                    <MintElderSpirintWorkflow />
+                    <Play />
                 </Route>
             </Switch>
         </Router>

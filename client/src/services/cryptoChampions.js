@@ -12,3 +12,8 @@ export const getMaxNumHeroes = async () => {
     const maxHeroes = await artifact.methods.MAX_NUMBER_OF_HEROES().call();
     return parseInt(maxHeroes);
 };
+
+export const getPhase = async () => {
+    // TO BE IMPLEMENTED
+    return 0;
+};

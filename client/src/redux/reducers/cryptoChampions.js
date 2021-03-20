@@ -1,4 +1,4 @@
-import { SET_MAX_ELDER_SPIRITS, SET_MAX_NUM_HEROES } from '../actions';
+import { SET_MAX_ELDER_SPIRITS, SET_MAX_NUM_HEROES, SET_PHASE } from '../actions';
 
 const initialState = {
     maxElderSpirits: 0,
@@ -16,6 +16,11 @@ export const cryptoChampions = (state = initialState, action) => {
             return {
                 ...state,
                 maxNumHeroes: action.maxNumHeroes
+            };
+        case SET_PHASE:
+            return {
+                ...state,
+                phase: action.phase
             };
         default:
             return state;
