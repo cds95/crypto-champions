@@ -1,16 +1,21 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { useGetMaxElderSpirits } from '../../hooks/cryptoChampionsHook';
 import { setMaxElderSpiritsAction } from '../../redux/actions';
 
-export const LandingPageComp = ({ setMaxElderSpirits }) => {
-    const { maxElderSpirits } = useGetMaxElderSpirits();
-    useEffect(() => setMaxElderSpirits(maxElderSpirits), [maxElderSpirits]);
-    return <div>{maxElderSpirits}</div>;
+export const LandingPageComp = ({ maxElderSpirits, maxNumHeroes }) => {
+    return (
+        <div>
+            {maxElderSpirits} {maxNumHeroes}
+        </div>
+    );
 };
 
-const mapStateToProps = () => {
-    return {};
+const mapStateToProps = (state) => {
+    const { maxElderSpirits, maxNumHeroes } = state.cryptoChampions;
+    return {
+        maxElderSpirits,
+        maxNumHeroes
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {

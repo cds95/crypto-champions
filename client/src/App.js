@@ -3,11 +3,11 @@ import './App.css';
 import useWeb3 from './hooks/web3';
 import { Provider } from 'react-redux';
 import { store } from './redux';
-import { LandingPage } from './pages/LandingPage';
+import { ContentWrapper } from './ContentWrapper';
 
 const App = () => {
-    const { isLoading, web3 } = useWeb3();
-    return <Provider store={store}>{isLoading ? 'Loading' : <LandingPage />}</Provider>;
+    const { isLoading } = useWeb3();
+    return <Provider store={store}>{isLoading ? 'Loading' : <ContentWrapper />}</Provider>;
 };
 
 export default App;

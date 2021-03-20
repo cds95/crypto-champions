@@ -5,3 +5,11 @@ export const setMaxElderSpiritsAction = (maxElderSpirits) => {
         maxElderSpirits
     };
 };
+
+export const SET_MAX_NUM_HEROES = 'SET_MAX_NUM_HEROES';
+export const setMaxNumHeroesAction = (maxNumHeroes) => {
+    return {
+        type: SET_MAX_NUM_HEROES,
+        maxNumHeroes
+    };
+};

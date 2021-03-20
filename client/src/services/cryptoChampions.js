@@ -6,3 +6,9 @@ export const getMaxElderSpirits = async () => {
     const maxElderSpirits = await artifact.methods.MAX_NUMBER_OF_ELDERS().call();
     return parseInt(maxElderSpirits);
 };
+
+export const getMaxNumHeroes = async () => {
+    const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    const maxHeroes = await artifact.methods.MAX_NUMBER_OF_HEROES().call();
+    return parseInt(maxHeroes);
+};
