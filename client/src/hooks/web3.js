@@ -8,7 +8,6 @@ const useWeb3 = () => {
         web3: null,
         accounts: []
     });
-
     useEffect(() => {
         (async () => {
             try {
@@ -29,9 +28,7 @@ const useWeb3 = () => {
             }
         })();
     }, []);
-
-    const { isLoading, isWeb3, web3, accounts } = state;
-    return { isLoading, isWeb3, web3, accounts };
+    return state;
 };
 
 export default useWeb3;
