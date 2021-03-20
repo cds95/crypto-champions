@@ -4,12 +4,20 @@ import { MINT_ELDER_SPIRIT_STEPS } from '../../constants';
 import {
     incrementActiveStepAction,
     setActiveStepAction,
+    setElderRaceAction,
     setElderStoneAction,
     setMaxStepsAction
 } from '../../redux/actions';
+import { RaceSelector } from '../RaceSelector';
 import { StoneSelector } from '../StoneSelector';
 
-export const MintElderSpirintWorkflowComp = ({ currentStep, selectStone, incrementCurrentStep, setMaxSteps }) => {
+export const MintElderSpirintWorkflowComp = ({
+    currentStep,
+    selectStone,
+    incrementCurrentStep,
+    setMaxSteps,
+    selectRace
+}) => {
     useEffect(() => {
         const numSteps = Object.keys(MINT_ELDER_SPIRIT_STEPS).length;
         setMaxSteps(numSteps);
@@ -18,10 +26,15 @@ export const MintElderSpirintWorkflowComp = ({ currentStep, selectStone, increme
         selectStone(stone);
         incrementCurrentStep();
     };
+    const handleOnSelectRace = (race) => {
+        selectRace(race);
+        incrementCurrentStep();
+    };
     switch (currentStep) {
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_STONE:
             return <StoneSelector onSelect={handleOnSelectStone} />;
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_RACE:
+            return <RaceSelector onSelect={handleOnSelectRace} />;
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_CLASS:
         case MINT_ELDER_SPIRIT_STEPS.MINT:
         default:
@@ -49,6 +62,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         selectStone: (stone) => {
             dispatch(setElderStoneAction(stone));
+        },
+        selectRace: (race) => {
+            dispatch(setElderRaceAction(race));
         },
         incrementCurrentStep: () => {
             dispatch(incrementActiveStepAction);

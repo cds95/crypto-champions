@@ -55,3 +55,11 @@ export const setElderStoneAction = (stone) => {
         stone
     };
 };
+
+export const SET_ELDER_RACE = 'SET_ELDER_RACE';
+export const setElderRaceAction = (race) => {
+    return {
+        type: SET_ELDER_RACE,
+        race
+    };
+};
