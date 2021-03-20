@@ -1,9 +1,9 @@
-import { SET_ELDER_RACE, SET_ELDER_STONE } from '../actions';
+import { SET_ELDER_CLASS, SET_ELDER_RACE, SET_ELDER_STONE } from '../actions';
 
 const initialState = {
     stone: null,
     race: null,
-    class: null
+    elderClass: null
 };
 
 export const mintElderSpiritWorkflow = (state = initialState, action) => {
@@ -17,6 +17,11 @@ export const mintElderSpiritWorkflow = (state = initialState, action) => {
             return {
                 ...state,
                 race: action.race
+            };
+        case SET_ELDER_CLASS:
+            return {
+                ...state,
+                elderClass: action.elderClass
             };
         default:
             return state;

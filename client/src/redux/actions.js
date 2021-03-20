@@ -63,3 +63,11 @@ export const setElderRaceAction = (race) => {
         race
     };
 };
+
+export const SET_ELDER_CLASS = 'SET_ELDER_CLASS';
+export const setElderClassAction = (elderClass) => {
+    return {
+        type: SET_ELDER_CLASS,
+        elderClass
+    };
+};
