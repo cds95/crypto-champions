@@ -3,14 +3,21 @@ pragma solidity ^0.6.0;
 
 import "../interfaces/ICryptoChampions.sol";
 
+import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/access/AccessControl.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC1155.sol";
 
 /// @title Crypto Champions Interface
 /// @author Oozyx
 /// @notice This is the crypto champions class
-contract CryptoChampions is ICryptoChampions, ERC1155 {
+contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     using SafeMath for uint256;
+
+    // The owner role is used to globally govern the contract
+    bytes32 public constant ROLE_OWNER = keccak256("ROLE_OWNER");
+
+    // The admin role is used for administrator duties and reports to the owner
+    bytes32 public constant ROLE_ADMIN = keccak256("ROLE_ADMIN");
 
     // The max amount of elders that can be minted
     uint256 public constant MAX_NUMBER_OF_ELDERS = 7;
@@ -45,13 +52,33 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
 
     // Initializes a new CryptoChampions contract
     // TODO: need to provide the proper uri
-    constructor() public ERC1155("uri") {}
+    constructor() public ERC1155("uri") {
+        // Set up administrative roles
+        _setRoleAdmin(ROLE_OWNER, ROLE_OWNER);
+        _setRoleAdmin(ROLE_ADMIN, ROLE_OWNER);
+
+        // Set up the deployer as the owner and give admin rights
+        _setupRole(ROLE_OWNER, msg.sender);
+        grantRole(ROLE_ADMIN, msg.sender);
+    }
+
+    // Restrict to only admins
+    modifier onlyAdmin {
+        _hasRole(ROLE_ADMIN);
+        _;
+    }
+
+    /// @notice Check if msg.sender has the role
+    /// @param role The role to verify
+    function _hasRole(bytes32 role) internal view {
+        require(hasRole(role, msg.sender)); // dev: Access denied.
+    }
 
     /// @notice Creates a new token affinity
     /// @dev This will be called by a priviledged address. It will allow to create new affinities. May need to add a
     /// remove affinity function as well.
     /// @param tokenTicker The token ticker of the affinity
-    function createAffinity(string calldata tokenTicker) external override {}
+    function createAffinity(string calldata tokenTicker) external override onlyAdmin {}
 
     /// @notice Mints an elder spirit
     /// @dev For now only race, class, and token (affinity) are needed. This will change. The race and class ids will
@@ -146,10 +173,10 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
     /// @notice Disburses the rewards evenly among the heroes of the winning affinity
     /// @dev This will be called from a priviledged address
     /// @param winningAffinity The winning affinity token ticker
-    function disburseRewards(string calldata winningAffinity) external override {}
+    function disburseRewards(string calldata winningAffinity) external override onlyAdmin {}
 
     /// @notice Burns all the elder spirits in game
-    function burnElders() external override {
+    function burnElders() external override onlyAdmin {
         require(eldersInGame > 0); // dev: No elders have been minted.
         for (uint256 i = 1; i <= MAX_NUMBER_OF_ELDERS; ++i) {
             if (_elderSpirits[i].valid) {
@@ -181,6 +208,7 @@ contract CryptoChampions is ICryptoChampions, ERC1155 {
     function burnHero(uint256 heroId) external override {
         require(heroId > MAX_NUMBER_OF_ELDERS && heroId <= MAX_NUMBER_OF_ELDERS + MAX_NUMBER_OF_HEROES); // dev: Cannot burn with invalid hero id.
         require(_heroes[heroId].valid); // dev: Cannot burn hero that does not exist.
+        require(_heroOwners[heroId] == _msgSender()); // dev: Cannot burn hero that is not yours.
 
         // TODO: need to make sure _heroOwners[heroId] can never be address(0).
         //     Check recipient before every token send so that we never send to address(0).

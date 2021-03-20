@@ -1,5 +1,4 @@
 import brownie
-from brownie.test import given, strategy
 
 
 def test_burn_no_elder_minted(accounts, crypto_champions):
