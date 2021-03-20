@@ -4,6 +4,7 @@ import useWeb3 from './hooks/web3';
 import { Provider } from 'react-redux';
 import { store } from './redux';
 import { ContentWrapper } from './ContentWrapper';
+import { NavigationBar } from './components/NavigationBar';
 
 const App = () => {
     const { isLoading } = useWeb3();

@@ -6,6 +6,7 @@ import { setMaxElderSpiritsAction, setMaxNumHeroesAction } from './redux/actions
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { routeDefinitions } from './routeDefinitions';
 import { MintElderSpirintWorkflow } from './pages/MintElderSpiritWorkflow';
+import { NavigationBar } from './components/NavigationBar';
 
 export const ContentWrapperComp = ({ setMaxElderSpirits, setMaxNumHeroes }) => {
     const { maxElderSpirits } = useGetMaxElderSpirits();
@@ -14,11 +15,12 @@ export const ContentWrapperComp = ({ setMaxElderSpirits, setMaxNumHeroes }) => {
     useEffect(() => setMaxNumHeroes(maxNumHeroes), [maxNumHeroes]);
     return (
         <Router>
+            <NavigationBar />
             <Switch>
-                <Route path={routeDefinitions.ROOT}>
+                <Route path={routeDefinitions.ROOT} exact={true}>
                     <LandingPage />
                 </Route>
-                <Route path={routeDefinitions.PHASE_1_WORKFLOW}>
+                <Route path={routeDefinitions.CREATION_WORKFLOW}>
                     <MintElderSpirintWorkflow />
                 </Route>
             </Switch>
