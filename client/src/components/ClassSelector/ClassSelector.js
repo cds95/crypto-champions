@@ -7,6 +7,14 @@ const text = {
     caption: 'Select a class'
 };
 
-export const ClassSelector = ({ onSelect }) => {
-    return <ItemSelector title={text.title} caption={text.caption} items={CLASSES} onSelect={onSelect} />;
+export const ClassSelector = ({ onSelect, selectedClassId }) => {
+    return (
+        <ItemSelector
+            title={text.title}
+            caption={text.caption}
+            items={CLASSES}
+            onSelect={onSelect}
+            selectedItemId={selectedClassId}
+        />
+    );
 };

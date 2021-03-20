@@ -5,8 +5,7 @@ import { useGetPhase } from '../../hooks/cryptoChampionsHook';
 import { setPhaseAction } from '../../redux/actions';
 import { PHASES } from '../../constants';
 import { MintElderSpirintWorkflow } from '../../components/MintElderSpiritWorkflow/MintElderSpiritWorkflow';
-import { CharacterSelector } from '../../components/CharacterSelector';
-import { MintCharacterWorkflow } from '../../components/MintCharacterWorkflow';
+import { MintHeroWorkflow } from '../../components/MintHeroWorkflow';
 
 export const PlayComp = ({ setPhase }) => {
     const { isLoading, phase } = useGetPhase();
@@ -22,7 +21,7 @@ export const PlayComp = ({ setPhase }) => {
             content = <MintElderSpirintWorkflow />;
             break;
         case PHASES.TWO:
-            content = <MintCharacterWorkflow />;
+            content = <MintHeroWorkflow />;
             break;
         default:
             console.warn(`Invalid phase ${phase}`);

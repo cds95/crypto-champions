@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { useGetElderSpirits } from '../../hooks/cryptoChampionsHook';
 import { setElderSpiritForHeroAction, setHeroNameAction } from '../../redux/actions';
 import { mintHero } from '../../services/cryptoChampions';
-import { CharacterSelector } from '../CharacterSelector/CharacterSelector';
-import './MintCharacter.css';
+import { ElderSelector } from '../ElderSelector/ElderSelector';
+import './MintHeroWorkflow.css';
 
 const text = {
     fieldLabel: "Enter your Hero's name",
     mintHero: 'Train with elder spirit and mint your champion'
 };
-export const MintCharacterWorkflowComp = ({
+export const MintHeroWorkflowComp = ({
     maxElderSpirits,
     setElderSpiritForHero,
     selectedElderSpirit,
@@ -33,14 +33,18 @@ export const MintCharacterWorkflowComp = ({
         mintHero(selectedElderSpirit.id, heroName);
     };
     return (
-        <div className="mint-character-workflow">
-            <CharacterSelector items={items} onSelect={setElderSpiritForHero} />
-            <div className="mint-character-workflow__bottom">
+        <div className="mint-hero-workflow">
+            <ElderSelector
+                items={items}
+                onSelect={setElderSpiritForHero}
+                selectedElderId={selectedElderSpirit ? selectedElderSpirit.id : ''}
+            />
+            <div className="mint-hero-workflow__bottom">
                 <TextField
                     value={heroName}
                     label={text.fieldLabel}
                     onChange={handleOnHeroNameChange}
-                    className="mint-character-workflow__name"
+                    className="mint-hero-workflow__name"
                 />
                 <Button onClick={handleOnSubmit} variant="contained" color="primary">
                     {text.mintHero}
@@ -72,4 +76,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export const MintCharacterWorkflow = connect(mapStateToProps, mapDispatchToProps)(MintCharacterWorkflowComp);
+export const MintHeroWorkflow = connect(mapStateToProps, mapDispatchToProps)(MintHeroWorkflowComp);

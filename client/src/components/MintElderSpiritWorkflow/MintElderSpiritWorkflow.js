@@ -54,11 +54,15 @@ export const MintElderSpirintWorkflowComp = ({
     };
     switch (currentStep) {
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_STONE:
-            return <StoneSelector onSelect={handleOnSelectStone} />;
+            return (
+                <StoneSelector onSelect={handleOnSelectStone} selectedStoneId={selectedStone ? selectedStone.id : ''} />
+            );
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_RACE:
-            return <RaceSelector onSelect={handleOnSelectRace} />;
+            return <RaceSelector onSelect={handleOnSelectRace} selectedRaceId={selectedRace ? selectedRace.id : ''} />;
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_CLASS:
-            return <ClassSelector onSelect={handleOnSelectClass} />;
+            return (
+                <ClassSelector onSelect={handleOnSelectClass} selectedClassId={selectedClass ? selectedClass.id : ''} />
+            );
         case MINT_ELDER_SPIRIT_STEPS.MINT:
             return (
                 <MintElderConfirmation
