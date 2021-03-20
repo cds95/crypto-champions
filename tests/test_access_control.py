@@ -20,3 +20,14 @@ def test_grant_admin_then_burn(accounts, crypto_champions, mint_first_elder):
     assert crypto_champions.eldersInGame() == 1
     crypto_champions.burnElders({"from": accounts[1]})
     assert crypto_champions.eldersInGame() == 0
+
+
+def test_non_authorized_mint_price(accounts, crypto_champions):
+    with brownie.reverts("dev: Access denied."):
+        crypto_champions.setElderMintPrice(0, {"from": accounts[1]})
+
+
+def test_authorized_mint_price(accounts, crypto_champions):
+    currentMintPrice = crypto_champions.elderMintPrice()
+    crypto_champions.setElderMintPrice(currentMintPrice - 1, {"from": accounts[0]})
+    assert crypto_champions.elderMintPrice() == currentMintPrice - 1

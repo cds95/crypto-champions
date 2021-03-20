@@ -24,3 +24,9 @@ def test_burn_hero_no_effect_on_elder(accounts, crypto_champions, mint_first_her
     assert crypto_champions.getHeroOwner(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1) == accounts[0]
     crypto_champions.burnHero(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1, {"from": accounts[0]})
     assert crypto_champions.getElderOwner(1) == accounts[0]
+
+
+def test_burn_hero_elder_spawns(accounts, crypto_champions, mint_first_hero):
+    assert crypto_champions.getElderSpawnsAmount(crypto_champions.currentRound(), 1) == 1
+    crypto_champions.burnHero(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1, {"from": accounts[0]})
+    assert crypto_champions.getElderSpawnsAmount(crypto_champions.currentRound(), 1) == 0
