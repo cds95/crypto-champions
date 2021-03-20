@@ -14,10 +14,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     using SafeMath for uint256;
 
     // The owner role is used to globally govern the contract
-    bytes32 public constant ROLE_OWNER = keccak256("ROLE_OWNER");
+    bytes32 internal constant ROLE_OWNER = keccak256("ROLE_OWNER");
 
     // The admin role is used for administrator duties and reports to the owner
-    bytes32 public constant ROLE_ADMIN = keccak256("ROLE_ADMIN");
+    bytes32 internal constant ROLE_ADMIN = keccak256("ROLE_ADMIN");
 
     // The max amount of elders that can be minted
     uint256 public constant MAX_NUMBER_OF_ELDERS = 7;
@@ -49,6 +49,23 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
     // The mapping of hero id to the hero
     mapping(uint256 => Hero) internal _heroes;
+
+    /// @notice Triggered when an elder spirit gets minted
+    /// @param elderId The elder id belonging to the minted elder
+    /// @param owner The address of the owner
+    event ElderSpiritMinted(uint256 elderId, address owner);
+
+    /// @notice Triggered when a hero gets minted
+    /// @param heroId The hero id belonging to the hero that was minted
+    /// @param owner The address of the owner
+    event HeroMinted(uint256 heroId, address owner);
+
+    /// @notice Triggered when the elder spirits have been burned
+    event ElderSpiritsBurned();
+
+    /// @notice Triggered when a hero has been burned
+    /// @param heroId The hero id of the hero that was burned
+    event HeroBurned(uint256 heroId);
 
     // Initializes a new CryptoChampions contract
     // TODO: need to provide the proper uri
@@ -107,14 +124,16 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         elder.affinity = affinity;
 
         // Mint the NFT
-        _mint(msg.sender, elderId, 1, ""); // TODO: give the URI
+        _mint(_msgSender(), elderId, 1, ""); // TODO: give the URI
 
         // Assign the elder id with the owner and its spirit
-        _elderOwners[elderId] = msg.sender;
+        _elderOwners[elderId] = _msgSender();
         _elderSpirits[elderId] = elder;
 
         // Increment elders minted
         eldersInGame = eldersInGame.add(1);
+
+        emit ElderSpiritMinted(elderId, _msgSender());
 
         return elderId;
     }
@@ -148,14 +167,16 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         hero.elder = _elderSpirits[elderId];
 
         // Mint the NFT
-        _mint(msg.sender, heroId, 1, ""); // TODO: give the URI
+        _mint(_msgSender(), heroId, 1, ""); // TODO: give the URI
 
         // Assign the hero id with the owner and with the hero
-        _heroOwners[heroId] = msg.sender;
+        _heroOwners[heroId] = _msgSender();
         _heroes[heroId] = hero;
 
         // Increment the heroes minted
         heroesMinted = heroesMinted.add(1);
+
+        emit HeroMinted(heroId, _msgSender());
 
         return heroId;
     }
@@ -183,6 +204,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
                 _burnElder(i);
             }
         }
+
+        emit ElderSpiritsBurned();
     }
 
     /// @notice Burns the elder spirit
@@ -218,5 +241,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         _heroOwners[heroId] = address(0);
         _heroes[heroId].valid = false;
         _heroes[heroId].elder.valid = false;
+
+        emit HeroBurned(heroId);
     }
 }
