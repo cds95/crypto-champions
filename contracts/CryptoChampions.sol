@@ -59,6 +59,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     // The current round index
     uint256 public currentRound;
 
+    // For bonding curve
+    uint256 internal constant K = 1 ether;
+    uint256 internal constant B = 50;
+    uint256 internal constant C = 26;
+    uint256 internal constant D = 8;
+    uint256 internal constant SIG_DIGITS = 3;
+
     /// @notice Triggered when an elder spirit gets minted
     /// @param elderId The elder id belonging to the minted elder
     /// @param owner The address of the owner
@@ -149,12 +156,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
         // Increment elders minted
         eldersInGame = eldersInGame.add(1);
+        //_roundElderSpawns[currentRound][elderId] = _roundElderSpawns[currentRound][elderId].add(1);
 
         // Refund if user sent too much
-        if (msg.value.sub(elderMintPrice) > 0) {
-            (bool success, ) = msg.sender.call{ value: msg.value.sub(elderMintPrice) }("");
-            require(success); // dev: Refund failed.
-        }
+        _refundSender(elderMintPrice);
 
         emit ElderSpiritMinted(elderId, _msgSender());
 
@@ -179,7 +184,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         require(elderId != 0 && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Elder id not valid.
         require(heroesMinted < MAX_NUMBER_OF_HEROES); // dev: Max number of heroes already minted.
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
-        require(msg.value >= elderMintPrice); // dev: Insufficient payment.
+        uint256 mintPrice = getHeroMintPrice(currentRound, elderId);
+        require(msg.value >= mintPrice); // dev: Insufficient payment.
 
         // Generate the hero id
         uint256 heroId = heroesMinted.add(1) + MAX_NUMBER_OF_ELDERS;
@@ -207,10 +213,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         _roundElderSpawns[currentRound][elderId] = _roundElderSpawns[currentRound][elderId].add(1);
 
         // Refund if user sent too much
-        if (msg.value.sub(elderMintPrice) > 0) {
-            (bool success, ) = msg.sender.call{ value: msg.value.sub(elderMintPrice) }("");
-            require(success); // dev: Refund failed.
-        }
+        _refundSender(mintPrice);
 
         emit HeroMinted(heroId, _msgSender());
 
@@ -274,8 +277,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         require(_heroes[heroId].valid); // dev: Cannot burn hero that does not exist.
         require(_heroOwners[heroId] == _msgSender()); // dev: Cannot burn hero that is not yours.
 
-        // TODO: need to make sure _heroOwners[heroId] can never be address(0).
-        //     Check recipient before every token send so that we never send to address(0).
         _burn(_heroOwners[heroId], heroId, 1);
 
         // Decrement the amount of spawns for the hero's elder
@@ -291,23 +292,70 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         _heroes[heroId].classId = 0;
         _heroes[heroId].affinity = "";
 
+        // Refund hero
+        (bool success, ) = msg.sender.call{ value: getHeroRefundAmount(heroId) }("");
+        require(success); // dev: Burn payment failed
+
         emit HeroBurned(heroId);
     }
 
     /// @notice Gets the minting price of a hero based on specified elder spirit
+    /// @dev K = 1
+    ///      B = 50
+    ///      C = 26
+    ///      D = 8
+    ///      SIG_DIGITS = 3
+    /// @param round The round of the hero to be minted
     /// @param elderId The elder id for which the hero will be based on
     /// @return The hero mint price
-    function getHeroMintPrice(uint256 elderId) public view override returns (uint256) {
-        return 0;
+    function getHeroMintPrice(uint256 round, uint256 elderId) public view override returns (uint256) {
+        uint256 heroAmount = _roundElderSpawns[round][elderId].add(1);
+        require(heroAmount <= MAX_NUMBER_OF_HEROES); // dev: Maximum amount of heroes exceeded.
+
+        uint256 price;
+        uint256 decimals = 10**SIG_DIGITS;
+        if (heroAmount < B) {
+            price = (10**(B.sub(heroAmount))).mul(decimals).div(11**(B.sub(heroAmount)));
+        } else if (heroAmount == B) {
+            price = decimals; // price = decimals * (A ^ 0)
+        } else {
+            price = (11**(heroAmount.sub(B))).mul(decimals).div(10**(heroAmount.sub(B)));
+        }
+
+        price = price.add(C.mul(heroAmount));
+        price = price.sub(D);
+        price = price.mul(1 ether).div(decimals);
+
+        return price;
     }
 
+    /// @notice Get the hero refund amount
+    /// @param heroId The hero id to be refunded
+    /// @return The refund amount
     function getHeroRefundAmount(uint256 heroId) public view override returns (uint256) {
-        return 0;
+        uint256 refund;
+        Hero memory hero = _heroes[heroId];
+        uint256 printPrice = getHeroMintPrice(hero.roundMinted, hero.elderId);
+        refund = (printPrice * 90) / 100; // 90 % of print price
+        return refund;
     }
 
+    /// @notice Gets the amount of heroes spawn from the elder with the specified id during the specified round
+    /// @param round The round the elder was created
+    /// @param elderId The elder id
+    /// @return The amount of heroes spawned from the elder
     function getElderSpawnsAmount(uint256 round, uint256 elderId) public view override returns (uint256) {
         require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
         require(round <= currentRound); // dev: Invalid round.
         return _roundElderSpawns[round][elderId];
+    }
+
+    /// @notice Refunds the sender if they sent too much
+    /// @param cost The cost
+    function _refundSender(uint256 cost) internal {
+        if (msg.value.sub(cost) > 0) {
+            (bool success, ) = msg.sender.call{ value: msg.value.sub(cost) }("");
+            require(success); // dev: Refund failed.
+        }
     }
 }

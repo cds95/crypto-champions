@@ -31,9 +31,8 @@ def mint_first_hero(accounts, crypto_champions, mint_first_elder):
     """
     Mint the first hero for the CryptoChampions contract. Hero is based on the first elder minted.
     """
-    mint_first_elder
     lastMintedElderId = crypto_champions.eldersInGame()
-    crypto_champions.mintHero(lastMintedElderId, "affinity", {"from": accounts[0], "value": crypto_champions.elderMintPrice()})
+    crypto_champions.mintHero(lastMintedElderId, "affinity", {"from": accounts[0], "value": crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), lastMintedElderId)})
 
 
 @pytest.fixture
