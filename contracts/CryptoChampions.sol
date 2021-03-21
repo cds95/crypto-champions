@@ -156,7 +156,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
         // Increment elders minted
         eldersInGame = eldersInGame.add(1);
-        //_roundElderSpawns[currentRound][elderId] = _roundElderSpawns[currentRound][elderId].add(1);
+        // We consider the elder spirit as a spawn of itself
+        _roundElderSpawns[currentRound][elderId] = _roundElderSpawns[currentRound][elderId].add(1);
 
         // Refund if user sent too much
         _refundSender(elderMintPrice);
@@ -184,6 +185,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         require(elderId != 0 && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Elder id not valid.
         require(heroesMinted < MAX_NUMBER_OF_HEROES); // dev: Max number of heroes already minted.
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
+
         uint256 mintPrice = getHeroMintPrice(currentRound, elderId);
         require(msg.value >= mintPrice); // dev: Insufficient payment.
 
@@ -277,11 +279,15 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         require(_heroes[heroId].valid); // dev: Cannot burn hero that does not exist.
         require(_heroOwners[heroId] == _msgSender()); // dev: Cannot burn hero that is not yours.
 
+        // Get the refund amount before burning
+        uint256 refundAmount = getHeroRefundAmount(heroId);
+
         _burn(_heroOwners[heroId], heroId, 1);
 
         // Decrement the amount of spawns for the hero's elder
         uint256 elderId = _heroes[heroId].elderId;
-        _roundElderSpawns[currentRound][elderId] = _roundElderSpawns[currentRound][elderId].sub(1);
+        uint256 heroRound = _heroes[heroId].roundMinted;
+        _roundElderSpawns[heroRound][elderId] = _roundElderSpawns[heroRound][elderId].sub(1);
 
         // Reset hero values for hero id
         _heroOwners[heroId] = address(0);
@@ -293,51 +299,64 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         _heroes[heroId].affinity = "";
 
         // Refund hero
-        (bool success, ) = msg.sender.call{ value: getHeroRefundAmount(heroId) }("");
+        (bool success, ) = msg.sender.call{ value: refundAmount }("");
         require(success); // dev: Burn payment failed
 
         emit HeroBurned(heroId);
     }
 
     /// @notice Gets the minting price of a hero based on specified elder spirit
-    /// @dev K = 1
-    ///      B = 50
-    ///      C = 26
-    ///      D = 8
-    ///      SIG_DIGITS = 3
     /// @param round The round of the hero to be minted
     /// @param elderId The elder id for which the hero will be based on
     /// @return The hero mint price
     function getHeroMintPrice(uint256 round, uint256 elderId) public view override returns (uint256) {
+        require(round <= currentRound); // dev: Cannot get price round has not started.
+        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Elder id is not valid.
+        require(_roundElderSpawns[round][elderId] > 0); // dev: The elder has not been minted.
+
         uint256 heroAmount = _roundElderSpawns[round][elderId].add(1);
         require(heroAmount <= MAX_NUMBER_OF_HEROES); // dev: Maximum amount of heroes exceeded.
 
-        uint256 price;
-        uint256 decimals = 10**SIG_DIGITS;
-        if (heroAmount < B) {
-            price = (10**(B.sub(heroAmount))).mul(decimals).div(11**(B.sub(heroAmount)));
-        } else if (heroAmount == B) {
-            price = decimals; // price = decimals * (A ^ 0)
-        } else {
-            price = (11**(heroAmount.sub(B))).mul(decimals).div(10**(heroAmount.sub(B)));
-        }
-
-        price = price.add(C.mul(heroAmount));
-        price = price.sub(D);
-        price = price.mul(1 ether).div(decimals);
-
-        return price;
+        return _bondingCurve(heroAmount);
     }
 
     /// @notice Get the hero refund amount
     /// @param heroId The hero id to be refunded
     /// @return The refund amount
     function getHeroRefundAmount(uint256 heroId) public view override returns (uint256) {
-        uint256 refund;
         Hero memory hero = _heroes[heroId];
-        uint256 printPrice = getHeroMintPrice(hero.roundMinted, hero.elderId);
-        refund = (printPrice * 90) / 100; // 90 % of print price
-        return refund;
+        require(hero.valid); // dev: Hero is not valid.
+
+        uint256 newSupply = _roundElderSpawns[hero.roundMinted][hero.elderId].sub(1);
+        uint256 mintPrice = _bondingCurve(newSupply);
+
+        return mintPrice.mul(90).div(100); // 90 % of mint price
+    }
+
+    /// @notice The bounding curve function that calculates price for the new supply
+    /// @dev K = 1
+    ///      B = 50
+    ///      C = 26
+    ///      D = 8
+    ///      SIG_DIGITS = 3
+    /// @param newSupply The new supply after a burn or mint
+    function _bondingCurve(uint256 newSupply) internal pure returns (uint256) {
+        uint256 price;
+        uint256 decimals = 10**SIG_DIGITS;
+
+        if (newSupply < B) {
+            price = (10**(B.sub(newSupply))).mul(decimals).div(11**(B.sub(newSupply)));
+        } else if (newSupply == B) {
+            price = decimals; // price = decimals * (A ^ 0)
+        } else {
+            price = (11**(newSupply.sub(B))).mul(decimals).div(10**(newSupply.sub(B)));
+        }
+
+        price = price.add(C.mul(newSupply));
+        price = price.sub(D);
+        price = price.mul(1 ether).div(decimals);
+
+        return price;
     }
 
     /// @notice Gets the amount of heroes spawn from the elder with the specified id during the specified round
