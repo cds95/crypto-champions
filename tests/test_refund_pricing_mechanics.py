@@ -2,12 +2,12 @@ import brownie
 
 
 def test_immediate_refund(accounts, crypto_champions, mint_first_elder):
-    balOriginal = accounts[0].balance()
+    balOriginal = accounts[1].balance()
     mintPrice = crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), crypto_champions.eldersInGame())
-    crypto_champions.mintHero(crypto_champions.eldersInGame(), {"from": accounts[0], "value": mintPrice})
-    balAfterMint = accounts[0].balance()
-    crypto_champions.burnHero(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1, {"from": accounts[0]})
-    balAfterBurn = accounts[0].balance()
+    crypto_champions.mintHero(crypto_champions.eldersInGame(), {"from": accounts[1], "value": mintPrice})
+    balAfterMint = accounts[1].balance()
+    crypto_champions.burnHero(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1, {"from": accounts[1]})
+    balAfterBurn = accounts[1].balance()
     assert balOriginal > balAfterBurn > balAfterMint
 
 

@@ -22,12 +22,12 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     // Reserved id for the in game currency
     uint256 internal constant IN_GAME_CURRENCY_ID = 0;
 
+    // Constants used to determine fee proportions.
+    // Usage: fee.mul(proportion).div(10)
+    uint8 internal constant HERO_MINT_ROYALTY_PROPORTION = 8;
+
     // The max amount of elders that can be minted
     uint256 public constant MAX_NUMBER_OF_ELDERS = 7;
-
-    // The max number of Heros that can be minted
-    // TODO: Determine an appropriate value
-    uint256 public constant MAX_NUMBER_OF_HEROES = 100;
 
     // The amount of elders minted
     // This amount cannot be greater than MAX_NUMBER_OF_ELDERS
@@ -40,11 +40,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     mapping(uint256 => ElderSpirit) internal _elderSpirits;
 
     // The amount of heros minted
-    // This amount cannot be greater than MAX_NUMBER_OF_HEROS
     uint256 public heroesMinted = 0;
 
     // The mapping of hero id to owner, ids can only be in the range of
-    // [1 + MAX_NUMBER_OF_ELDERS, MAX_NUMBER_OF_ELDERS + MAX_NUMBER_OF_HEROS]
+    // [1 + MAX_NUMBER_OF_ELDERS, ]
     mapping(uint256 => address) internal _heroOwners;
 
     // The mapping of hero id to the hero
@@ -188,7 +187,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @return The hero id
     function mintHero(uint256 elderId) external payable override returns (uint256) {
         require(elderId != 0 && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Elder id not valid.
-        require(heroesMinted < MAX_NUMBER_OF_HEROES); // dev: Max number of heroes already minted.
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
 
         uint256 mintPrice = getHeroMintPrice(currentRound, elderId);
@@ -219,6 +217,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         heroesMinted = heroesMinted.add(1);
         _roundElderSpawns[currentRound][elderId] = _roundElderSpawns[currentRound][elderId].add(1);
 
+        // Disburse royalties
+        uint256 royaltyFee = mintPrice.mul(HERO_MINT_ROYALTY_PROPORTION).div(10);
+        address seedOwner = _elderOwners[elderId];
+        (bool success, ) = seedOwner.call{ value: royaltyFee }("");
+        require(success, "Payment failed");
+        // Remaining 20% kept for contract/Treum
+
         // Refund if user sent too much
         _refundSender(mintPrice);
 
@@ -231,7 +236,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @param heroId The hero id
     /// @return The owner address
     function getHeroOwner(uint256 heroId) public view override returns (address) {
-        require(heroId > MAX_NUMBER_OF_ELDERS && heroId <= MAX_NUMBER_OF_ELDERS + MAX_NUMBER_OF_HEROES); // dev: Given hero id is not valid.
+        require(heroId > MAX_NUMBER_OF_ELDERS); // dev: Given hero id is not valid.
         require(_heroOwners[heroId] != address(0)); // dev: Given hero id has not been minted.
 
         return _heroOwners[heroId];
@@ -281,7 +286,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @dev This will only be able to be called from the owner of the hero
     /// @param heroId The hero id to burn
     function burnHero(uint256 heroId) external override {
-        require(heroId > MAX_NUMBER_OF_ELDERS && heroId <= MAX_NUMBER_OF_ELDERS + MAX_NUMBER_OF_HEROES); // dev: Cannot burn with invalid hero id.
+        require(heroId > MAX_NUMBER_OF_ELDERS); // dev: Cannot burn with invalid hero id.
         require(_heroes[heroId].valid); // dev: Cannot burn hero that does not exist.
         require(_heroOwners[heroId] == _msgSender()); // dev: Cannot burn hero that is not yours.
 
@@ -321,7 +326,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         require(_roundElderSpawns[round][elderId] > 0); // dev: The elder has not been minted.
 
         uint256 heroAmount = _roundElderSpawns[round][elderId].add(1);
-        require(heroAmount <= MAX_NUMBER_OF_HEROES); // dev: Maximum amount of heroes exceeded.
 
         return _bondingCurve(heroAmount);
     }
@@ -363,6 +367,27 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         price = price.mul(1 ether).div(decimals);
 
         return price;
+    }
+
+    function _beforeTokenTransfer(
+        address operator,
+        address from,
+        address to,
+        uint256[] memory ids,
+        uint256[] memory amounts,
+        bytes memory data
+    ) internal virtual override {
+        super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
+
+        for (uint256 i = 0; i < ids.length; i++) {
+            // If token is an elder spirit, update owners so can send them royalties
+            if (ids[i] > IN_GAME_CURRENCY_ID && ids[i] <= MAX_NUMBER_OF_ELDERS) {
+                _elderOwners[ids[i]] = payable(to);
+            }
+            if (ids[i] > MAX_NUMBER_OF_ELDERS) {
+                _heroOwners[ids[i]] = to;
+            }
+        }
     }
 
     /// @notice Gets the amount of heroes spawn from the elder with the specified id during the specified round
