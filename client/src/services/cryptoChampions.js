@@ -16,9 +16,11 @@ export const getPhase = async () => {
 
 export const mintElderSpirit = async (raceId, classId, affinity) => {
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    const price = await getCardPrice();
     const account = await getUserAccount();
     await artifact.methods.mintElderSpirit(raceId, classId, affinity).send({
-        from: account
+        from: account,
+        value: price
     });
 };
 
@@ -46,7 +48,14 @@ export const getElderSpirit = async (elderSpiritId) => {
 export const mintHero = async (elderSpiritId, heroName) => {
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
     const userAccount = await getUserAccount();
+    const price = await getCardPrice();
     await artifact.methods.mintHero(elderSpiritId, heroName).send({
-        from: userAccount
+        from: userAccount,
+        value: price
     });
+};
+
+export const getCardPrice = async () => {
+    const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    return await artifact.methods.elderMintPrice().call();
 };
