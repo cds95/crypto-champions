@@ -8,7 +8,7 @@ def test_mint_hero_owner_initial_state(accounts, crypto_champions):
 
 def test_mint_hero_non_existent_elder(accounts, crypto_champions):
     with brownie.reverts("dev: Elder with id doesn't exists or not valid."):
-        crypto_champions.mintHero(1, "affinity", {"from": accounts[0], "value": 1000000000000000000})
+        crypto_champions.mintHero(1, {"from": accounts[0], "value": 1000000000000000000})
 
 
 def test_mint_first_hero_owner(accounts, crypto_champions, mint_first_hero):
@@ -25,12 +25,12 @@ def test_mint_first_hero_heroes_minted(accounts, crypto_champions, mint_first_he
 
 def test_mint_hero_insufficient_payment(accounts, crypto_champions, mint_first_elder):
     with brownie.reverts("dev: Insufficient payment."):
-        crypto_champions.mintHero(1, "affinity", {"from": accounts[0], "value": crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), 1) - 1000})
+        crypto_champions.mintHero(1, {"from": accounts[0], "value": crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), 1) - 1000})
 
 
 def test_mint_hero_refund(accounts, crypto_champions, mint_first_elder):
     ethSent = crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), 1) + 1000
-    tx = crypto_champions.mintHero(1, "affinity",{"from": accounts[0], "value": ethSent})
+    tx = crypto_champions.mintHero(1, {"from": accounts[0], "value": ethSent})
     assert tx.internal_transfers[0]["to"] == accounts[0]
     assert tx.internal_transfers[0]["value"] == 1000
 

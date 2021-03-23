@@ -5,6 +5,7 @@ struct ElderSpirit {
     bool valid;
     uint256 raceId;
     uint256 classId;
+    string affinity;
 }
 
 struct Hero {
@@ -21,11 +22,15 @@ interface ICryptoChampions {
 
     function setElderMintPrice(uint256 price) external;
 
-    function mintElderSpirit(uint256 raceId, uint256 classId) external payable returns (uint256);
+    function mintElderSpirit(
+        uint256 raceId,
+        uint256 classId,
+        string calldata affinity
+    ) external payable returns (uint256);
 
     function getElderOwner(uint256 elderId) external view returns (address);
 
-    function mintHero(uint256 elderId, string calldata affinity) external payable returns (uint256);
+    function mintHero(uint256 elderId) external payable returns (uint256);
 
     function getHeroOwner(uint256 heroId) external view returns (address);
 

@@ -131,8 +131,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// probably be public constants defined in the crypto champions contract, this is subject to change.
     /// @param raceId The race id
     /// @param classId The class id
+    /// @param affinity The affinity of the minted hero
     /// @return The elder spirit id
-    function mintElderSpirit(uint256 raceId, uint256 classId) external payable override returns (uint256) {
+    function mintElderSpirit(
+        uint256 raceId,
+        uint256 classId,
+        string calldata affinity
+    ) external payable override returns (uint256) {
         require(eldersInGame < MAX_NUMBER_OF_ELDERS); // dev: Max number of elders already minted.
         require(msg.value >= elderMintPrice); // dev: Insufficient payment.
 
@@ -146,6 +151,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         elder.valid = true;
         elder.raceId = raceId;
         elder.classId = classId;
+        elder.affinity = affinity;
 
         // Mint the NFT
         _mint(_msgSender(), elderId, 1, ""); // TODO: give the URI
@@ -179,9 +185,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
     /// @notice Mints a hero based on an elder spirit
     /// @param elderId The id of the elder spirit this hero is based on
-    /// @param affinity The affinity of the minted hero
     /// @return The hero id
-    function mintHero(uint256 elderId, string calldata affinity) external payable override returns (uint256) {
+    function mintHero(uint256 elderId) external payable override returns (uint256) {
         require(elderId != 0 && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Elder id not valid.
         require(heroesMinted < MAX_NUMBER_OF_HEROES); // dev: Max number of heroes already minted.
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
@@ -201,7 +206,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         hero.elderId = elderId;
         hero.raceId = _elderSpirits[elderId].raceId;
         hero.classId = _elderSpirits[elderId].classId;
-        hero.affinity = affinity;
+        hero.affinity = _elderSpirits[elderId].affinity;
 
         // Mint the NFT
         _mint(_msgSender(), heroId, 1, ""); // TODO: give the URI
@@ -269,6 +274,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         _elderSpirits[elderId].valid = false;
         _elderSpirits[elderId].raceId = 0;
         _elderSpirits[elderId].classId = 0;
+        _elderSpirits[elderId].affinity = "";
     }
 
     /// @notice Burns the hero for a refund

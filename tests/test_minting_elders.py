@@ -21,17 +21,17 @@ def test_mint_first_elder_owner(accounts, crypto_champions, mint_first_elder):
 def test_mint_max_number_elders(accounts, crypto_champions, mint_max_elders):
     assert crypto_champions.eldersInGame() == crypto_champions.MAX_NUMBER_OF_ELDERS()
     with brownie.reverts("dev: Max number of elders already minted."):
-        crypto_champions.mintElderSpirit(0, 0, {"from": accounts[0], "value": crypto_champions.elderMintPrice()})
+        crypto_champions.mintElderSpirit(0, 0, "affinity", {"from": accounts[0], "value": crypto_champions.elderMintPrice()})
     assert crypto_champions.eldersInGame() == crypto_champions.MAX_NUMBER_OF_ELDERS()
 
 
 def test_mint_elder_insufficient_funds(accounts, crypto_champions):
     with brownie.reverts("dev: Insufficient payment."):
-        crypto_champions.mintElderSpirit(0, 0, {"from": accounts[0], "value": crypto_champions.elderMintPrice() - 1})
+        crypto_champions.mintElderSpirit(0, 0, "affinity", {"from": accounts[0], "value": crypto_champions.elderMintPrice() - 1})
 
 
 def test_mint_elder_refund(accounts, crypto_champions):
     ethSent = crypto_champions.elderMintPrice() + 1000
-    tx = crypto_champions.mintElderSpirit(0, 0, {"from": accounts[0], "value": ethSent})
+    tx = crypto_champions.mintElderSpirit(0, 0, "affinity", {"from": accounts[0], "value": ethSent})
     assert tx.internal_transfers[0]["to"] == accounts[0]
     assert tx.internal_transfers[0]["value"] == 1000
