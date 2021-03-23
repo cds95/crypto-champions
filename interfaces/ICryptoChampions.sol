@@ -10,12 +10,18 @@ struct ElderSpirit {
 
 struct Hero {
     bool valid;
-    ElderSpirit elder;
+    uint256 roundMinted;
+    uint256 elderId;
+    uint256 raceId;
+    uint256 classId;
+    string affinity;
     string name;
 }
 
 interface ICryptoChampions {
     function createAffinity(string calldata tokenTicker) external;
+
+    function setElderMintPrice(uint256 price) external;
 
     function mintElderSpirit(
         uint256 raceId,
@@ -31,9 +37,15 @@ interface ICryptoChampions {
 
     function disburseRewards(string calldata winningAffinity) external;
 
-    function burnElder(uint256 elderId) external;
+    function burnElders() external;
 
     function burnHero(uint256 heroId) external;
 
     function getElderSpirit(uint256 elderId) external view returns (bool, uint256, uint256, string memory);
+
+    function getHeroMintPrice(uint256 round, uint256 elderId) external view returns (uint256);
+
+    function getHeroRefundAmount(uint256 heroId) external view returns (uint256);
+
+    function getElderSpawnsAmount(uint256 round, uint256 elderId) external view returns (uint256);
 }

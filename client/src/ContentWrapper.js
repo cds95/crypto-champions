@@ -1,18 +1,16 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useGetMaxElderSpirits, useGetMaxNumHeroes } from './hooks/cryptoChampionsHook';
+import { useGetMaxElderSpirits } from './hooks/cryptoChampionsHook';
 import { LandingPage } from './pages/LandingPage';
-import { setMaxElderSpiritsAction, setMaxNumHeroesAction } from './redux/actions';
+import { setMaxElderSpiritsAction } from './redux/actions';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { routeDefinitions } from './routeDefinitions';
 import { Play } from './pages/PlayPage';
 import { NavigationBar } from './components/NavigationBar';
 
-export const ContentWrapperComp = ({ setMaxElderSpirits, setMaxNumHeroes }) => {
+export const ContentWrapperComp = ({ setMaxElderSpirits }) => {
     const { maxElderSpirits } = useGetMaxElderSpirits();
-    const { maxNumHeroes } = useGetMaxNumHeroes();
     useEffect(() => setMaxElderSpirits(maxElderSpirits), [maxElderSpirits]);
-    useEffect(() => setMaxNumHeroes(maxNumHeroes), [maxNumHeroes]);
     return (
         <Router>
             <NavigationBar />
@@ -32,9 +30,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setMaxElderSpirits: (maxElderSpirits) => {
             dispatch(setMaxElderSpiritsAction(maxElderSpirits));
-        },
-        setMaxNumHeroes: (maxNumHeroes) => {
-            dispatch(setMaxNumHeroesAction(maxNumHeroes));
         }
     };
 };

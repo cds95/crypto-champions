@@ -12,11 +12,6 @@ export const cryptoChampions = (state = initialState, action) => {
                 ...state,
                 maxElderSpirits: action.maxElderSpirits
             };
-        case SET_MAX_NUM_HEROES:
-            return {
-                ...state,
-                maxNumHeroes: action.maxNumHeroes
-            };
         case SET_PHASE:
             return {
                 ...state,
