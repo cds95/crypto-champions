@@ -89,7 +89,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     // Initializes a new CryptoChampions contract
     // TODO: need to provide the proper uri
     constructor() public ERC1155("uri") {
-         // Set up administrative roles
+        // Set up administrative roles
         _setRoleAdmin(ROLE_OWNER, ROLE_OWNER);
         _setRoleAdmin(ROLE_ADMIN, ROLE_OWNER);
 
