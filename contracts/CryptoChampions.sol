@@ -202,7 +202,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @notice Mints a hero based on an elder spirit
     /// @param elderId The id of the elder spirit this hero is based on
     /// @return The hero id
-    function mintHero(uint256 elderId, string memory heroName) isValidElderSpiritId(elderId) external payable override returns (uint256) {
+    function mintHero(uint256 elderId, string calldata heroName) isValidElderSpiritId(elderId) external payable override returns (uint256) {
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
 
         uint256 mintPrice = getHeroMintPrice(currentRound, elderId);
