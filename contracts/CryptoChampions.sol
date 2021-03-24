@@ -3,6 +3,7 @@ pragma solidity ^0.6.0;
 
 import "../interfaces/ICryptoChampions.sol";
 
+import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/access/AccessControl.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC1155.sol";
@@ -63,6 +64,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
     // The current round index
     uint256 public currentRound;
+
+    // The mapping of affinities (token ticker) to price feed address
+    mapping(string => address) internal _affinities;
 
     // For bonding curve
     uint256 internal constant K = 1 ether;
@@ -136,7 +140,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @dev This will be called by a priviledged address. It will allow to create new affinities. May need to add a
     /// remove affinity function as well.
     /// @param tokenTicker The token ticker of the affinity
-    function createAffinity(string calldata tokenTicker) external override onlyAdmin {}
+    /// @param feedAddress The price feed address
+    function createAffinity(string calldata tokenTicker, address feedAddress) external override onlyAdmin {
+        _affinities[tokenTicker] = feedAddress;
+    }
 
     /// @notice Sets the elder mint price
     /// @dev Can only be called by an admin address
@@ -159,11 +166,16 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     ) external payable override returns (uint256) {
         require(eldersInGame < MAX_NUMBER_OF_ELDERS); // dev: Max number of elders already minted.
         require(msg.value >= elderMintPrice); // dev: Insufficient payment.
+        require(_affinities[affinity] != address(0)); // dev: Affinity does not exist.
 
         // Generate the elderId and make sure it doesn't already exists
         uint256 elderId = eldersInGame.add(1);
         assert(_elderOwners[elderId] == address(0)); // dev: Elder with id already has owner.
         assert(_elderSpirits[elderId].valid == false); // dev: Elder spirit with id has already been generated.
+
+        // Get the price data of affinity
+        int256 affinityPrice;
+        (, affinityPrice, , , ) = AggregatorV3Interface(_affinities[affinity]).latestRoundData();
 
         // Create the elder spirit
         ElderSpirit memory elder;
@@ -171,6 +183,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         elder.raceId = raceId;
         elder.classId = classId;
         elder.affinity = affinity;
+        elder.affinityPrice = affinityPrice;
 
         // Mint the NFT
         _mint(_msgSender(), elderId, 1, ""); // TODO: give the URI
@@ -298,6 +311,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         _elderSpirits[elderId].raceId = 0;
         _elderSpirits[elderId].classId = 0;
         _elderSpirits[elderId].affinity = "";
+        _elderSpirits[elderId].affinityPrice = 0;
     }
 
     /// @notice Burns the hero for a refund

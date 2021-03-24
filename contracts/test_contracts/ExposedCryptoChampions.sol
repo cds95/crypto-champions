@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.6.0;
 
-import "./CryptoChampions.sol";
+import "../CryptoChampions.sol";
 
 /// @title Exposed version of CryptoChampions
 /// @author Oozyx
