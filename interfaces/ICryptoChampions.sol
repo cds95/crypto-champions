@@ -15,6 +15,7 @@ struct Hero {
     uint256 raceId;
     uint256 classId;
     string affinity;
+    string name;
 }
 
 interface ICryptoChampions {
@@ -30,7 +31,7 @@ interface ICryptoChampions {
 
     function getElderOwner(uint256 elderId) external view returns (address);
 
-    function mintHero(uint256 elderId) external payable returns (uint256);
+    function mintHero(uint256 elderId, string memory heroName) external payable returns (uint256);
 
     function getHeroOwner(uint256 heroId) external view returns (address);
 
@@ -39,6 +40,8 @@ interface ICryptoChampions {
     function burnElders() external;
 
     function burnHero(uint256 heroId) external;
+
+    function getElderSpirit(uint256 elderId) external view returns (bool, uint256, uint256, string memory);
 
     function getHeroMintPrice(uint256 round, uint256 elderId) external view returns (uint256);
 

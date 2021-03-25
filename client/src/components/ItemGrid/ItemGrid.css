@@ -1,0 +1,26 @@
+.item-grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item-grid.item-grid--selectable .item-grid__item {
+    cursor: pointer;
+}
+
+.item-grid__item {
+    width: calc(50% - 25px);
+    padding: 12.5px;
+}
+
+@media (min-width: 768px) {
+    .item-grid__item {
+        width: calc(33.3333% - 50px);
+        padding: 25px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .item-grid__item {
+        width: calc(20% - 50px);
+    }
+}

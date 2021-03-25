@@ -13,6 +13,12 @@ import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC115
 contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     using SafeMath for uint256;
 
+    // Possible phases the contract can be in.  Phase one is when users can mint elder spirits and two is when they can mint heros.
+    enum Phase { ONE, TWO }
+
+    // The current phase the contract is in.
+    Phase public currentPhase;
+
     // The owner role is used to globally govern the contract
     bytes32 internal constant ROLE_OWNER = keccak256("ROLE_OWNER");
 
@@ -98,12 +104,26 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
         // Set the initial round to 0
         currentRound = 0;
+
+        // Set initial phase to phase one
+        currentPhase = Phase.ONE;
+    }
+
+    modifier isValidElderSpiritId(uint elderId) {
+        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS);  // dev: Given id is not valid.
+        _;
     }
 
     // Restrict to only admins
     modifier onlyAdmin {
         _hasRole(ROLE_ADMIN);
         _;
+    }
+
+    /// @notice Sets the contract's phase
+    /// @param phase The phase the contract should be set to
+    function setPhase(Phase phase) onlyAdmin external {
+        currentPhase = phase;
     }
 
     /// @notice Check if msg.sender has the role
@@ -175,8 +195,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @notice Gets the elder owner for the given elder id
     /// @param elderId The elder id
     /// @return The owner of the elder
-    function getElderOwner(uint256 elderId) public view override returns (address) {
-        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+    function getElderOwner(uint256 elderId) isValidElderSpiritId(elderId) public view override returns (address) {
         require(_elderOwners[elderId] != address(0)); // dev: Given elder id has not been minted.
 
         return _elderOwners[elderId];
@@ -185,8 +204,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @notice Mints a hero based on an elder spirit
     /// @param elderId The id of the elder spirit this hero is based on
     /// @return The hero id
-    function mintHero(uint256 elderId) external payable override returns (uint256) {
-        require(elderId != 0 && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Elder id not valid.
+    function mintHero(uint256 elderId, string calldata heroName) isValidElderSpiritId(elderId) external payable override returns (uint256) {
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
 
         uint256 mintPrice = getHeroMintPrice(currentRound, elderId);
@@ -200,6 +218,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         // Create the hero
         Hero memory hero;
         hero.valid = true;
+        hero.name = heroName;
         hero.roundMinted = currentRound;
         hero.elderId = elderId;
         hero.raceId = _elderSpirits[elderId].raceId;
@@ -265,8 +284,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @notice Burns the elder spirit
     /// @dev This will only be able to be called by the contract
     /// @param elderId The elder id
-    function _burnElder(uint256 elderId) internal {
-        require(elderId > 0 && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Cannot burn with invalid elder id.
+    function _burnElder(uint256 elderId) isValidElderSpiritId(elderId) internal {
         require(_elderSpirits[elderId].valid); // dev: Cannot burn elder that does not exist.
 
         // TODO: need to make sure _elderOwners[elderId] can never be address(0).
@@ -394,8 +412,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @param round The round the elder was created
     /// @param elderId The elder id
     /// @return The amount of heroes spawned from the elder
-    function getElderSpawnsAmount(uint256 round, uint256 elderId) public view override returns (uint256) {
-        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+    function getElderSpawnsAmount(uint256 round, uint256 elderId) isValidElderSpiritId(elderId) public view override returns (uint256) {
         require(round <= currentRound); // dev: Invalid round.
         return _roundElderSpawns[round][elderId];
     }
@@ -407,5 +424,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
             (bool success, ) = msg.sender.call{ value: msg.value.sub(cost) }("");
             require(success); // dev: Refund failed.
         }
+    }
+
+    /// @notice Fetches the data of a single elder spirit
+    /// @param elderId The id of the elder being searched for 
+    /// @return The elder's attributes in the following order (valid, raceId, classId, affinity)
+    function getElderSpirit(uint256 elderId) isValidElderSpiritId(elderId) external override view returns (bool, uint256, uint256, string memory) {
+        ElderSpirit memory elderSpirit = _elderSpirits[elderId];
+        return (elderSpirit.valid, elderSpirit.raceId, elderSpirit.classId, elderSpirit.affinity);
     }
 }

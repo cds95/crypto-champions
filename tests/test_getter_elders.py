@@ -9,3 +9,5 @@ def test_get_owner_of_invalid_id_elder(crypto_champions):
 def test_get_owner_of_non_existent_elder(crypto_champions):
     with brownie.reverts("dev: Given elder id has not been minted."):
         crypto_champions.getElderOwner(1)
+
+# TODO: Test getElderSpirit(uint256 elderId) function
