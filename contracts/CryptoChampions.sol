@@ -13,8 +13,10 @@ import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC115
 contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     using SafeMath for uint256;
 
+    // Possible phases the contract can be in.  Phase one is when users can mint elder spirits and two is when they can mint heros.
     enum Phase { ONE, TWO }
 
+    // The current phase the contract is in.
     Phase public currentPhase;
 
     // The owner role is used to globally govern the contract
@@ -108,7 +110,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     }
 
     modifier isValidElderSpiritId(uint elderId) {
-        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); 
+        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS);  // dev: Given id is not valid.
         _;
     }
 
@@ -410,8 +412,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @param round The round the elder was created
     /// @param elderId The elder id
     /// @return The amount of heroes spawned from the elder
-    function getElderSpawnsAmount(uint256 round, uint256 elderId) public view override returns (uint256) {
-        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+    function getElderSpawnsAmount(uint256 round, uint256 elderId) isValidElderSpiritId(elderId) public view override returns (uint256) {
         require(round <= currentRound); // dev: Invalid round.
         return _roundElderSpawns[round][elderId];
     }
