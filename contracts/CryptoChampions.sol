@@ -464,10 +464,17 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
             bool,
             uint256,
             uint256,
-            string memory
+            string memory,
+            int256
         )
     {
         ElderSpirit memory elderSpirit = _elderSpirits[elderId];
-        return (elderSpirit.valid, elderSpirit.raceId, elderSpirit.classId, elderSpirit.affinity);
+        return (
+            elderSpirit.valid,
+            elderSpirit.raceId,
+            elderSpirit.classId,
+            elderSpirit.affinity,
+            elderSpirit.affinityPrice
+        );
     }
 }

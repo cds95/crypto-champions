@@ -42,7 +42,16 @@ interface ICryptoChampions {
 
     function burnHero(uint256 heroId) external;
 
-    function getElderSpirit(uint256 elderId) external view returns (bool, uint256, uint256, string memory);
+    function getElderSpirit(uint256 elderId)
+        external
+        view
+        returns (
+            bool,
+            uint256,
+            uint256,
+            string memory,
+            int256
+        );
 
     function getHeroMintPrice(uint256 round, uint256 elderId) external view returns (uint256);
 
