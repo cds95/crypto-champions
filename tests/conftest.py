@@ -39,7 +39,7 @@ def mint_first_elder(accounts, crypto_champions, create_eth_affinity):
     """
     Mint the first elder for the CryptoChampions contract.
     """
-    crypto_champions.mintElderSpirit(0, 0, "ETH", {"from": accounts[0], "value": crypto_champions.elderMintPrice()})
+    crypto_champions.mintElderSpirit(7, 3, "ETH", {"from": accounts[0], "value": crypto_champions.elderMintPrice()})
 
 
 @pytest.fixture
