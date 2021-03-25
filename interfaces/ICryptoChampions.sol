@@ -55,7 +55,5 @@ interface ICryptoChampions {
 
     function getHeroMintPrice(uint256 round, uint256 elderId) external view returns (uint256);
 
-    function getHeroRefundAmount(uint256 heroId) external view returns (uint256);
-
     function getElderSpawnsAmount(uint256 round, uint256 elderId) external view returns (uint256);
 }

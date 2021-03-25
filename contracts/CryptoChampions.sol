@@ -68,13 +68,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     // The mapping of affinities (token ticker) to price feed address
     mapping(string => address) internal _affinities;
 
-    // For bonding curve
-    uint256 internal constant K = 1 ether;
-    uint256 internal constant B = 50;
-    uint256 internal constant C = 26;
-    uint256 internal constant D = 8;
-    uint256 internal constant SIG_DIGITS = 3;
-
     /// @notice Triggered when an elder spirit gets minted
     /// @param elderId The elder id belonging to the minted elder
     /// @param owner The address of the owner
@@ -328,9 +321,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         require(_heroes[heroId].valid); // dev: Cannot burn hero that does not exist.
         require(_heroOwners[heroId] == _msgSender()); // dev: Cannot burn hero that is not yours.
 
-        // Get the refund amount before burning
-        uint256 refundAmount = getHeroRefundAmount(heroId);
-
         _burn(_heroOwners[heroId], heroId, 1);
 
         // Decrement the amount of spawns for the hero's elder
@@ -347,10 +337,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         _heroes[heroId].classId = 0;
         _heroes[heroId].affinity = "";
 
-        // Refund hero
-        (bool success, ) = msg.sender.call{ value: refundAmount }("");
-        require(success); // dev: Burn payment failed
-
         emit HeroBurned(heroId);
     }
 
@@ -365,44 +351,18 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
         uint256 heroAmount = _roundElderSpawns[round][elderId].add(1);
 
-        return _bondingCurve(heroAmount);
-    }
-
-    /// @notice Get the hero refund amount
-    /// @param heroId The hero id to be refunded
-    /// @return The refund amount
-    function getHeroRefundAmount(uint256 heroId) public view override returns (uint256) {
-        Hero memory hero = _heroes[heroId];
-        require(hero.valid); // dev: Hero is not valid.
-
-        uint256 newSupply = _roundElderSpawns[hero.roundMinted][hero.elderId].sub(1);
-        uint256 mintPrice = _bondingCurve(newSupply);
-
-        return mintPrice.mul(90).div(100); // 90 % of mint price
+        return _priceFormula(heroAmount);
     }
 
     /// @notice The bounding curve function that calculates price for the new supply
-    /// @dev K = 1
-    ///      B = 50
-    ///      C = 26
-    ///      D = 8
-    ///      SIG_DIGITS = 3
+    /// @dev price = 0.02*(heroes minted) + 0.1
     /// @param newSupply The new supply after a burn or mint
-    function _bondingCurve(uint256 newSupply) internal pure returns (uint256) {
+    /// @return The calculated price
+    function _priceFormula(uint256 newSupply) internal pure returns (uint256) {
         uint256 price;
-        uint256 decimals = 10**SIG_DIGITS;
-
-        if (newSupply < B) {
-            price = (10**(B.sub(newSupply))).mul(decimals).div(11**(B.sub(newSupply)));
-        } else if (newSupply == B) {
-            price = decimals; // price = decimals * (A ^ 0)
-        } else {
-            price = (11**(newSupply.sub(B))).mul(decimals).div(10**(newSupply.sub(B)));
-        }
-
-        price = price.add(C.mul(newSupply));
-        price = price.sub(D);
-        price = price.mul(1 ether).div(decimals);
+        uint256 base = 1;
+        price = newSupply.mul(10**18).mul(2).div(100);
+        price = price.add(base.mul(10**18).div(10));
 
         return price;
     }
