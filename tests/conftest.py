@@ -19,21 +19,19 @@ def crypto_champions(accounts, ExposedCryptoChampions):
 
 
 @pytest.fixture(scope="module")
-def get_eth_usd_price_feed_address(accounts, MockV3Aggregator):
+def get_eth_usd_price_feed(accounts, MockV3Aggregator):
     """
     Deploys the mock v3 aggregator and returns the deployed address
     """
     yield accounts[0].deploy(MockV3Aggregator, 18, 2000)
-    #mock_price_feed = MockV3Aggregator.deploy(18, 2000, {'from': accounts[0]})
-    #return mock_price_feed.address
 
 
 @pytest.fixture
-def create_eth_affinity(accounts, crypto_champions, get_eth_usd_price_feed_address):
+def create_eth_affinity(accounts, crypto_champions, get_eth_usd_price_feed):
     """
     Creates the ETH affinity
     """
-    crypto_champions.createAffinity("ETH", get_eth_usd_price_feed_address.address, {"from": accounts[0]})
+    crypto_champions.createAffinity("ETH", get_eth_usd_price_feed.address, {"from": accounts[0]})
 
 
 @pytest.fixture
