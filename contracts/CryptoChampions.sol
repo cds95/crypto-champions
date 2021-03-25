@@ -187,8 +187,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
         // Increment elders minted
         eldersInGame = eldersInGame.add(1);
-        // We consider the elder spirit as a spawn of itself
-        _roundElderSpawns[currentRound][elderId] = _roundElderSpawns[currentRound][elderId].add(1);
 
         // Refund if user sent too much
         _refundSender(elderMintPrice);
@@ -218,6 +216,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         returns (uint256)
     {
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
+
+        require(_canMintHero(elderId)); // dev: Can't mint hero. Too mnay heroes minted for elder.
 
         uint256 mintPrice = getHeroMintPrice(currentRound, elderId);
         require(msg.value >= mintPrice); // dev: Insufficient payment.
@@ -261,6 +261,29 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         emit HeroMinted(heroId, _msgSender());
 
         return heroId;
+    }
+
+    /// @notice Checks to see if a hero can be minted for a given elder
+    /// @dev (n < 4) || (n <= 2 * m)
+    ///     n is number of champions already minted for elder
+    ///     m is number of champions already minted for elder with least amount of champions
+    /// @param elderId The elder id
+    /// @return True if hero can be minted, false otherwise
+    function _canMintHero(uint256 elderId) internal view returns (bool) {
+        // Verify first condition
+        if (_roundElderSpawns[currentRound][elderId] < 4) {
+            return true;
+        }
+
+        // Find the elder with the least amount of heroes minted
+        uint256 smallestElderAmount = _roundElderSpawns[currentRound][elderId];
+        for (uint256 i = 1; i <= eldersInGame; ++i) {
+            if (_roundElderSpawns[currentRound][i] < smallestElderAmount) {
+                smallestElderAmount = _roundElderSpawns[currentRound][i];
+            }
+        }
+
+        return _roundElderSpawns[currentRound][elderId] <= smallestElderAmount.mul(2);
     }
 
     /// @notice Get the hero owner for the given hero id
@@ -347,7 +370,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     function getHeroMintPrice(uint256 round, uint256 elderId) public view override returns (uint256) {
         require(round <= currentRound); // dev: Cannot get price round has not started.
         require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Elder id is not valid.
-        require(_roundElderSpawns[round][elderId] > 0); // dev: The elder has not been minted.
 
         uint256 heroAmount = _roundElderSpawns[round][elderId].add(1);
 

@@ -16,8 +16,3 @@ def test_get_hero_mint_price_wrong_round(accounts, crypto_champions, mint_first_
 def test_get_hero_mint_price_invalid_id(accounts, crypto_champions):
     with brownie.reverts("dev: Elder id is not valid."):
         crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), 0)
-
-
-def test_get_hero_mint_price_non_existent_elder(accounts, crypto_champions):
-    with brownie.reverts("dev: The elder has not been minted."):
-        crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), 1)

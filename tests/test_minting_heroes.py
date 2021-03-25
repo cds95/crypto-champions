@@ -36,4 +36,4 @@ def test_mint_hero_refund(accounts, crypto_champions, mint_first_elder):
 
 
 def test_mint_hero_elder_spawns(accounts, crypto_champions, mint_first_hero):
-    assert crypto_champions.getElderSpawnsAmount(crypto_champions.currentRound(), 1) == 2
+    assert crypto_champions.getElderSpawnsAmount(crypto_champions.currentRound(), 1) == 1
