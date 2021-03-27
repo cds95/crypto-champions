@@ -324,6 +324,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         return _roundElderSpawns[currentRound][elderId] <= smallestElderAmount.mul(2);
     }
 
+    /// @notice Sets the hero attributes
+    /// @param heroId The hero id
+    /// @param requestId The VRF request id
     function _setHeroAttributes(uint256 heroId, bytes32 requestId) internal {
         uint256 randomNumber = _randomResultsVRF[requestId];
         uint256 newRandomNumber;
@@ -345,7 +348,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         _heroes[heroId].hp = _heroes[heroId].hp.add(9);
         (_heroes[heroId].mana, newRandomNumber) = _rollDice(21, newRandomNumber); // Roll 10-30
         _heroes[heroId].mana = _heroes[heroId].mana.add(9);
-        (_heroes[heroId].stamina, newRandomNumber) = _rollDice(30, newRandomNumber); // Roll 10-40
+        (_heroes[heroId].stamina, newRandomNumber) = _rollDice(31, newRandomNumber); // Roll 10-40
         _heroes[heroId].stamina = _heroes[heroId].stamina.add(9);
 
         (_heroes[heroId].strength, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
@@ -358,10 +361,14 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         _heroes[heroId].intelligence = _heroes[heroId].intelligence.add(2);
         (_heroes[heroId].wisdom, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
         _heroes[heroId].wisdom = _heroes[heroId].wisdom.add(2);
-        (_heroes[heroId].charisma, newRandomNumber) = _rollDice(15, newRandomNumber); // Roll 3-18
+        (_heroes[heroId].charisma, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
         _heroes[heroId].charisma = _heroes[heroId].charisma.add(2);
     }
 
+    /// @notice Simulates rolling dice
+    /// @param maxNumber The max number of the dice (e.g. regular die is 6)
+    /// @param randomNumber The random number
+    /// @return The result of the dice roll and a new random number to use for another dice roll
     function _rollDice(uint256 maxNumber, uint256 randomNumber) internal pure returns (uint256, uint256) {
         return (randomNumber.mod(maxNumber) + 1, randomNumber.div(10));
     }
