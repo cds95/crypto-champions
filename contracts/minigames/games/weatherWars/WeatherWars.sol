@@ -5,26 +5,53 @@ import "../../CappedMinigame.sol";
 import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/ChainlinkClient.sol";
 
 contract WeatherWars is CappedMinigame, ChainlinkClient {
-    mapping(string => uint256) prices;
+    uint256 private constant MAX_PLAYERS = 2;
 
-    address private _vrfCoordinatorAddress;
     address private _linkTokenAddress;
-    uint256 private _fee;
-    bytes32 private _keyHash;
 
-    constructor(address vrfCoordinateAdddress, address linkTokenAddress, uint256 fee, string memory _gameName, uint256 _maxPlayers, address _cryptoChampionsContractAddress, uint256 _buyinAmount) CappedMinigame(gameName, _maxPlayers, _cryptoChampionsContractAddress, _buyinAmount) public {
-        _vrfCoordinatorAddress = vrfCoordinateAdddress;
+    uint256 private _fee;
+
+    string public city;
+
+    address private _oracle;
+
+    bytes32 private constant GET_JOB_ID = "29fa9aa13bf1468788b7cc4a500a45b8";
+
+    bytes32 public cityWeather;
+
+    constructor(address _oracle, address linkTokenAddress, uint256 fee, string memory _gameName, address _cryptoChampionsContractAddress, uint256 _buyinAmount, string memory _city) CappedMinigame(gameName, MAX_PLAYERS, _cryptoChampionsContractAddress, _buyinAmount) public {
+        setPublicChainlinkToken();
         _linkTokenAddress = linkTokenAddress;
         _fee = fee;
-        _keyHash = 0x6c3699283bda56ad74f6b855546325b68d482e983852a7a82979cc4807b641f4;
+        city = _city;
+        _oracle = _oracle;
     }
 
     function onMaxCapacityReached() public override {
-        // TODO:  Schedule job in keeper network
         super.startGame();
     }
 
     function play() internal override {
-        // Make request to open weather API
+        Chainlink.Request memory request = buildChainlinkRequest(GET_JOB_ID, address(this), this.fulfill.selector);
+        string memory reqUrlWithCity = concatenate("http://api.openweathermap.org/data/2.5/weather?q=", city);
+        request.add("get", concatenate(reqUrlWithCity, "&appid=2c9761ee41522554e88632268c609e13"));
+        request.add("path", "weather[0].main");
+        sendChainlinkRequestTo(_oracle, request, _fee);
     }
+
+    // TODO:  Move to it's own library
+    function concatenate(
+        string memory a,
+        string memory b)
+        pure
+        internal
+        returns(string memory) {
+            return string(abi.encodePacked(a, b));
+        }
+
+    function fulfill(bytes32 _requestId, bytes32 weather) public recordChainlinkFulfillment(_requestId) {
+        // TODO:  Use weather data to determine winner
+        cityWeather = weather;
+    }
+
 }
