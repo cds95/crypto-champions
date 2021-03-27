@@ -4,6 +4,7 @@ pragma solidity ^0.6.0;
 import "../interfaces/ICryptoChampions.sol";
 
 import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/VRFConsumerBase.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/access/AccessControl.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC1155.sol";
@@ -11,7 +12,7 @@ import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC115
 /// @title Crypto Champions Interface
 /// @author Oozyx
 /// @notice This is the crypto champions class
-contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
+contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsumerBase {
     using SafeMath for uint256;
 
     // Possible phases the contract can be in.  Phase one is when users can mint elder spirits and two is when they can mint heros.
@@ -68,6 +69,15 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     // The mapping of affinities (token ticker) to price feed address
     mapping(string => address) internal _affinities;
 
+    // The key hash used for VRF
+    bytes32 internal _keyHash;
+
+    // The fee in LINK for VRF
+    uint256 internal _fee;
+
+    // Random result from the VRF
+    uint256 internal _randomResult;
+
     /// @notice Triggered when an elder spirit gets minted
     /// @param elderId The elder id belonging to the minted elder
     /// @param owner The address of the owner
@@ -87,7 +97,11 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
     // Initializes a new CryptoChampions contract
     // TODO: need to provide the proper uri
-    constructor() public ERC1155("uri") {
+    constructor(
+        bytes32 keyhash,
+        address vrfCoordinator,
+        address linkToken
+    ) public ERC1155("uri") VRFConsumerBase(vrfCoordinator, linkToken) {
         // Set up administrative roles
         _setRoleAdmin(ROLE_OWNER, ROLE_OWNER);
         _setRoleAdmin(ROLE_ADMIN, ROLE_OWNER);
@@ -104,6 +118,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
         // Set initial phase to phase one
         currentPhase = Phase.ONE;
+
+        // Set VRF fields
+        _keyHash = keyhash;
+        _fee = 0.1 * 10**18; // 0.1 LINK
     }
 
     modifier isValidElderSpiritId(uint256 elderId) {
@@ -115,6 +133,21 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     modifier onlyAdmin {
         _hasRole(ROLE_ADMIN);
         _;
+    }
+
+    /// @notice Makes a request for a random number
+    /// @param userProvidedSeed The seed for the random request
+    /// @return The request id
+    function _getRandomNumber(uint256 userProvidedSeed) internal returns (bytes32) {
+        require(LINK.balanceOf(address(this)) >= _fee, "Not enough LINK - fill contract with faucet");
+        return requestRandomness(_keyHash, _fee, userProvidedSeed);
+    }
+
+    /// @notice Callback function used by the VRF coordinator
+    /// @param requestId The request id
+    /// @param randomness The randomness
+    function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+        _randomResult = randomness;
     }
 
     /// @notice Sets the contract's phase

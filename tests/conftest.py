@@ -11,11 +11,35 @@ def setup(fn_isolation):
 
 
 @pytest.fixture(scope="module")
-def crypto_champions(accounts, ExposedCryptoChampions):
+def link_token(accounts, LinkToken):
+    """
+    Yield a `Contract` object for the LinkToken contract.
+    """
+    yield accounts[0].deploy(LinkToken)
+
+
+@pytest.fixture(scope="module")
+def vrf_coordinator(accounts, VRFCoordinatorMock, link_token):
+    """
+    Yield a `Contract` object for the VRFCoordinatorMock contract.
+    """
+    yield accounts[0].deploy(VRFCoordinatorMock, link_token)
+
+
+@pytest.fixture(scope="module")
+def key_hash(accounts, link_token):
+    """
+    Returns a key hash.
+    """
+    return 0
+
+
+@pytest.fixture(scope="module")
+def crypto_champions(accounts, ExposedCryptoChampions, link_token, vrf_coordinator, key_hash):
     """
     Yield a `Contract` object for the CryptoChampions contract.
     """
-    yield accounts[0].deploy(ExposedCryptoChampions)
+    yield accounts[0].deploy(ExposedCryptoChampions, key_hash, vrf_coordinator.address, link_token.address)
 
 
 @pytest.fixture(scope="module")
