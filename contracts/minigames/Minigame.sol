@@ -9,12 +9,14 @@ struct MinigamePlayer {
 
 abstract contract Minigame {
     enum MinigamePhase {
-        OPEN, IN_GAME, FINISHED 
+        OPEN, CLOSED
     }
 
     MinigamePhase private _currentPhase; 
 
     mapping(uint256 => MinigamePlayer) public players;
+
+    uint256[] playerIds;
     
     uint256 public numPlayers;
 
@@ -30,31 +32,26 @@ abstract contract Minigame {
         cryptoChampions = ICryptoChampions(_cryptoChampionsAddress);
     }
 
-    function distributeWinnings(uint256 heroId) external payable {
-        address winner = cryptoChampions.getHeroOwner(heroId);
-        setPhase(MinigamePhase.FINISHED);
-        // TODO: Transfer money to winner 
-    }
-
-    function joinGame(uint256 heroId) public virtual {
+    function joinGame(uint256 heroId) public virtual payable {
         require(_currentPhase == MinigamePhase.OPEN);
         MinigamePlayer memory player;
         player.isInGame = true;
         players[heroId] = player;
+        playerIds.push(heroId);
         numPlayers++;
     }
 
-    function leaveGame(uint256 heroId) external {
+    function leaveGame(uint256 heroId) external payable {
         require(_currentPhase == MinigamePhase.OPEN);
-        players[heroId].isInGame = false;
+        MinigamePlayer storage player = players[heroId];
+        player.isInGame = false;
         numPlayers--;
     }
 
     function startGame() public {
         require(_currentPhase == MinigamePhase.OPEN);
-        require(numPlayers > 1);
-        setPhase(MinigamePhase.IN_GAME);
         play();
+        setPhase(MinigamePhase.CLOSED);
     }
 
     function setPhase(MinigamePhase phase) internal {
