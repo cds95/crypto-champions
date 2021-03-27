@@ -8,6 +8,9 @@ import "../CryptoChampions.sol";
 /// @notice This contract inherits from CryptoChampions and makes its functions testable
 /// @dev Not to be deployed outside of a test environment
 contract ExposedCryptoChampions is CryptoChampions {
+    /// Holds the requestId
+    bytes32 public requestId;
+
     /// See CryptoChampions::CryptoChampions
     constructor(
         bytes32 keyhash,
@@ -17,7 +20,12 @@ contract ExposedCryptoChampions is CryptoChampions {
 
     /// See CryptoChampions::_getRandomNumber
     function getRandomNumber(uint256 seed) public {
-        _getRandomNumber(seed);
+        requestId = _getRandomNumber(seed);
+    }
+
+    /// See CryptoChampions::_randomResult
+    function getRandomResult() public view returns (uint256) {
+        return _randomResult;
     }
 
     /// See CryptoChampions::_burnElder

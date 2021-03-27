@@ -84,3 +84,13 @@ def mint_max_elders(accounts, crypto_champions, create_eth_affinity):
     maxElders = crypto_champions.MAX_NUMBER_OF_ELDERS()
     for _ in range(maxElders):
         crypto_champions.mintElderSpirit(0, 0, "ETH", {"from": accounts[0], "value": crypto_champions.elderMintPrice()})
+
+
+@pytest.fixture
+def chainlink_fee():
+    return 1000000000000000000
+
+
+@pytest.fixture
+def get_seed():
+    return 777

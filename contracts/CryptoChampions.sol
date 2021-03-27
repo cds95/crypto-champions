@@ -76,7 +76,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     uint256 internal _fee;
 
     // Random result from the VRF
-    uint256 internal _randomResult;
+    uint256 _randomResult;
 
     /// @notice Triggered when an elder spirit gets minted
     /// @param elderId The elder id belonging to the minted elder
@@ -137,9 +137,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
     /// @notice Makes a request for a random number
     /// @param userProvidedSeed The seed for the random request
-    /// @return The request id
-    function _getRandomNumber(uint256 userProvidedSeed) internal returns (bytes32) {
-        require(LINK.balanceOf(address(this)) >= _fee, "Not enough LINK - fill contract with faucet");
+    /// @return requestId The request id
+    function _getRandomNumber(uint256 userProvidedSeed) internal returns (bytes32 requestId) {
+        require(LINK.balanceOf(address(this)) >= _fee); // dev: Not enough LINK - fill contract with faucet
         return requestRandomness(_keyHash, _fee, userProvidedSeed);
     }
 
@@ -422,6 +422,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         return price;
     }
 
+    /// @dev Hook function called before every token transfer
     function _beforeTokenTransfer(
         address operator,
         address from,
