@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.6.0;
 
-import "../../interfaces/IMinigame.sol";
 import "../../interfaces/ICryptoChampions.sol";
 
-abstract contract Minigame is IMinigame {
+struct MinigamePlayer {
+    bool isInGame;
+}
+
+abstract contract Minigame {
     enum MinigamePhase {
         OPEN, IN_GAME, FINISHED 
     }
@@ -15,41 +18,39 @@ abstract contract Minigame is IMinigame {
     
     uint256 public numPlayers;
 
-    uint256 public maxPlayers; 
-
     string public gameName;
 
     ICryptoChampions public cryptoChampions;
 
-    constructor(string memory _gameName, uint256 _maxPlayers, address _cryptoChampionsAddress) public {
+    event GameStarted();
+
+    constructor(string memory _gameName, address _cryptoChampionsAddress) public {
         gameName = _gameName;
-        maxPlayers = _maxPlayers;
         _currentPhase = MinigamePhase.OPEN;
         cryptoChampions = ICryptoChampions(_cryptoChampionsAddress);
     }
 
-    function distributeWinnings(uint256 heroId) external payable override {
+    function distributeWinnings(uint256 heroId) external payable {
         address winner = cryptoChampions.getHeroOwner(heroId);
         setPhase(MinigamePhase.FINISHED);
         // TODO: Transfer money to winner 
     }
 
-    function joinGame(uint256 heroId) external override {
+    function joinGame(uint256 heroId) public virtual {
         require(_currentPhase == MinigamePhase.OPEN);
-        require(numPlayers + 1 <= maxPlayers);
         MinigamePlayer memory player;
         player.isInGame = true;
         players[heroId] = player;
         numPlayers++;
     }
 
-    function leaveGame(uint256 heroId) external override {
+    function leaveGame(uint256 heroId) external {
         require(_currentPhase == MinigamePhase.OPEN);
         players[heroId].isInGame = false;
         numPlayers--;
     }
 
-    function startGame() external override {
+    function startGame() public {
         require(_currentPhase == MinigamePhase.OPEN);
         require(numPlayers > 1);
         setPhase(MinigamePhase.IN_GAME);
@@ -60,5 +61,9 @@ abstract contract Minigame is IMinigame {
         _currentPhase = phase;
     }
 
-    function play() public virtual override;
+    function getNumPlayers() public view returns(uint256) {
+        return numPlayers;
+    }
+
+    function play() internal virtual;
 }
