@@ -76,7 +76,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     uint256 internal _fee;
 
     // Random result from the VRF
-    uint256 _randomResult;
+    // Mapping of request id to random result
+    mapping(bytes32 => uint256) _randomResultsVRF;
 
     /// @notice Triggered when an elder spirit gets minted
     /// @param elderId The elder id belonging to the minted elder
@@ -147,7 +148,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     /// @param requestId The request id
     /// @param randomness The randomness
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
-        _randomResult = randomness;
+        _randomResultsVRF[requestId] = randomness;
     }
 
     /// @notice Sets the contract's phase
@@ -269,13 +270,17 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         hero.raceId = _elderSpirits[elderId].raceId;
         hero.classId = _elderSpirits[elderId].classId;
         hero.affinity = _elderSpirits[elderId].affinity;
+        _heroes[heroId] = hero;
+
+        // Request the random number and set hero attributes
+        bytes32 requestId = _getRandomNumber(heroId);
+        _setHeroAttributes(heroId, requestId);
 
         // Mint the NFT
         _mint(_msgSender(), heroId, 1, ""); // TODO: give the URI
 
         // Assign the hero id with the owner and with the hero
         _heroOwners[heroId] = _msgSender();
-        _heroes[heroId] = hero;
 
         // Increment the heroes minted and the elder spawns
         heroesMinted = heroesMinted.add(1);
@@ -317,6 +322,48 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         }
 
         return _roundElderSpawns[currentRound][elderId] <= smallestElderAmount.mul(2);
+    }
+
+    function _setHeroAttributes(uint256 heroId, bytes32 requestId) internal {
+        uint256 randomNumber = _randomResultsVRF[requestId];
+        uint256 newRandomNumber;
+
+        _heroes[heroId].level = 1; // 1 by default
+        (_heroes[heroId].appearance, newRandomNumber) = _rollDice(2, randomNumber); // 1 out of 2
+
+        (_heroes[heroId].trait1, newRandomNumber) = _rollDice(4, newRandomNumber); // 1 out of 4
+        (_heroes[heroId].trait2, newRandomNumber) = _rollDice(4, newRandomNumber); // 1 out of 4
+        (_heroes[heroId].skill1, newRandomNumber) = _rollDice(4, newRandomNumber); // 1 out of 4
+        (_heroes[heroId].skill2, newRandomNumber) = _rollDice(4, newRandomNumber); // 1 out of 4
+
+        (_heroes[heroId].alignment, newRandomNumber) = _rollDice(9, newRandomNumber); // 1 out of 9
+        (_heroes[heroId].background, newRandomNumber) = _rollDice(30, newRandomNumber); // 1 out of 30
+        (_heroes[heroId].hometown, newRandomNumber) = _rollDice(24, newRandomNumber); // 1 out of 24
+        (_heroes[heroId].weather, newRandomNumber) = _rollDice(5, newRandomNumber); // 1 ouf of 5
+
+        (_heroes[heroId].hp, newRandomNumber) = _rollDice(21, newRandomNumber); // Roll 10-30
+        _heroes[heroId].hp = _heroes[heroId].hp.add(9);
+        (_heroes[heroId].mana, newRandomNumber) = _rollDice(21, newRandomNumber); // Roll 10-30
+        _heroes[heroId].mana = _heroes[heroId].mana.add(9);
+        (_heroes[heroId].stamina, newRandomNumber) = _rollDice(30, newRandomNumber); // Roll 10-40
+        _heroes[heroId].stamina = _heroes[heroId].stamina.add(9);
+
+        (_heroes[heroId].strength, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
+        _heroes[heroId].strength = _heroes[heroId].strength.add(2);
+        (_heroes[heroId].dexterity, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
+        _heroes[heroId].dexterity = _heroes[heroId].dexterity.add(2);
+        (_heroes[heroId].constitution, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
+        _heroes[heroId].constitution = _heroes[heroId].constitution.add(2);
+        (_heroes[heroId].intelligence, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
+        _heroes[heroId].intelligence = _heroes[heroId].intelligence.add(2);
+        (_heroes[heroId].wisdom, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
+        _heroes[heroId].wisdom = _heroes[heroId].wisdom.add(2);
+        (_heroes[heroId].charisma, newRandomNumber) = _rollDice(15, newRandomNumber); // Roll 3-18
+        _heroes[heroId].charisma = _heroes[heroId].charisma.add(2);
+    }
+
+    function _rollDice(uint256 maxNumber, uint256 randomNumber) internal pure returns (uint256, uint256) {
+        return (randomNumber.mod(maxNumber) + 1, randomNumber.div(10));
     }
 
     /// @notice Get the hero owner for the given hero id
@@ -400,10 +447,14 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     /// @param round The round of the hero to be minted
     /// @param elderId The elder id for which the hero will be based on
     /// @return The hero mint price
-    function getHeroMintPrice(uint256 round, uint256 elderId) public view override returns (uint256) {
+    function getHeroMintPrice(uint256 round, uint256 elderId)
+        public
+        view
+        override
+        isValidElderSpiritId(elderId)
+        returns (uint256)
+    {
         require(round <= currentRound); // dev: Cannot get price round has not started.
-        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Elder id is not valid.
-
         uint256 heroAmount = _roundElderSpawns[round][elderId].add(1);
 
         return _priceFormula(heroAmount);

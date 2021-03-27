@@ -43,6 +43,21 @@ def crypto_champions(accounts, ExposedCryptoChampions, link_token, vrf_coordinat
 
 
 @pytest.fixture(scope="module")
+def chainlink_fee():
+    return 1000000000000000000
+
+
+@pytest.fixture(scope="module")
+def get_seed():
+    return 777
+
+
+@pytest.fixture(scope="module")
+def fund_contract_with_link(accounts, crypto_champions, link_token, chainlink_fee):
+    link_token.transfer(crypto_champions.address, chainlink_fee * 100, {"from": accounts[0]})
+
+
+@pytest.fixture(scope="module")
 def get_eth_usd_price_feed(accounts, MockV3Aggregator):
     """
     Deploys the mock v3 aggregator and returns the deployed address
@@ -67,7 +82,7 @@ def mint_first_elder(accounts, crypto_champions, create_eth_affinity):
 
 
 @pytest.fixture
-def mint_first_hero(accounts, crypto_champions, mint_first_elder):
+def mint_first_hero(accounts, crypto_champions, mint_first_elder, fund_contract_with_link):
     """
     Mint the first hero for the CryptoChampions contract. Hero is based on the first elder minted.
     """
@@ -86,11 +101,3 @@ def mint_max_elders(accounts, crypto_champions, create_eth_affinity):
         crypto_champions.mintElderSpirit(0, 0, "ETH", {"from": accounts[0], "value": crypto_champions.elderMintPrice()})
 
 
-@pytest.fixture
-def chainlink_fee():
-    return 1000000000000000000
-
-
-@pytest.fixture
-def get_seed():
-    return 777

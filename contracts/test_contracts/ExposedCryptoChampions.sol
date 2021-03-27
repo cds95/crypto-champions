@@ -25,7 +25,7 @@ contract ExposedCryptoChampions is CryptoChampions {
 
     /// See CryptoChampions::_randomResult
     function getRandomResult() public view returns (uint256) {
-        return _randomResult;
+        return _randomResultsVRF[requestId];
     }
 
     /// See CryptoChampions::_burnElder
