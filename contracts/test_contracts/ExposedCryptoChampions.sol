@@ -12,4 +12,9 @@ contract ExposedCryptoChampions is CryptoChampions {
     function burnElder(uint256 elderId) public {
         _burnElder(elderId);
     }
+
+    /// See CryptoChampions::_canMintHero
+    function canMintHero(uint256 elderId) public view returns (bool) {
+        return _canMintHero(elderId);
+    }
 }

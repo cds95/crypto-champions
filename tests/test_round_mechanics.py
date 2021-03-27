@@ -13,7 +13,7 @@ def test_round_elder_spawn(accounts, crypto_champions, mint_first_hero):
     crypto_champions.burnElders({"from": accounts[0]})
     assert crypto_champions.currentRound() == 1
     crypto_champions.mintElderSpirit(0, 0, "ETH", {"from": accounts[0], "value": crypto_champions.elderMintPrice()})
-    assert crypto_champions.getElderSpawnsAmount(crypto_champions.currentRound(), 1) == 1
+    assert crypto_champions.getElderSpawnsAmount(crypto_champions.currentRound(), 1) == 0
 
 
 def test_get_elder_spawns_invalid_id(accounts, crypto_champions):
