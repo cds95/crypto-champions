@@ -3,6 +3,7 @@ pragma solidity ^0.6.0;
 
 import "../interfaces/ICryptoChampions.sol";
 
+import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/access/AccessControl.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC1155.sol";
@@ -12,6 +13,12 @@ import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC115
 /// @notice This is the crypto champions class
 contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     using SafeMath for uint256;
+
+    // Possible phases the contract can be in.  Phase one is when users can mint elder spirits and two is when they can mint heros.
+    enum Phase { ONE, TWO }
+
+    // The current phase the contract is in.
+    Phase public currentPhase;
 
     // The owner role is used to globally govern the contract
     bytes32 internal constant ROLE_OWNER = keccak256("ROLE_OWNER");
@@ -58,12 +65,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     // The current round index
     uint256 public currentRound;
 
-    // For bonding curve
-    uint256 internal constant K = 1 ether;
-    uint256 internal constant B = 50;
-    uint256 internal constant C = 26;
-    uint256 internal constant D = 8;
-    uint256 internal constant SIG_DIGITS = 3;
+    // The mapping of affinities (token ticker) to price feed address
+    mapping(string => address) internal _affinities;
 
     /// @notice Triggered when an elder spirit gets minted
     /// @param elderId The elder id belonging to the minted elder
@@ -98,12 +101,26 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
         // Set the initial round to 0
         currentRound = 0;
+
+        // Set initial phase to phase one
+        currentPhase = Phase.ONE;
+    }
+
+    modifier isValidElderSpiritId(uint256 elderId) {
+        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+        _;
     }
 
     // Restrict to only admins
     modifier onlyAdmin {
         _hasRole(ROLE_ADMIN);
         _;
+    }
+
+    /// @notice Sets the contract's phase
+    /// @param phase The phase the contract should be set to
+    function setPhase(Phase phase) external onlyAdmin {
+        currentPhase = phase;
     }
 
     /// @notice Check if msg.sender has the role
@@ -116,7 +133,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @dev This will be called by a priviledged address. It will allow to create new affinities. May need to add a
     /// remove affinity function as well.
     /// @param tokenTicker The token ticker of the affinity
-    function createAffinity(string calldata tokenTicker) external override onlyAdmin {}
+    /// @param feedAddress The price feed address
+    function createAffinity(string calldata tokenTicker, address feedAddress) external override onlyAdmin {
+        _affinities[tokenTicker] = feedAddress;
+    }
 
     /// @notice Sets the elder mint price
     /// @dev Can only be called by an admin address
@@ -139,11 +159,16 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     ) external payable override returns (uint256) {
         require(eldersInGame < MAX_NUMBER_OF_ELDERS); // dev: Max number of elders already minted.
         require(msg.value >= elderMintPrice); // dev: Insufficient payment.
+        require(_affinities[affinity] != address(0)); // dev: Affinity does not exist.
 
         // Generate the elderId and make sure it doesn't already exists
         uint256 elderId = eldersInGame.add(1);
         assert(_elderOwners[elderId] == address(0)); // dev: Elder with id already has owner.
         assert(_elderSpirits[elderId].valid == false); // dev: Elder spirit with id has already been generated.
+
+        // Get the price data of affinity
+        int256 affinityPrice;
+        (, affinityPrice, , , ) = AggregatorV3Interface(_affinities[affinity]).latestRoundData();
 
         // Create the elder spirit
         ElderSpirit memory elder;
@@ -151,6 +176,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         elder.raceId = raceId;
         elder.classId = classId;
         elder.affinity = affinity;
+        elder.affinityPrice = affinityPrice;
 
         // Mint the NFT
         _mint(_msgSender(), elderId, 1, ""); // TODO: give the URI
@@ -161,8 +187,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
         // Increment elders minted
         eldersInGame = eldersInGame.add(1);
-        // We consider the elder spirit as a spawn of itself
-        _roundElderSpawns[currentRound][elderId] = _roundElderSpawns[currentRound][elderId].add(1);
 
         // Refund if user sent too much
         _refundSender(elderMintPrice);
@@ -175,8 +199,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @notice Gets the elder owner for the given elder id
     /// @param elderId The elder id
     /// @return The owner of the elder
-    function getElderOwner(uint256 elderId) public view override returns (address) {
-        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+    function getElderOwner(uint256 elderId) public view override isValidElderSpiritId(elderId) returns (address) {
         require(_elderOwners[elderId] != address(0)); // dev: Given elder id has not been minted.
 
         return _elderOwners[elderId];
@@ -185,9 +208,16 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @notice Mints a hero based on an elder spirit
     /// @param elderId The id of the elder spirit this hero is based on
     /// @return The hero id
-    function mintHero(uint256 elderId) external payable override returns (uint256) {
-        require(elderId != 0 && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Elder id not valid.
+    function mintHero(uint256 elderId, string calldata heroName)
+        external
+        payable
+        override
+        isValidElderSpiritId(elderId)
+        returns (uint256)
+    {
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
+
+        require(_canMintHero(elderId)); // dev: Can't mint hero. Too mnay heroes minted for elder.
 
         uint256 mintPrice = getHeroMintPrice(currentRound, elderId);
         require(msg.value >= mintPrice); // dev: Insufficient payment.
@@ -200,6 +230,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         // Create the hero
         Hero memory hero;
         hero.valid = true;
+        hero.name = heroName;
         hero.roundMinted = currentRound;
         hero.elderId = elderId;
         hero.raceId = _elderSpirits[elderId].raceId;
@@ -230,6 +261,29 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         emit HeroMinted(heroId, _msgSender());
 
         return heroId;
+    }
+
+    /// @notice Checks to see if a hero can be minted for a given elder
+    /// @dev (n < 4) || (n <= 2 * m)
+    ///     n is number of champions already minted for elder
+    ///     m is number of champions already minted for elder with least amount of champions
+    /// @param elderId The elder id
+    /// @return True if hero can be minted, false otherwise
+    function _canMintHero(uint256 elderId) internal view returns (bool) {
+        // Verify first condition
+        if (_roundElderSpawns[currentRound][elderId] < 4) {
+            return true;
+        }
+
+        // Find the elder with the least amount of heroes minted
+        uint256 smallestElderAmount = _roundElderSpawns[currentRound][elderId];
+        for (uint256 i = 1; i <= eldersInGame; ++i) {
+            if (_roundElderSpawns[currentRound][i] < smallestElderAmount) {
+                smallestElderAmount = _roundElderSpawns[currentRound][i];
+            }
+        }
+
+        return _roundElderSpawns[currentRound][elderId] <= smallestElderAmount.mul(2);
     }
 
     /// @notice Get the hero owner for the given hero id
@@ -265,8 +319,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @notice Burns the elder spirit
     /// @dev This will only be able to be called by the contract
     /// @param elderId The elder id
-    function _burnElder(uint256 elderId) internal {
-        require(elderId > 0 && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Cannot burn with invalid elder id.
+    function _burnElder(uint256 elderId) internal isValidElderSpiritId(elderId) {
         require(_elderSpirits[elderId].valid); // dev: Cannot burn elder that does not exist.
 
         // TODO: need to make sure _elderOwners[elderId] can never be address(0).
@@ -280,6 +333,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         _elderSpirits[elderId].raceId = 0;
         _elderSpirits[elderId].classId = 0;
         _elderSpirits[elderId].affinity = "";
+        _elderSpirits[elderId].affinityPrice = 0;
     }
 
     /// @notice Burns the hero for a refund
@@ -289,9 +343,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         require(heroId > MAX_NUMBER_OF_ELDERS); // dev: Cannot burn with invalid hero id.
         require(_heroes[heroId].valid); // dev: Cannot burn hero that does not exist.
         require(_heroOwners[heroId] == _msgSender()); // dev: Cannot burn hero that is not yours.
-
-        // Get the refund amount before burning
-        uint256 refundAmount = getHeroRefundAmount(heroId);
 
         _burn(_heroOwners[heroId], heroId, 1);
 
@@ -309,10 +360,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         _heroes[heroId].classId = 0;
         _heroes[heroId].affinity = "";
 
-        // Refund hero
-        (bool success, ) = msg.sender.call{ value: refundAmount }("");
-        require(success); // dev: Burn payment failed
-
         emit HeroBurned(heroId);
     }
 
@@ -323,48 +370,21 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     function getHeroMintPrice(uint256 round, uint256 elderId) public view override returns (uint256) {
         require(round <= currentRound); // dev: Cannot get price round has not started.
         require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Elder id is not valid.
-        require(_roundElderSpawns[round][elderId] > 0); // dev: The elder has not been minted.
 
         uint256 heroAmount = _roundElderSpawns[round][elderId].add(1);
 
-        return _bondingCurve(heroAmount);
-    }
-
-    /// @notice Get the hero refund amount
-    /// @param heroId The hero id to be refunded
-    /// @return The refund amount
-    function getHeroRefundAmount(uint256 heroId) public view override returns (uint256) {
-        Hero memory hero = _heroes[heroId];
-        require(hero.valid); // dev: Hero is not valid.
-
-        uint256 newSupply = _roundElderSpawns[hero.roundMinted][hero.elderId].sub(1);
-        uint256 mintPrice = _bondingCurve(newSupply);
-
-        return mintPrice.mul(90).div(100); // 90 % of mint price
+        return _priceFormula(heroAmount);
     }
 
     /// @notice The bounding curve function that calculates price for the new supply
-    /// @dev K = 1
-    ///      B = 50
-    ///      C = 26
-    ///      D = 8
-    ///      SIG_DIGITS = 3
+    /// @dev price = 0.02*(heroes minted) + 0.1
     /// @param newSupply The new supply after a burn or mint
-    function _bondingCurve(uint256 newSupply) internal pure returns (uint256) {
+    /// @return The calculated price
+    function _priceFormula(uint256 newSupply) internal pure returns (uint256) {
         uint256 price;
-        uint256 decimals = 10**SIG_DIGITS;
-
-        if (newSupply < B) {
-            price = (10**(B.sub(newSupply))).mul(decimals).div(11**(B.sub(newSupply)));
-        } else if (newSupply == B) {
-            price = decimals; // price = decimals * (A ^ 0)
-        } else {
-            price = (11**(newSupply.sub(B))).mul(decimals).div(10**(newSupply.sub(B)));
-        }
-
-        price = price.add(C.mul(newSupply));
-        price = price.sub(D);
-        price = price.mul(1 ether).div(decimals);
+        uint256 base = 1;
+        price = newSupply.mul(10**18).mul(2).div(100);
+        price = price.add(base.mul(10**18).div(10));
 
         return price;
     }
@@ -394,8 +414,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @param round The round the elder was created
     /// @param elderId The elder id
     /// @return The amount of heroes spawned from the elder
-    function getElderSpawnsAmount(uint256 round, uint256 elderId) public view override returns (uint256) {
-        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+    function getElderSpawnsAmount(uint256 round, uint256 elderId)
+        public
+        view
+        override
+        isValidElderSpiritId(elderId)
+        returns (uint256)
+    {
         require(round <= currentRound); // dev: Invalid round.
         return _roundElderSpawns[round][elderId];
     }
@@ -407,5 +432,31 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
             (bool success, ) = msg.sender.call{ value: msg.value.sub(cost) }("");
             require(success); // dev: Refund failed.
         }
+    }
+
+    /// @notice Fetches the data of a single elder spirit
+    /// @param elderId The id of the elder being searched for
+    /// @return The elder's attributes in the following order (valid, raceId, classId, affinity)
+    function getElderSpirit(uint256 elderId)
+        external
+        view
+        override
+        isValidElderSpiritId(elderId)
+        returns (
+            bool,
+            uint256,
+            uint256,
+            string memory,
+            int256
+        )
+    {
+        ElderSpirit memory elderSpirit = _elderSpirits[elderId];
+        return (
+            elderSpirit.valid,
+            elderSpirit.raceId,
+            elderSpirit.classId,
+            elderSpirit.affinity,
+            elderSpirit.affinityPrice
+        );
     }
 }

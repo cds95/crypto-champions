@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.6.0;
 
-import "./CryptoChampions.sol";
+import "../CryptoChampions.sol";
 
 /// @title Exposed version of CryptoChampions
 /// @author Oozyx
@@ -11,5 +11,10 @@ contract ExposedCryptoChampions is CryptoChampions {
     /// See CryptoChampions::_burnElder
     function burnElder(uint256 elderId) public {
         _burnElder(elderId);
+    }
+
+    /// See CryptoChampions::_canMintHero
+    function canMintHero(uint256 elderId) public view returns (bool) {
+        return _canMintHero(elderId);
     }
 }

@@ -31,7 +31,7 @@ def test_burn_internal_non_existent_elder(accounts, crypto_champions):
 
 
 def test_burn_internal_invalid_id(accounts, crypto_champions):
-    with brownie.reverts("dev: Cannot burn with invalid elder id."):
+    with brownie.reverts("dev: Given id is not valid."):
         crypto_champions.burnElder(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1, {"from": accounts[0]})
 
 
