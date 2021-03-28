@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.0;
 
-import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/interfaces/LinkTokenInterface.sol";
-import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/VRFConsumerBase.sol";
+import "../../chainlink_contracts/LinkTokenInterface.sol";
+import "../../chainlink_contracts/VRFConsumerBase.sol";
 
 contract VRFCoordinatorMock {
     LinkTokenInterface public LINK;

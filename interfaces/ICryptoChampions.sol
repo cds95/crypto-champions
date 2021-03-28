@@ -73,6 +73,114 @@ interface ICryptoChampions {
             int256
         );
 
+    function getHeroGameData(uint256 heroId)
+        external
+        view
+        returns (
+            bool, // valid
+            string memory, // affinity
+            int256, // affinity price
+            uint256, // round minted
+            uint256 // elder id
+        );
+
+    function getHeroVisuals(uint256 heroId)
+        external
+        view
+        returns (
+            string memory, // name
+            uint256, // race id
+            uint256, // class id
+            uint256 // appearance
+        );
+
+    function getHeroTraitsSkills(uint256 heroId)
+        external
+        view
+        returns (
+            uint256, // trait 1
+            uint256, // trait 2
+            uint256, // skill 1
+            uint256 // skill 2
+        );
+
+    function getHeroLore(uint256 heroId)
+        external
+        view
+        returns (
+            uint256, // alignment
+            uint256, // background
+            uint256, // hometown
+            uint256 // weather
+        );
+
+    function getHeroVitals(uint256 heroId)
+        external
+        view
+        returns (
+            uint256, // level
+            uint256, // hp
+            uint256 // mana
+        );
+
+    function getHeroStats(uint256 heroId)
+        external
+        view
+        returns (
+            uint256, // stamina
+            uint256, // strength
+            uint256, // dexterity
+            uint256, // constitution
+            uint256, // intelligence
+            uint256, // wisdom
+            uint256 // charisma
+        );
+
+    // function getHeroFixedAttributes(uint256 heroId)
+    //     external
+    //     view
+    //     returns (
+    //         bool,
+    //         string memory,
+    //         string memory,
+    //         int256,
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256
+    //     );
+
+    // function getHeroDetails(uint256 heroId)
+    //     external
+    //     view
+    //     returns (
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256
+    //     );
+
+    // function getHeroStats(uint256 heroId)
+    //     external
+    //     view
+    //     returns (
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256,
+    //         uint256
+    //     );
+
     function getHeroMintPrice(uint256 round, uint256 elderId) external view returns (uint256);
 
     function getElderSpawnsAmount(uint256 round, uint256 elderId) external view returns (uint256);

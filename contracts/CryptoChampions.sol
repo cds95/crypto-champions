@@ -551,4 +551,128 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
             elderSpirit.affinityPrice
         );
     }
+
+    /// @notice Hero getter function
+    /// @param heroId The hero id
+    /// @return valid, affinity, affinity price, round minted, elder id
+    function getHeroGameData(uint256 heroId)
+        external
+        view
+        override
+        returns (
+            bool, // valid
+            string memory, // affinity
+            int256, // affinity price
+            uint256, // round minted
+            uint256 // elder id
+        )
+    {
+        return (
+            _heroes[heroId].valid,
+            _heroes[heroId].affinity,
+            _heroes[heroId].affinityPrice,
+            _heroes[heroId].roundMinted,
+            _heroes[heroId].elderId
+        );
+    }
+
+    /// @notice Hero getter function
+    /// @param heroId The hero id
+    /// @return name, race id, class id, appearance
+    function getHeroVisuals(uint256 heroId)
+        external
+        view
+        override
+        returns (
+            string memory, // name
+            uint256, // race id
+            uint256, // class id
+            uint256 // appearance
+        )
+    {
+        return (_heroes[heroId].name, _heroes[heroId].raceId, _heroes[heroId].classId, _heroes[heroId].appearance);
+    }
+
+    /// @notice Hero getter function
+    /// @param heroId The hero id
+    /// @return trait 1, trait 2, skill 1, skill 2
+    function getHeroTraitsSkills(uint256 heroId)
+        external
+        view
+        override
+        returns (
+            uint256, // trait 1
+            uint256, // trait 2
+            uint256, // skill 1
+            uint256 // skill 2
+        )
+    {
+        return (_heroes[heroId].trait1, _heroes[heroId].trait2, _heroes[heroId].skill1, _heroes[heroId].skill2);
+    }
+
+    /// @notice Hero getter function
+    /// @param heroId The hero id
+    /// @return alignment, background, hometown, weather
+    function getHeroLore(uint256 heroId)
+        external
+        view
+        override
+        returns (
+            uint256, // alignment
+            uint256, // background
+            uint256, // hometown
+            uint256 // weather
+        )
+    {
+        return (
+            _heroes[heroId].alignment,
+            _heroes[heroId].background,
+            _heroes[heroId].hometown,
+            _heroes[heroId].weather
+        );
+    }
+
+    /// @notice Hero getter function
+    /// @param heroId The hero id
+    /// @return level, hp, mana
+    function getHeroVitals(uint256 heroId)
+        external
+        view
+        override
+        returns (
+            uint256, // level
+            uint256, // hp
+            uint256 // mana
+        )
+    {
+        return (_heroes[heroId].level, _heroes[heroId].hp, _heroes[heroId].mana);
+    }
+
+    /// @notice Hero getter function
+    /// @param heroId The hero id
+    /// @return stamina, strength, dexterity, constitution, intelligence, wisdom, charisma
+    function getHeroStats(uint256 heroId)
+        external
+        view
+        override
+        returns (
+            uint256, // stamina
+            uint256, // strength
+            uint256, // dexterity
+            uint256, // constitution
+            uint256, // intelligence
+            uint256, // wisdom
+            uint256 // charisma
+        )
+    {
+        return (
+            _heroes[heroId].stamina,
+            _heroes[heroId].strength,
+            _heroes[heroId].dexterity,
+            _heroes[heroId].constitution,
+            _heroes[heroId].intelligence,
+            _heroes[heroId].wisdom,
+            _heroes[heroId].charisma
+        );
+    }
 }
