@@ -2,9 +2,9 @@
 pragma solidity ^0.6.0;
 
 import "../interfaces/ICryptoChampions.sol";
+import "./chainlink_contracts/AggregatorV3Interface.sol";
+import "./chainlink_contracts/VRFConsumerBase.sol";
 
-import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
-import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/VRFConsumerBase.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/access/AccessControl.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC1155.sol";
