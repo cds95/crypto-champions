@@ -23,7 +23,7 @@ abstract contract Minigame {
     mapping(uint256 => MinigamePlayer) public players;
 
     // List of hero IDs in the game
-    uint256[] heroIds;
+    uint256[] internal _heroIds;
 
     // Number of players currently in the game
     uint256 public numPlayers;
@@ -33,6 +33,9 @@ abstract contract Minigame {
 
     // Reference to crypto champions contract
     ICryptoChampions public cryptoChampions;
+
+    // Winning hero's ID
+    uint256 public winner;
 
     // Event to signal that a game has started
     event GameStarted();
@@ -51,7 +54,7 @@ abstract contract Minigame {
 
     /// @notice Joins a game
     /// @param heroId The id of the joining player's hero
-    function joinGame(uint256 heroId) public virtual {
+    function joinGame(uint256 heroId) public payable virtual {
         require(_currentPhase == MinigamePhase.OPEN);
         MinigamePlayer memory player;
         player.isInGame = true;
@@ -62,7 +65,7 @@ abstract contract Minigame {
 
     /// @notice Leaves a game
     /// @param heroId The id of the leaving player's hero
-    function leaveGame(uint256 heroId) external {
+    function leaveGame(uint256 heroId) external payable {
         require(_currentPhase == MinigamePhase.OPEN);
         MinigamePlayer storage player = players[heroId];
         player.isInGame = false;
@@ -89,6 +92,16 @@ abstract contract Minigame {
         return numPlayers;
     }
 
+    /// @notice Gets the ids of all the heros in the game
+    function getHeroIds() public view returns (uint256[]) {
+        return _heroIds;
+    }
+
     /// @notice Handler function to execute game logic.  This should be implemented by the concrete class.
     function play() internal virtual;
+
+    /// @notice Sets the winner's id
+    function setWinnerId(uint256 winnerId) internal {
+        winner = winnerId;
+    }
 }

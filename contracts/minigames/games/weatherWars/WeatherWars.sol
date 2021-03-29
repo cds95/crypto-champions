@@ -19,6 +19,12 @@ contract WeatherWars is CappedMinigame, ChainlinkClient {
 
     bytes32 public cityWeather;
 
+    // The amount of ether required to join the game
+    uint256 public buyinAmount;
+
+    // The mapping from hero id to the player's balance
+    mapping(uint256 => uint256) balances;
+
     constructor(
         address oracle,
         address linkTokenAddress,
@@ -33,6 +39,26 @@ contract WeatherWars is CappedMinigame, ChainlinkClient {
         _fee = fee;
         _oracle = oracle;
         city = _city;
+        buyinAmount = _buyinAmount;
+    }
+
+    /// @notice Joins a game
+    /// @param heroId The id of the joining player's hero
+    function joinGame(uint256 heroId) external payable override {
+        require(msg.value == buyinAmount); // dev Incorrect buyin amount
+        balances[heroId] = buyinAmount;
+        super.joinGame(heroId);
+    }
+
+    /// @notice Leaves a game
+    /// @param heroId The id of the leaving player's hero
+    function leaveGame(uint256 heroId) external payable override {
+        super.leaveGame(heroId);
+        uint256 playerBalance = balances[heroId];
+        balances[heroId] = 0;
+        address playerAddress = cryptoChampions.getHeroOwner(heroId);
+        address payable payableAddress = payable(playerAddress);
+        payableAddress.transfer(playerBalance);
     }
 
     function onMaxCapacityReached() public override {
