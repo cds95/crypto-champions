@@ -21,7 +21,7 @@ contract MockV3Aggregator is AggregatorV3Interface {
 
     mapping(uint256 => int256) public getAnswer;
     mapping(uint256 => uint256) public getTimestamp;
-    mapping(uint256 => uint256) public getStartedAt;
+    mapping(uint256 => uint256) private getStartedAt;
 
     constructor(uint8 _decimals, int256 _initialAnswer) public {
         decimals = _decimals;
