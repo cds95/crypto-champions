@@ -8,6 +8,10 @@ import "../CryptoChampions.sol";
 /// @notice This contract inherits from CryptoChampions and makes its functions testable
 /// @dev Not to be deployed outside of a test environment
 contract ExposedCryptoChampions is CryptoChampions {
+    constructor(address minigameFactoryRegistry) CryptoChampions(minigameFactoryRegistry) public {
+
+    }
+
     /// See CryptoChampions::_burnElder
     function burnElder(uint256 elderId) public {
         _burnElder(elderId);
