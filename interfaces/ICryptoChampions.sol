@@ -63,5 +63,5 @@ interface ICryptoChampions {
 
     function getNumEldersInGame() external view returns (uint256);
 
-    function startNewPriceGame(address priceWarsFactoryAddress) external;
+    function startNewPriceGame() external;
 }

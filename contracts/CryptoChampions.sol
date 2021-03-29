@@ -2,6 +2,7 @@
 pragma solidity ^0.6.0;
 
 import "../interfaces/ICryptoChampions.sol";
+import "../interfaces/IMinigameFactoryRegistry.sol";
 import "./minigames/games/priceWars/PriceWarsFactory.sol";
 import "./minigames/games/priceWars/PriceWars.sol";
 
@@ -37,6 +38,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     // Constants used to determine fee proportions.
     // Usage: fee.mul(proportion).div(10)
     uint8 internal constant HERO_MINT_ROYALTY_PROPORTION = 8;
+
+    // The identifier for the price wars game
+    string internal constant PRICE_WARS_ID = "PRICE_WARS";
 
     // The max amount of elders that can be minted
     uint256 public constant MAX_NUMBER_OF_ELDERS = 7;
@@ -76,8 +80,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     // The list of affinities that won in a round
     string[] public winningAffinitiesByRound;
 
-    // The address of the price wars factory contract
-    address internal _priceWarsFactoryAddress;
+    // The registry of minigame factories
+    IMinigameFactoryRegistry internal _minigameFactoryRegistry;
 
     /// @notice Triggered when an elder spirit gets minted
     /// @param elderId The elder id belonging to the minted elder
@@ -98,7 +102,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
     // Initializes a new CryptoChampions contract
     // TODO: need to provide the proper uri
-    constructor() public ERC1155("uri") {
+    constructor(address minigameFactoryRegistry) public ERC1155("uri") {
         // Set up administrative roles
         _setRoleAdmin(ROLE_OWNER, ROLE_OWNER);
         _setRoleAdmin(ROLE_ADMIN, ROLE_OWNER);
@@ -116,6 +120,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
         // Set initial phase to phase one
         currentPhase = Phase.ONE;
+
+        _minigameFactoryRegistry = IMinigameFactoryRegistry(minigameFactoryRegistry);
     }
 
     modifier isValidElderSpiritId(uint256 elderId) {
@@ -500,8 +506,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
     /// @notice Starts a new price game
     /// @dev This can only be called by the admin of the contract
-    /// @param priceWarsFactoryAddress The address of the price wars factory contract
-    function startNewPriceGame(address priceWarsFactoryAddress) external override onlyAdmin {
+    function startNewPriceGame() external override onlyAdmin {
+        address priceWarsFactoryAddress = _minigameFactoryRegistry.getFactory(PRICE_WARS_ID);
         PriceWarsFactory priceWarsFactory = PriceWarsFactory(priceWarsFactoryAddress);
         PriceWars priceWar = priceWarsFactory.createPriceWar(address(this));
         grantRole(ROLE_GAME_ADMIN, address(priceWar));
