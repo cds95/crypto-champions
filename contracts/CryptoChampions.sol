@@ -181,6 +181,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         uint256 classId,
         string calldata affinity
     ) external payable override returns (uint256) {
+        require(currentPhase == Phase.ONE); // dev: Can only mint elders in phase one
         require(eldersInGame < MAX_NUMBER_OF_ELDERS); // dev: Max number of elders already minted.
         require(msg.value >= elderMintPrice); // dev: Insufficient payment.
         require(_affinities[affinity] != address(0)); // dev: Affinity does not exist.
@@ -239,6 +240,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         isValidElderSpiritId(elderId)
         returns (uint256)
     {
+        require(currentPhase == Phase.TWO); //dev: Can only mint hero in phase 2.
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
 
         require(_canMintHero(elderId)); // dev: Can't mint hero. Too mnay heroes minted for elder.
@@ -487,13 +489,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @notice Fetches the feed address for a given affinity
     /// @param affinity The affinity being searched for
     /// @return The address of the affinity's feed address
-    function getAffinityFeedAddress(string calldata affinity) external view override returns(address) {
+    function getAffinityFeedAddress(string calldata affinity) external view override returns (address) {
         return _affinities[affinity];
     }
 
     /// @notice Fetches the number of elders currently in the game
     /// @return The current number of elders in the game
-    function getNumEldersInGame() external view override returns(uint256) {
+    function getNumEldersInGame() external view override returns (uint256) {
         return eldersInGame;
     }
 
