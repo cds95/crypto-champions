@@ -19,12 +19,12 @@ contract WeatherWars is CappedMinigame, ChainlinkClient {
 
     bytes32 public cityWeather;
 
-    constructor(address _oracle, address linkTokenAddress, uint256 fee, string memory _gameName, address _cryptoChampionsContractAddress, uint256 _buyinAmount, string memory _city) CappedMinigame(gameName, MAX_PLAYERS, _cryptoChampionsContractAddress, _buyinAmount) public {
+    constructor(address oracle, address linkTokenAddress, uint256 fee, string memory _gameName, address _cryptoChampionsContractAddress, uint256 _buyinAmount, string memory _city) CappedMinigame(gameName, MAX_PLAYERS, _cryptoChampionsContractAddress) public {
         setPublicChainlinkToken();
         _linkTokenAddress = linkTokenAddress;
         _fee = fee;
+        _oracle = oracle;
         city = _city;
-        _oracle = _oracle;
     }
 
     function onMaxCapacityReached() public override {

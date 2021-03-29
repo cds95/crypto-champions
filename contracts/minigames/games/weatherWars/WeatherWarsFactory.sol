@@ -3,8 +3,11 @@ pragma solidity ^0.6.0;
 
 import "./WeatherWars.sol";
 import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/VRFConsumerBase.sol";
+import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 
 contract WeatherWarsFactory is VRFConsumerBase {
+    using SafeMath for uint256;
+    
     WeatherWars[] public games;
 
     uint256 private _fee;
@@ -17,8 +20,6 @@ contract WeatherWarsFactory is VRFConsumerBase {
 
     uint256 constant SEED = 13563;
 
-    address private _cryptoChampionsContractAddress;
-
     address private _linkTokenAddress;
 
     address private _oracle;
@@ -27,10 +28,9 @@ contract WeatherWarsFactory is VRFConsumerBase {
 
     event CreatingGame(string city);
 
-    constructor(address oracle, address vrfCoordinateAdddress, address linkTokenAddress, uint256 fee, bytes32 keyHash, address _cryptoChampions) VRFConsumerBase(vrfCoordinateAdddress, linkTokenAddress) public {
+    constructor(address oracle, address vrfCoordinateAdddress, address linkTokenAddress, uint256 fee, bytes32 keyHash) VRFConsumerBase(vrfCoordinateAdddress, linkTokenAddress) public {
         _fee = fee;
         _keyHash = keyHash;
-        _cryptoChampionsContractAddress = _cryptoChampions;
         _linkTokenAddress = linkTokenAddress;
         _oracle = oracle;
     }
@@ -39,8 +39,8 @@ contract WeatherWarsFactory is VRFConsumerBase {
         requestNextCity();
     }
 
-    function createWeatherWars(string calldata _gameName, uint256 _buyinAmount) public returns (bytes32) {
-        WeatherWars newGame = new WeatherWars(_oracle, _linkTokenAddress, _fee, _gameName, _cryptoChampionsContractAddress, _buyinAmount, _nextCity);
+    function createWeatherWars(string calldata _gameName, uint256 _buyinAmount, address cryptoChampionsContractAddress) public returns (bytes32) {
+        WeatherWars newGame = new WeatherWars(_oracle, _linkTokenAddress, _fee, _gameName, cryptoChampionsContractAddress, _buyinAmount, _nextCity);
         games.push(newGame);
         emit GameCreated(_gameName, _nextCity);
         requestNextCity();
