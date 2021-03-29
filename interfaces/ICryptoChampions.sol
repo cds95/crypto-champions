@@ -54,6 +54,8 @@ interface ICryptoChampions {
 
     function mintHero(uint256 elderId, string memory heroName) external payable returns (uint256);
 
+    function trainHero(uint256 heroId) external;
+
     function getHeroOwner(uint256 heroId) external view returns (address);
 
     function disburseRewards(string calldata winningAffinity) external;
@@ -120,14 +122,14 @@ interface ICryptoChampions {
         returns (
             uint256, // level
             uint256, // hp
-            uint256 // mana
+            uint256, // mana
+            uint256 // stamina
         );
 
     function getHeroStats(uint256 heroId)
         external
         view
         returns (
-            uint256, // stamina
             uint256, // strength
             uint256, // dexterity
             uint256, // constitution
@@ -135,51 +137,6 @@ interface ICryptoChampions {
             uint256, // wisdom
             uint256 // charisma
         );
-
-    // function getHeroFixedAttributes(uint256 heroId)
-    //     external
-    //     view
-    //     returns (
-    //         bool,
-    //         string memory,
-    //         string memory,
-    //         int256,
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256
-    //     );
-
-    // function getHeroDetails(uint256 heroId)
-    //     external
-    //     view
-    //     returns (
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256
-    //     );
-
-    // function getHeroStats(uint256 heroId)
-    //     external
-    //     view
-    //     returns (
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256,
-    //         uint256
-    //     );
 
     function getHeroMintPrice(uint256 round, uint256 elderId) external view returns (uint256);
 

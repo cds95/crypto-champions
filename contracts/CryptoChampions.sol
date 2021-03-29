@@ -75,9 +75,11 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     // The fee in LINK for VRF
     uint256 internal _fee;
 
-    // Random result from the VRF
+    // Mapping of request id to hero id
+    mapping(uint256 => bytes32) internal _heroRandomRequest;
+
     // Mapping of request id to random result
-    mapping(bytes32 => uint256) _randomResultsVRF;
+    mapping(bytes32 => uint256) internal _randomResultsVRF;
 
     /// @notice Triggered when an elder spirit gets minted
     /// @param elderId The elder id belonging to the minted elder
@@ -274,7 +276,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
         // Request the random number and set hero attributes
         bytes32 requestId = _getRandomNumber(heroId);
-        _setHeroAttributes(heroId, requestId);
+        _heroRandomRequest[heroId] = requestId;
 
         // Mint the NFT
         _mint(_msgSender(), heroId, 1, ""); // TODO: give the URI
@@ -326,9 +328,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
     /// @notice Sets the hero attributes
     /// @param heroId The hero id
-    /// @param requestId The VRF request id
-    function _setHeroAttributes(uint256 heroId, bytes32 requestId) internal {
-        uint256 randomNumber = _randomResultsVRF[requestId];
+    function trainHero(uint256 heroId) external override {
+        bytes32 heroRequestId = _heroRandomRequest[heroId];
+        require(heroRequestId != 0); // dev: Random number was never requested for this hero.
+
+        uint256 randomNumber = _randomResultsVRF[heroRequestId];
+        require(randomNumber != 0); // dev: Random number has not arrived yet.
+
         uint256 newRandomNumber;
 
         _heroes[heroId].level = 1; // 1 by default
@@ -642,10 +648,11 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         returns (
             uint256, // level
             uint256, // hp
-            uint256 // mana
+            uint256, // mana
+            uint256 // stamina
         )
     {
-        return (_heroes[heroId].level, _heroes[heroId].hp, _heroes[heroId].mana);
+        return (_heroes[heroId].level, _heroes[heroId].hp, _heroes[heroId].mana, _heroes[heroId].stamina);
     }
 
     /// @notice Hero getter function
@@ -656,7 +663,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         view
         override
         returns (
-            uint256, // stamina
             uint256, // strength
             uint256, // dexterity
             uint256, // constitution
@@ -666,7 +672,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         )
     {
         return (
-            _heroes[heroId].stamina,
             _heroes[heroId].strength,
             _heroes[heroId].dexterity,
             _heroes[heroId].constitution,
