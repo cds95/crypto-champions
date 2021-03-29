@@ -7,7 +7,7 @@ import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 
 contract WeatherWarsFactory is VRFConsumerBase {
     using SafeMath for uint256;
-    
+
     WeatherWars[] public games;
 
     uint256 private _fee;
@@ -28,7 +28,13 @@ contract WeatherWarsFactory is VRFConsumerBase {
 
     event CreatingGame(string city);
 
-    constructor(address oracle, address vrfCoordinateAdddress, address linkTokenAddress, uint256 fee, bytes32 keyHash) VRFConsumerBase(vrfCoordinateAdddress, linkTokenAddress) public {
+    constructor(
+        address oracle,
+        address vrfCoordinateAdddress,
+        address linkTokenAddress,
+        uint256 fee,
+        bytes32 keyHash
+    ) public VRFConsumerBase(vrfCoordinateAdddress, linkTokenAddress) {
         _fee = fee;
         _keyHash = keyHash;
         _linkTokenAddress = linkTokenAddress;
@@ -39,8 +45,21 @@ contract WeatherWarsFactory is VRFConsumerBase {
         requestNextCity();
     }
 
-    function createWeatherWars(string calldata _gameName, uint256 _buyinAmount, address cryptoChampionsContractAddress) public returns (bytes32) {
-        WeatherWars newGame = new WeatherWars(_oracle, _linkTokenAddress, _fee, _gameName, cryptoChampionsContractAddress, _buyinAmount, _nextCity);
+    function createWeatherWars(
+        string calldata _gameName,
+        uint256 _buyinAmount,
+        address cryptoChampionsContractAddress
+    ) public returns (bytes32) {
+        WeatherWars newGame =
+            new WeatherWars(
+                _oracle,
+                _linkTokenAddress,
+                _fee,
+                _gameName,
+                cryptoChampionsContractAddress,
+                _buyinAmount,
+                _nextCity
+            );
         games.push(newGame);
         emit GameCreated(_gameName, _nextCity);
         requestNextCity();

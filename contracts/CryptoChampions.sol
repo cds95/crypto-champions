@@ -487,13 +487,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @notice Fetches the feed address for a given affinity
     /// @param affinity The affinity being searched for
     /// @return The address of the affinity's feed address
-    function getAffinityFeedAddress(string calldata affinity) external view override returns(address) {
+    function getAffinityFeedAddress(string calldata affinity) external view override returns (address) {
         return _affinities[affinity];
     }
 
     /// @notice Fetches the number of elders currently in the game
     /// @return The current number of elders in the game
-    function getNumEldersInGame() external view override returns(uint256) {
+    function getNumEldersInGame() external view override returns (uint256) {
         return eldersInGame;
     }
 

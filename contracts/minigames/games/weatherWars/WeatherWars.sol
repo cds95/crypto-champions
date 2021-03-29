@@ -19,7 +19,15 @@ contract WeatherWars is CappedMinigame, ChainlinkClient {
 
     bytes32 public cityWeather;
 
-    constructor(address oracle, address linkTokenAddress, uint256 fee, string memory _gameName, address _cryptoChampionsContractAddress, uint256 _buyinAmount, string memory _city) CappedMinigame(gameName, MAX_PLAYERS, _cryptoChampionsContractAddress) public {
+    constructor(
+        address oracle,
+        address linkTokenAddress,
+        uint256 fee,
+        string memory _gameName,
+        address _cryptoChampionsContractAddress,
+        uint256 _buyinAmount,
+        string memory _city
+    ) public CappedMinigame(gameName, MAX_PLAYERS, _cryptoChampionsContractAddress) {
         setPublicChainlinkToken();
         _linkTokenAddress = linkTokenAddress;
         _fee = fee;
@@ -40,18 +48,12 @@ contract WeatherWars is CappedMinigame, ChainlinkClient {
     }
 
     // TODO:  Move to it's own library
-    function concatenate(
-        string memory a,
-        string memory b)
-        pure
-        internal
-        returns(string memory) {
-            return string(abi.encodePacked(a, b));
-        }
+    function concatenate(string memory a, string memory b) internal pure returns (string memory) {
+        return string(abi.encodePacked(a, b));
+    }
 
     function fulfill(bytes32 _requestId, bytes32 weather) public recordChainlinkFulfillment(_requestId) {
         // TODO:  Use weather data to determine winner
         cityWeather = weather;
     }
-
 }
