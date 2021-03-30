@@ -151,6 +151,12 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         _;
     }
 
+    modifier isValidHero(uint256 heroId) {
+        require(heroId > MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+        require(_heroes[heroId].valid); // dev: Hero is not valid.
+        _;
+    }
+
     // Restrict to only price war addresses
     modifier onlyGameAdmin {
         _hasRole(ROLE_GAME_ADMIN);
@@ -353,7 +359,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
     /// @notice Sets the hero attributes
     /// @param heroId The hero id
-    function trainHero(uint256 heroId) external override {
+    function trainHero(uint256 heroId) external override isValidHero(heroId) {
         bytes32 heroRequestId = _heroRandomRequest[heroId];
         require(heroRequestId != 0); // dev: Random number was never requested for this hero.
 
@@ -407,8 +413,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     /// @notice Get the hero owner for the given hero id
     /// @param heroId The hero id
     /// @return The owner address
-    function getHeroOwner(uint256 heroId) public view override returns (address) {
-        require(heroId > MAX_NUMBER_OF_ELDERS); // dev: Given hero id is not valid.
+    function getHeroOwner(uint256 heroId) public view override isValidHero(heroId) returns (address) {
         require(_heroOwners[heroId] != address(0)); // dev: Given hero id has not been minted.
 
         return _heroOwners[heroId];
@@ -448,17 +453,12 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         eldersInGame = eldersInGame.sub(1);
         _elderOwners[elderId] = address(0);
         _elderSpirits[elderId].valid = false;
-        _elderSpirits[elderId].raceId = 0;
-        _elderSpirits[elderId].classId = 0;
-        _elderSpirits[elderId].affinity = "";
-        _elderSpirits[elderId].affinityPrice = 0;
     }
 
     /// @notice Burns the hero for a refund
     /// @dev This will only be able to be called from the owner of the hero
     /// @param heroId The hero id to burn
-    function burnHero(uint256 heroId) external override {
-        require(heroId > MAX_NUMBER_OF_ELDERS); // dev: Cannot burn with invalid hero id.
+    function burnHero(uint256 heroId) external override isValidHero(heroId) {
         require(_heroes[heroId].valid); // dev: Cannot burn hero that does not exist.
         require(_heroOwners[heroId] == _msgSender()); // dev: Cannot burn hero that is not yours.
 
@@ -472,11 +472,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         // Reset hero values for hero id
         _heroOwners[heroId] = address(0);
         _heroes[heroId].valid = false;
-        _heroes[heroId].roundMinted = 0;
-        _heroes[heroId].elderId = 0;
-        _heroes[heroId].raceId = 0;
-        _heroes[heroId].classId = 0;
-        _heroes[heroId].affinity = "";
 
         emit HeroBurned(heroId);
     }
@@ -590,6 +585,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         external
         view
         override
+        isValidHero(heroId)
         returns (
             bool, // valid
             string memory, // affinity
@@ -614,6 +610,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         external
         view
         override
+        isValidHero(heroId)
         returns (
             string memory, // name
             uint256, // race id
@@ -631,6 +628,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         external
         view
         override
+        isValidHero(heroId)
         returns (
             uint256, // trait 1
             uint256, // trait 2
@@ -648,6 +646,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         external
         view
         override
+        isValidHero(heroId)
         returns (
             uint256, // alignment
             uint256, // background
@@ -670,6 +669,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         external
         view
         override
+        isValidHero(heroId)
         returns (
             uint256, // level
             uint256, // hp
@@ -687,6 +687,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         external
         view
         override
+        isValidHero(heroId)
         returns (
             uint256, // strength
             uint256, // dexterity

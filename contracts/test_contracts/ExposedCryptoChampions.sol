@@ -38,4 +38,9 @@ contract ExposedCryptoChampions is CryptoChampions {
     function canMintHero(uint256 elderId) public view returns (bool) {
         return _canMintHero(elderId);
     }
+
+    /// See CryptoChampions::getHeroRequestId
+    function getHeroRequestId(uint256 heroId) public view returns (bytes32) {
+        return _heroRandomRequest[heroId];
+    }
 }
