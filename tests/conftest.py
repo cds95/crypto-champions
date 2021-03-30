@@ -11,11 +11,12 @@ def setup(fn_isolation):
 
 
 @pytest.fixture(scope="module")
-def crypto_champions(accounts, ExposedCryptoChampions):
+def crypto_champions(accounts, ExposedCryptoChampions, MinigameFactoryRegistry):
     """
     Yield a `Contract` object for the CryptoChampions contract.
     """
-    yield accounts[0].deploy(ExposedCryptoChampions)
+    minigameFactoryRegistry = MinigameFactoryRegistry.deploy({ "from": accounts[0] })
+    yield accounts[0].deploy(ExposedCryptoChampions, minigameFactoryRegistry.address)
 
 
 @pytest.fixture(scope="module")

@@ -56,4 +56,12 @@ interface ICryptoChampions {
     function getHeroMintPrice(uint256 round, uint256 elderId) external view returns (uint256);
 
     function getElderSpawnsAmount(uint256 round, uint256 elderId) external view returns (uint256);
+
+    function getAffinityFeedAddress(string calldata affinity) external view returns (address);
+
+    function declareRoundWinner(string calldata winningAffinity) external;
+
+    function getNumEldersInGame() external view returns (uint256);
+
+    function startNewPriceGame() external;
 }
