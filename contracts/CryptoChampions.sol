@@ -2,8 +2,11 @@
 pragma solidity ^0.6.0;
 
 import "../interfaces/ICryptoChampions.sol";
+import "../interfaces/IMinigameFactoryRegistry.sol";
 import "./chainlink_contracts/AggregatorV3Interface.sol";
 import "./chainlink_contracts/VRFConsumerBase.sol";
+import "./minigames/games/priceWars/PriceWarsFactory.sol";
+import "./minigames/games/priceWars/PriceWars.sol";
 
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/access/AccessControl.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
@@ -27,12 +30,18 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     // The admin role is used for administrator duties and reports to the owner
     bytes32 internal constant ROLE_ADMIN = keccak256("ROLE_ADMIN");
 
+    // The role to declare round winners
+    bytes32 internal constant ROLE_GAME_ADMIN = keccak256("ROLE_GAME_ADMIN");
+
     // Reserved id for the in game currency
     uint256 internal constant IN_GAME_CURRENCY_ID = 0;
 
     // Constants used to determine fee proportions.
     // Usage: fee.mul(proportion).div(10)
     uint8 internal constant HERO_MINT_ROYALTY_PROPORTION = 8;
+
+    // The identifier for the price wars game
+    string internal constant PRICE_WARS_ID = "PRICE_WARS";
 
     // The max amount of elders that can be minted
     uint256 public constant MAX_NUMBER_OF_ELDERS = 7;
@@ -81,6 +90,12 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     // Mapping of request id to random result
     mapping(bytes32 => uint256) internal _randomResultsVRF;
 
+    // The list of affinities that won in a round
+    string[] public winningAffinitiesByRound;
+
+    // The registry of minigame factories
+    IMinigameFactoryRegistry internal _minigameFactoryRegistry;
+
     /// @notice Triggered when an elder spirit gets minted
     /// @param elderId The elder id belonging to the minted elder
     /// @param owner The address of the owner
@@ -103,11 +118,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     constructor(
         bytes32 keyhash,
         address vrfCoordinator,
-        address linkToken
+        address linkToken,
+        address minigameFactoryRegistry
     ) public ERC1155("uri") VRFConsumerBase(vrfCoordinator, linkToken) {
         // Set up administrative roles
         _setRoleAdmin(ROLE_OWNER, ROLE_OWNER);
         _setRoleAdmin(ROLE_ADMIN, ROLE_OWNER);
+        _setRoleAdmin(ROLE_GAME_ADMIN, ROLE_OWNER);
 
         // Set up the deployer as the owner and give admin rights
         _setupRole(ROLE_OWNER, msg.sender);
@@ -125,10 +142,18 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         // Set VRF fields
         _keyHash = keyhash;
         _fee = 0.1 * 10**18; // 0.1 LINK
+
+        _minigameFactoryRegistry = IMinigameFactoryRegistry(minigameFactoryRegistry);
     }
 
     modifier isValidElderSpiritId(uint256 elderId) {
         require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+        _;
+    }
+
+    // Restrict to only price war addresses
+    modifier onlyGameAdmin {
+        _hasRole(ROLE_GAME_ADMIN);
         _;
     }
 
@@ -679,5 +704,35 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
             _heroes[heroId].wisdom,
             _heroes[heroId].charisma
         );
+    }
+
+    /// @notice Fetches the feed address for a given affinity
+    /// @param affinity The affinity being searched for
+    /// @return The address of the affinity's feed address
+    function getAffinityFeedAddress(string calldata affinity) external view override returns (address) {
+        return _affinities[affinity];
+    }
+
+    /// @notice Fetches the number of elders currently in the game
+    /// @return The current number of elders in the game
+    function getNumEldersInGame() external view override returns (uint256) {
+        return eldersInGame;
+    }
+
+    /// @notice Declares a winning affinity for a round
+    /// @dev This can only be called by a game admin contract
+    /// @param winningAffinity The affinity that won the game
+    function declareRoundWinner(string calldata winningAffinity) external override onlyGameAdmin {
+        winningAffinitiesByRound.push(winningAffinity);
+    }
+
+    /// @notice Starts a new price game
+    /// @dev This can only be called by the admin of the contract
+    function startNewPriceGame() external override onlyAdmin {
+        address priceWarsFactoryAddress = _minigameFactoryRegistry.getFactory(PRICE_WARS_ID);
+        PriceWarsFactory priceWarsFactory = PriceWarsFactory(priceWarsFactoryAddress);
+        PriceWars priceWar = priceWarsFactory.createPriceWar(address(this));
+        grantRole(ROLE_GAME_ADMIN, address(priceWar));
+        priceWar.startGame();
     }
 }

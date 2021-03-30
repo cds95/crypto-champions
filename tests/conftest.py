@@ -11,6 +11,11 @@ def setup(fn_isolation):
 
 
 @pytest.fixture(scope="module")
+def minigame_factory_registry(accounts, MinigameFactoryRegistry):
+    yield accounts[0].deploy(MinigameFactoryRegistry)
+
+
+@pytest.fixture(scope="module")
 def link_token(accounts, LinkToken):
     """
     Yield a `Contract` object for the LinkToken contract.
@@ -35,11 +40,11 @@ def key_hash(accounts, link_token):
 
 
 @pytest.fixture(scope="module")
-def crypto_champions(accounts, ExposedCryptoChampions, link_token, vrf_coordinator, key_hash):
+def crypto_champions(accounts, ExposedCryptoChampions, minigame_factory_registry, link_token, vrf_coordinator, key_hash):
     """
     Yield a `Contract` object for the CryptoChampions contract.
     """
-    yield accounts[0].deploy(ExposedCryptoChampions, key_hash, vrf_coordinator.address, link_token.address)
+    yield accounts[0].deploy(ExposedCryptoChampions, key_hash, vrf_coordinator.address, link_token.address, minigame_factory_registry)
 
 
 @pytest.fixture(scope="module")

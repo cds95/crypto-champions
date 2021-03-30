@@ -15,8 +15,9 @@ contract ExposedCryptoChampions is CryptoChampions {
     constructor(
         bytes32 keyhash,
         address vrfCoordinator,
-        address linkToken
-    ) public CryptoChampions(keyhash, vrfCoordinator, linkToken) {}
+        address linkToken,
+        address minigameFactoryRegistry
+    ) public CryptoChampions(keyhash, vrfCoordinator, linkToken, minigameFactoryRegistry) {}
 
     /// See CryptoChampions::_getRandomNumber
     function getRandomNumber(uint256 seed) public {
