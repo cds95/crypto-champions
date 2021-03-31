@@ -19,7 +19,7 @@ export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElde
     const availableElderSpots = maxElderSpirits - items.length;
     for (let i = 0; i < availableElderSpots; i++) {
         items.push({
-            id: items.length + i,
+            id: items.length + i + 1,
             label: '',
             isSelectable: true
         });

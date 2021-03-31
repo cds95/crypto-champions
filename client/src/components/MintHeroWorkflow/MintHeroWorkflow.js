@@ -34,8 +34,9 @@ export const MintHeroWorkflowComp = ({
             };
         });
     const handleOnHeroNameChange = (e) => setHeroName(e.target.value);
-    const handleOnSubmit = () => {
-        mintHero(selectedElderSpirit.id, heroName);
+    const handleOnSubmit = async () => {
+        await mintHero(selectedElderSpirit.id, heroName);
+        console.log('done');
     };
     return (
         <div className="mint-hero-workflow">

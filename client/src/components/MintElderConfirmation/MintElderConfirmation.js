@@ -1,7 +1,5 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@material-ui/core';
+import { FormControl, InputLabel, MenuItem, Select, Typography } from '@material-ui/core';
 import React from 'react';
-import { connect } from 'react-redux';
-import { AFFINITIES } from '../../constants';
 import { getRaceImage } from '../../images/races';
 import { CryptoChampionButton } from '../CryptoChampionButton';
 import { ItemGridTile } from '../ItemGridTile/ItemGridTile';
