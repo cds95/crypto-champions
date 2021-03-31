@@ -11,7 +11,8 @@ const initialState = {
     maxNumHeroes: 0,
     numMintedElderSpirits: 0,
     elderSpirits: [],
-    affinities: []
+    affinities: [],
+    mintedAffinities: []
 };
 
 export const cryptoChampions = (state = initialState, action) => {
@@ -32,9 +33,11 @@ export const cryptoChampions = (state = initialState, action) => {
                 numMintedElderSpirits: action.numMintedElderSpirits
             };
         case SET_ELDER_SPIRITS:
+            const mintedAffinities = action.elderSpirits.map((spirit) => spirit.affinity);
             return {
                 ...state,
-                elderSpirits: action.elderSpirits
+                elderSpirits: action.elderSpirits,
+                mintedAffinities
             };
         case SET_AFFINITIES:
             return {

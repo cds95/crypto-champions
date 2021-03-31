@@ -68,7 +68,8 @@ export const getElderSpirit = async (elderSpiritId) => {
         valid: elderSpirit[0],
         raceId: parseInt(elderSpirit[1]),
         classId: parseInt(elderSpirit[2]),
-        attribute: elderSpirit[3]
+        affinity: elderSpirit[3],
+        affinityPrice: parseInt(elderSpirit[4])
     };
 };
 

@@ -10,6 +10,7 @@ import {
     setElderClassAction,
     setAffinityAction
 } from '../../redux/actions';
+import { getAllowedAffinities } from '../../redux/selectors';
 import { mintElderSpirit } from '../../services/cryptoChampions';
 import { ClassSelector } from '../ClassSelector';
 import { MintElderConfirmation } from '../MintElderConfirmation';
@@ -67,7 +68,14 @@ export const MintElderSpirintWorkflowComp = ({
                 />
             );
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_RACE:
-            return <RaceSelector onSelect={handleOnSelectRace} selectedRaceId={selectedRace ? selectedRace.id : ''} />;
+            const mintedRaces = elderSpirits.map((spirit) => spirit.raceId);
+            return (
+                <RaceSelector
+                    onSelect={handleOnSelectRace}
+                    selectedRaceId={selectedRace ? selectedRace.id : ''}
+                    mintedRaces={mintedRaces}
+                />
+            );
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_CLASS:
             return (
                 <ClassSelector onSelect={handleOnSelectClass} selectedClassId={selectedClass ? selectedClass.id : ''} />
@@ -92,7 +100,7 @@ const mapStateToProps = (state) => {
     const {
         workflow: { currentStep, maxSteps },
         mintElderSpiritWorkflow: { race, elderClass, stone, affinity },
-        cryptoChampions: { maxElderSpirits, elderSpirits, affinities }
+        cryptoChampions: { maxElderSpirits, elderSpirits }
     } = state;
     return {
         currentStep,
@@ -103,7 +111,7 @@ const mapStateToProps = (state) => {
         selectedAffinity: affinity,
         maxElderSpirits,
         elderSpirits,
-        affinities
+        affinities: getAllowedAffinities(state)
     };
 };
 
