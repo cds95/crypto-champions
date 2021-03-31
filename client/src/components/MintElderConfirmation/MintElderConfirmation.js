@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AFFINITIES } from '../../constants';
 import { getRaceImage } from '../../images/races';
+import { CryptoChampionButton } from '../CryptoChampionButton';
 import { ItemGridTile } from '../ItemGridTile/ItemGridTile';
 import './MintElderConfirmation.css';
 
@@ -58,9 +59,7 @@ export const MintElderConfirmation = ({
                 </FormControl>
             </div>
             <div className="mint-elder-confirmation__confirmation-container">
-                <Button onClick={onConfirm} variant="contained" color="primary">
-                    {text.mint}
-                </Button>
+                <CryptoChampionButton onClick={onConfirm} label={text.mint} />
             </div>
         </div>
     );

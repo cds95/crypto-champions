@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setMaxElderSpiritsAction } from '../../redux/actions';
-import { Button } from '@material-ui/core';
 import './LandingPage.css';
 import { Link } from 'react-router-dom';
 import { routeDefinitions } from '../../routeDefinitions';
+import { CryptoChampionButton } from '../../components/CryptoChampionButton';
 
 export const LandingPageComp = () => {
     return (
@@ -15,19 +15,11 @@ export const LandingPageComp = () => {
                 </div>
                 <Link
                     to={routeDefinitions.PLAY}
-                    component={(props) => (
-                        <Button className="landing-page__get-started" variant="contained" color="primary" {...props}>
-                            Get Started
-                        </Button>
-                    )}
+                    component={(props) => <CryptoChampionButton {...props} label="Get Started" />}
                 />
             </div>
         </div>
     );
-};
-
-const mapStateToProps = (state) => {
-    return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -38,4 +30,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export const LandingPage = connect(mapStateToProps, mapDispatchToProps)(LandingPageComp);
+export const LandingPage = connect(null, mapDispatchToProps)(LandingPageComp);

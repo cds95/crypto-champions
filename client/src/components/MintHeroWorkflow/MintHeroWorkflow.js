@@ -1,9 +1,12 @@
 import { Button, TextField } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
+import { getElderSpiritImage } from '../../AppUtils';
 import { useGetElderSpirits } from '../../hooks/cryptoChampionsHook';
+import { getRaceImage } from '../../images/races';
 import { setElderSpiritForHeroAction, setHeroNameAction } from '../../redux/actions';
-import { mintHero } from '../../services/cryptoChampions';
+import { getElderSpirit, mintHero } from '../../services/cryptoChampions';
+import { CryptoChampionButton } from '../CryptoChampionButton';
 import { ElderSelector } from '../ElderSelector/ElderSelector';
 import './MintHeroWorkflow.css';
 
@@ -12,21 +15,22 @@ const text = {
     mintHero: 'Train with elder spirit and mint your champion'
 };
 export const MintHeroWorkflowComp = ({
-    maxElderSpirits,
+    elderSpirits,
     setElderSpiritForHero,
     selectedElderSpirit,
     setHeroName,
     heroName
 }) => {
-    const { isLoading, elderSpirits } = useGetElderSpirits(maxElderSpirits);
-    if (isLoading) {
+    if (!elderSpirits) {
         return <div>Loading...</div>;
     }
     const items = elderSpirits
         .filter(({ valid }) => valid)
-        .map(({ id, attribute }) => ({
-            id,
-            label: attribute
+        .map((elder) => ({
+            id: elder.id,
+            label: elder.attribute,
+            image: getElderSpiritImage(elder),
+            isSelectable: true
         }));
     const handleOnHeroNameChange = (e) => setHeroName(e.target.value);
     const handleOnSubmit = () => {
@@ -46,9 +50,7 @@ export const MintHeroWorkflowComp = ({
                     onChange={handleOnHeroNameChange}
                     className="mint-hero-workflow__name"
                 />
-                <Button onClick={handleOnSubmit} variant="contained" color="primary">
-                    {text.mintHero}
-                </Button>
+                <CryptoChampionButton onClick={handleOnSubmit} label={text.mintHero} />
             </div>
         </div>
     );
@@ -56,12 +58,14 @@ export const MintHeroWorkflowComp = ({
 
 const mapStateToProps = (state) => {
     const {
+        cryptoChampions: { elderSpirits },
         mintHeroWorkflow: { heroName, elderSpirit }
     } = state;
     return {
         maxElderSpirits: state.cryptoChampions.maxElderSpirits,
         selectedElderSpirit: elderSpirit,
-        heroName
+        heroName,
+        elderSpirits
     };
 };
 
