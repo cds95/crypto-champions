@@ -1,7 +1,7 @@
 import { TextField } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
-import { getClass, getElderSpiritImage, getRace } from '../../AppUtils';
+import { getClass, getElderSpiritImage, getElderSpiritLabel, getRace } from '../../AppUtils';
 import { setElderSpiritForHeroAction, setHeroNameAction } from '../../redux/actions';
 import { mintHero } from '../../services/cryptoChampions';
 import { CryptoChampionButton } from '../CryptoChampionButton';
@@ -25,11 +25,9 @@ export const MintHeroWorkflowComp = ({
     const items = elderSpirits
         .filter(({ valid }) => valid)
         .map((elder) => {
-            const race = getRace(elder.raceId);
-            const elderClass = getClass(elder.classId);
             return {
                 id: elder.id,
-                label: `${race.label} - ${elderClass.label}`,
+                label: getElderSpiritLabel(elder),
                 subLabel: elder.affinity,
                 image: getElderSpiritImage(elder),
                 isSelectable: true

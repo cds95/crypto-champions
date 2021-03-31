@@ -44,11 +44,11 @@ export const RACES = [
         label: 'Bull'
     },
     {
-        id: 7,
+        id: 6,
         label: 'Frog'
     },
     {
-        id: 8,
+        id: 7,
         label: 'Robot'
     }
 ];

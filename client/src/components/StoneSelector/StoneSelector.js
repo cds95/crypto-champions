@@ -1,18 +1,20 @@
 import React from 'react';
+import { getElderSpiritLabel } from '../../AppUtils';
 import { getRaceImage } from '../../images/races';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 
 const text = {
     title: '1st Cycle Summoning Elder Spirits',
     caption: 'Elder spirits are to be summoned to be our champions',
-    subCaption: 'Elder spirits will determnine the Race, Class and Afinity of the Champions they gather'
+    subCaption: 'Elder spirits will determine the Race, Class and Afinity of the Champions they gather'
 };
 
 export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElderSpirits }) => {
     const items = elderSpirits.map((spirit) => ({
         id: spirit.id,
-        label: `Test`,
-        image: getRaceImage(spirit.raceId)
+        label: getElderSpiritLabel(spirit),
+        image: getRaceImage(spirit.raceId),
+        subLabel: spirit.affinity
     }));
     const availableElderSpots = maxElderSpirits - items.length;
     for (let i = 0; i < availableElderSpots; i++) {
