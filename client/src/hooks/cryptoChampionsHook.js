@@ -52,16 +52,24 @@ export const useGetMaxElderSpirits = () => {
 export const useGetPhase = () => {
     const [state, setState] = useState({
         isLoading: false,
-        phase: 0
+        phase: 0,
+        isInErrorState: false
     });
     useEffect(() => {
         (async () => {
             setState({ isLoading: true });
-            const phase = await getPhase();
-            setState({
-                isLoading: false,
-                phase
-            });
+            try {
+                const phase = await getPhase();
+                setState({
+                    isLoading: false,
+                    phase
+                });
+            } catch (e) {
+                setState({
+                    isLoading: false,
+                    isInErrorState: true
+                });
+            }
         })();
     }, []);
     return state;

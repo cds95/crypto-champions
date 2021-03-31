@@ -8,12 +8,20 @@ import { MintElderSpirintWorkflow } from '../../components/MintElderSpiritWorkfl
 import { MintHeroWorkflow } from '../../components/MintHeroWorkflow';
 
 export const PlayComp = ({ setPhase }) => {
-    const { isLoading, phase } = useGetPhase();
+    const { isLoading, phase, isInErrorState } = useGetPhase();
     useEffect(() => {
         setPhase(phase);
     }, [phase]);
     if (isLoading) {
         return <div>Loading...</div>;
+    }
+    if (isInErrorState) {
+        return (
+            <div>
+                Failed to get current phase. Make sure you're MetaMask wallet is connected as we can't connect to the
+                blockchain without it.
+            </div>
+        );
     }
     let content;
     switch (phase) {
