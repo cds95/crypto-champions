@@ -21,57 +21,69 @@ export const MINT_ELDER_SPIRIT_STEPS = {
 export const RACES = [
     {
         id: 0,
-        label: 'race 1'
+        label: 'Man'
     },
     {
         id: 1,
-        label: 'race 2'
+        label: 'Woman'
     },
     {
         id: 2,
-        label: 'race 3'
+        label: 'Elf Male'
     },
     {
         id: 3,
-        label: 'race 4'
+        label: 'Elf Female'
     },
     {
         id: 4,
-        label: 'race 5'
+        label: 'Bear'
     },
     {
         id: 5,
-        label: 'race 6'
+        label: 'Bull'
     },
     {
         id: 7,
-        label: 'race 7'
+        label: 'Frog'
     },
     {
         id: 8,
-        label: 'race 8'
+        label: 'Robot'
     }
 ];
 
 export const CLASSES = [
     {
         id: 0,
-        label: 'class 1'
+        label: 'Warrior'
     },
     {
         id: 1,
-        label: 'class 2'
+        label: 'Mage'
     },
     {
         id: 2,
-        label: 'class 3'
+        label: 'Druid'
     },
     {
         id: 3,
-        label: 'class 4'
+        label: 'Paladin'
     },
     {
         id: 4,
-        label: 'class 5'
+        label: 'Bard'
+    },
+    {
+        id: 5,
+        label: 'Necromancer'
+    },
+    {
+        id: 6,
+        label: 'Priest'
+    },
+    {
+        id: 4,
+        label: 'Rogue'
     }
 ];
