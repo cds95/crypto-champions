@@ -1,6 +1,7 @@
-from brownie import CryptoChampions, accounts
+from brownie import CryptoChampions, PriceWarsFactory, accounts
 
 
 def main():
     """ Simple deploy script for our two contracts. """
-    accounts[0].deploy(CryptoChampions)
+    pwf = PriceWarsFactory.deploy({ "from": accounts[0] })
+    accounts[0].deploy(CryptoChampions, pwf.address)

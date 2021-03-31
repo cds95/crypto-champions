@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import { ItemGrid } from '../ItemGrid';
 import './ItemSelector.css';
 
-export const ItemSelector = ({ items = [], title, caption, onSelect, selectedItemId }) => {
+export const ItemSelector = ({ items = [], title, caption, subCaption, onSelect, selectedItemId }) => {
     items = items.map((item) => {
         if (item.id === selectedItemId) {
             item.isSelected = true;
@@ -21,6 +21,11 @@ export const ItemSelector = ({ items = [], title, caption, onSelect, selectedIte
             <div className="item-selector__items">
                 <ItemGrid items={items} onSelect={onSelect} />
             </div>
+            {subCaption && (
+                <Typography variant="h6" className="item-selector__sub__caption">
+                    {subCaption}
+                </Typography>
+            )}
         </div>
     );
 };
