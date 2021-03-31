@@ -53,7 +53,7 @@ export const mintElderSpirit = async (raceId, classId, affinity) => {
 
 export const getElderSpirits = async (numElderSpirits) => {
     const elderSpirits = [];
-    for (let id = 1; id < numElderSpirits; id++) {
+    for (let id = 1; id <= numElderSpirits; id++) {
         const spirit = await getElderSpirit(id);
         elderSpirits.push(spirit);
     }
