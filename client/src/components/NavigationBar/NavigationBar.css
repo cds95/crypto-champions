@@ -1,3 +1,7 @@
+header.navigation-bar {
+    background-color: #5c5b58;
+}
+
 .navigation-bar__options {
     display: flex;
     flex: 1;
@@ -7,5 +11,14 @@
 .navigation-bar__options .navigation-bar__link {
     margin-left: 15px;
     text-decoration: none;
+}
+
+header.navigation-bar .navigation-bar__text,
+.navigation-bar__options .navigation-bar__link {
     color: #fff;
+    font-family: 'LeagueSpartan';
+}
+
+header.navigation-bar .navigation-bar__text {
+    font-size: 30px;
 }
