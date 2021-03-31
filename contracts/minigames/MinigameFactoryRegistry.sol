@@ -12,7 +12,7 @@ contract MinigameFactoryRegistry is IMinigameFactoryRegistry {
         minigameFactories[minigameId] = minigameFactoryAddress;
     }
 
-    function getFactory(string calldata minigameId) external override returns(address) {
+    function getFactory(string calldata minigameId) external override returns (address) {
         return minigameFactories[minigameId];
     }
 }

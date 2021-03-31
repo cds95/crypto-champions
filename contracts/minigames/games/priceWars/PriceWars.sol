@@ -2,7 +2,7 @@
 pragma solidity ^0.6.0;
 
 import "../../Minigame.sol";
-import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+import "../../../chainlink_contracts/AggregatorV3Interface.sol";
 import "../../../../interfaces/ICryptoChampions.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SignedSafeMath.sol";
 
@@ -10,21 +10,21 @@ import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SignedSafeMath.
 /// @author cds95
 /// @notice This is the contract for the price wars minigame
 contract PriceWars is Minigame {
-    using SignedSafeMath for int;
+    using SignedSafeMath for int256;
 
     // Initializes a new price war minigame
-    constructor(address cryptoChampionsContractAddress) Minigame("price-wars", cryptoChampionsContractAddress) public {}
+    constructor(address cryptoChampionsContractAddress) public Minigame("price-wars", cryptoChampionsContractAddress) {}
 
     /// @notice Executes one round of a price war minigame by determining the affinity with the token that had the greatest gain.
     function play() internal override {
         string memory winningAffinity;
-        int greatestPercentageChange;
-        for(uint256 elderId = 1; elderId <= cryptoChampions.getNumEldersInGame(); elderId++) {
+        int256 greatestPercentageChange;
+        for (uint256 elderId = 1; elderId <= cryptoChampions.getNumEldersInGame(); elderId++) {
             string memory affinity;
-            int startAffinityPrice;
+            int256 startAffinityPrice;
             (, , , affinity, startAffinityPrice) = cryptoChampions.getElderSpirit(elderId);
-            int percentageChange = determinePercentageChange(startAffinityPrice, affinity);
-            if(percentageChange > greatestPercentageChange || greatestPercentageChange == 0) {
+            int256 percentageChange = determinePercentageChange(startAffinityPrice, affinity);
+            if (percentageChange > greatestPercentageChange || greatestPercentageChange == 0) {
                 greatestPercentageChange = percentageChange;
                 winningAffinity = affinity;
             }
@@ -34,11 +34,15 @@ contract PriceWars is Minigame {
 
     /// @notice Determines the percentage change of a token.
     /// @return The token's percentage change.
-    function determinePercentageChange(int startAffinityPrice, string memory affinity) internal returns (int) {
+    function determinePercentageChange(int256 startAffinityPrice, string memory affinity)
+        internal
+        view
+        returns (int256)
+    {
         address feedAddress = cryptoChampions.getAffinityFeedAddress(affinity);
-        int currentAffinityPrice;
+        int256 currentAffinityPrice;
         (, currentAffinityPrice, , , ) = AggregatorV3Interface(feedAddress).latestRoundData();
-        int absoluteChange = currentAffinityPrice.sub(startAffinityPrice);
+        int256 absoluteChange = currentAffinityPrice.sub(startAffinityPrice);
         return absoluteChange.mul(100).div(startAffinityPrice);
     }
 }
