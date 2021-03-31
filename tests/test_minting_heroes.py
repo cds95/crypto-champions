@@ -2,7 +2,7 @@ import brownie
 
 
 def test_mint_hero_owner_initial_state(accounts, crypto_champions):
-    with brownie.reverts("dev: Given hero id has not been minted."):
+    with brownie.reverts("dev: Hero is not valid."):
         crypto_champions.getHeroOwner(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1)
 
 

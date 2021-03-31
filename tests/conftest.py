@@ -11,12 +11,55 @@ def setup(fn_isolation):
 
 
 @pytest.fixture(scope="module")
-def crypto_champions(accounts, ExposedCryptoChampions, MinigameFactoryRegistry):
+def minigame_factory_registry(accounts, MinigameFactoryRegistry):
+    yield accounts[0].deploy(MinigameFactoryRegistry)
+
+
+@pytest.fixture(scope="module")
+def link_token(accounts, LinkToken):
+    """
+    Yield a `Contract` object for the LinkToken contract.
+    """
+    yield accounts[0].deploy(LinkToken)
+
+
+@pytest.fixture(scope="module")
+def vrf_coordinator(accounts, VRFCoordinatorMock, link_token):
+    """
+    Yield a `Contract` object for the VRFCoordinatorMock contract.
+    """
+    yield accounts[0].deploy(VRFCoordinatorMock, link_token)
+
+
+@pytest.fixture(scope="module")
+def key_hash(accounts, link_token):
+    """
+    Returns a key hash.
+    """
+    return 0
+
+
+@pytest.fixture(scope="module")
+def crypto_champions(accounts, ExposedCryptoChampions, minigame_factory_registry, link_token, vrf_coordinator, key_hash):
     """
     Yield a `Contract` object for the CryptoChampions contract.
     """
-    minigameFactoryRegistry = MinigameFactoryRegistry.deploy({ "from": accounts[0] })
-    yield accounts[0].deploy(ExposedCryptoChampions, minigameFactoryRegistry.address)
+    yield accounts[0].deploy(ExposedCryptoChampions, key_hash, vrf_coordinator.address, link_token.address, minigame_factory_registry)
+
+
+@pytest.fixture(scope="module")
+def chainlink_fee():
+    return 1000000000000000000
+
+
+@pytest.fixture(scope="module")
+def get_seed():
+    return 777
+
+
+@pytest.fixture(scope="module")
+def fund_contract_with_link(accounts, crypto_champions, link_token, chainlink_fee):
+    link_token.transfer(crypto_champions.address, chainlink_fee * 100, {"from": accounts[0]})
 
 
 @pytest.fixture(scope="module")
@@ -44,7 +87,7 @@ def mint_first_elder(accounts, crypto_champions, create_eth_affinity):
 
 
 @pytest.fixture
-def mint_first_hero(accounts, crypto_champions, mint_first_elder):
+def mint_first_hero(accounts, crypto_champions, mint_first_elder, fund_contract_with_link):
     """
     Mint the first hero for the CryptoChampions contract. Hero is based on the first elder minted.
     """
@@ -61,3 +104,5 @@ def mint_max_elders(accounts, crypto_champions, create_eth_affinity):
     maxElders = crypto_champions.MAX_NUMBER_OF_ELDERS()
     for _ in range(maxElders):
         crypto_champions.mintElderSpirit(0, 0, "ETH", {"from": accounts[0], "value": crypto_champions.elderMintPrice()})
+
+
