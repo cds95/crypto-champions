@@ -1,8 +1,8 @@
 import React from 'react';
 import './ItemGridTile.css';
-import tempImage from '../../test.png';
 import clsx from 'clsx';
 import { Typography } from '@material-ui/core';
+import emptySpace from '../../images/not-summoned.png';
 
 export const ItemGridTile = ({ itemLabel, itemImage, isSelectable, isSelected }) => {
     const classNames = clsx('item-grid-tile', {
@@ -11,7 +11,7 @@ export const ItemGridTile = ({ itemLabel, itemImage, isSelectable, isSelected })
     });
     return (
         <div className={classNames}>
-            <img src={tempImage} className="item-grid-tile__image" />
+            <img src={itemImage || emptySpace} className="item-grid-tile__image" />
             <Typography variant="body1">{itemLabel}</Typography>
         </div>
     );

@@ -6,6 +6,14 @@ export const setMaxElderSpiritsAction = (maxElderSpirits) => {
     };
 };
 
+export const SET_NUM_MINTED_ELDER_SPIRITS = 'SET_NUM_MINTED_ELDER_SPIRITS';
+export const setNumMintedElderSpiritsAction = (numMintedElderSpirits) => {
+    return {
+        type: SET_NUM_MINTED_ELDER_SPIRITS,
+        numMintedElderSpirits
+    };
+};
+
 export const SET_PHASE = 'SET_PHASE';
 export const setPhaseAction = (phase) => {
     return {
@@ -85,5 +93,13 @@ export const setHeroNameAction = (heroName) => {
     return {
         type: SET_HERO_NAME,
         heroName
+    };
+};
+
+export const SET_ELDER_SPIRITS = 'SET_ELDER_SPIRITS';
+export const setElderSpiritsAction = (elderSpirits) => {
+    return {
+        type: SET_ELDER_SPIRITS,
+        elderSpirits
     };
 };

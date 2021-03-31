@@ -1,5 +1,26 @@
 import { useState, useEffect } from 'react';
-import { getElderSpirits, getMaxElderSpirits, getPhase } from '../services/cryptoChampions';
+import { getElderSpirits, getMaxElderSpirits, getNumMintedElderSpirits, getPhase } from '../services/cryptoChampions';
+
+export const useGetNumMintedElderSpirits = () => {
+    const [state, setState] = useState({
+        isLoading: false,
+        numMintedElderSpirits: 0
+    });
+    useEffect(() => {
+        (async () => {
+            setState({
+                isLoading: true
+            });
+            const numMintedElderSpirits = await getNumMintedElderSpirits();
+            setState({
+                isLoading: false,
+                numMintedElderSpirits
+            });
+        })();
+    }, []);
+
+    return state;
+};
 
 export const useGetMaxElderSpirits = () => {
     const [state, setState] = useState({

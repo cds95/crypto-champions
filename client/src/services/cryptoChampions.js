@@ -8,6 +8,12 @@ export const getMaxElderSpirits = async () => {
     return parseInt(maxElderSpirits);
 };
 
+export const getNumMintedElderSpirits = async () => {
+    const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    const numElderSpirits = await artifact.methods.getNumEldersInGame().call();
+    return parseInt(numElderSpirits);
+};
+
 export const getPhase = async () => {
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
     const currentPhase = await artifact.methods.currentPhase().call();
@@ -24,9 +30,9 @@ export const mintElderSpirit = async (raceId, classId, affinity) => {
     });
 };
 
-export const getElderSpirits = async (maxElderSpirits) => {
+export const getElderSpirits = async (numElderSpirits) => {
     const elderSpirits = [];
-    for (let id = 1; id < maxElderSpirits; id++) {
+    for (let id = 1; id < numElderSpirits; id++) {
         const spirit = await getElderSpirit(id);
         elderSpirits.push(spirit);
     }

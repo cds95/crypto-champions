@@ -19,7 +19,9 @@ import { StoneSelector } from '../StoneSelector';
 export const MintElderSpirintWorkflowComp = ({
     currentStep,
     selectStone,
+    elderSpirits,
     incrementCurrentStep,
+    maxElderSpirits,
     setMaxSteps,
     selectRace,
     selectAffinity,
@@ -55,7 +57,13 @@ export const MintElderSpirintWorkflowComp = ({
     switch (currentStep) {
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_STONE:
             return (
-                <StoneSelector onSelect={handleOnSelectStone} selectedStoneId={selectedStone ? selectedStone.id : ''} />
+                <StoneSelector
+                    maxStones={maxElderSpirits}
+                    onSelect={handleOnSelectStone}
+                    selectedStoneId={selectedStone ? selectedStone.id : ''}
+                    elderSpirits={elderSpirits}
+                    maxElderSpirits={maxElderSpirits}
+                />
             );
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_RACE:
             return <RaceSelector onSelect={handleOnSelectRace} selectedRaceId={selectedRace ? selectedRace.id : ''} />;
@@ -81,7 +89,8 @@ export const MintElderSpirintWorkflowComp = ({
 const mapStateToProps = (state) => {
     const {
         workflow: { currentStep, maxSteps },
-        mintElderSpiritWorkflow: { race, elderClass, stone, affinity }
+        mintElderSpiritWorkflow: { race, elderClass, stone, affinity },
+        cryptoChampions: { maxElderSpirits, elderSpirits }
     } = state;
     return {
         currentStep,
@@ -89,7 +98,9 @@ const mapStateToProps = (state) => {
         selectedRace: race,
         selectedClass: elderClass,
         selectedStone: stone,
-        selectedAffinity: affinity
+        selectedAffinity: affinity,
+        maxElderSpirits,
+        elderSpirits
     };
 };
 
