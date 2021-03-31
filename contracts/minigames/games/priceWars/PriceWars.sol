@@ -34,7 +34,11 @@ contract PriceWars is Minigame {
 
     /// @notice Determines the percentage change of a token.
     /// @return The token's percentage change.
-    function determinePercentageChange(int256 startAffinityPrice, string memory affinity) internal returns (int256) {
+    function determinePercentageChange(int256 startAffinityPrice, string memory affinity)
+        internal
+        view
+        returns (int256)
+    {
         address feedAddress = cryptoChampions.getAffinityFeedAddress(affinity);
         int256 currentAffinityPrice;
         (, currentAffinityPrice, , , ) = AggregatorV3Interface(feedAddress).latestRoundData();
