@@ -1,4 +1,4 @@
-from brownie import CryptoChampions, PriceWarsFactory, MockV3Aggregator, MinigameFactoryRegistry, accounts
+from brownie import CryptoChampions, PriceWarsFactory, MockV3Aggregator, VRFCoordinatorMock, LinkToken, MinigameFactoryRegistry, accounts
 
 def main():
     INIT_BTC_PRICE = 50000
@@ -12,9 +12,11 @@ def main():
 
     PRICE_WARS = "PRICE_WARS"
 
+    linkToken = LinkToken.deploy({ "from": accounts[0] })
+    vrfCoord = VRFCoordinatorMock.deploy(linkToken.address, { "from": accounts[0] })
     minigameFactoryRegistry = MinigameFactoryRegistry.deploy({ "from": accounts[0] })
     pwf = PriceWarsFactory.deploy({ "from": accounts[0] })
-    cc = CryptoChampions.deploy(minigameFactoryRegistry.address, { "from": accounts[0] })
+    cc = CryptoChampions.deploy(0, vrfCoord.address, linkToken.address, minigameFactoryRegistry.address, { "from": accounts[0] })
     btcV3Aggregator = MockV3Aggregator.deploy(18, INIT_BTC_PRICE, { "from": accounts[0] })
     ethV3Aggregator = MockV3Aggregator.deploy(18, INIT_ETH_PRICE, { "from": accounts[0] })
     linkV3Aggregator = MockV3Aggregator.deploy(18, INIT_LINK_PRICE, { "from": accounts[0] })
