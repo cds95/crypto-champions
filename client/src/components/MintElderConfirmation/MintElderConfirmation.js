@@ -1,6 +1,7 @@
 import { Button, MenuItem, Select, Typography } from '@material-ui/core';
 import React from 'react';
 import { AFFINITIES } from '../../constants';
+import { getRaceImage } from '../../images/races';
 import { ItemGridTile } from '../ItemGridTile/ItemGridTile';
 import './MintElderConfirmation.css';
 
@@ -15,7 +16,7 @@ export const MintElderConfirmation = ({ selectedAffinity, race, elderClass, onCo
         <div className="mint-elder-confirmation">
             <div className="mint-elder-confirmation__selections">
                 <div className="mint-elder-confirmation__selections-item">
-                    <ItemGridTile itemLabel={race.label} />
+                    <ItemGridTile itemLabel={race.label} itemImage={getRaceImage(race.id)} />
                 </div>
                 <div className="mint-elder-confirmation__selections-item">
                     <ItemGridTile itemLabel={elderClass.label} />

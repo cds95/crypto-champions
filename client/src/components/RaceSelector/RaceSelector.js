@@ -1,5 +1,5 @@
 import React from 'react';
-import { RACES } from '../../constants';
+import { getRaceImage } from '../../images/races';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 
 const text = {
@@ -7,12 +7,52 @@ const text = {
     caption: 'Select a race'
 };
 
+export const RACES = [
+    {
+        id: 1,
+        label: 'race 1'
+    },
+    {
+        id: 2,
+        label: 'race 2'
+    },
+    {
+        id: 3,
+        label: 'race 3'
+    },
+    {
+        id: 4,
+        label: 'race 4'
+    },
+    {
+        id: 5,
+        label: 'race 5'
+    },
+    {
+        id: 6,
+        label: 'race 6'
+    },
+    {
+        id: 7,
+        label: 'race 7'
+    },
+    {
+        id: 8,
+        label: 'race 8'
+    }
+];
+
 export const RaceSelector = ({ onSelect, selectedRaceId }) => {
+    const items = RACES.map((race) => ({
+        ...race,
+        image: getRaceImage(race.id),
+        isSelectable: true
+    }));
     return (
         <ItemSelector
             title={text.title}
             caption={text.caption}
-            items={RACES}
+            items={items}
             onSelect={onSelect}
             selectedItemId={selectedRaceId}
         />

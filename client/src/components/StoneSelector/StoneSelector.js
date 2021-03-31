@@ -1,5 +1,5 @@
 import React from 'react';
-import { STONES } from '../../constants';
+import { getRaceImage } from '../../images/races';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 
 const text = {
@@ -11,7 +11,8 @@ const text = {
 export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElderSpirits }) => {
     const items = elderSpirits.map((spirit) => ({
         id: spirit.id,
-        label: `Test`
+        label: `Test`,
+        image: getRaceImage(spirit.raceId)
     }));
     const availableElderSpots = maxElderSpirits - items.length;
     for (let i = 0; i < availableElderSpots; i++) {
