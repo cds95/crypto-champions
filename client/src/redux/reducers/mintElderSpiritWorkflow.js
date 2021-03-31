@@ -1,11 +1,10 @@
-import { AFFINITIES } from '../../constants';
 import { SET_AFFINITY, SET_ELDER_CLASS, SET_ELDER_RACE, SET_ELDER_STONE } from '../actions';
 
 const initialState = {
     stone: null,
     race: null,
     elderClass: null,
-    affinity: AFFINITIES[0]
+    affinity: null
 };
 
 export const mintElderSpiritWorkflow = (state = initialState, action) => {

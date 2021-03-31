@@ -17,5 +17,3 @@ export const MINT_ELDER_SPIRIT_STEPS = {
     CHOOSE_CLASS: 2,
     MINT: 3
 };
-
-export const AFFINITIES = ['Affinity One', 'Affinity Two'];

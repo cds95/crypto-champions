@@ -103,3 +103,11 @@ export const setElderSpiritsAction = (elderSpirits) => {
         elderSpirits
     };
 };
+
+export const SET_AFFINITIES = 'SET_AFFINITIES';
+export const setAffinitiesAction = (affinities) => {
+    return {
+        type: SET_AFFINITIES,
+        affinities
+    };
+};

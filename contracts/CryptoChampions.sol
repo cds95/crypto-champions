@@ -77,6 +77,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     // The mapping of affinities (token ticker) to price feed address
     mapping(string => address) internal _affinities;
 
+    // List of available affinities
+    string[] public affinities;
+
     // The list of affinities that won in a round
     string[] public winningAffinitiesByRound;
 
@@ -160,6 +163,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @param feedAddress The price feed address
     function createAffinity(string calldata tokenTicker, address feedAddress) external override onlyAdmin {
         _affinities[tokenTicker] = feedAddress;
+        affinities.push(tokenTicker);
     }
 
     /// @notice Sets the elder mint price
