@@ -8,6 +8,7 @@ const defaultRenderItem = (item, isSelectable) => (
         itemLabel={item.label}
         isSelectable={isSelectable}
         isSelected={item.isSelected}
+        itemSublabel={item.subLabel}
     />
 );
 

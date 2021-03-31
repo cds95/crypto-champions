@@ -1,11 +1,9 @@
-import { Button, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
-import { getElderSpiritImage } from '../../AppUtils';
-import { useGetElderSpirits } from '../../hooks/cryptoChampionsHook';
-import { getRaceImage } from '../../images/races';
+import { getClass, getElderSpiritImage, getRace } from '../../AppUtils';
 import { setElderSpiritForHeroAction, setHeroNameAction } from '../../redux/actions';
-import { getElderSpirit, mintHero } from '../../services/cryptoChampions';
+import { mintHero } from '../../services/cryptoChampions';
 import { CryptoChampionButton } from '../CryptoChampionButton';
 import { ElderSelector } from '../ElderSelector/ElderSelector';
 import './MintHeroWorkflow.css';
@@ -26,12 +24,17 @@ export const MintHeroWorkflowComp = ({
     }
     const items = elderSpirits
         .filter(({ valid }) => valid)
-        .map((elder) => ({
-            id: elder.id,
-            label: elder.attribute,
-            image: getElderSpiritImage(elder),
-            isSelectable: true
-        }));
+        .map((elder) => {
+            const race = getRace(elder.raceId);
+            const elderClass = getClass(elder.classId);
+            return {
+                id: elder.id,
+                label: `${race.label} - ${elderClass.label}`,
+                subLabel: elder.affinity,
+                image: getElderSpiritImage(elder),
+                isSelectable: true
+            };
+        });
     const handleOnHeroNameChange = (e) => setHeroName(e.target.value);
     const handleOnSubmit = () => {
         mintHero(selectedElderSpirit.id, heroName);

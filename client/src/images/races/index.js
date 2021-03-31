@@ -11,5 +11,5 @@ import robot from './08-robot.png';
 const images = [humanMale, humanFemale, elfMale, elfFemale, bear, bull, frog, robot];
 
 export const getRaceImage = (id) => {
-    return images[id - 1]; // id is 1 based
+    return images[id];
 };
