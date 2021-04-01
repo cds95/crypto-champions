@@ -125,7 +125,6 @@ export const MintElderSpirintWorkflowComp = ({
         <React.Fragment>
             <Confirmation
                 isOpen={isModalOpen}
-                text={text.confirmation}
                 isLoading={isMinting}
                 text={text.confirmation}
                 loadingText={text.processing}

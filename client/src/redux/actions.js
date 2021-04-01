@@ -120,9 +120,24 @@ export const setIsMintingElderSpiritAction = (isMinting) => {
     };
 };
 
+export const SET_IS_MINTING_HERO = 'SET_IS_MINTING_HERO';
+export const setIsMintingHeroAction = (isMinting) => {
+    return {
+        type: SET_IS_MINTING_HERO,
+        isMinting
+    };
+};
+
 export const RESET_MINTING_ELDER_SPIRIT_WORKFLOW = 'RESET_MINTING_ELDER_SPIRIT_WORKFLOW';
 export const resetMintingElderSpiritWorkflowAction = () => {
     return {
         type: RESET_MINTING_ELDER_SPIRIT_WORKFLOW
+    };
+};
+
+export const RESET_MINTING_HERO_WORKFLOW = 'RESET_MINTING_HERO_WORKFLOW';
+export const resetMintingHeroWorkflowAction = () => {
+    return {
+        type: RESET_MINTING_HERO_WORKFLOW
     };
 };

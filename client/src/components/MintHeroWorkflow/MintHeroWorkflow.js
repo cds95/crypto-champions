@@ -1,24 +1,40 @@
 import { TextField } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { getClass, getElderSpiritImage, getElderSpiritLabel, getRace } from '../../AppUtils';
-import { setElderSpiritForHeroAction, setHeroNameAction } from '../../redux/actions';
+import { useHistory } from 'react-router';
+import { getElderSpiritImage, getElderSpiritLabel } from '../../AppUtils';
+import {
+    resetMintingHeroWorkflowAction,
+    setElderSpiritForHeroAction,
+    setHeroNameAction,
+    setIsMintingHeroAction
+} from '../../redux/actions';
+import { routeDefinitions } from '../../routeDefinitions';
 import { mintHero } from '../../services/cryptoChampions';
+import { Confirmation } from '../Confirmation';
 import { CryptoChampionButton } from '../CryptoChampionButton';
 import { ElderSelector } from '../ElderSelector/ElderSelector';
 import './MintHeroWorkflow.css';
 
 const text = {
     fieldLabel: "Enter your Hero's name",
-    mintHero: 'Train with elder spirit and mint your champion'
+    mintHero: 'Train with elder spirit and mint your champion',
+    processing: 'Processing...',
+    confirmation: 'Successfully purchased character'
 };
+
 export const MintHeroWorkflowComp = ({
     elderSpirits,
     setElderSpiritForHero,
     selectedElderSpirit,
     setHeroName,
-    heroName
+    heroName,
+    resetWorkflow,
+    setIsMinting,
+    isMinting
 }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const history = useHistory();
     if (!elderSpirits) {
         return <div>Loading...</div>;
     }
@@ -35,8 +51,14 @@ export const MintHeroWorkflowComp = ({
         });
     const handleOnHeroNameChange = (e) => setHeroName(e.target.value);
     const handleOnSubmit = async () => {
+        setIsMinting(true);
+        setIsModalOpen(true);
         await mintHero(selectedElderSpirit.id, heroName);
-        console.log('done');
+        setIsMinting(false);
+    };
+    const handleOnClose = () => {
+        history.push(routeDefinitions.ROOT);
+        resetWorkflow();
     };
     return (
         <div className="mint-hero-workflow">
@@ -54,6 +76,13 @@ export const MintHeroWorkflowComp = ({
                 />
                 <CryptoChampionButton onClick={handleOnSubmit} label={text.mintHero} />
             </div>
+            <Confirmation
+                isOpen={isModalOpen}
+                text={text.confirmation}
+                isLoading={isMinting}
+                loadingText={text.processing}
+                onConfirm={handleOnClose}
+            />
         </div>
     );
 };
@@ -61,13 +90,14 @@ export const MintHeroWorkflowComp = ({
 const mapStateToProps = (state) => {
     const {
         cryptoChampions: { elderSpirits },
-        mintHeroWorkflow: { heroName, elderSpirit }
+        mintHeroWorkflow: { heroName, elderSpirit, isMinting }
     } = state;
     return {
         maxElderSpirits: state.cryptoChampions.maxElderSpirits,
         selectedElderSpirit: elderSpirit,
         heroName,
-        elderSpirits
+        elderSpirits,
+        isMinting
     };
 };
 
@@ -78,6 +108,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         setHeroName: (heroName) => {
             dispatch(setHeroNameAction(heroName));
+        },
+        setIsMinting: (isMinting) => {
+            dispatch(setIsMintingHeroAction(isMinting));
+        },
+        resetWorkflow: () => {
+            dispatch(resetMintingHeroWorkflowAction());
         }
     };
 };
