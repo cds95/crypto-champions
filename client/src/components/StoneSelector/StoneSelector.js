@@ -1,19 +1,36 @@
 import React from 'react';
-import { STONES } from '../../constants';
+import { getElderSpiritLabel } from '../../AppUtils';
+import { getRaceImage } from '../../images/races';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 
 const text = {
-    title: (numStones) =>
-        `You make your way to the top of a misty mountain and discover ${numStones} stones with strange markings on them.`,
-    caption: 'Select a stone to begin summoning an Elder Spirit'
+    title: '1st Cycle Summoning Elder Spirits',
+    caption: 'Elder spirits are to be summoned to be our champions',
+    subCaption: 'Elder spirits will determine the Race, Class and Afinity of the Champions they gather'
 };
-export const StoneSelector = ({ onSelect, selectedStoneId }) => {
+
+export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElderSpirits }) => {
+    const items = elderSpirits.map((spirit) => ({
+        id: spirit.id,
+        label: getElderSpiritLabel(spirit),
+        image: getRaceImage(spirit.raceId),
+        subLabel: spirit.affinity
+    }));
+    const availableElderSpots = maxElderSpirits - items.length;
+    for (let i = 0; i < availableElderSpots; i++) {
+        items.push({
+            id: items.length + i + 1,
+            label: '',
+            isSelectable: true
+        });
+    }
     return (
         <ItemSelector
-            title={text.title(STONES.length)}
+            title={text.title}
             caption={text.caption}
-            items={STONES}
+            items={items}
             onSelect={onSelect}
+            subCaption={text.subCaption}
             selectedItemId={selectedStoneId}
         />
     );

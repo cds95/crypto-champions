@@ -77,6 +77,9 @@ def create_eth_affinity(accounts, crypto_champions, get_eth_usd_price_feed):
     """
     crypto_champions.createAffinity("ETH", get_eth_usd_price_feed.address, {"from": accounts[0]})
 
+@pytest.fixture
+def set_phase_to_mint_hero(accounts, crypto_champions):
+    crypto_champions.setPhase(1, {"from": accounts[0]})
 
 @pytest.fixture
 def mint_first_elder(accounts, crypto_champions, create_eth_affinity):
@@ -87,7 +90,7 @@ def mint_first_elder(accounts, crypto_champions, create_eth_affinity):
 
 
 @pytest.fixture
-def mint_first_hero(accounts, crypto_champions, mint_first_elder, fund_contract_with_link):
+def mint_first_hero(accounts, crypto_champions, mint_first_elder, set_phase_to_mint_hero, fund_contract_with_link):
     """
     Mint the first hero for the CryptoChampions contract. Hero is based on the first elder minted.
     """

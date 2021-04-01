@@ -8,6 +8,7 @@ const defaultRenderItem = (item, isSelectable) => (
         itemLabel={item.label}
         isSelectable={isSelectable}
         isSelected={item.isSelected}
+        itemSublabel={item.subLabel}
     />
 );
 
@@ -15,10 +16,10 @@ export const ItemGrid = ({ items = [], onSelect, renderItem = defaultRenderItem 
     return (
         <div className="item-grid">
             {items.map((item) => {
-                const handleOnClick = () => onSelect && onSelect(item);
+                const handleOnClick = () => item.isSelectable && onSelect && onSelect(item);
                 return (
                     <div className="item-grid__item" key={item.id} onClick={handleOnClick}>
-                        {renderItem(item, !!onSelect)}
+                        {renderItem(item, !!onSelect && item.isSelectable)}
                     </div>
                 );
             })}

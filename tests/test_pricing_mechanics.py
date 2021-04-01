@@ -1,7 +1,7 @@
 import brownie
 
 
-def test_increase_mint_price(accounts, crypto_champions, mint_first_elder, fund_contract_with_link):
+def test_increase_mint_price(accounts, crypto_champions, mint_first_elder, set_phase_to_mint_hero, fund_contract_with_link):
     initialMintPrice = crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), crypto_champions.eldersInGame())
     crypto_champions.mintHero(crypto_champions.eldersInGame(), "name", {"from": accounts[0], "value": initialMintPrice})
     newMintPrice = crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), crypto_champions.eldersInGame())

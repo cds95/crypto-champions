@@ -29,7 +29,7 @@ def main():
 
     cc.mintElderSpirit(1, 1, "BTC", { "from": accounts[0], "value": 0.3 * 10 ** 18 })
     cc.mintElderSpirit(2, 2, "ETH", { "from": accounts[0], "value": 0.3 * 10 ** 18 })
-    cc.mintElderSpirit(3, 3, "LINK",{ "from": accounts[0], "value": 0.3 * 10 ** 18 })
+    # cc.mintElderSpirit(3, 3, "LINK",{ "from": accounts[0], "value": 0.3 * 10 ** 18 })
 
     btcV3Aggregator.updateAnswer(CURRENT_BTC_PRICE)
     ethV3Aggregator.updateAnswer(CURRENT_ETH_PRICE)

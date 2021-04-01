@@ -13,6 +13,44 @@
     padding: 0 25px;
 }
 
-.mint-elder-confirmation__affinity-selector-container {
+h5.mint-elder-confirmation__select-affinity,
+.mint-elder-confirmation .mint-elder-confirmation__affinity-selector-label,
+.mint-elder-confirmation .mint-elder-confirmation__affinity-selector {
+    color: #fff !important;
+}
+
+.mint-elder-confirmation .mint-elder-confirmation__affinity-selector {
+    text-align: left;
+}
+
+.mint-elder-confirmation .mint-elder-confirmation__form-control {
+    min-width: 200px;
     margin: 50px 0;
+}
+
+.mint-elder-confirmation .mint-elder-confirmation__affinity-selector-label,
+li.mint-elder-confirmation__affinity-item,
+.mint-elder-confirmation__affinity-selector-label,
+.mint-elder-confirmation .mint-elder-confirmation__select-affinity,
+.mint-elder-confirmation .mint-elder-confirmation__affinity-selector {
+    font-family: 'Pronciono';
+}
+
+.mint-elder-confirmation__affinity-selector::before,
+.mint-elder-confirmation__affinity-selector::after {
+    border-bottom: 1px solid white !important;
+}
+
+.mint-elder-confirmation__affinity-selector .MuiSelect-icon {
+    color: #fff;
+}
+
+.mint-elder-spirit__actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.mint-elder-spirit__nav {
+    margin: 0 15px;
 }

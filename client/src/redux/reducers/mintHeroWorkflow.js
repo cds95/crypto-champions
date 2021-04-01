@@ -1,8 +1,9 @@
-import { SET_ELDER_SPIRIT_FOR_HERO, SET_HERO_NAME } from '../actions';
+import { RESET_MINTING_HERO_WORKFLOW, SET_ELDER_SPIRIT_FOR_HERO, SET_HERO_NAME, SET_IS_MINTING_HERO } from '../actions';
 
 const initialState = {
     elderSpirit: null,
-    heroName: ''
+    heroName: '',
+    isMinting: false
 };
 
 export const mintHeroWorkflow = (state = initialState, action) => {
@@ -17,6 +18,13 @@ export const mintHeroWorkflow = (state = initialState, action) => {
                 ...state,
                 heroName: action.heroName
             };
+        case SET_IS_MINTING_HERO:
+            return {
+                ...state,
+                isMinting: action.isMinting
+            };
+        case RESET_MINTING_HERO_WORKFLOW:
+            return initialState;
         default:
             return state;
     }

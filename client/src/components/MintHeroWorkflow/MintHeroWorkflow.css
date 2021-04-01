@@ -6,5 +6,17 @@
 
 .mint-hero-workflow .mint-hero-workflow__name {
     width: 300px;
-    margin-bottom: 50px;
+    margin: 50px 0;
+    color: #fff;
+}
+
+.mint-hero-workflow .mint-hero-workflow__name label,
+.mint-hero-workflow .mint-hero-workflow__name label + .MuiInput-formControl {
+    color: #fff;
+    font-family: 'Pronciono';
+}
+
+.mint-hero-workflow .mint-hero-workflow__name label + .MuiInput-formControl:before,
+.mint-hero-workflow .mint-hero-workflow__name label + .MuiInput-formControl:after {
+    border-bottom: 1px solid #fff;
 }
