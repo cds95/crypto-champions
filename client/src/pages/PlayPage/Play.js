@@ -25,10 +25,10 @@ export const PlayComp = ({ setPhase }) => {
     }
     let content;
     switch (phase) {
-        case PHASES.ONE:
+        case PHASES.MINT_ELDER:
             content = <MintElderSpirintWorkflow />;
             break;
-        case PHASES.TWO:
+        case PHASES.MINT_HERO:
             content = <MintHeroWorkflow />;
             break;
         default:

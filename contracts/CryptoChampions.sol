@@ -19,7 +19,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     using SafeMath for uint256;
 
     // Possible phases the contract can be in.  Phase one is when users can mint elder spirits and two is when they can mint heros.
-    enum Phase { ONE, TWO }
+    enum Phase { MINT_ELDER, MINT_HERO }
 
     // The current phase the contract is in.
     Phase public currentPhase;
@@ -140,7 +140,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         currentRound = 0;
 
         // Set initial phase to phase one
-        currentPhase = Phase.ONE;
+        currentPhase = Phase.MINT_ELDER;
 
         // Set VRF fields
         _keyHash = keyhash;
@@ -228,7 +228,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         uint256 classId,
         string calldata affinity
     ) external payable override returns (uint256) {
-        require(currentPhase == Phase.ONE); // dev: Can only mint elders in phase one
+        require(currentPhase == Phase.MINT_ELDER); // dev: Can only mint elders in phase one
         require(eldersInGame < MAX_NUMBER_OF_ELDERS); // dev: Max number of elders already minted.
         require(msg.value >= elderMintPrice); // dev: Insufficient payment.
         require(_affinities[affinity] != address(0)); // dev: Affinity does not exist.
@@ -287,7 +287,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         isValidElderSpiritId(elderId)
         returns (uint256)
     {
-        require(currentPhase == Phase.TWO); //dev: Can only mint hero in phase 2.
+        require(currentPhase == Phase.MINT_HERO); //dev: Can only mint hero in phase 2.
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
 
         require(_canMintHero(elderId)); // dev: Can't mint hero. Too mnay heroes minted for elder.
