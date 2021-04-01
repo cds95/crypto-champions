@@ -10,7 +10,8 @@ import {
     setElderClassAction,
     setAffinityAction,
     setIsMintingElderSpiritAction,
-    resetMintingElderSpiritWorkflowAction
+    resetMintingElderSpiritWorkflowAction,
+    decrementActiveStepAction
 } from '../../redux/actions';
 import { getAllowedAffinities } from '../../redux/selectors';
 import { mintElderSpirit } from '../../services/cryptoChampions';
@@ -21,10 +22,13 @@ import { RaceSelector } from '../RaceSelector';
 import { StoneSelector } from '../StoneSelector';
 import { useHistory } from 'react-router-dom';
 import { routeDefinitions } from '../../routeDefinitions';
+import { CryptoChampionButton } from '../CryptoChampionButton';
 
 const text = {
     confirmation: 'Successfully purchased elder',
-    processing: 'Processing...'
+    processing: 'Processing...',
+    back: 'Back',
+    next: 'Next'
 };
 
 export const MintElderSpirintWorkflowComp = ({
@@ -33,6 +37,7 @@ export const MintElderSpirintWorkflowComp = ({
     selectStone,
     elderSpirits,
     incrementCurrentStep,
+    decrementCurrentStep,
     maxElderSpirits,
     setMaxSteps,
     selectRace,
@@ -57,11 +62,9 @@ export const MintElderSpirintWorkflowComp = ({
     };
     const handleOnSelectRace = (race) => {
         selectRace(race);
-        incrementCurrentStep();
     };
     const handleOnSelectClass = (elderClass) => {
         selectElderClass(elderClass);
-        incrementCurrentStep();
     };
     const handleOnSelectAffinity = (affinity) => selectAffinity(affinity);
     const handleOnConfirm = async () => {
@@ -78,6 +81,7 @@ export const MintElderSpirintWorkflowComp = ({
         history.push(routeDefinitions.ROOT);
         resetMintingElderSpiritWorkflow();
     };
+
     let content;
     switch (currentStep) {
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_STONE:
@@ -131,6 +135,18 @@ export const MintElderSpirintWorkflowComp = ({
                 onConfirm={handleOnCloseModal}
             />
             {content}
+            <div className="mint-elder-spirit__actions">
+                {currentStep > 0 && (
+                    <div className="mint-elder-spirit__nav">
+                        <CryptoChampionButton label={text.back} onClick={decrementCurrentStep} />
+                    </div>
+                )}
+                {currentStep >= 1 && currentStep < Object.keys(MINT_ELDER_SPIRIT_STEPS).length - 1 && (
+                    <div className="mint-elder-spirit__nav">
+                        <CryptoChampionButton label={text.next} onClick={incrementCurrentStep} />
+                    </div>
+                )}
+            </div>
         </React.Fragment>
     );
 };
@@ -183,6 +199,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         incrementCurrentStep: () => {
             dispatch(incrementActiveStepAction);
+        },
+        decrementCurrentStep: () => {
+            dispatch(decrementActiveStepAction);
         }
     };
 };
