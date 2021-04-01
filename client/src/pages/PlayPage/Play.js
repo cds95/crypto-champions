@@ -38,10 +38,6 @@ export const PlayComp = ({ setPhase }) => {
     return <div className="play">{content}</div>;
 };
 
-const mapStateToProps = (state) => {
-    return {};
-};
-
 const mapDispatchToProps = (dispatch) => {
     return {
         setPhase: (phase) => {
@@ -50,4 +46,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export const Play = connect(mapStateToProps, mapDispatchToProps)(PlayComp);
+export const Play = connect(null, mapDispatchToProps)(PlayComp);

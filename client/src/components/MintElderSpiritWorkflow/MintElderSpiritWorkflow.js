@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { MINT_ELDER_SPIRIT_STEPS } from '../../constants';
 import {
@@ -8,14 +8,24 @@ import {
     setElderStoneAction,
     setMaxStepsAction,
     setElderClassAction,
-    setAffinityAction
+    setAffinityAction,
+    setIsMintingElderSpiritAction,
+    resetMintingElderSpiritWorkflowAction
 } from '../../redux/actions';
 import { getAllowedAffinities } from '../../redux/selectors';
 import { mintElderSpirit } from '../../services/cryptoChampions';
 import { ClassSelector } from '../ClassSelector';
+import { Confirmation } from '../Confirmation';
 import { MintElderConfirmation } from '../MintElderConfirmation';
 import { RaceSelector } from '../RaceSelector';
 import { StoneSelector } from '../StoneSelector';
+import { useHistory } from 'react-router-dom';
+import { routeDefinitions } from '../../routeDefinitions';
+
+const text = {
+    confirmation: 'Successfully purchased elder',
+    processing: 'Processing...'
+};
 
 export const MintElderSpirintWorkflowComp = ({
     affinities,
@@ -31,8 +41,12 @@ export const MintElderSpirintWorkflowComp = ({
     selectedClass,
     selectedRace,
     selectedAffinity,
-    selectedStone
+    selectedStone,
+    setIsMinting,
+    isMinting,
+    resetMintingElderSpiritWorkflow
 }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     useEffect(() => {
         const numSteps = Object.keys(MINT_ELDER_SPIRIT_STEPS).length;
         setMaxSteps(numSteps);
@@ -51,14 +65,23 @@ export const MintElderSpirintWorkflowComp = ({
     };
     const handleOnSelectAffinity = (affinity) => selectAffinity(affinity);
     const handleOnConfirm = async () => {
+        setIsModalOpen(true);
         const raceId = selectedRace.id;
         const classId = selectedClass.id;
         const affinity = selectedAffinity;
+        setIsMinting(true);
         await mintElderSpirit(raceId, classId, affinity);
+        setIsMinting(false);
     };
+    const history = useHistory();
+    const handleOnCloseModal = () => {
+        history.push(routeDefinitions.ROOT);
+        resetMintingElderSpiritWorkflow();
+    };
+    let content;
     switch (currentStep) {
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_STONE:
-            return (
+            content = (
                 <StoneSelector
                     maxStones={maxElderSpirits}
                     onSelect={handleOnSelectStone}
@@ -67,21 +90,24 @@ export const MintElderSpirintWorkflowComp = ({
                     maxElderSpirits={maxElderSpirits}
                 />
             );
+            break;
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_RACE:
             const mintedRaces = elderSpirits.map((spirit) => spirit.raceId);
-            return (
+            content = (
                 <RaceSelector
                     onSelect={handleOnSelectRace}
                     selectedRaceId={selectedRace ? selectedRace.id : ''}
                     mintedRaces={mintedRaces}
                 />
             );
+            break;
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_CLASS:
-            return (
+            content = (
                 <ClassSelector onSelect={handleOnSelectClass} selectedClassId={selectedClass ? selectedClass.id : ''} />
             );
+            break;
         case MINT_ELDER_SPIRIT_STEPS.MINT:
-            return (
+            content = (
                 <MintElderConfirmation
                     affinities={affinities}
                     selectedAffinity={selectedAffinity}
@@ -91,15 +117,29 @@ export const MintElderSpirintWorkflowComp = ({
                     onConfirm={handleOnConfirm}
                 />
             );
+            break;
         default:
-            return <></>;
+            content = <></>;
     }
+    return (
+        <React.Fragment>
+            <Confirmation
+                isOpen={isModalOpen}
+                text={text.confirmation}
+                isLoading={isMinting}
+                text={text.confirmation}
+                loadingText={text.processing}
+                onConfirm={handleOnCloseModal}
+            />
+            {content}
+        </React.Fragment>
+    );
 };
 
 const mapStateToProps = (state) => {
     const {
         workflow: { currentStep, maxSteps },
-        mintElderSpiritWorkflow: { race, elderClass, stone, affinity },
+        mintElderSpiritWorkflow: { race, elderClass, stone, affinity, isMinting },
         cryptoChampions: { maxElderSpirits, elderSpirits }
     } = state;
     return {
@@ -111,12 +151,19 @@ const mapStateToProps = (state) => {
         selectedAffinity: affinity,
         maxElderSpirits,
         elderSpirits,
-        affinities: getAllowedAffinities(state)
+        affinities: getAllowedAffinities(state),
+        isMinting
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        resetMintingElderSpiritWorkflow: () => {
+            dispatch(resetMintingElderSpiritWorkflowAction());
+        },
+        setIsMinting: (isMinting) => {
+            dispatch(setIsMintingElderSpiritAction(isMinting));
+        },
         setMaxSteps: (maxSteps) => {
             dispatch(setMaxStepsAction(maxSteps));
         },

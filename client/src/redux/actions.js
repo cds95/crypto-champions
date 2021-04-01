@@ -111,3 +111,18 @@ export const setAffinitiesAction = (affinities) => {
         affinities
     };
 };
+
+export const SET_IS_MINTING_ELDER_SPIRIT = 'SET_IS_MINTING_ELDER_SPIRIT';
+export const setIsMintingElderSpiritAction = (isMinting) => {
+    return {
+        type: SET_IS_MINTING_ELDER_SPIRIT,
+        isMinting
+    };
+};
+
+export const RESET_MINTING_ELDER_SPIRIT_WORKFLOW = 'RESET_MINTING_ELDER_SPIRIT_WORKFLOW';
+export const resetMintingElderSpiritWorkflowAction = () => {
+    return {
+        type: RESET_MINTING_ELDER_SPIRIT_WORKFLOW
+    };
+};
