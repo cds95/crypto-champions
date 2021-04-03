@@ -88,7 +88,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     uint256 internal _fee;
 
     // Mapping of request id to hero id
-    mapping(uint256 => bytes32) internal _heroRandomRequest;
+    mapping(uint256 => bytes32) public _heroRandomRequest;
 
     // Mapping of request id to random result
     mapping(bytes32 => uint256) internal _randomResultsVRF;
