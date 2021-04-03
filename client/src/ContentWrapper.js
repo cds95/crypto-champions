@@ -13,7 +13,7 @@ import {
     setElderSpiritsAction,
     setAffinitiesAction
 } from './redux/actions';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route, HashRouter as Router, Switch } from 'react-router-dom';
 import { routeDefinitions } from './routeDefinitions';
 import { Play } from './pages/PlayPage';
 import { NavigationBar } from './components/NavigationBar';
