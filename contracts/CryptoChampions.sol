@@ -88,7 +88,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     uint256 internal _fee;
 
     // Mapping of request id to hero id
-    mapping(uint256 => bytes32) public _heroRandomRequest;
+    mapping(bytes32 => uint256) internal _heroRandomRequest;
 
     // Mapping of request id to random result
     mapping(bytes32 => uint256) internal _randomResultsVRF;
@@ -185,6 +185,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     /// @param randomness The randomness
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
         _randomResultsVRF[requestId] = randomness;
+        _trainHero(requestId);
     }
 
     /// @notice Sets the contract's phase
@@ -313,7 +314,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
         // Request the random number and set hero attributes
         bytes32 requestId = _getRandomNumber(heroId);
-        _heroRandomRequest[heroId] = requestId;
+        _heroRandomRequest[requestId] = heroId;
 
         // Mint the NFT
         _mint(_msgSender(), heroId, 1, ""); // TODO: give the URI
@@ -364,14 +365,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     }
 
     /// @notice Sets the hero attributes
-    /// @param heroId The hero id
-    function trainHero(uint256 heroId) external override isValidHero(heroId) {
-        bytes32 heroRequestId = _heroRandomRequest[heroId];
-        require(heroRequestId != 0); // dev: Random number was never requested for this hero.
-
-        uint256 randomNumber = _randomResultsVRF[heroRequestId];
-        require(randomNumber != 0); // dev: Random number has not arrived yet.
-
+    /// @param requestId The request id that is mapped to a hero
+    function _trainHero(bytes32 requestId) internal isValidHero(_heroRandomRequest[requestId]) {
+        uint256 heroId = _heroRandomRequest[requestId];
+        uint256 randomNumber = _randomResultsVRF[requestId];
         uint256 newRandomNumber;
 
         _heroes[heroId].level = 1; // 1 by default

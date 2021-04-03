@@ -54,8 +54,6 @@ interface ICryptoChampions {
 
     function mintHero(uint256 elderId, string memory heroName) external payable returns (uint256);
 
-    function trainHero(uint256 heroId) external;
-
     function getHeroOwner(uint256 heroId) external view returns (address);
 
     function disburseRewards(string calldata winningAffinity) external;

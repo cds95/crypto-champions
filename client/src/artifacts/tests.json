@@ -1,0 +1,434 @@
+{
+  "contracts": {
+    "CryptoChampions": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "ExposedCryptoChampions": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "LinkToken": "66cdcc3b8f3a7066a587cc938b750574e721c2c8",
+    "MinigameFactoryRegistry": "09a2508361d293e09d34332d2cf49778b7137e6d",
+    "MockV3Aggregator": "9e734e161b5cafcca52a917f10266f5a8bc05b28",
+    "OpenZeppelin/openzeppelin-contracts@3.4.0/Address": "3b4158955f564edb18bd7a8ffdb49859c904f0b7",
+    "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155": "60f50f9d41e3797d17e37b5915df56417762ca06",
+    "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20": "5f752f651d57bcdbb64c8d6e1654bb78df527095",
+    "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet": "3b4158955f564edb18bd7a8ffdb49859c904f0b7",
+    "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath": "3b4158955f564edb18bd7a8ffdb49859c904f0b7",
+    "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath": "3b4158955f564edb18bd7a8ffdb49859c904f0b7",
+    "PriceWars": "989a72ab07f6588d56690a5d6e01946efd30d057",
+    "PriceWarsFactory": "79c23e49788dae1c5248303ad02cb9f5c36440a7",
+    "VRFCoordinatorMock": "a234e721cab3c47e532d8404949512e63f344855",
+    "VRFRequestIDBase": "73df0a6f5d0123eb2b2db0faf62b602aa77c123a"
+  },
+  "tests": {
+    "tests/test_access_control.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": ".....",
+      "sha1": "71c73428e3363b0fc60c0563c33c76bd761f270a",
+      "txhash": []
+    },
+    "tests/test_affinity_prices.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": "..",
+      "sha1": "4778a405d2b3ad8e3a8b89a979adcc104f2fd0c7",
+      "txhash": []
+    },
+    "tests/test_burn_elders.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": ".......",
+      "sha1": "dc26012acd2e9fdf85498af62066a6c974e66e53",
+      "txhash": []
+    },
+    "tests/test_burn_heroes.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": ".....",
+      "sha1": "8ffe47d159fc87823f19d9acd37575de4f8c80cc",
+      "txhash": []
+    },
+    "tests/test_can_mint_hero.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": "..",
+      "sha1": "7b42cdae3d50d44b19fe90f578b3bd846c22db19",
+      "txhash": []
+    },
+    "tests/test_getter_elders.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": ".........",
+      "sha1": "59ee858dd64cf455a8b207213f4c76320f036d31",
+      "txhash": []
+    },
+    "tests/test_getter_heroes.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": "..",
+      "sha1": "546af70573b69847a8a8072036e97dd08fc43efb",
+      "txhash": []
+    },
+    "tests/test_minting_elders.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": "........",
+      "sha1": "6aca6fe7b56593d50918c605636f2e11c6d827a7",
+      "txhash": [
+        "b1040889d98437d4a715dd364d3e9dbd59634d1f"
+      ]
+    },
+    "tests/test_minting_heroes.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": "........",
+      "sha1": "e2f04a7131d72d0e24adedeb5614eff5b2974ec2",
+      "txhash": [
+        "c7363bf2f5a14889a53664b6438307b5494ff99f"
+      ]
+    },
+    "tests/test_pricing_mechanics.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": "...",
+      "sha1": "c8ca9299b04980f860b89c1af35e1021110df76f",
+      "txhash": []
+    },
+    "tests/test_round_mechanics.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": "....",
+      "sha1": "0f5aa1df0a132d8cd1a60de35f24877e52e7e5a6",
+      "txhash": []
+    },
+    "tests/test_royalty_fees_mechanism.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": "..",
+      "sha1": "426e4857baa60a3cf8ab1c9f7c53c17619db8316",
+      "txhash": []
+    },
+    "tests/test_train_hero.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": "...",
+      "sha1": "b82fc595d4142816e82a9f2877cae36619af8401",
+      "txhash": []
+    },
+    "tests/test_vrf_functionality.py": {
+      "coverage": false,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": ".",
+      "sha1": "950234e736de4e8dd8ffe848c279aee94337435d",
+      "txhash": []
+    }
+  },
+  "tx": {
+    "b1040889d98437d4a715dd364d3e9dbd59634d1f": {
+      "MockV3Aggregator": {
+        "29": [
+          [
+            14
+          ],
+          [],
+          []
+        ]
+      }
+    },
+    "c7363bf2f5a14889a53664b6438307b5494ff99f": {
+      "LinkToken": {
+        "12": [
+          [
+            20
+          ],
+          [],
+          []
+        ],
+        "16": [
+          [
+            9,
+            10,
+            11,
+            25,
+            26
+          ],
+          [
+            42
+          ],
+          []
+        ],
+        "17": [
+          [
+            22
+          ],
+          [],
+          []
+        ],
+        "23": [
+          [],
+          [],
+          []
+        ],
+        "3": [
+          [
+            19,
+            23,
+            24
+          ],
+          [],
+          [
+            43,
+            44
+          ]
+        ],
+        "9": [
+          [
+            2,
+            6,
+            13,
+            16,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36
+          ],
+          [],
+          [
+            40,
+            41
+          ]
+        ]
+      },
+      "VRFCoordinatorMock": {
+        "30": [
+          [
+            0
+          ],
+          [],
+          []
+        ]
+      }
+    }
+  }
+}
