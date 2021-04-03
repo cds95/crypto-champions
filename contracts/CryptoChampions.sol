@@ -388,32 +388,32 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         (_heroes[heroId].weather, newRandomNumber) = _rollDice(5, newRandomNumber); // 1 ouf of 5
 
         (_heroes[heroId].hp, newRandomNumber) = _rollDice(21, newRandomNumber); // Roll 10-30
-        _heroes[heroId].hp = _heroes[heroId].hp.add(9);
+        _heroes[heroId].hp = _heroes[heroId].hp + (9);
         (_heroes[heroId].mana, newRandomNumber) = _rollDice(21, newRandomNumber); // Roll 10-30
-        _heroes[heroId].mana = _heroes[heroId].mana.add(9);
+        _heroes[heroId].mana = _heroes[heroId].mana + (9);
         (_heroes[heroId].stamina, newRandomNumber) = _rollDice(31, newRandomNumber); // Roll 10-40
-        _heroes[heroId].stamina = _heroes[heroId].stamina.add(9);
+        _heroes[heroId].stamina = _heroes[heroId].stamina + (9);
 
         (_heroes[heroId].strength, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
-        _heroes[heroId].strength = _heroes[heroId].strength.add(2);
+        _heroes[heroId].strength = _heroes[heroId].strength + (2);
         (_heroes[heroId].dexterity, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
-        _heroes[heroId].dexterity = _heroes[heroId].dexterity.add(2);
+        _heroes[heroId].dexterity = _heroes[heroId].dexterity + (2);
         (_heroes[heroId].constitution, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
-        _heroes[heroId].constitution = _heroes[heroId].constitution.add(2);
+        _heroes[heroId].constitution = _heroes[heroId].constitution + (2);
         (_heroes[heroId].intelligence, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
-        _heroes[heroId].intelligence = _heroes[heroId].intelligence.add(2);
+        _heroes[heroId].intelligence = _heroes[heroId].intelligence + (2);
         (_heroes[heroId].wisdom, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
-        _heroes[heroId].wisdom = _heroes[heroId].wisdom.add(2);
+        _heroes[heroId].wisdom = _heroes[heroId].wisdom + (2);
         (_heroes[heroId].charisma, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
-        _heroes[heroId].charisma = _heroes[heroId].charisma.add(2);
+        _heroes[heroId].charisma = _heroes[heroId].charisma + (2);
     }
 
     /// @notice Simulates rolling dice
     /// @param maxNumber The max number of the dice (e.g. regular die is 6)
     /// @param randomNumber The random number
     /// @return The result of the dice roll and a new random number to use for another dice roll
-    function _rollDice(uint256 maxNumber, uint256 randomNumber) internal pure returns (uint256, uint256) {
-        return (randomNumber.mod(maxNumber) + 1, randomNumber.div(10));
+    function _rollDice(uint8 maxNumber, uint256 randomNumber) internal pure returns (uint8, uint256) {
+        return (uint8(randomNumber % (maxNumber)) + 1, randomNumber / (10));
     }
 
     /// @notice Get the hero owner for the given hero id
@@ -621,7 +621,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
             string memory, // name
             uint256, // race id
             uint256, // class id
-            uint256 // appearance
+            uint8 // appearance
         )
     {
         return (_heroes[heroId].name, _heroes[heroId].raceId, _heroes[heroId].classId, _heroes[heroId].appearance);
@@ -636,10 +636,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         override
         isValidHero(heroId)
         returns (
-            uint256, // trait 1
-            uint256, // trait 2
-            uint256, // skill 1
-            uint256 // skill 2
+            uint8, // trait 1
+            uint8, // trait 2
+            uint8, // skill 1
+            uint8 // skill 2
         )
     {
         return (_heroes[heroId].trait1, _heroes[heroId].trait2, _heroes[heroId].skill1, _heroes[heroId].skill2);
@@ -654,10 +654,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         override
         isValidHero(heroId)
         returns (
-            uint256, // alignment
-            uint256, // background
-            uint256, // hometown
-            uint256 // weather
+            uint8, // alignment
+            uint8, // background
+            uint8, // hometown
+            uint8 // weather
         )
     {
         return (
@@ -677,10 +677,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         override
         isValidHero(heroId)
         returns (
-            uint256, // level
-            uint256, // hp
-            uint256, // mana
-            uint256 // stamina
+            uint8, // level
+            uint8, // hp
+            uint8, // mana
+            uint8 // stamina
         )
     {
         return (_heroes[heroId].level, _heroes[heroId].hp, _heroes[heroId].mana, _heroes[heroId].stamina);
@@ -695,12 +695,12 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         override
         isValidHero(heroId)
         returns (
-            uint256, // strength
-            uint256, // dexterity
-            uint256, // constitution
-            uint256, // intelligence
-            uint256, // wisdom
-            uint256 // charisma
+            uint8, // strength
+            uint8, // dexterity
+            uint8, // constitution
+            uint8, // intelligence
+            uint8, // wisdom
+            uint8 // charisma
         )
     {
         return (
