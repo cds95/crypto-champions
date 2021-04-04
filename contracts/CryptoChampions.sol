@@ -17,6 +17,7 @@ import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC115
 /// @notice This is the crypto champions class
 contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsumerBase {
     using SafeMath for uint256;
+    using SafeMath for uint8;
 
     // Possible phases the contract can be in.  Phase one is when users can mint elder spirits and two is when they can mint heros.
     enum Phase { MINT_ELDER, MINT_HERO }
@@ -385,24 +386,24 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         (_heroes[heroId].weather, newRandomNumber) = _rollDice(5, newRandomNumber); // 1 ouf of 5
 
         (_heroes[heroId].hp, newRandomNumber) = _rollDice(21, newRandomNumber); // Roll 10-30
-        _heroes[heroId].hp = _heroes[heroId].hp + (9);
+        _heroes[heroId].hp = uint8(_heroes[heroId].hp.add(9));
         (_heroes[heroId].mana, newRandomNumber) = _rollDice(21, newRandomNumber); // Roll 10-30
-        _heroes[heroId].mana = _heroes[heroId].mana + (9);
+        _heroes[heroId].mana = uint8(_heroes[heroId].mana.add(9));
         (_heroes[heroId].stamina, newRandomNumber) = _rollDice(31, newRandomNumber); // Roll 10-40
-        _heroes[heroId].stamina = _heroes[heroId].stamina + (9);
+        _heroes[heroId].stamina = uint8(_heroes[heroId].stamina.add(9));
 
         (_heroes[heroId].strength, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
-        _heroes[heroId].strength = _heroes[heroId].strength + (2);
+        _heroes[heroId].strength = uint8(_heroes[heroId].strength.add(2));
         (_heroes[heroId].dexterity, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
-        _heroes[heroId].dexterity = _heroes[heroId].dexterity + (2);
+        _heroes[heroId].dexterity = uint8(_heroes[heroId].dexterity.add(2));
         (_heroes[heroId].constitution, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
-        _heroes[heroId].constitution = _heroes[heroId].constitution + (2);
+        _heroes[heroId].constitution = uint8(_heroes[heroId].constitution.add(2));
         (_heroes[heroId].intelligence, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
-        _heroes[heroId].intelligence = _heroes[heroId].intelligence + (2);
+        _heroes[heroId].intelligence = uint8(_heroes[heroId].intelligence.add(2));
         (_heroes[heroId].wisdom, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
-        _heroes[heroId].wisdom = _heroes[heroId].wisdom + (2);
+        _heroes[heroId].wisdom = uint8(_heroes[heroId].wisdom.add(2));
         (_heroes[heroId].charisma, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
-        _heroes[heroId].charisma = _heroes[heroId].charisma + (2);
+        _heroes[heroId].charisma = uint8(_heroes[heroId].charisma.add(2));
     }
 
     /// @notice Simulates rolling dice
@@ -410,7 +411,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     /// @param randomNumber The random number
     /// @return The result of the dice roll and a new random number to use for another dice roll
     function _rollDice(uint8 maxNumber, uint256 randomNumber) internal pure returns (uint8, uint256) {
-        return (uint8(randomNumber % (maxNumber)) + 1, randomNumber / (10));
+        return (uint8(randomNumber.mod(maxNumber).add(1)), randomNumber.div(10));
     }
 
     /// @notice Get the hero owner for the given hero id
