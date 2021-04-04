@@ -1,11 +1,12 @@
 import { CHAINS, RACES, CLASSES } from './constants';
 import { getRaceImage } from './images/races';
 import getWeb3 from './services/web3';
+import map from './artifacts/deployments/map.json';
 
 export const getChain = async () => {
     const web3 = await getWeb3();
     const networkId = await web3.eth.net.getId();
-    if (networkId === 5777) {
+    if (Object.keys(map).indexOf(networkId) === -1) {
         return CHAINS.DEV;
     }
     return networkId;
