@@ -24,15 +24,8 @@ abstract contract CappedMinigame is Minigame {
 
     /// @notice Joins a game
     /// @param heroId The id of the joining player's hero
-    function joinGame(uint256 heroId) public payable virtual override {
+    function joinGame(uint256 heroId) public override {
         require(super.getNumPlayers() < maxPlayers);
         super.joinGame(heroId);
-        if (super.getNumPlayers() == maxPlayers) {
-            emit MaxPlayersReached();
-            onMaxCapacityReached();
-        }
     }
-
-    /// @notice Handler function whenever the maximum number of players has been reached
-    function onMaxCapacityReached() public virtual;
 }

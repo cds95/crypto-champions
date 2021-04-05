@@ -1,4 +1,4 @@
-from brownie import VRFCoordinatorMock, LinkToken, CryptoChampions, WeatherWarsFactory, MockV3Aggregator, MinigameFactoryRegistry, LinkToken, accounts
+from brownie import WeatherWars, VRFCoordinatorMock, LinkToken, CryptoChampions, WeatherWarsFactory, MockV3Aggregator, MinigameFactoryRegistry, LinkToken, accounts
 
 def main():
     INIT_BTC_PRICE = 50000
@@ -37,4 +37,17 @@ def main():
     cc.mintHero(1, "heroName", { "from": accounts[4], "value": 0.271 * 10**18 })
     
     wwf.init()
-    wwf.createWeatherWars("test", 10**18, cc.address)
+
+    BUYIN_AMOUNT = 10**18
+    wwf.createWeatherWars("test", 10**18, cc.address, { "from": accounts[0] })
+    ww_add = wwf.games(0)
+    ww = WeatherWars.at(ww_add)
+
+    cc.transferInGameTokens(ww.address, BUYIN_AMOUNT, { "from": accounts[3] })
+    cc.transferInGameTokens(ww.address, BUYIN_AMOUNT, { "from": accounts[4] })
+
+    # 8 and 9 are the hero ids
+    ww.joinGame(8, { "from": accounts[3] })
+    ww.joinGame(9, { "from": accounts[4] })
+
+    ww.determineWinner({ "from": accounts[0] })

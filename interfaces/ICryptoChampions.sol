@@ -147,4 +147,6 @@ interface ICryptoChampions {
     function getNumEldersInGame() external view returns (uint256);
 
     function startNewPriceGame() external;
+
+    function transferInGameTokens(address to, uint256 amount) external;
 }

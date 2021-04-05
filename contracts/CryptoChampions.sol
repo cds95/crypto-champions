@@ -746,4 +746,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         grantRole(ROLE_GAME_ADMIN, address(priceWar));
         priceWar.startGame();
     }
+
+    /// @notice Transfers in game currenct tokens from one address to another
+    function transferInGameTokens(address to, uint256 amount) external override {
+        bytes memory data;
+        safeTransferFrom(msg.sender, to, IN_GAME_CURRENCY_ID, amount, data);
+    }
 }

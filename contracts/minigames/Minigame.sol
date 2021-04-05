@@ -17,13 +17,13 @@ abstract contract Minigame {
     enum MinigamePhase { OPEN, CLOSED }
 
     // The current game's phase
-    MinigamePhase private _currentPhase;
+    MinigamePhase internal _currentPhase;
 
     // Map of hero ids to player struct
     mapping(uint256 => MinigamePlayer) public players;
 
     // List of hero IDs in the game
-    uint256[] internal _heroIds;
+    uint256[] public heroIds;
 
     // Number of players currently in the game
     uint256 public numPlayers;
@@ -33,9 +33,6 @@ abstract contract Minigame {
 
     // Reference to crypto champions contract
     ICryptoChampions public cryptoChampions;
-
-    // Winning hero's ID
-    uint256 public winner;
 
     // Event to signal that a game has started
     event GameStarted();
@@ -54,18 +51,18 @@ abstract contract Minigame {
 
     /// @notice Joins a game
     /// @param heroId The id of the joining player's hero
-    function joinGame(uint256 heroId) public payable virtual {
+    function joinGame(uint256 heroId) public virtual {
         require(_currentPhase == MinigamePhase.OPEN);
         MinigamePlayer memory player;
         player.isInGame = true;
         players[heroId] = player;
-        _heroIds.push(heroId);
+        heroIds.push(heroId);
         numPlayers++;
     }
 
     /// @notice Leaves a game
     /// @param heroId The id of the leaving player's hero
-    function leaveGame(uint256 heroId) public payable virtual {
+    function leaveGame(uint256 heroId) public virtual {
         require(_currentPhase == MinigamePhase.OPEN);
         MinigamePlayer storage player = players[heroId];
         player.isInGame = false;
@@ -73,7 +70,7 @@ abstract contract Minigame {
     }
 
     /// @notice Starts a new game and closes it when it's finished
-    function startGame() public {
+    function startGame() external {
         require(_currentPhase == MinigamePhase.OPEN);
         emit GameStarted();
         play();
@@ -94,9 +91,4 @@ abstract contract Minigame {
 
     /// @notice Handler function to execute game logic.  This should be implemented by the concrete class.
     function play() internal virtual;
-
-    /// @notice Sets the winner's id
-    function setWinnerId(uint256 winnerId) internal {
-        winner = winnerId;
-    }
 }
