@@ -33,7 +33,7 @@ def test_mint_elder_insufficient_funds(accounts, crypto_champions):
         crypto_champions.mintElderSpirit(0, 0, "affinity", {"from": accounts[0], "value": crypto_champions.elderMintPrice() - 1})
 
 
-def test_mint_elder_refund(accounts, crypto_champions, create_eth_affinity):
+def test_mint_elder_refund(accounts, crypto_champions, create_affinities):
     ethSent = crypto_champions.elderMintPrice() + 1000
     tx = crypto_champions.mintElderSpirit(0, 0, "ETH", {"from": accounts[0], "value": ethSent})
     assert tx.internal_transfers[0]["to"] == accounts[0]

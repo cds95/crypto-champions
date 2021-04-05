@@ -1,7 +1,7 @@
 {
   "contracts": {
-    "CryptoChampions": "471b51c4da8905f128a360d00ef73fa0491f30f3",
-    "ExposedCryptoChampions": "4ceccf756243aadaec852a644996602536b2382d",
+    "CryptoChampions": "9ab8d424ae4f2c7f890de4d2275de8eb3e827078",
+    "ExposedCryptoChampions": "10aefeea0c6687c35ad6a773b445e054c8167a97",
     "LinkToken": "66cdcc3b8f3a7066a587cc938b750574e721c2c8",
     "MinigameFactoryRegistry": "09a2508361d293e09d34332d2cf49778b7137e6d",
     "MockV3Aggregator": "9e734e161b5cafcca52a917f10266f5a8bc05b28",
@@ -37,7 +37,7 @@
         "VRFRequestIDBase"
       ],
       "results": "......",
-      "sha1": "a65f5ca69d93d0aca7f3e2d8042c885b47469d62",
+      "sha1": "a81e71b47bc5733680cacc062fcec5c6e0aa2eba",
       "txhash": []
     },
     "tests/test_affinity_prices.py": {
@@ -60,7 +60,7 @@
         "VRFRequestIDBase"
       ],
       "results": "..",
-      "sha1": "4778a405d2b3ad8e3a8b89a979adcc104f2fd0c7",
+      "sha1": "8520ff46e0f9f3118048c08cda45e5f301da3f32",
       "txhash": []
     },
     "tests/test_burn_elders.py": {
@@ -82,8 +82,8 @@
         "VRFCoordinatorMock",
         "VRFRequestIDBase"
       ],
-      "results": "......",
-      "sha1": "46d893f37c3fbefa8e18b0b9172fbf662ef0ef64",
+      "results": ".....",
+      "sha1": "5c5a5bb87656a0f0a60ee6d28662deeabba87fd5",
       "txhash": []
     },
     "tests/test_can_mint_hero.py": {
@@ -106,7 +106,7 @@
         "VRFRequestIDBase"
       ],
       "results": "..",
-      "sha1": "7b42cdae3d50d44b19fe90f578b3bd846c22db19",
+      "sha1": "888dc6ee15b3493102608813f7a2e88241871137",
       "txhash": []
     },
     "tests/test_elder_spawns.py": {
@@ -129,7 +129,7 @@
         "VRFRequestIDBase"
       ],
       "results": "..",
-      "sha1": "d89ef6064f5580dcd916a8074cfc0dd8c534c951",
+      "sha1": "66f3bbf196a224bca606385b9632d0bfa0479891",
       "txhash": []
     },
     "tests/test_getter_elders.py": {
@@ -152,7 +152,7 @@
         "VRFRequestIDBase"
       ],
       "results": ".........",
-      "sha1": "59ee858dd64cf455a8b207213f4c76320f036d31",
+      "sha1": "fd8abca404c6dc0f7af0bf22ea0f77ce3e51014c",
       "txhash": []
     },
     "tests/test_getter_heroes.py": {
@@ -173,9 +173,72 @@
         "VRFCoordinatorMock",
         "VRFRequestIDBase"
       ],
-      "results": "..",
-      "sha1": "546af70573b69847a8a8072036e97dd08fc43efb",
-      "txhash": []
+      "results": ".F",
+      "sha1": "e17b10d06149c6b141cd93f648208b7805e563f8",
+      "txhash": [
+        "0231d02f895c482c4026c71cf66e165f8b582fec"
+      ]
+    },
+    "tests/test_hero_reward_claim.py": {
+      "coverage": true,
+      "isolated": [
+        "CryptoChampions",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC1155",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "VRFRequestIDBase"
+      ],
+      "results": "....",
+      "sha1": "301c4b1d1c3fe2f693bca58fae179c083d72bfb7",
+      "txhash": [
+        "08b59329efea47b0c46a41449f39fd7238c7fa11",
+        "11f7e388069e0a574db801ee768f46e554afb75f",
+        "197fec95a9bdc0488034b14562b29ccfcbd09c9e",
+        "34fa350f318afbe98fea63f9d38dedca50f15603",
+        "4c8912949d7f64b8ba19b336dd169c5d297f2364",
+        "4e500d4717ce9c0399a7f0b0a254cd99f9720aaa",
+        "5c6369ad32371dc467b440b632e1d2a5e9cdd422",
+        "60a094b271e9b0ec85f0d108b5d2179dbb21b0ec",
+        "63cbffce5f618cae7c44f3eac9111b953edc234d",
+        "734bc0220502d6553568d445aab3cb6f5584ec3f",
+        "7515775ba8db18ee6737d9a87dd97a9329fc3eb6",
+        "864f9e83c3aa0072b43ede59547273f164cc1dc4",
+        "87643016f1e9bd9688eed6d61571afaa87bd641b",
+        "87bb64314079e1fc05262e5b0921046c821e0246",
+        "94fe060928f1b4fd976d2c56595b7af415ee565c",
+        "9a6094bb92516e751cea9e3220ccb23dca2d32ec",
+        "9aac053d2f211a14e103497034b1622f0a6a063f",
+        "a391368fee3a6dc3166269d6b659f42d9b8c402b",
+        "a4ea45ffa1f745f92eeca4d58246f811d29cbf2e",
+        "ac508260c79488d6e5e7b7b1ed6cbfbe1f218f1c",
+        "ad5a643f658560ce3abdeeda7d84ba97e1690fed",
+        "c325bb46930e5b853a871e27f3268c516aebe786",
+        "cb093a888fed774385ee229bcb90878b84ced38e",
+        "cc3fe3ef83051a1c0e443173fd7dea2c7fc4fea2",
+        "ce11ddf265da8b25aaea86c2b327adf4fa512f55",
+        "d4f181f19c62eff6d497cb8cd53a68b146022c87",
+        "d6b3301b779b8aae95c818387a173722e119954d",
+        "df2039f66c3047e24f41fcbc9b58522c4ea92a1b",
+        "e382b0d02046c5bf6114f4ea596723ee777b6ccf",
+        "e58a22ff29b750f59c9e28d061374ee5ea5738db",
+        "e6892813447426427d2a58a88e312d9f711a4981",
+        "e808d1f618118f5573772aeeef7e17fc118ef6a5",
+        "eff351a5adeb755242866361c609e5a639b8480c",
+        "f57177b618f2a8cb91bd00feacf56607eed8c9bf",
+        "f623dabdd1c170e4b01b9c5f3e6a291cc8639cc8",
+        "f7c48aa4705419b2bb30970c9e577da52683bbd5",
+        "fe8b5d181f1c57fc9f865e14c480a8d1d0d24a03"
+      ]
     },
     "tests/test_minting_elders.py": {
       "coverage": false,
@@ -197,9 +260,9 @@
         "VRFRequestIDBase"
       ],
       "results": "........",
-      "sha1": "6aca6fe7b56593d50918c605636f2e11c6d827a7",
+      "sha1": "de46e83ef89f1d72bc542baaf931a52a9e17c81f",
       "txhash": [
-        "e665a62f7bca57ef21592dd178dc87ab6511ecca"
+        "8ddd1378060aa25369e87498f769e0add431959d"
       ]
     },
     "tests/test_minting_heroes.py": {
@@ -221,10 +284,11 @@
         "VRFCoordinatorMock",
         "VRFRequestIDBase"
       ],
-      "results": "........",
-      "sha1": "e2f04a7131d72d0e24adedeb5614eff5b2974ec2",
+      "results": "F.......",
+      "sha1": "0546b4a5ad6386211a71fe90377aa49ad398ead8",
       "txhash": [
-        "1a57a5a6100ef2b820c44df15eac6561b160ff1b"
+        "0231d02f895c482c4026c71cf66e165f8b582fec",
+        "c201e4dba393cd80f6eeb3fa2f989e6d4169fa2f"
       ]
     },
     "tests/test_pricing_mechanics.py": {
@@ -247,7 +311,7 @@
         "VRFRequestIDBase"
       ],
       "results": ".........",
-      "sha1": "a1eab593be01bbdbc73eccc70f6d457f690668db",
+      "sha1": "7a0d8619b75dd1733cdf15f67be30d786c27008e",
       "txhash": []
     },
     "tests/test_royalty_fees_mechanism.py": {
@@ -270,7 +334,7 @@
         "VRFRequestIDBase"
       ],
       "results": "..",
-      "sha1": "6034123cccb9dee5de0a91572a72c0cf0ecae473",
+      "sha1": "b0cdf4d8a5b58c50d3c843674e46f56584558646",
       "txhash": []
     },
     "tests/test_train_hero.py": {
@@ -293,7 +357,7 @@
         "VRFRequestIDBase"
       ],
       "results": "...",
-      "sha1": "b82fc595d4142816e82a9f2877cae36619af8401",
+      "sha1": "b7b9152b486c71cd7eeb131db5fe5374ad5ae178",
       "txhash": []
     },
     "tests/test_vrf_functionality.py": {
@@ -315,12 +379,45 @@
         "VRFRequestIDBase"
       ],
       "results": ".",
-      "sha1": "950234e736de4e8dd8ffe848c279aee94337435d",
+      "sha1": "b9a72aaca34fc425ba14e084478ef3d174341e1e",
       "txhash": []
     }
   },
   "tx": {
-    "1a57a5a6100ef2b820c44df15eac6561b160ff1b": {
+    "0231d02f895c482c4026c71cf66e165f8b582fec": {},
+    "08b59329efea47b0c46a41449f39fd7238c7fa11": {},
+    "11f7e388069e0a574db801ee768f46e554afb75f": {
+      "MinigameFactoryRegistry": {
+        "25": [
+          [
+            2
+          ],
+          [],
+          []
+        ]
+      },
+      "MockV3Aggregator": {
+        "29": [
+          [
+            14
+          ],
+          [],
+          []
+        ]
+      },
+      "PriceWarsFactory": {
+        "27": [
+          [
+            0,
+            1,
+            2
+          ],
+          [],
+          []
+        ]
+      }
+    },
+    "197fec95a9bdc0488034b14562b29ccfcbd09c9e": {
       "LinkToken": {
         "12": [
           [
@@ -396,7 +493,68 @@
         ]
       }
     },
-    "e665a62f7bca57ef21592dd178dc87ab6511ecca": {
+    "34fa350f318afbe98fea63f9d38dedca50f15603": {
+      "MinigameFactoryRegistry": {
+        "25": [
+          [
+            2
+          ],
+          [],
+          []
+        ]
+      },
+      "PriceWarsFactory": {
+        "27": [
+          [
+            0,
+            1,
+            2
+          ],
+          [],
+          []
+        ]
+      }
+    },
+    "4c8912949d7f64b8ba19b336dd169c5d297f2364": {},
+    "4e500d4717ce9c0399a7f0b0a254cd99f9720aaa": {
+      "MinigameFactoryRegistry": {
+        "25": [
+          [
+            2
+          ],
+          [],
+          []
+        ]
+      },
+      "MockV3Aggregator": {
+        "29": [
+          [
+            14
+          ],
+          [],
+          []
+        ]
+      },
+      "PriceWarsFactory": {
+        "27": [
+          [
+            0,
+            1,
+            2
+          ],
+          [],
+          []
+        ]
+      }
+    },
+    "5c6369ad32371dc467b440b632e1d2a5e9cdd422": {},
+    "60a094b271e9b0ec85f0d108b5d2179dbb21b0ec": {},
+    "63cbffce5f618cae7c44f3eac9111b953edc234d": {},
+    "734bc0220502d6553568d445aab3cb6f5584ec3f": {},
+    "7515775ba8db18ee6737d9a87dd97a9329fc3eb6": {},
+    "864f9e83c3aa0072b43ede59547273f164cc1dc4": {},
+    "87643016f1e9bd9688eed6d61571afaa87bd641b": {},
+    "87bb64314079e1fc05262e5b0921046c821e0246": {
       "MockV3Aggregator": {
         "29": [
           [
@@ -406,6 +564,280 @@
           []
         ]
       }
-    }
+    },
+    "8ddd1378060aa25369e87498f769e0add431959d": {
+      "MockV3Aggregator": {
+        "29": [
+          [
+            14
+          ],
+          [],
+          []
+        ]
+      }
+    },
+    "94fe060928f1b4fd976d2c56595b7af415ee565c": {},
+    "9a6094bb92516e751cea9e3220ccb23dca2d32ec": {},
+    "9aac053d2f211a14e103497034b1622f0a6a063f": {},
+    "a391368fee3a6dc3166269d6b659f42d9b8c402b": {},
+    "a4ea45ffa1f745f92eeca4d58246f811d29cbf2e": {},
+    "ac508260c79488d6e5e7b7b1ed6cbfbe1f218f1c": {},
+    "ad5a643f658560ce3abdeeda7d84ba97e1690fed": {},
+    "c201e4dba393cd80f6eeb3fa2f989e6d4169fa2f": {
+      "LinkToken": {
+        "12": [
+          [
+            20
+          ],
+          [],
+          []
+        ],
+        "16": [
+          [
+            9,
+            10,
+            11,
+            25,
+            26
+          ],
+          [
+            42
+          ],
+          []
+        ],
+        "17": [
+          [
+            22
+          ],
+          [],
+          []
+        ],
+        "23": [
+          [],
+          [],
+          []
+        ],
+        "3": [
+          [
+            19,
+            23,
+            24
+          ],
+          [],
+          [
+            43,
+            44
+          ]
+        ],
+        "9": [
+          [
+            2,
+            6,
+            13,
+            16,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36
+          ],
+          [],
+          [
+            40,
+            41
+          ]
+        ]
+      },
+      "VRFCoordinatorMock": {
+        "30": [
+          [
+            0
+          ],
+          [],
+          []
+        ]
+      }
+    },
+    "c325bb46930e5b853a871e27f3268c516aebe786": {},
+    "cb093a888fed774385ee229bcb90878b84ced38e": {},
+    "cc3fe3ef83051a1c0e443173fd7dea2c7fc4fea2": {},
+    "ce11ddf265da8b25aaea86c2b327adf4fa512f55": {
+      "LinkToken": {
+        "12": [
+          [
+            20
+          ],
+          [],
+          []
+        ],
+        "17": [
+          [
+            22
+          ],
+          [],
+          []
+        ],
+        "23": [
+          [],
+          [],
+          []
+        ],
+        "3": [
+          [
+            19,
+            23,
+            24
+          ],
+          [],
+          [
+            43,
+            44
+          ]
+        ],
+        "9": [
+          [
+            2,
+            16,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36
+          ],
+          [],
+          [
+            40,
+            41
+          ]
+        ]
+      }
+    },
+    "d4f181f19c62eff6d497cb8cd53a68b146022c87": {
+      "MockV3Aggregator": {
+        "29": [
+          [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          [],
+          []
+        ]
+      }
+    },
+    "d6b3301b779b8aae95c818387a173722e119954d": {},
+    "df2039f66c3047e24f41fcbc9b58522c4ea92a1b": {
+      "MockV3Aggregator": {
+        "29": [
+          [
+            14
+          ],
+          [],
+          []
+        ]
+      }
+    },
+    "e382b0d02046c5bf6114f4ea596723ee777b6ccf": {
+      "MinigameFactoryRegistry": {
+        "25": [
+          [
+            0,
+            1
+          ],
+          [],
+          [
+            3
+          ]
+        ]
+      }
+    },
+    "e58a22ff29b750f59c9e28d061374ee5ea5738db": {},
+    "e6892813447426427d2a58a88e312d9f711a4981": {},
+    "e808d1f618118f5573772aeeef7e17fc118ef6a5": {},
+    "eff351a5adeb755242866361c609e5a639b8480c": {},
+    "f57177b618f2a8cb91bd00feacf56607eed8c9bf": {},
+    "f623dabdd1c170e4b01b9c5f3e6a291cc8639cc8": {
+      "LinkToken": {
+        "12": [
+          [
+            20
+          ],
+          [],
+          []
+        ],
+        "16": [
+          [
+            9,
+            10,
+            11,
+            25,
+            26
+          ],
+          [
+            42
+          ],
+          []
+        ],
+        "17": [
+          [
+            22
+          ],
+          [],
+          []
+        ],
+        "23": [
+          [],
+          [],
+          []
+        ],
+        "3": [
+          [
+            19,
+            23,
+            24
+          ],
+          [],
+          [
+            43,
+            44
+          ]
+        ],
+        "9": [
+          [
+            2,
+            6,
+            13,
+            16,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36
+          ],
+          [],
+          [
+            40,
+            41
+          ]
+        ]
+      },
+      "VRFCoordinatorMock": {
+        "30": [
+          [
+            0
+          ],
+          [],
+          []
+        ]
+      }
+    },
+    "f7c48aa4705419b2bb30970c9e577da52683bbd5": {},
+    "fe8b5d181f1c57fc9f865e14c480a8d1d0d24a03": {}
   }
 }

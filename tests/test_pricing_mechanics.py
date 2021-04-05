@@ -22,7 +22,7 @@ def test_mint_elder_rewards_pool(accounts, crypto_champions, mint_first_elder):
     assert crypto_champions.devFund() == crypto_champions.elderMintPrice()
 
 
-def test_mint_elder_rewards_pool_refund(accounts, crypto_champions, create_eth_affinity):
+def test_mint_elder_rewards_pool_refund(accounts, crypto_champions, create_affinities):
     crypto_champions.mintElderSpirit(0, 0, "ETH", {"from": accounts[0], "value": crypto_champions.elderMintPrice() + 1000})
     assert crypto_champions.devFund() == crypto_champions.elderMintPrice()
     

@@ -56,7 +56,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     uint256 public devFund = 0;
 
     // The rewards share for every hero with the winning affinity calculated at the end of every round
-    uint256 internal heroRewardsShare = 0;
+    uint256 internal _heroRewardsShare = 0;
 
     // The identifier for the price wars game
     string internal constant PRICE_WARS_ID = "PRICE_WARS";
@@ -112,7 +112,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     mapping(bytes32 => uint256) internal _randomResultsVRF;
 
     // The list of affinities that won in a round
-    string[] public winningAffinitiesByRound;
+    mapping(uint256 => string) public winningAffinitiesByRound;
 
     // Mapping of hero id to a mapping of round to a bool of the rewards claim
     mapping(uint256 => mapping(uint256 => bool)) internal _heroRewardsClaimed;
@@ -197,14 +197,16 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     }
 
     /// @notice Transitions to the next phase
-    function transitionNextPhase() internal {
+    function _transitionNextPhase() internal {
         if (currentPhase == Phase.SETUP) {
             // If rewards have gone unclaimed, send to address
             // todo
             rewardsPoolAmount = 0;
 
             // Reset the hero rewards share
-            heroRewardsShare = 0;
+            _heroRewardsShare = 0;
+
+            // todo mint all elders that have yet to be minted
 
             // Increment the round
             currentRound = currentRound.add(1);
@@ -217,12 +219,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
             // Calculate hero rewards.
             // Start by finding which elder had the winning affinity
-            for (uint256 i = 1; i <= MAX_NUMBER_OF_ELDERS; ++i) {
+            uint256 i = 1;
+            for (; i <= eldersInGame; ++i) {
                 if (
                     keccak256(bytes(_elderSpirits[i].affinity)) ==
                     keccak256(bytes(winningAffinitiesByRound[currentRound]))
                 ) {
-                    heroRewardsShare = rewardsPoolAmount.div(getElderSpawnsAmount(currentRound, i));
+                    _heroRewardsShare = rewardsPoolAmount.div(getElderSpawnsAmount(currentRound, i));
                     break;
                 }
             }
@@ -249,9 +252,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         bool phaseChanged = false;
 
         if (currentPhase == Phase.SETUP && now >= currentPhaseStartTime + SETUP_PHASE_DURATION) {
-            transitionNextPhase();
+            _transitionNextPhase();
         } else if (currentPhase == Phase.ACTION && now >= currentPhaseStartTime + ACTION_PHASE_DURATION) {
-            transitionNextPhase();
+            _transitionNextPhase();
         }
 
         if (phaseChanged) {
@@ -511,7 +514,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
     /// @notice Burns all the elder spirits in game
     function _burnElders() internal {
-        require(eldersInGame > 0); // dev: No elders have been minted.
         for (uint256 i = 1; i <= MAX_NUMBER_OF_ELDERS; ++i) {
             if (_elderSpirits[i].valid) {
                 _burnElder(i);
@@ -782,8 +784,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     /// @notice Declares a winning affinity for a round
     /// @dev This can only be called by a game admin contract
     /// @param winningAffinity The affinity that won the game
-    function declareRoundWinner(string calldata winningAffinity) external override onlyGameAdmin {
-        winningAffinitiesByRound.push(winningAffinity);
+    function declareRoundWinner(string calldata winningAffinity) external override atPhase(Phase.ACTION) onlyGameAdmin {
+        winningAffinitiesByRound[currentRound] = winningAffinity;
     }
 
     /// @notice Claims the rewards for the hero if eligible
@@ -791,16 +793,14 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     /// @param heroId The hero id
     function claimReward(uint256 heroId) external override atPhase(Phase.SETUP) isValidHero(heroId) {
         // Check if hero is eligible and if hero hasn't already claimed
-        if (
-            _heroes[heroId].roundMinted == currentRound &&
-            (keccak256(bytes(_heroes[heroId].affinity)) == keccak256(bytes(winningAffinitiesByRound[currentRound]))) &&
-            _heroRewardsClaimed[heroId][currentRound] == false
-        ) {
-            (bool success, ) = _heroOwners[heroId].call{ value: heroRewardsShare }("");
-            require(success, "Payment failed");
-            rewardsPoolAmount = rewardsPoolAmount.sub(heroRewardsShare);
-            _heroRewardsClaimed[heroId][currentRound] = true;
-        }
+        require(_heroes[heroId].roundMinted == currentRound); // dev: Hero was not minted this round.
+        require(keccak256(bytes(_heroes[heroId].affinity)) == keccak256(bytes(winningAffinitiesByRound[currentRound]))); // dev: Hero does not have the winning affinity.
+        require(_heroRewardsClaimed[heroId][currentRound] == false); // dev: Reward has already been claimed.
+
+        (bool success, ) = _heroOwners[heroId].call{ value: _heroRewardsShare }("");
+        require(success, "Payment failed");
+        rewardsPoolAmount = rewardsPoolAmount.sub(_heroRewardsShare);
+        _heroRewardsClaimed[heroId][currentRound] = true;
     }
 
     /// @notice Starts a new price game

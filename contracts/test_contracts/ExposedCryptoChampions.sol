@@ -50,4 +50,19 @@ contract ExposedCryptoChampions is CryptoChampions {
         _randomResultsVRF[requestId] = randomNumber;
         _trainHero(requestId);
     }
+
+    /// See CryptoChampions::_startNewPriceGame
+    function startNewPriceGame() public {
+        _startNewPriceGame();
+    }
+
+    /// See CryptoChampions::_transitionNextPhase
+    function transitionNextPhase() public {
+        _transitionNextPhase();
+    }
+
+    /// See CryptoChampions::_heroRewardsShare
+    function heroRewardsShare() public view returns (uint256) {
+        return _heroRewardsShare;
+    }
 }
