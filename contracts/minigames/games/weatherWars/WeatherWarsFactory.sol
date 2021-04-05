@@ -48,23 +48,31 @@ contract WeatherWarsFactory is VRFConsumerBase {
 
     address private _linkTokenAddress;
 
-    address private _oracle;
+    address public oracle;
+
+    string private _weatherApiKey;
+
+    bytes32 public jobId;
 
     event GameCreated(string gameName, string city);
 
     event CreatingGame(string city);
 
     constructor(
-        address oracle,
+        address oracleAddress,
         address vrfCoordinateAdddress,
         address linkTokenAddress,
-        uint256 fee,
-        bytes32 keyHash
+        uint256 feeInLink,
+        bytes32 keyHash,
+        bytes32 weatherApiKey,
+        bytes32 oracleJobId
     ) public VRFConsumerBase(vrfCoordinateAdddress, linkTokenAddress) {
-        _fee = fee;
+        _fee = feeInLink * 10**18;
         _keyHash = keyHash;
         _linkTokenAddress = linkTokenAddress;
-        _oracle = oracle;
+        _weatherApiKey = weatherApiKey;
+        oracle = oracleAddress;
+        jobId = oracleJobId;
     }
 
     function init() public {
@@ -84,7 +92,9 @@ contract WeatherWarsFactory is VRFConsumerBase {
                 _gameName,
                 cryptoChampionsContractAddress,
                 _buyinAmount,
-                _nextCity
+                _nextCity,
+                jobId,
+                _weatherApiKey
             );
         games.push(newGame);
         emit GameCreated(_gameName, _nextCity);

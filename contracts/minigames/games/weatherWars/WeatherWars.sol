@@ -16,8 +16,6 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
 
     address private _oracle;
 
-    bytes32 private constant GET_JOB_ID = "29fa9aa13bf1468788b7cc4a500a45b8";
-
     bytes32 public cityWeather;
 
     // The amount of ether required to join the game
@@ -26,6 +24,12 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
     // The mapping from hero id to the player's balance
     mapping(address => uint256) public balances;
 
+    // The job ID to make a GET call and retrieve a bytes32 result
+    bytes32 private _jobId;
+
+    // API key to make call to get weather
+    string private _apiKey;
+
     constructor(
         address oracle,
         address linkTokenAddress,
@@ -33,7 +37,9 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         string memory _gameName,
         address _cryptoChampionsContractAddress,
         uint256 _buyinAmount,
-        string memory _city
+        string memory _city,
+        bytes32 jobId,
+        string memory apiKey
     ) public CappedMinigame(gameName, MAX_PLAYERS, _cryptoChampionsContractAddress) {
         setPublicChainlinkToken();
         _linkTokenAddress = linkTokenAddress;
@@ -41,14 +47,22 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         _oracle = oracle;
         city = _city;
         buyinAmount = _buyinAmount;
+        _jobId = jobId;
+        _apiKey = apiKey;
     }
 
     function play() internal override {
-        Chainlink.Request memory request = buildChainlinkRequest(GET_JOB_ID, address(this), this.fulfill.selector);
+        Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
+
+        // Build URL
         string memory reqUrlWithCity = concatenate("http://api.openweathermap.org/data/2.5/weather?id=", city);
-        request.add("get", concatenate(reqUrlWithCity, "&appid=2c9761ee41522554e88632268c609e13"));
-        request.add("path", "weather[0].main");
-        sendChainlinkRequestTo(_oracle, request, _fee);
+        reqUrlWithCity = concatenate(reqUrlWithCity, "&appid=");
+        reqUrlWithCity = concatenate(reqUrlWithCity, _apiKey);
+
+        // Send Request
+        request.add("get", reqUrlWithCity);
+        request.add("path", "weather.0.main");
+        return sendChainlinkRequestTo(oracle, request, fee);
     }
 
     // TODO:  Move to it's own library
@@ -56,14 +70,13 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         return string(abi.encodePacked(a, b));
     }
 
-    function fulfill(bytes32 _requestId, bytes32 weather) public recordChainlinkFulfillment(_requestId) {
-        // TODO:  Use weather data to determine winner
-        cityWeather = weather;
+    function fulfill(bytes32 _requestId, bytes32 _weather) public recordChainlinkFulfillment(_requestId) {
+        cityWeather = string(abi.encodePacked(_weather));
     }
 
     function leaveGame(uint256 heroId) public override {
         require(_currentPhase == MinigamePhase.OPEN); // dev: Game already closed
-        require(_cityWeather == ""); // dev: City weather data already fetched
+        require(cityWeather == ""); // dev: City weather data already fetched
 
         super.leaveGame(heroId);
         uint256 addressBalance = balances[msg.sender];
@@ -75,7 +88,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         require(super.getNumPlayers() == MAX_PLAYERS); // dev: Weather Wars can only have two players
         require(balances[msg.sender] > 0); // dev: Only a player who has bought in may determine a winner
         require(_currentPhase == MinigamePhase.OPEN); // dev: Game already closed
-        require(_cityWeather != ""); // dev: City weather data has not been fetched yet
+        require(cityWeather != ""); // dev: City weather data has not been fetched yet
 
         uint256 heroOne = heroIds[0];
         uint256 heroTwo = heroIds[1];
