@@ -62,6 +62,9 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
     }
 
     function leaveGame(uint256 heroId) public override {
+        require(_currentPhase == MinigamePhase.OPEN); // dev: Game already closed
+        require(_cityWeather == ""); // dev: City weather data already fetched
+
         super.leaveGame(heroId);
         uint256 addressBalance = balances[msg.sender];
         balances[msg.sender] = 0;
@@ -72,6 +75,8 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         require(super.getNumPlayers() == MAX_PLAYERS); // dev: Weather Wars can only have two players
         require(balances[msg.sender] > 0); // dev: Only a player who has bought in may determine a winner
         require(_currentPhase == MinigamePhase.OPEN); // dev: Game already closed
+        require(_cityWeather != ""); // dev: City weather data has not been fetched yet
+
         uint256 heroOne = heroIds[0];
         uint256 heroTwo = heroIds[1];
         uint8 heroOneScore = getHeroScore(heroOne);
