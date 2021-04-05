@@ -11,12 +11,32 @@ struct ElderSpirit {
 
 struct Hero {
     bool valid;
+    string name;
+    string affinity;
+    int256 affinityPrice;
     uint256 roundMinted;
     uint256 elderId;
     uint256 raceId;
     uint256 classId;
-    string affinity;
-    string name;
+    uint8 appearance;
+    uint8 trait1;
+    uint8 trait2;
+    uint8 skill1;
+    uint8 skill2;
+    uint8 alignment;
+    uint8 background;
+    uint8 hometown;
+    uint8 weather;
+    uint8 level;
+    uint8 hp;
+    uint8 mana;
+    uint8 stamina;
+    uint8 strength;
+    uint8 dexterity;
+    uint8 constitution;
+    uint8 intelligence;
+    uint8 wisdom;
+    uint8 charisma;
 }
 
 interface ICryptoChampions {
@@ -51,6 +71,69 @@ interface ICryptoChampions {
             uint256,
             string memory,
             int256
+        );
+
+    function getHeroGameData(uint256 heroId)
+        external
+        view
+        returns (
+            bool, // valid
+            string memory, // affinity
+            int256, // affinity price
+            uint256, // round minted
+            uint256 // elder id
+        );
+
+    function getHeroVisuals(uint256 heroId)
+        external
+        view
+        returns (
+            string memory, // name
+            uint256, // race id
+            uint256, // class id
+            uint8 // appearance
+        );
+
+    function getHeroTraitsSkills(uint256 heroId)
+        external
+        view
+        returns (
+            uint8, // trait 1
+            uint8, // trait 2
+            uint8, // skill 1
+            uint8 // skill 2
+        );
+
+    function getHeroLore(uint256 heroId)
+        external
+        view
+        returns (
+            uint8, // alignment
+            uint8, // background
+            uint8, // hometown
+            uint8 // weather
+        );
+
+    function getHeroVitals(uint256 heroId)
+        external
+        view
+        returns (
+            uint8, // level
+            uint8, // hp
+            uint8, // mana
+            uint8 // stamina
+        );
+
+    function getHeroStats(uint256 heroId)
+        external
+        view
+        returns (
+            uint8, // strength
+            uint8, // dexterity
+            uint8, // constitution
+            uint8, // intelligence
+            uint8, // wisdom
+            uint8 // charisma
         );
 
     function getHeroMintPrice(uint256 round, uint256 elderId) external view returns (uint256);

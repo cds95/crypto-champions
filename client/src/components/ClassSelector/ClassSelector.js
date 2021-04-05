@@ -8,11 +8,15 @@ const text = {
 };
 
 export const ClassSelector = ({ onSelect, selectedClassId }) => {
+    const items = CLASSES.map((classItem) => ({
+        ...classItem,
+        isSelectable: true
+    }));
     return (
         <ItemSelector
             title={text.title}
             caption={text.caption}
-            items={CLASSES}
+            items={items}
             onSelect={onSelect}
             selectedItemId={selectedClassId}
         />

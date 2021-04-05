@@ -2,7 +2,7 @@
 pragma solidity ^0.6.0;
 
 import "../../Minigame.sol";
-import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+import "../../../chainlink_contracts/AggregatorV3Interface.sol";
 import "../../../../interfaces/ICryptoChampions.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SignedSafeMath.sol";
 
@@ -34,7 +34,11 @@ contract PriceWars is Minigame {
 
     /// @notice Determines the percentage change of a token.
     /// @return The token's percentage change.
-    function determinePercentageChange(int256 startAffinityPrice, string memory affinity) internal returns (int256) {
+    function determinePercentageChange(int256 startAffinityPrice, string memory affinity)
+        internal
+        view
+        returns (int256)
+    {
         address feedAddress = cryptoChampions.getAffinityFeedAddress(affinity);
         int256 currentAffinityPrice;
         (, currentAffinityPrice, , , ) = AggregatorV3Interface(feedAddress).latestRoundData();

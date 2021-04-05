@@ -3,10 +3,11 @@ pragma solidity ^0.6.0;
 
 import "../interfaces/ICryptoChampions.sol";
 import "../interfaces/IMinigameFactoryRegistry.sol";
+import "./chainlink_contracts/AggregatorV3Interface.sol";
+import "./chainlink_contracts/VRFConsumerBase.sol";
 import "./minigames/games/priceWars/PriceWarsFactory.sol";
 import "./minigames/games/priceWars/PriceWars.sol";
 
-import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/access/AccessControl.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC1155.sol";
@@ -14,11 +15,12 @@ import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC115
 /// @title Crypto Champions Interface
 /// @author Oozyx
 /// @notice This is the crypto champions class
-contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
+contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsumerBase {
     using SafeMath for uint256;
+    using SafeMath for uint8;
 
     // Possible phases the contract can be in.  Phase one is when users can mint elder spirits and two is when they can mint heros.
-    enum Phase { ONE, TWO }
+    enum Phase { MINT_ELDER, MINT_HERO }
 
     // The current phase the contract is in.
     Phase public currentPhase;
@@ -77,6 +79,21 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     // The mapping of affinities (token ticker) to price feed address
     mapping(string => address) internal _affinities;
 
+    // List of available affinities
+    string[] public affinities;
+
+    // The key hash used for VRF
+    bytes32 internal _keyHash;
+
+    // The fee in LINK for VRF
+    uint256 internal _fee;
+
+    // Mapping of request id to hero id
+    mapping(bytes32 => uint256) internal _heroRandomRequest;
+
+    // Mapping of request id to random result
+    mapping(bytes32 => uint256) internal _randomResultsVRF;
+
     // The list of affinities that won in a round
     string[] public winningAffinitiesByRound;
 
@@ -102,7 +119,12 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
 
     // Initializes a new CryptoChampions contract
     // TODO: need to provide the proper uri
-    constructor(address minigameFactoryRegistry) public ERC1155("uri") {
+    constructor(
+        bytes32 keyhash,
+        address vrfCoordinator,
+        address linkToken,
+        address minigameFactoryRegistry
+    ) public ERC1155("uri") VRFConsumerBase(vrfCoordinator, linkToken) {
         // Set up administrative roles
         _setRoleAdmin(ROLE_OWNER, ROLE_OWNER);
         _setRoleAdmin(ROLE_ADMIN, ROLE_OWNER);
@@ -119,13 +141,23 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         currentRound = 0;
 
         // Set initial phase to phase one
-        currentPhase = Phase.ONE;
+        currentPhase = Phase.MINT_ELDER;
+
+        // Set VRF fields
+        _keyHash = keyhash;
+        _fee = 0.1 * 10**18; // 0.1 LINK
 
         _minigameFactoryRegistry = IMinigameFactoryRegistry(minigameFactoryRegistry);
     }
 
     modifier isValidElderSpiritId(uint256 elderId) {
         require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+        _;
+    }
+
+    modifier isValidHero(uint256 heroId) {
+        require(heroId > MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+        require(_heroes[heroId].valid); // dev: Hero is not valid.
         _;
     }
 
@@ -139,6 +171,22 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     modifier onlyAdmin {
         _hasRole(ROLE_ADMIN);
         _;
+    }
+
+    /// @notice Makes a request for a random number
+    /// @param userProvidedSeed The seed for the random request
+    /// @return requestId The request id
+    function _getRandomNumber(uint256 userProvidedSeed) internal returns (bytes32 requestId) {
+        require(LINK.balanceOf(address(this)) >= _fee); // dev: Not enough LINK - fill contract with faucet
+        return requestRandomness(_keyHash, _fee, userProvidedSeed);
+    }
+
+    /// @notice Callback function used by the VRF coordinator
+    /// @param requestId The request id
+    /// @param randomness The randomness
+    function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+        _randomResultsVRF[requestId] = randomness;
+        _trainHero(requestId);
     }
 
     /// @notice Sets the contract's phase
@@ -160,6 +208,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @param feedAddress The price feed address
     function createAffinity(string calldata tokenTicker, address feedAddress) external override onlyAdmin {
         _affinities[tokenTicker] = feedAddress;
+        affinities.push(tokenTicker);
     }
 
     /// @notice Sets the elder mint price
@@ -181,6 +230,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         uint256 classId,
         string calldata affinity
     ) external payable override returns (uint256) {
+        require(currentPhase == Phase.MINT_ELDER); // dev: Can only mint elders in phase one
         require(eldersInGame < MAX_NUMBER_OF_ELDERS); // dev: Max number of elders already minted.
         require(msg.value >= elderMintPrice); // dev: Insufficient payment.
         require(_affinities[affinity] != address(0)); // dev: Affinity does not exist.
@@ -239,6 +289,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         isValidElderSpiritId(elderId)
         returns (uint256)
     {
+        require(currentPhase == Phase.MINT_HERO); //dev: Can only mint hero in phase 2.
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
 
         require(_canMintHero(elderId)); // dev: Can't mint hero. Too mnay heroes minted for elder.
@@ -260,13 +311,17 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         hero.raceId = _elderSpirits[elderId].raceId;
         hero.classId = _elderSpirits[elderId].classId;
         hero.affinity = _elderSpirits[elderId].affinity;
+        _heroes[heroId] = hero;
+
+        // Request the random number and set hero attributes
+        bytes32 requestId = _getRandomNumber(heroId);
+        _heroRandomRequest[requestId] = heroId;
 
         // Mint the NFT
         _mint(_msgSender(), heroId, 1, ""); // TODO: give the URI
 
         // Assign the hero id with the owner and with the hero
         _heroOwners[heroId] = _msgSender();
-        _heroes[heroId] = hero;
 
         // Increment the heroes minted and the elder spawns
         heroesMinted = heroesMinted.add(1);
@@ -310,11 +365,59 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         return _roundElderSpawns[currentRound][elderId] <= smallestElderAmount.mul(2);
     }
 
+    /// @notice Sets the hero attributes
+    /// @param requestId The request id that is mapped to a hero
+    function _trainHero(bytes32 requestId) internal isValidHero(_heroRandomRequest[requestId]) {
+        uint256 heroId = _heroRandomRequest[requestId];
+        uint256 randomNumber = _randomResultsVRF[requestId];
+        uint256 newRandomNumber;
+
+        _heroes[heroId].level = 1; // 1 by default
+        (_heroes[heroId].appearance, newRandomNumber) = _rollDice(2, randomNumber); // 1 out of 2
+
+        (_heroes[heroId].trait1, newRandomNumber) = _rollDice(4, newRandomNumber); // 1 out of 4
+        (_heroes[heroId].trait2, newRandomNumber) = _rollDice(4, newRandomNumber); // 1 out of 4
+        (_heroes[heroId].skill1, newRandomNumber) = _rollDice(4, newRandomNumber); // 1 out of 4
+        (_heroes[heroId].skill2, newRandomNumber) = _rollDice(4, newRandomNumber); // 1 out of 4
+
+        (_heroes[heroId].alignment, newRandomNumber) = _rollDice(9, newRandomNumber); // 1 out of 9
+        (_heroes[heroId].background, newRandomNumber) = _rollDice(30, newRandomNumber); // 1 out of 30
+        (_heroes[heroId].hometown, newRandomNumber) = _rollDice(24, newRandomNumber); // 1 out of 24
+        (_heroes[heroId].weather, newRandomNumber) = _rollDice(5, newRandomNumber); // 1 ouf of 5
+
+        (_heroes[heroId].hp, newRandomNumber) = _rollDice(21, newRandomNumber); // Roll 10-30
+        _heroes[heroId].hp = uint8(_heroes[heroId].hp.add(9));
+        (_heroes[heroId].mana, newRandomNumber) = _rollDice(21, newRandomNumber); // Roll 10-30
+        _heroes[heroId].mana = uint8(_heroes[heroId].mana.add(9));
+        (_heroes[heroId].stamina, newRandomNumber) = _rollDice(31, newRandomNumber); // Roll 10-40
+        _heroes[heroId].stamina = uint8(_heroes[heroId].stamina.add(9));
+
+        (_heroes[heroId].strength, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
+        _heroes[heroId].strength = uint8(_heroes[heroId].strength.add(2));
+        (_heroes[heroId].dexterity, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
+        _heroes[heroId].dexterity = uint8(_heroes[heroId].dexterity.add(2));
+        (_heroes[heroId].constitution, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
+        _heroes[heroId].constitution = uint8(_heroes[heroId].constitution.add(2));
+        (_heroes[heroId].intelligence, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
+        _heroes[heroId].intelligence = uint8(_heroes[heroId].intelligence.add(2));
+        (_heroes[heroId].wisdom, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
+        _heroes[heroId].wisdom = uint8(_heroes[heroId].wisdom.add(2));
+        (_heroes[heroId].charisma, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
+        _heroes[heroId].charisma = uint8(_heroes[heroId].charisma.add(2));
+    }
+
+    /// @notice Simulates rolling dice
+    /// @param maxNumber The max number of the dice (e.g. regular die is 6)
+    /// @param randomNumber The random number
+    /// @return The result of the dice roll and a new random number to use for another dice roll
+    function _rollDice(uint8 maxNumber, uint256 randomNumber) internal pure returns (uint8, uint256) {
+        return (uint8(randomNumber.mod(maxNumber).add(1)), randomNumber.div(10));
+    }
+
     /// @notice Get the hero owner for the given hero id
     /// @param heroId The hero id
     /// @return The owner address
-    function getHeroOwner(uint256 heroId) public view override returns (address) {
-        require(heroId > MAX_NUMBER_OF_ELDERS); // dev: Given hero id is not valid.
+    function getHeroOwner(uint256 heroId) public view override isValidHero(heroId) returns (address) {
         require(_heroOwners[heroId] != address(0)); // dev: Given hero id has not been minted.
 
         return _heroOwners[heroId];
@@ -354,17 +457,12 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         eldersInGame = eldersInGame.sub(1);
         _elderOwners[elderId] = address(0);
         _elderSpirits[elderId].valid = false;
-        _elderSpirits[elderId].raceId = 0;
-        _elderSpirits[elderId].classId = 0;
-        _elderSpirits[elderId].affinity = "";
-        _elderSpirits[elderId].affinityPrice = 0;
     }
 
     /// @notice Burns the hero for a refund
     /// @dev This will only be able to be called from the owner of the hero
     /// @param heroId The hero id to burn
-    function burnHero(uint256 heroId) external override {
-        require(heroId > MAX_NUMBER_OF_ELDERS); // dev: Cannot burn with invalid hero id.
+    function burnHero(uint256 heroId) external override isValidHero(heroId) {
         require(_heroes[heroId].valid); // dev: Cannot burn hero that does not exist.
         require(_heroOwners[heroId] == _msgSender()); // dev: Cannot burn hero that is not yours.
 
@@ -378,11 +476,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         // Reset hero values for hero id
         _heroOwners[heroId] = address(0);
         _heroes[heroId].valid = false;
-        _heroes[heroId].roundMinted = 0;
-        _heroes[heroId].elderId = 0;
-        _heroes[heroId].raceId = 0;
-        _heroes[heroId].classId = 0;
-        _heroes[heroId].affinity = "";
 
         emit HeroBurned(heroId);
     }
@@ -391,10 +484,14 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
     /// @param round The round of the hero to be minted
     /// @param elderId The elder id for which the hero will be based on
     /// @return The hero mint price
-    function getHeroMintPrice(uint256 round, uint256 elderId) public view override returns (uint256) {
+    function getHeroMintPrice(uint256 round, uint256 elderId)
+        public
+        view
+        override
+        isValidElderSpiritId(elderId)
+        returns (uint256)
+    {
         require(round <= currentRound); // dev: Cannot get price round has not started.
-        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Elder id is not valid.
-
         uint256 heroAmount = _roundElderSpawns[round][elderId].add(1);
 
         return _priceFormula(heroAmount);
@@ -413,6 +510,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
         return price;
     }
 
+    /// @dev Hook function called before every token transfer
     function _beforeTokenTransfer(
         address operator,
         address from,
@@ -481,6 +579,135 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155 {
             elderSpirit.classId,
             elderSpirit.affinity,
             elderSpirit.affinityPrice
+        );
+    }
+
+    /// @notice Hero getter function
+    /// @param heroId The hero id
+    /// @return valid, affinity, affinity price, round minted, elder id
+    function getHeroGameData(uint256 heroId)
+        external
+        view
+        override
+        isValidHero(heroId)
+        returns (
+            bool, // valid
+            string memory, // affinity
+            int256, // affinity price
+            uint256, // round minted
+            uint256 // elder id
+        )
+    {
+        return (
+            _heroes[heroId].valid,
+            _heroes[heroId].affinity,
+            _heroes[heroId].affinityPrice,
+            _heroes[heroId].roundMinted,
+            _heroes[heroId].elderId
+        );
+    }
+
+    /// @notice Hero getter function
+    /// @param heroId The hero id
+    /// @return name, race id, class id, appearance
+    function getHeroVisuals(uint256 heroId)
+        external
+        view
+        override
+        isValidHero(heroId)
+        returns (
+            string memory, // name
+            uint256, // race id
+            uint256, // class id
+            uint8 // appearance
+        )
+    {
+        return (_heroes[heroId].name, _heroes[heroId].raceId, _heroes[heroId].classId, _heroes[heroId].appearance);
+    }
+
+    /// @notice Hero getter function
+    /// @param heroId The hero id
+    /// @return trait 1, trait 2, skill 1, skill 2
+    function getHeroTraitsSkills(uint256 heroId)
+        external
+        view
+        override
+        isValidHero(heroId)
+        returns (
+            uint8, // trait 1
+            uint8, // trait 2
+            uint8, // skill 1
+            uint8 // skill 2
+        )
+    {
+        return (_heroes[heroId].trait1, _heroes[heroId].trait2, _heroes[heroId].skill1, _heroes[heroId].skill2);
+    }
+
+    /// @notice Hero getter function
+    /// @param heroId The hero id
+    /// @return alignment, background, hometown, weather
+    function getHeroLore(uint256 heroId)
+        external
+        view
+        override
+        isValidHero(heroId)
+        returns (
+            uint8, // alignment
+            uint8, // background
+            uint8, // hometown
+            uint8 // weather
+        )
+    {
+        return (
+            _heroes[heroId].alignment,
+            _heroes[heroId].background,
+            _heroes[heroId].hometown,
+            _heroes[heroId].weather
+        );
+    }
+
+    /// @notice Hero getter function
+    /// @param heroId The hero id
+    /// @return level, hp, mana
+    function getHeroVitals(uint256 heroId)
+        external
+        view
+        override
+        isValidHero(heroId)
+        returns (
+            uint8, // level
+            uint8, // hp
+            uint8, // mana
+            uint8 // stamina
+        )
+    {
+        return (_heroes[heroId].level, _heroes[heroId].hp, _heroes[heroId].mana, _heroes[heroId].stamina);
+    }
+
+    /// @notice Hero getter function
+    /// @param heroId The hero id
+    /// @return stamina, strength, dexterity, constitution, intelligence, wisdom, charisma
+    function getHeroStats(uint256 heroId)
+        external
+        view
+        override
+        isValidHero(heroId)
+        returns (
+            uint8, // strength
+            uint8, // dexterity
+            uint8, // constitution
+            uint8, // intelligence
+            uint8, // wisdom
+            uint8 // charisma
+        )
+    {
+        return (
+            _heroes[heroId].strength,
+            _heroes[heroId].dexterity,
+            _heroes[heroId].constitution,
+            _heroes[heroId].intelligence,
+            _heroes[heroId].wisdom,
+            _heroes[heroId].charisma
         );
     }
 

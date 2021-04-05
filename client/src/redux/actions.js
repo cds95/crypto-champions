@@ -6,6 +6,14 @@ export const setMaxElderSpiritsAction = (maxElderSpirits) => {
     };
 };
 
+export const SET_NUM_MINTED_ELDER_SPIRITS = 'SET_NUM_MINTED_ELDER_SPIRITS';
+export const setNumMintedElderSpiritsAction = (numMintedElderSpirits) => {
+    return {
+        type: SET_NUM_MINTED_ELDER_SPIRITS,
+        numMintedElderSpirits
+    };
+};
+
 export const SET_PHASE = 'SET_PHASE';
 export const setPhaseAction = (phase) => {
     return {
@@ -85,5 +93,51 @@ export const setHeroNameAction = (heroName) => {
     return {
         type: SET_HERO_NAME,
         heroName
+    };
+};
+
+export const SET_ELDER_SPIRITS = 'SET_ELDER_SPIRITS';
+export const setElderSpiritsAction = (elderSpirits) => {
+    return {
+        type: SET_ELDER_SPIRITS,
+        elderSpirits
+    };
+};
+
+export const SET_AFFINITIES = 'SET_AFFINITIES';
+export const setAffinitiesAction = (affinities) => {
+    return {
+        type: SET_AFFINITIES,
+        affinities
+    };
+};
+
+export const SET_IS_MINTING_ELDER_SPIRIT = 'SET_IS_MINTING_ELDER_SPIRIT';
+export const setIsMintingElderSpiritAction = (isMinting) => {
+    return {
+        type: SET_IS_MINTING_ELDER_SPIRIT,
+        isMinting
+    };
+};
+
+export const SET_IS_MINTING_HERO = 'SET_IS_MINTING_HERO';
+export const setIsMintingHeroAction = (isMinting) => {
+    return {
+        type: SET_IS_MINTING_HERO,
+        isMinting
+    };
+};
+
+export const RESET_MINTING_ELDER_SPIRIT_WORKFLOW = 'RESET_MINTING_ELDER_SPIRIT_WORKFLOW';
+export const resetMintingElderSpiritWorkflowAction = () => {
+    return {
+        type: RESET_MINTING_ELDER_SPIRIT_WORKFLOW
+    };
+};
+
+export const RESET_MINTING_HERO_WORKFLOW = 'RESET_MINTING_HERO_WORKFLOW';
+export const resetMintingHeroWorkflowAction = () => {
+    return {
+        type: RESET_MINTING_HERO_WORKFLOW
     };
 };

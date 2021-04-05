@@ -1,8 +1,18 @@
-import { SET_MAX_ELDER_SPIRITS, SET_MAX_NUM_HEROES, SET_PHASE } from '../actions';
+import {
+    SET_AFFINITIES,
+    SET_ELDER_SPIRITS,
+    SET_MAX_ELDER_SPIRITS,
+    SET_NUM_MINTED_ELDER_SPIRITS,
+    SET_PHASE
+} from '../actions';
 
 const initialState = {
     maxElderSpirits: 0,
-    maxNumHeroes: 0
+    maxNumHeroes: 0,
+    numMintedElderSpirits: 0,
+    elderSpirits: [],
+    affinities: [],
+    mintedAffinities: []
 };
 
 export const cryptoChampions = (state = initialState, action) => {
@@ -16,6 +26,23 @@ export const cryptoChampions = (state = initialState, action) => {
             return {
                 ...state,
                 phase: action.phase
+            };
+        case SET_NUM_MINTED_ELDER_SPIRITS:
+            return {
+                ...state,
+                numMintedElderSpirits: action.numMintedElderSpirits
+            };
+        case SET_ELDER_SPIRITS:
+            const mintedAffinities = action.elderSpirits.map((spirit) => spirit.affinity);
+            return {
+                ...state,
+                elderSpirits: action.elderSpirits,
+                mintedAffinities
+            };
+        case SET_AFFINITIES:
+            return {
+                ...state,
+                affinities: action.affinities
             };
         default:
             return state;

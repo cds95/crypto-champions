@@ -2,12 +2,12 @@ import brownie
 
 
 def test_burn_invalid_hero_id(accounts, crypto_champions):
-    with brownie.reverts("dev: Cannot burn with invalid hero id."):
+    with brownie.reverts("dev: Given id is not valid."):
         crypto_champions.burnHero(0, {"from": accounts[0]})
 
 
 def test_burn_non_existent_hero(accounts, crypto_champions):
-    with brownie.reverts("dev: Cannot burn hero that does not exist."):
+    with brownie.reverts("dev: Hero is not valid."):
         crypto_champions.burnHero(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1, {"from": accounts[0]})
 
 
@@ -15,7 +15,7 @@ def test_burn_first_hero(accounts, crypto_champions, mint_first_hero):
     assert crypto_champions.heroesMinted() == 1
     assert crypto_champions.getHeroOwner(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1) == accounts[0]
     crypto_champions.burnHero(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1, {"from": accounts[0]})
-    with brownie.reverts("dev: Given hero id has not been minted."):
+    with brownie.reverts("dev: Hero is not valid."):
         crypto_champions.getHeroOwner(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1)
 
 

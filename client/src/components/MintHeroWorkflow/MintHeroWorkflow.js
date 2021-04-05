@@ -1,36 +1,64 @@
-import { Button, TextField } from '@material-ui/core';
-import React from 'react';
+import { TextField } from '@material-ui/core';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { useGetElderSpirits } from '../../hooks/cryptoChampionsHook';
-import { setElderSpiritForHeroAction, setHeroNameAction } from '../../redux/actions';
+import { useHistory } from 'react-router';
+import { getElderSpiritImage, getElderSpiritLabel } from '../../AppUtils';
+import {
+    resetMintingHeroWorkflowAction,
+    setElderSpiritForHeroAction,
+    setHeroNameAction,
+    setIsMintingHeroAction
+} from '../../redux/actions';
+import { routeDefinitions } from '../../routeDefinitions';
 import { mintHero } from '../../services/cryptoChampions';
+import { Confirmation } from '../Confirmation';
+import { CryptoChampionButton } from '../CryptoChampionButton';
 import { ElderSelector } from '../ElderSelector/ElderSelector';
 import './MintHeroWorkflow.css';
 
 const text = {
     fieldLabel: "Enter your Hero's name",
-    mintHero: 'Train with elder spirit and mint your champion'
+    mintHero: 'Train with elder spirit and mint your champion',
+    processing: 'Processing...',
+    confirmation: 'Successfully purchased character'
 };
+
 export const MintHeroWorkflowComp = ({
-    maxElderSpirits,
+    elderSpirits,
     setElderSpiritForHero,
     selectedElderSpirit,
     setHeroName,
-    heroName
+    heroName,
+    resetWorkflow,
+    setIsMinting,
+    isMinting
 }) => {
-    const { isLoading, elderSpirits } = useGetElderSpirits(maxElderSpirits);
-    if (isLoading) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const history = useHistory();
+    if (!elderSpirits) {
         return <div>Loading...</div>;
     }
     const items = elderSpirits
         .filter(({ valid }) => valid)
-        .map(({ id, attribute }) => ({
-            id,
-            label: attribute
-        }));
+        .map((elder) => {
+            return {
+                id: elder.id,
+                label: getElderSpiritLabel(elder),
+                subLabel: elder.affinity,
+                image: getElderSpiritImage(elder),
+                isSelectable: true
+            };
+        });
     const handleOnHeroNameChange = (e) => setHeroName(e.target.value);
-    const handleOnSubmit = () => {
-        mintHero(selectedElderSpirit.id, heroName);
+    const handleOnSubmit = async () => {
+        setIsMinting(true);
+        setIsModalOpen(true);
+        await mintHero(selectedElderSpirit.id, heroName);
+        setIsMinting(false);
+    };
+    const handleOnClose = () => {
+        history.push(routeDefinitions.ROOT);
+        resetWorkflow();
     };
     return (
         <div className="mint-hero-workflow">
@@ -46,22 +74,30 @@ export const MintHeroWorkflowComp = ({
                     onChange={handleOnHeroNameChange}
                     className="mint-hero-workflow__name"
                 />
-                <Button onClick={handleOnSubmit} variant="contained" color="primary">
-                    {text.mintHero}
-                </Button>
+                <CryptoChampionButton onClick={handleOnSubmit} label={text.mintHero} />
             </div>
+            <Confirmation
+                isOpen={isModalOpen}
+                text={text.confirmation}
+                isLoading={isMinting}
+                loadingText={text.processing}
+                onConfirm={handleOnClose}
+            />
         </div>
     );
 };
 
 const mapStateToProps = (state) => {
     const {
-        mintHeroWorkflow: { heroName, elderSpirit }
+        cryptoChampions: { elderSpirits },
+        mintHeroWorkflow: { heroName, elderSpirit, isMinting }
     } = state;
     return {
         maxElderSpirits: state.cryptoChampions.maxElderSpirits,
         selectedElderSpirit: elderSpirit,
-        heroName
+        heroName,
+        elderSpirits,
+        isMinting
     };
 };
 
@@ -72,6 +108,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         setHeroName: (heroName) => {
             dispatch(setHeroNameAction(heroName));
+        },
+        setIsMinting: (isMinting) => {
+            dispatch(setIsMintingHeroAction(isMinting));
+        },
+        resetWorkflow: () => {
+            dispatch(resetMintingHeroWorkflowAction());
         }
     };
 };

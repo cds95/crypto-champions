@@ -3,7 +3,7 @@ import map from '../artifacts/deployments/map.json';
 import { getChain } from '../AppUtils';
 
 export const loadContract = async (contractName) => {
-    const chain = getChain();
+    const chain = await getChain();
     const address = getContractAddress(chain, contractName);
     if (!address) {
         console.log(`Couldn't find any deployed contract "${contractName}" on the chain "${chain}".`);

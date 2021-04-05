@@ -7,8 +7,8 @@ export const CONTRACTS = {
 };
 
 export const PHASES = {
-    ONE: 0,
-    TWO: 1
+    MINT_ELDER: 0,
+    MINT_HERO: 1
 };
 
 export const MINT_ELDER_SPIRIT_STEPS = {
@@ -18,88 +18,72 @@ export const MINT_ELDER_SPIRIT_STEPS = {
     MINT: 3
 };
 
-export const AFFINITIES = ['Affinity One', 'Affinity Two'];
+export const RACES = [
+    {
+        id: 0,
+        label: 'Man'
+    },
+    {
+        id: 1,
+        label: 'Woman'
+    },
+    {
+        id: 2,
+        label: 'Elf Male'
+    },
+    {
+        id: 3,
+        label: 'Elf Female'
+    },
+    {
+        id: 4,
+        label: 'Bear'
+    },
+    {
+        id: 5,
+        label: 'Bull'
+    },
+    {
+        id: 6,
+        label: 'Frog'
+    },
+    {
+        id: 7,
+        label: 'Robot'
+    }
+];
 
 export const CLASSES = [
     {
         id: 0,
-        label: 'class 1',
-        image: '../../test.png'
+        label: 'Warrior'
     },
     {
         id: 1,
-        label: 'class 2',
-        image: '../../test.png'
+        label: 'Mage'
     },
     {
         id: 2,
-        label: 'class 3',
-        image: '../../test.png'
+        label: 'Druid'
     },
     {
         id: 3,
-        label: 'class 4',
-        image: '../../test.png'
+        label: 'Paladin'
     },
     {
         id: 4,
-        label: 'class 5',
-        image: '../../test.png'
-    }
-];
-
-export const STONES = [
-    {
-        id: 0,
-        label: 'stone 1',
-        image: '../../test.png'
+        label: 'Bard'
     },
     {
-        id: 1,
-        label: 'stone 2',
-        image: '../../test.png'
+        id: 5,
+        label: 'Necromancer'
     },
     {
-        id: 2,
-        label: 'stone 3',
-        image: '../../test.png'
-    },
-    {
-        id: 3,
-        label: 'stone 4',
-        image: '../../test.png'
+        id: 6,
+        label: 'Priest'
     },
     {
         id: 4,
-        label: 'stone 5',
-        image: '../../test.png'
-    }
-];
-
-export const RACES = [
-    {
-        id: 0,
-        label: 'race 1',
-        image: '../../test.png'
-    },
-    {
-        id: 1,
-        label: 'race 2',
-        image: '../../test.png'
-    },
-    {
-        id: 2,
-        label: 'race 3',
-        image: '../../test.png'
-    },
-    {
-        id: 3,
-        label: 'race 4',
-        image: '../../test.png'
-    },
-    {
-        id: 4,
-        label: 'race 5',
-        image: '../../test.png'
+        label: 'Rogue'
     }
 ];

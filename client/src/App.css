@@ -3,8 +3,27 @@
     padding: 0 15px;
 }
 
+#root {
+    height: 100vh;
+}
+
 @media (min-width: 768px) {
     .app {
         padding: 100px;
     }
+}
+
+@font-face {
+    font-family: 'LeagueSpartan';
+    src: url('./fonts/LeagueSpartan-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'LeagueSpartan';
+    src: url('./fonts/LeagueSpartan-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Pronciono';
+    src: url('./fonts/Prociono-Regular.woff') format('woff');
 }
