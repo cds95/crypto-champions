@@ -20,15 +20,14 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     using SafeMath for uint8;
 
     // Possible phases the contract can be in.  Phase one is when users can mint elder spirits and two is when they can mint heros.
-    enum Phase { MINT_ELDER, MINT_HERO, REWARDS_DISTRIBUTION }
+    enum Phase { SETUP, ACTION }
 
     // The current phase the contract is in.
     Phase public currentPhase;
 
     // The duration of each phase in days
-    uint256 internal MINT_ELDER_PHASE_DURATION = 2 days;
-    uint256 internal MINT_HERO_PHASE_DURATION = 2 days;
-    uint256 internal REWARDS_DISTRIBUTION_PHASE_DURATION = 2 days;
+    uint256 internal SETUP_PHASE_DURATION = 2 days;
+    uint256 internal ACTION_PHASE_DURATION = 2 days;
 
     // The current phase start time
     uint256 public currentPhaseStartTime;
@@ -158,7 +157,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         currentRound = 0;
 
         // Set initial phase to phase one and phase start time
-        currentPhase = Phase.MINT_ELDER;
+        currentPhase = Phase.SETUP;
         currentPhaseStartTime = now;
 
         // Set VRF fields
@@ -198,28 +197,30 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     }
 
     modifier timedPhaseTransition() {
-        if (currentPhase == Phase.MINT_ELDER && now >= currentPhaseStartTime + MINT_ELDER_PHASE_DURATION) {
+        if (currentPhase == Phase.SETUP && now >= currentPhaseStartTime + SETUP_PHASE_DURATION) {
             transitionNextPhase();
         }
-
-        if (currentPhase == Phase.MINT_HERO && now >= currentPhaseStartTime + MINT_HERO_PHASE_DURATION) {
-            transitionNextPhase();
-        }
-
-        if (
-            currentPhase == Phase.REWARDS_DISTRIBUTION &&
-            now >= currentPhaseStartTime + REWARDS_DISTRIBUTION_PHASE_DURATION
-        ) {
+        if (currentPhase == Phase.ACTION && now >= currentPhaseStartTime + ACTION_PHASE_DURATION) {
             transitionNextPhase();
         }
         _;
     }
 
     function transitionNextPhase() internal {
-        if (currentPhase == Phase.MINT_ELDER) {
+        if (currentPhase == Phase.SETUP) {
+            // If rewards have gone unclaimed, send to address
+            // todo
+            rewardsPoolAmount = 0;
+
+            // Reset the hero rewards share
+            heroRewardsShare = 0;
+
+            // Increment the round
+            currentRound = currentRound.add(1);
+
             // Set the next phase
-            currentPhase = Phase.MINT_HERO;
-        } else if (currentPhase == Phase.MINT_HERO) {
+            currentPhase = Phase.ACTION;
+        } else if (currentPhase == Phase.ACTION) {
             // Start the price game that will determine the winning affinity
             _startNewPriceGame();
 
@@ -235,25 +236,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
                 }
             }
 
-            // Set the next phase
-            currentPhase = Phase.REWARDS_DISTRIBUTION;
-        } else if (currentPhase == Phase.REWARDS_DISTRIBUTION) {
-            // If rewards have gone unclaimed, send to address
-            // todo
-            rewardsPoolAmount = 0;
-
-            // Reset the hero rewards share
-            heroRewardsShare = 0;
-
             // Burn the elders
             _burnElders();
 
-            // Increment the round
-            currentRound = currentRound.add(1);
-
             // Set the next phase
-            currentPhase = Phase.MINT_ELDER;
+            currentPhase = Phase.SETUP;
         }
+
         currentPhaseStartTime = now;
     }
 
@@ -313,7 +302,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         uint256 raceId,
         uint256 classId,
         string calldata affinity
-    ) external payable override atPhase(Phase.MINT_ELDER) returns (uint256) {
+    ) external payable override atPhase(Phase.SETUP) returns (uint256) {
         require(eldersInGame < MAX_NUMBER_OF_ELDERS); // dev: Max number of elders already minted.
         require(msg.value >= elderMintPrice); // dev: Insufficient payment.
         require(_affinities[affinity] != address(0)); // dev: Affinity does not exist.
@@ -373,7 +362,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         payable
         override
         isValidElderSpiritId(elderId)
-        atPhase(Phase.MINT_HERO)
+        atPhase(Phase.ACTION)
         returns (uint256)
     {
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
@@ -796,11 +785,12 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         external
         override
         timedPhaseTransition()
-        atPhase(Phase.REWARDS_DISTRIBUTION)
+        atPhase(Phase.SETUP)
         isValidHero(heroId)
     {
-        // Check if hero if visible and if hero hasn't already claimed
+        // Check if hero is eligible and if hero hasn't already claimed
         if (
+            _heroes[heroId].roundMinted == currentRound &&
             (keccak256(bytes(_heroes[heroId].affinity)) == keccak256(bytes(winningAffinitiesByRound[currentRound]))) &&
             _heroRewardsClaimed[heroId][currentRound] == false
         ) {
