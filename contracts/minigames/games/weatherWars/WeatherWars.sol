@@ -66,7 +66,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient {
 
     function play() internal override {
         Chainlink.Request memory request = buildChainlinkRequest(GET_JOB_ID, address(this), this.fulfill.selector);
-        string memory reqUrlWithCity = concatenate("http://api.openweathermap.org/data/2.5/weather?q=", city);
+        string memory reqUrlWithCity = concatenate("http://api.openweathermap.org/data/2.5/weather?id=", city);
         request.add("get", concatenate(reqUrlWithCity, "&appid=2c9761ee41522554e88632268c609e13"));
         request.add("path", "weather[0].main");
         sendChainlinkRequestTo(_oracle, request, _fee);
