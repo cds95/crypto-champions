@@ -20,10 +20,18 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     using SafeMath for uint8;
 
     // Possible phases the contract can be in.  Phase one is when users can mint elder spirits and two is when they can mint heros.
-    enum Phase { MINT_ELDER, MINT_HERO }
+    enum Phase { MINT_ELDER, MINT_HERO, REWARDS_DISTRIBUTION }
 
     // The current phase the contract is in.
     Phase public currentPhase;
+
+    // The duration of each phase in days
+    uint256 internal MINT_ELDER_PHASE_DURATION = 2 days;
+    uint256 internal MINT_HERO_PHASE_DURATION = 2 days;
+    uint256 internal REWARDS_DISTRIBUTION_PHASE_DURATION = 2 days;
+
+    // The current phase start time
+    uint256 public currentPhaseStartTime;
 
     // The owner role is used to globally govern the contract
     bytes32 internal constant ROLE_OWNER = keccak256("ROLE_OWNER");
@@ -39,14 +47,17 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
     // Constants used to determine fee proportions in percentage
     // Usage: fee.mul(proportion).div(100)
-    uint8 internal constant HERO_MINT_ROYALTY_PERCENT = 20;
-    uint8 internal constant HERO_MINT_DEV_PERCENT = 5;
+    uint8 internal constant HERO_MINT_ROYALTY_PERCENT = 25;
+    uint8 internal constant HERO_MINT_DEV_PERCENT = 25;
 
     // The amount of ETH contained in the rewards pool
     uint256 public rewardsPoolAmount = 0;
 
     // The amount of ETH contained in the dev fund
     uint256 public devFund = 0;
+
+    // The rewards share for every hero with the winning affinity calculated at the end of every round
+    uint256 internal heroRewardsShare = 0;
 
     // The identifier for the price wars game
     string internal constant PRICE_WARS_ID = "PRICE_WARS";
@@ -104,6 +115,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     // The list of affinities that won in a round
     string[] public winningAffinitiesByRound;
 
+    // Mapping of hero id to a mapping of round to a bool of the rewards claim
+    mapping(uint256 => mapping(uint256 => bool)) internal _heroRewardsClaimed;
+
     // The registry of minigame factories
     IMinigameFactoryRegistry internal _minigameFactoryRegistry;
 
@@ -119,10 +133,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
     /// @notice Triggered when the elder spirits have been burned
     event ElderSpiritsBurned();
-
-    /// @notice Triggered when a hero has been burned
-    /// @param heroId The hero id of the hero that was burned
-    event HeroBurned(uint256 heroId);
 
     // Initializes a new CryptoChampions contract
     // TODO: need to provide the proper uri
@@ -147,8 +157,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         // Set the initial round to 0
         currentRound = 0;
 
-        // Set initial phase to phase one
+        // Set initial phase to phase one and phase start time
         currentPhase = Phase.MINT_ELDER;
+        currentPhaseStartTime = now;
 
         // Set VRF fields
         _keyHash = keyhash;
@@ -178,6 +189,72 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     modifier onlyAdmin {
         _hasRole(ROLE_ADMIN);
         _;
+    }
+
+    // Restrict to the specified phase
+    modifier atPhase(Phase phase) {
+        require(currentPhase == phase); // dev: Current phase prohibits action.
+        _;
+    }
+
+    modifier timedPhaseTransition() {
+        if (currentPhase == Phase.MINT_ELDER && now >= currentPhaseStartTime + MINT_ELDER_PHASE_DURATION) {
+            transitionNextPhase();
+        }
+
+        if (currentPhase == Phase.MINT_HERO && now >= currentPhaseStartTime + MINT_HERO_PHASE_DURATION) {
+            transitionNextPhase();
+        }
+
+        if (
+            currentPhase == Phase.REWARDS_DISTRIBUTION &&
+            now >= currentPhaseStartTime + REWARDS_DISTRIBUTION_PHASE_DURATION
+        ) {
+            transitionNextPhase();
+        }
+        _;
+    }
+
+    function transitionNextPhase() internal {
+        if (currentPhase == Phase.MINT_ELDER) {
+            // Set the next phase
+            currentPhase = Phase.MINT_HERO;
+        } else if (currentPhase == Phase.MINT_HERO) {
+            // Start the price game that will determine the winning affinity
+            _startNewPriceGame();
+
+            // Calculate hero rewards.
+            // Start by finding which elder had the winning affinity
+            for (uint256 i = 1; i <= MAX_NUMBER_OF_ELDERS; ++i) {
+                if (
+                    keccak256(bytes(_elderSpirits[i].affinity)) ==
+                    keccak256(bytes(winningAffinitiesByRound[currentRound]))
+                ) {
+                    heroRewardsShare = rewardsPoolAmount.div(getElderSpawnsAmount(currentRound, i));
+                    break;
+                }
+            }
+
+            // Set the next phase
+            currentPhase = Phase.REWARDS_DISTRIBUTION;
+        } else if (currentPhase == Phase.REWARDS_DISTRIBUTION) {
+            // If rewards have gone unclaimed, send to address
+            // todo
+            rewardsPoolAmount = 0;
+
+            // Reset the hero rewards share
+            heroRewardsShare = 0;
+
+            // Burn the elders
+            _burnElders();
+
+            // Increment the round
+            currentRound = currentRound.add(1);
+
+            // Set the next phase
+            currentPhase = Phase.MINT_ELDER;
+        }
+        currentPhaseStartTime = now;
     }
 
     /// @notice Makes a request for a random number
@@ -236,8 +313,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         uint256 raceId,
         uint256 classId,
         string calldata affinity
-    ) external payable override returns (uint256) {
-        require(currentPhase == Phase.MINT_ELDER); // dev: Can only mint elders in phase one
+    ) external payable override atPhase(Phase.MINT_ELDER) returns (uint256) {
         require(eldersInGame < MAX_NUMBER_OF_ELDERS); // dev: Max number of elders already minted.
         require(msg.value >= elderMintPrice); // dev: Insufficient payment.
         require(_affinities[affinity] != address(0)); // dev: Affinity does not exist.
@@ -272,8 +348,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         // Refund if user sent too much
         _refundSender(elderMintPrice);
 
-        // The entire elder minting fee goes to the rewards pool
-        rewardsPoolAmount = rewardsPoolAmount.add(elderMintPrice);
+        // The entire elder minting fee goes to the dev fund
+        devFund = devFund.add(elderMintPrice);
 
         emit ElderSpiritMinted(elderId, _msgSender());
 
@@ -297,9 +373,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         payable
         override
         isValidElderSpiritId(elderId)
+        atPhase(Phase.MINT_HERO)
         returns (uint256)
     {
-        require(currentPhase == Phase.MINT_HERO); //dev: Can only mint hero in phase 2.
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
 
         require(_canMintHero(elderId)); // dev: Can't mint hero. Too mnay heroes minted for elder.
@@ -437,22 +513,14 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         return _heroOwners[heroId];
     }
 
-    /// @notice Disburses the rewards evenly among the heroes of the winning affinity
-    /// @dev This will be called from a priviledged address
-    /// @param winningAffinity The winning affinity token ticker
-    function disburseRewards(string calldata winningAffinity) external override onlyAdmin {}
-
     /// @notice Burns all the elder spirits in game
-    function burnElders() external override onlyAdmin {
+    function _burnElders() internal {
         require(eldersInGame > 0); // dev: No elders have been minted.
         for (uint256 i = 1; i <= MAX_NUMBER_OF_ELDERS; ++i) {
             if (_elderSpirits[i].valid) {
                 _burnElder(i);
             }
         }
-
-        // Increment the round
-        currentRound = currentRound.add(1);
 
         emit ElderSpiritsBurned();
     }
@@ -471,27 +539,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         eldersInGame = eldersInGame.sub(1);
         _elderOwners[elderId] = address(0);
         _elderSpirits[elderId].valid = false;
-    }
-
-    /// @notice Burns the hero for a refund
-    /// @dev This will only be able to be called from the owner of the hero
-    /// @param heroId The hero id to burn
-    function burnHero(uint256 heroId) external override isValidHero(heroId) {
-        require(_heroes[heroId].valid); // dev: Cannot burn hero that does not exist.
-        require(_heroOwners[heroId] == _msgSender()); // dev: Cannot burn hero that is not yours.
-
-        _burn(_heroOwners[heroId], heroId, 1);
-
-        // Decrement the amount of spawns for the hero's elder
-        uint256 elderId = _heroes[heroId].elderId;
-        uint256 heroRound = _heroes[heroId].roundMinted;
-        _roundElderSpawns[heroRound][elderId] = _roundElderSpawns[heroRound][elderId].sub(1);
-
-        // Reset hero values for hero id
-        _heroOwners[heroId] = address(0);
-        _heroes[heroId].valid = false;
-
-        emit HeroBurned(heroId);
     }
 
     /// @notice Gets the minting price of a hero based on specified elder spirit
@@ -745,9 +792,28 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         winningAffinitiesByRound.push(winningAffinity);
     }
 
+    function claimReward(uint256 heroId)
+        external
+        override
+        timedPhaseTransition()
+        atPhase(Phase.REWARDS_DISTRIBUTION)
+        isValidHero(heroId)
+    {
+        // Check if hero if visible and if hero hasn't already claimed
+        if (
+            (keccak256(bytes(_heroes[heroId].affinity)) == keccak256(bytes(winningAffinitiesByRound[currentRound]))) &&
+            _heroRewardsClaimed[heroId][currentRound] == false
+        ) {
+            (bool success, ) = _heroOwners[heroId].call{ value: heroRewardsShare }("");
+            require(success, "Payment failed");
+            rewardsPoolAmount = rewardsPoolAmount.sub(heroRewardsShare);
+            _heroRewardsClaimed[heroId][currentRound] = true;
+        }
+    }
+
     /// @notice Starts a new price game
     /// @dev This can only be called by the admin of the contract
-    function startNewPriceGame() external override onlyAdmin {
+    function _startNewPriceGame() internal {
         address priceWarsFactoryAddress = _minigameFactoryRegistry.getFactory(PRICE_WARS_ID);
         PriceWarsFactory priceWarsFactory = PriceWarsFactory(priceWarsFactoryAddress);
         PriceWars priceWar = priceWarsFactory.createPriceWar(address(this));
