@@ -1,7 +1,7 @@
 {
   "contracts": {
     "CryptoChampions": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
-    "ExposedCryptoChampions": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "ExposedCryptoChampions": "95320ec6c226d15761c630c9eb605eec658b6681",
     "LinkToken": "66cdcc3b8f3a7066a587cc938b750574e721c2c8",
     "MinigameFactoryRegistry": "09a2508361d293e09d34332d2cf49778b7137e6d",
     "MockV3Aggregator": "9e734e161b5cafcca52a917f10266f5a8bc05b28",
@@ -199,7 +199,7 @@
       "results": "........",
       "sha1": "6aca6fe7b56593d50918c605636f2e11c6d827a7",
       "txhash": [
-        "b1040889d98437d4a715dd364d3e9dbd59634d1f"
+        "304f7e96dbb88db223574b4cc4f4aabe0a6bcd08"
       ]
     },
     "tests/test_minting_heroes.py": {
@@ -224,7 +224,7 @@
       "results": "........",
       "sha1": "e2f04a7131d72d0e24adedeb5614eff5b2974ec2",
       "txhash": [
-        "c7363bf2f5a14889a53664b6438307b5494ff99f"
+        "20e91d2c1e1a6fac9646384feb3b8bbf5c716b35"
       ]
     },
     "tests/test_pricing_mechanics.py": {
@@ -246,8 +246,8 @@
         "VRFCoordinatorMock",
         "VRFRequestIDBase"
       ],
-      "results": "...",
-      "sha1": "c8ca9299b04980f860b89c1af35e1021110df76f",
+      "results": ".........",
+      "sha1": "b794d9d749afe87a35096d9bb8579653fd47fb93",
       "txhash": []
     },
     "tests/test_round_mechanics.py": {
@@ -293,7 +293,7 @@
         "VRFRequestIDBase"
       ],
       "results": "..",
-      "sha1": "426e4857baa60a3cf8ab1c9f7c53c17619db8316",
+      "sha1": "6a5bd4459a71e536e31fc9ab512f34f20b69a100",
       "txhash": []
     },
     "tests/test_train_hero.py": {
@@ -343,18 +343,7 @@
     }
   },
   "tx": {
-    "b1040889d98437d4a715dd364d3e9dbd59634d1f": {
-      "MockV3Aggregator": {
-        "29": [
-          [
-            14
-          ],
-          [],
-          []
-        ]
-      }
-    },
-    "c7363bf2f5a14889a53664b6438307b5494ff99f": {
+    "20e91d2c1e1a6fac9646384feb3b8bbf5c716b35": {
       "LinkToken": {
         "12": [
           [
@@ -424,6 +413,17 @@
         "30": [
           [
             0
+          ],
+          [],
+          []
+        ]
+      }
+    },
+    "304f7e96dbb88db223574b4cc4f4aabe0a6bcd08": {
+      "MockV3Aggregator": {
+        "29": [
+          [
+            14
           ],
           [],
           []
