@@ -141,4 +141,6 @@ interface ICryptoChampions {
     function claimReward(uint256 heroId) external;
 
     function getNumEldersInGame() external view returns (uint256);
+
+    function refreshPhase() external;
 }

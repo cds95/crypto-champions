@@ -196,16 +196,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         _;
     }
 
-    modifier timedPhaseTransition() {
-        if (currentPhase == Phase.SETUP && now >= currentPhaseStartTime + SETUP_PHASE_DURATION) {
-            transitionNextPhase();
-        }
-        if (currentPhase == Phase.ACTION && now >= currentPhaseStartTime + ACTION_PHASE_DURATION) {
-            transitionNextPhase();
-        }
-        _;
-    }
-
+    /// @notice Transitions to the next phase
     function transitionNextPhase() internal {
         if (currentPhase == Phase.SETUP) {
             // If rewards have gone unclaimed, send to address
@@ -246,6 +237,28 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         currentPhaseStartTime = now;
     }
 
+    /// @notice Sets the contract's phase
+    /// @dev May delete function and keep only the refresh phase function
+    /// @param phase The phase the contract should be set to
+    function setPhase(Phase phase) external onlyAdmin {
+        currentPhase = phase;
+    }
+
+    /// @notice Transitions to next phase if the condition is met and rewards caller for a successful phase transition
+    function refreshPhase() external override {
+        bool phaseChanged = false;
+
+        if (currentPhase == Phase.SETUP && now >= currentPhaseStartTime + SETUP_PHASE_DURATION) {
+            transitionNextPhase();
+        } else if (currentPhase == Phase.ACTION && now >= currentPhaseStartTime + ACTION_PHASE_DURATION) {
+            transitionNextPhase();
+        }
+
+        if (phaseChanged) {
+            // todo reward msg.sender
+        }
+    }
+
     /// @notice Makes a request for a random number
     /// @param userProvidedSeed The seed for the random request
     /// @return requestId The request id
@@ -260,12 +273,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
         _randomResultsVRF[requestId] = randomness;
         _trainHero(requestId);
-    }
-
-    /// @notice Sets the contract's phase
-    /// @param phase The phase the contract should be set to
-    function setPhase(Phase phase) external onlyAdmin {
-        currentPhase = phase;
     }
 
     /// @notice Check if msg.sender has the role
@@ -779,13 +786,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         winningAffinitiesByRound.push(winningAffinity);
     }
 
-    function claimReward(uint256 heroId)
-        external
-        override
-        timedPhaseTransition()
-        atPhase(Phase.SETUP)
-        isValidHero(heroId)
-    {
+    /// @notice Claims the rewards for the hero if eligible
+    /// @dev Can only claim once and only for the round the hero was minted
+    /// @param heroId The hero id
+    function claimReward(uint256 heroId) external override atPhase(Phase.SETUP) isValidHero(heroId) {
         // Check if hero is eligible and if hero hasn't already claimed
         if (
             _heroes[heroId].roundMinted == currentRound &&
