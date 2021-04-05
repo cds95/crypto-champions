@@ -6,8 +6,6 @@ import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/VRFConsumerBas
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 
 contract WeatherWarsFactory is VRFConsumerBase {
-    using SafeMath for uint256;
-
     WeatherWars[] public games;
 
     uint256 private _fee;
@@ -64,10 +62,10 @@ contract WeatherWarsFactory is VRFConsumerBase {
         address linkTokenAddress,
         uint256 feeInLink,
         bytes32 keyHash,
-        bytes32 weatherApiKey,
+        string memory weatherApiKey,
         bytes32 oracleJobId
     ) public VRFConsumerBase(vrfCoordinateAdddress, linkTokenAddress) {
-        _fee = feeInLink * 10**18;
+        _fee = feeInLink;
         _keyHash = keyHash;
         _linkTokenAddress = linkTokenAddress;
         _weatherApiKey = weatherApiKey;
@@ -75,7 +73,7 @@ contract WeatherWarsFactory is VRFConsumerBase {
         jobId = oracleJobId;
     }
 
-    function init() public {
+    function init() external {
         requestNextCity();
     }
 
@@ -83,10 +81,10 @@ contract WeatherWarsFactory is VRFConsumerBase {
         string calldata _gameName,
         uint256 _buyinAmount,
         address cryptoChampionsContractAddress
-    ) public returns (bytes32) {
+    ) external returns (bytes32) {
         WeatherWars newGame =
             new WeatherWars(
-                _oracle,
+                oracle,
                 _linkTokenAddress,
                 _fee,
                 _gameName,
@@ -97,7 +95,6 @@ contract WeatherWarsFactory is VRFConsumerBase {
                 _weatherApiKey
             );
         games.push(newGame);
-        emit GameCreated(_gameName, _nextCity);
         requestNextCity();
     }
 

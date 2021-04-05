@@ -16,7 +16,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
 
     address private _oracle;
 
-    bytes32 public cityWeather;
+    string public cityWeather;
 
     // The amount of ether required to join the game
     uint256 public buyinAmount;
@@ -52,7 +52,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
     }
 
     function play() internal override {
-        Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
+        Chainlink.Request memory request = buildChainlinkRequest(_jobId, address(this), this.fulfill.selector);
 
         // Build URL
         string memory reqUrlWithCity = concatenate("http://api.openweathermap.org/data/2.5/weather?id=", city);
@@ -62,7 +62,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         // Send Request
         request.add("get", reqUrlWithCity);
         request.add("path", "weather.0.main");
-        return sendChainlinkRequestTo(oracle, request, fee);
+        sendChainlinkRequestTo(_oracle, request, _fee);
     }
 
     // TODO:  Move to it's own library
@@ -76,7 +76,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
 
     function leaveGame(uint256 heroId) public override {
         require(_currentPhase == MinigamePhase.OPEN); // dev: Game already closed
-        require(cityWeather == ""); // dev: City weather data already fetched
+        require(bytes(cityWeather).length == 0); // dev: City weather data already fetched
 
         super.leaveGame(heroId);
         uint256 addressBalance = balances[msg.sender];
@@ -88,7 +88,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         require(super.getNumPlayers() == MAX_PLAYERS); // dev: Weather Wars can only have two players
         require(balances[msg.sender] > 0); // dev: Only a player who has bought in may determine a winner
         require(_currentPhase == MinigamePhase.OPEN); // dev: Game already closed
-        require(cityWeather != ""); // dev: City weather data has not been fetched yet
+        require(bytes(cityWeather).length != 0); // dev: City weather data has not been fetched yet
 
         uint256 heroOne = heroIds[0];
         uint256 heroTwo = heroIds[1];
