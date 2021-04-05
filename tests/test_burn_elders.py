@@ -30,11 +30,6 @@ def test_burn_internal_non_existent_elder(accounts, crypto_champions):
         crypto_champions.burnElder(1, {"from": accounts[0]})
 
 
-def test_burn_internal_invalid_id(accounts, crypto_champions):
-    with brownie.reverts("dev: Given id is not valid."):
-        crypto_champions.burnElder(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1, {"from": accounts[0]})
-
-
 def test_burn_internal_first_elder(accounts, crypto_champions, mint_first_elder):
     assert crypto_champions.eldersInGame() == 1 and crypto_champions.getElderOwner(1) == accounts[0]
     crypto_champions.burnElder(1)

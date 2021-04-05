@@ -2,26 +2,6 @@ import brownie
 from web3 import Web3
 
 
-
-def test_burn_other_owner_hero(accounts, crypto_champions, mint_first_hero):
-    heroId = crypto_champions.MAX_NUMBER_OF_ELDERS() + 1
-    assert crypto_champions.getHeroOwner(heroId) == accounts[0]
-    with brownie.reverts("dev: Cannot burn hero that is not yours."):
-        crypto_champions.burnHero(heroId, {"from": accounts[1]})
-
-
-def test_burn_elders_from_non_admin(accounts, crypto_champions, mint_first_elder):
-    with brownie.reverts("dev: Access denied."):
-        crypto_champions.burnElders({"from": accounts[1]})
-
-
-def test_grant_admin_then_burn(accounts, crypto_champions, mint_first_elder):
-    crypto_champions.grantRole(Web3.keccak(text="ROLE_ADMIN"), accounts[1], {"from": accounts[0]})
-    assert crypto_champions.eldersInGame() == 1
-    crypto_champions.burnElders({"from": accounts[1]})
-    assert crypto_champions.eldersInGame() == 0
-
-
 def test_non_authorized_mint_price(accounts, crypto_champions):
     with brownie.reverts("dev: Access denied."):
         crypto_champions.setElderMintPrice(0, {"from": accounts[1]})
@@ -31,3 +11,25 @@ def test_authorized_mint_price(accounts, crypto_champions):
     currentMintPrice = crypto_champions.elderMintPrice()
     crypto_champions.setElderMintPrice(currentMintPrice - 1, {"from": accounts[0]})
     assert crypto_champions.elderMintPrice() == currentMintPrice - 1
+
+
+def test_non_authorized_phase_set(accounts, crypto_champions):
+    with brownie.reverts("dev: Access denied."):
+        crypto_champions.setPhase(1, {"from": accounts[1]})
+
+
+def test_authorized_phase_set(accounts, crypto_champions):
+    assert crypto_champions.currentPhase() == 0
+    crypto_champions.setPhase(1, {"from": accounts[0]})
+    assert crypto_champions.currentPhase() == 1
+
+
+def test_non_authorized_affinity_creation(accounts, crypto_champions, MockV3Aggregator):
+    btcV3Aggregator = MockV3Aggregator.deploy(18, 10000000000, { "from": accounts[0] })
+    with brownie.reverts("dev: Access denied."):
+        crypto_champions.createAffinity("BTC", btcV3Aggregator.address, {"from": accounts[1]})
+
+
+def test_authorized_affinity_creation(accounts, crypto_champions, MockV3Aggregator):
+    btcV3Aggregator = MockV3Aggregator.deploy(18, 10000000000, { "from": accounts[0] })
+    crypto_champions.createAffinity("BTC", btcV3Aggregator.address, {"from": accounts[0]})

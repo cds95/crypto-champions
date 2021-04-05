@@ -520,8 +520,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     function _burnElder(uint256 elderId) internal isValidElderSpiritId(elderId) {
         require(_elderSpirits[elderId].valid); // dev: Cannot burn elder that does not exist.
 
-        // TODO: need to make sure _elderOwners[elderId] can never be address(0).
-        //     Check recipient before every token send so that we never send to address(0).
         _burn(_elderOwners[elderId], elderId, 1);
 
         // Reset elder values for elder id

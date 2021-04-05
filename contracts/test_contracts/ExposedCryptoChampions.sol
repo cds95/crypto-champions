@@ -29,6 +29,11 @@ contract ExposedCryptoChampions is CryptoChampions {
         return _randomResultsVRF[requestId];
     }
 
+    /// See CryptoChampions::_burnElders
+    function burnElders() public {
+        _burnElders();
+    }
+
     /// See CryptoChampions::_burnElder
     function burnElder(uint256 elderId) public {
         _burnElder(elderId);

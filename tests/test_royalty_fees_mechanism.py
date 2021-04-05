@@ -5,7 +5,7 @@ def test_royalty_paid_out(accounts, crypto_champions, mint_first_elder, set_phas
     balBeforeHeroMint = accounts[0].balance()
     mintPrice = crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), crypto_champions.eldersInGame())
     crypto_champions.mintHero(crypto_champions.eldersInGame(), "test-hero", {"from": accounts[1], "value": mintPrice})
-    royaltyFee = mintPrice * 0.2 # Hardcoded here should be equal to the constant in the contract
+    royaltyFee = mintPrice * 0.25 # Hardcoded here should be equal to the constant in the contract
     assert accounts[0].balance() == balBeforeHeroMint + royaltyFee
 
 
@@ -14,5 +14,5 @@ def test_elder_ownership_transfer_royalty(accounts, crypto_champions, mint_first
     balBeforeHeroMint = accounts[1].balance()
     mintPrice = crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), crypto_champions.eldersInGame())
     crypto_champions.mintHero(crypto_champions.eldersInGame(), "test-hero", {"from": accounts[2], "value": mintPrice})
-    royaltyFee = mintPrice * 0.2 # Hardcoded here should be equal to the constant in the contract
+    royaltyFee = mintPrice * 0.25 # Hardcoded here should be equal to the constant in the contract
     assert accounts[1].balance() == balBeforeHeroMint + royaltyFee
