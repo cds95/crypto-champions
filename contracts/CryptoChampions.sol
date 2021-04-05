@@ -37,9 +37,16 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     // Reserved id for the in game currency
     uint256 internal constant IN_GAME_CURRENCY_ID = 0;
 
-    // Constants used to determine fee proportions.
-    // Usage: fee.mul(proportion).div(10)
-    uint8 internal constant HERO_MINT_ROYALTY_PROPORTION = 8;
+    // Constants used to determine fee proportions in percentage
+    // Usage: fee.mul(proportion).div(100)
+    uint8 internal constant HERO_MINT_ROYALTY_PERCENT = 20;
+    uint8 internal constant HERO_MINT_DEV_PERCENT = 5;
+
+    // The amount of ETH contained in the rewards pool
+    uint256 public rewardsPoolAmount = 0;
+
+    // The amount of ETH contained in the dev fund
+    uint256 public devFund = 0;
 
     // The identifier for the price wars game
     string internal constant PRICE_WARS_ID = "PRICE_WARS";
@@ -265,6 +272,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         // Refund if user sent too much
         _refundSender(elderMintPrice);
 
+        // The entire elder minting fee goes to the rewards pool
+        rewardsPoolAmount = rewardsPoolAmount.add(elderMintPrice);
+
         emit ElderSpiritMinted(elderId, _msgSender());
 
         return elderId;
@@ -328,11 +338,15 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         _roundElderSpawns[currentRound][elderId] = _roundElderSpawns[currentRound][elderId].add(1);
 
         // Disburse royalties
-        uint256 royaltyFee = mintPrice.mul(HERO_MINT_ROYALTY_PROPORTION).div(10);
+        uint256 royaltyFee = mintPrice.mul(HERO_MINT_ROYALTY_PERCENT).div(100);
         address seedOwner = _elderOwners[elderId];
         (bool success, ) = seedOwner.call{ value: royaltyFee }("");
         require(success, "Payment failed");
-        // Remaining 20% kept for contract/Treum
+
+        // Update the rewards and dev fund pools
+        uint256 devFee = mintPrice.mul(HERO_MINT_DEV_PERCENT).div(100);
+        devFund = devFund.add(devFee);
+        rewardsPoolAmount = rewardsPoolAmount.add(mintPrice.sub(royaltyFee).sub(devFee));
 
         // Refund if user sent too much
         _refundSender(mintPrice);
