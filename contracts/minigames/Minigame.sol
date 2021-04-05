@@ -44,10 +44,10 @@ abstract contract Minigame {
     event GameEnded();
 
     // Initializes a new minigame
-    /// @param gameName The minigame's name
+    /// @param nameOfGame The minigame's name
     /// @param cryptoChampionsAddress The address of the cryptoChampions contract
-    constructor(string memory _gameName, address cryptoChampionsAddress) public {
-        gameName = _gameName;
+    constructor(string memory nameOfGame, address cryptoChampionsAddress) public {
+        gameName = nameOfGame;
         _currentPhase = MinigamePhase.OPEN;
         cryptoChampions = ICryptoChampions(cryptoChampionsAddress);
     }
@@ -59,13 +59,13 @@ abstract contract Minigame {
         MinigamePlayer memory player;
         player.isInGame = true;
         players[heroId] = player;
-        heroIds.push(heroId);
+        _heroIds.push(heroId);
         numPlayers++;
     }
 
     /// @notice Leaves a game
     /// @param heroId The id of the leaving player's hero
-    function leaveGame(uint256 heroId) external payable {
+    function leaveGame(uint256 heroId) public payable virtual {
         require(_currentPhase == MinigamePhase.OPEN);
         MinigamePlayer storage player = players[heroId];
         player.isInGame = false;
@@ -90,11 +90,6 @@ abstract contract Minigame {
     /// @notice Gets the number of players in the game
     function getNumPlayers() public view returns (uint256) {
         return numPlayers;
-    }
-
-    /// @notice Gets the ids of all the heros in the game
-    function getHeroIds() public view returns (uint256[]) {
-        return _heroIds;
     }
 
     /// @notice Handler function to execute game logic.  This should be implemented by the concrete class.

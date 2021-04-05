@@ -44,15 +44,14 @@ contract WeatherWars is CappedMinigame, ChainlinkClient {
 
     /// @notice Joins a game
     /// @param heroId The id of the joining player's hero
-    function joinGame(uint256 heroId) external payable override {
-        require(msg.value == buyinAmount); // dev Incorrect buyin amount
+    function joinGame(uint256 heroId) public payable override {
         balances[heroId] = buyinAmount;
         super.joinGame(heroId);
     }
 
     /// @notice Leaves a game
     /// @param heroId The id of the leaving player's hero
-    function leaveGame(uint256 heroId) external payable override {
+    function leaveGame(uint256 heroId) public payable override {
         super.leaveGame(heroId);
         uint256 playerBalance = balances[heroId];
         balances[heroId] = 0;

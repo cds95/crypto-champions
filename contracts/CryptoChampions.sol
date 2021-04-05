@@ -25,6 +25,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     // The current phase the contract is in.
     Phase public currentPhase;
 
+    // Number of tokens minted whenever a user mints a hero
+    uint256 internal constant NUM_TOKENS_MINTED = 500 * 10**18;
+
     // The owner role is used to globally govern the contract
     bytes32 internal constant ROLE_OWNER = keccak256("ROLE_OWNER");
 
@@ -319,6 +322,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
         // Mint the NFT
         _mint(_msgSender(), heroId, 1, ""); // TODO: give the URI
+
+        // Mint in game currency tokens
+        _mint(_msgSender(), IN_GAME_CURRENCY_ID, NUM_TOKENS_MINTED, "");
 
         // Assign the hero id with the owner and with the hero
         _heroOwners[heroId] = _msgSender();
