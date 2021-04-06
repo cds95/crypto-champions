@@ -7,6 +7,7 @@ import {
     getNumMintedElderSpirits,
     getPhase
 } from '../services/cryptoChampions';
+import { getAllWeatherDuels } from '../services/weatherWars';
 import { getUserAccount } from '../services/web3';
 
 export const useGetNumMintedElderSpirits = () => {
@@ -151,6 +152,33 @@ export const useGetHeroes = () => {
                     isLoading: false,
                     isInErrorState: true,
                     heroes: []
+                });
+            }
+        })();
+    }, []);
+    return state;
+};
+
+export const useGetWeatherDuels = () => {
+    const [state, setState] = useState({
+        isLoading: false,
+        isInErrorState: false,
+        weatherDuels: []
+    });
+    useEffect(() => {
+        (async () => {
+            setState({ isLoading: true });
+            try {
+                const weatherDuels = await getAllWeatherDuels();
+                setState({
+                    isLoading: false,
+                    weatherDuels
+                });
+            } catch (e) {
+                setState({
+                    isLoading: false,
+                    isInErrorState: true,
+                    weatherDuels: []
                 });
             }
         })();

@@ -8,9 +8,17 @@ import { getRaceImage } from '../../images/races';
 import { getRaceClassLabel } from '../../AppUtils';
 import { getNonUserOwnedHeros } from '../../redux/selectors';
 import { DuelModal } from '../../components/DuelModal/DuelModal';
+import { Tab, Tabs } from '@material-ui/core';
 
 const text = {
-    title: 'Click on a hero below to challenge them to a duel!'
+    title: 'Click on a hero below to challenge them to a duel!',
+    challengeTab: 'Challenge',
+    myDuels: 'My Duels'
+};
+
+const galleryTabs = {
+    CHALLENGE: 0,
+    USER_DUELS: 1
 };
 
 export const GalleryComp = ({ setHeroes, setIsLoadingHeroes, nonUserHeroes, setDuelOpponentHero }) => {
@@ -24,7 +32,11 @@ export const GalleryComp = ({ setHeroes, setIsLoadingHeroes, nonUserHeroes, setD
         setIsDuelModalOpen(true);
     };
     const [isDuelModalOpen, setIsDuelModalOpen] = useState(false);
+    const [currentTab, setCurrentTab] = useState(galleryTabs.CHALLENGE);
     const handleOnClose = () => setIsDuelModalOpen(false);
+    const changeTabs = (event, newTab) => {
+        setCurrentTab(newTab);
+    };
     const items = nonUserHeroes.map((hero) => {
         return {
             ...hero,
@@ -34,10 +46,28 @@ export const GalleryComp = ({ setHeroes, setIsLoadingHeroes, nonUserHeroes, setD
             subLabel: hero.affinity
         };
     });
+    let content;
+    switch (currentTab) {
+        case galleryTabs.CHALLENGE:
+            content = (
+                <React.Fragment>
+                    <ItemSelector title={text.title} caption={text.caption} items={items} onSelect={onSelect} />
+                    <DuelModal isOpen={isDuelModalOpen} onClose={handleOnClose} />
+                </React.Fragment>
+            );
+            break;
+        case galleryTabs.USER_DUELS:
+
+        default:
+            break;
+    }
     return (
         <div className="gallery">
-            <ItemSelector title={text.title} caption={text.caption} items={items} onSelect={onSelect} />
-            <DuelModal isOpen={isDuelModalOpen} onClose={handleOnClose} />
+            <Tabs className="gallery__tabs" value={currentTab} onChange={changeTabs}>
+                <Tab className="gallery__tab-item" label={text.challengeTab} />
+                <Tab className="gallery__tab-item" label={text.myDuels} />
+            </Tabs>
+            <div className="gallery-content">{content}</div>
         </div>
     );
 };
