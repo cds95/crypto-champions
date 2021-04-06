@@ -91,7 +91,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
     }
 
     function joinGame(uint256 heroId) public override {
-        require(msg.sender == initiator || msg.sender == opponent); // dev: Address not part of the game
+        require(msg.sender == address(_weatherWarsFactory) || msg.sender == initiator || msg.sender == opponent); // dev: Address not part of the game
         super.joinGame(heroId);
     }
 

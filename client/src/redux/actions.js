@@ -175,10 +175,11 @@ export const setDuelInitiatorHeroAction = (heroId) => {
 };
 
 export const SET_DUEL_OPPONENT_HERO = 'SET_DUEL_OPPONENT_HERO';
-export const setDuelOpponentHeroAction = (heroId) => {
+export const setDuelOpponentHeroAction = (heroId, opponentAddress) => {
     return {
         type: SET_DUEL_OPPONENT_HERO,
-        heroId
+        heroId,
+        opponentAddress
     };
 };
 

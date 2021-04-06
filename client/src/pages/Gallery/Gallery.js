@@ -5,7 +5,6 @@ import { setDuelOpponentHeroAction, setHeroesAction, setIsLoadingHeroesAction } 
 import './Gallery.css';
 import { ItemSelector } from '../../components/ItemSelector';
 import { getRaceImage } from '../../images/races';
-import { CLASSES, RACES } from '../../constants';
 import { getRaceClassLabel } from '../../AppUtils';
 import { getNonUserOwnedHeros } from '../../redux/selectors';
 import { DuelModal } from '../../components/DuelModal/DuelModal';
@@ -21,7 +20,7 @@ export const GalleryComp = ({ setHeroes, setIsLoadingHeroes, nonUserHeroes, setD
         setHeroes(heroes);
     }, [isLoadingHeroes]);
     const onSelect = (hero) => {
-        setDuelOpponentHero(hero.id);
+        setDuelOpponentHero(hero.id, hero.owner);
         setIsDuelModalOpen(true);
     };
     const [isDuelModalOpen, setIsDuelModalOpen] = useState(false);
@@ -57,8 +56,8 @@ const mapDispatchToProps = (dispatch) => {
         setIsLoadingHeroes: (isLoadingHeroes) => {
             dispatch(setIsLoadingHeroesAction(isLoadingHeroes));
         },
-        setDuelOpponentHero: (heroId) => {
-            dispatch(setDuelOpponentHeroAction(heroId));
+        setDuelOpponentHero: (heroId, opponentAddress) => {
+            dispatch(setDuelOpponentHeroAction(heroId, opponentAddress));
         }
     };
 };

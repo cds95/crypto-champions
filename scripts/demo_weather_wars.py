@@ -35,11 +35,13 @@ def main():
 
     cc.mintElderSpirit(1, 1, "BTC", { "from": accounts[0], "value": 0.3 * 10 ** 18 })
     cc.mintElderSpirit(2, 2, "ETH", { "from": accounts[1], "value": 0.3 * 10 ** 18 })
+    cc.mintElderSpirit(3, 3, "ETH", { "from": accounts[1], "value": 0.3 * 10 ** 18 })
 
     cc.setPhase(1)
 
     cc.mintHero(1, "heroName", { "from": accounts[3], "value": 0.271 * 10**18 })
     cc.mintHero(2, "heroName", { "from": accounts[4], "value": 0.271 * 10**18 })
+    cc.mintHero(3, "testName", { "from": accounts[0], "value": 0.271 * 10**18 })
     
     wwf.init()
 

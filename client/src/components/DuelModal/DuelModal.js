@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
+import { CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { DuelModalConfirmStep } from './DuelModalConfirmStep';
@@ -8,13 +8,15 @@ import { getHero, getUserOwnedHeros } from '../../redux/selectors';
 import { resetDuelAction, setDuelBetAmountAction, setDuelInitiatorHeroAction } from '../../redux/actions';
 import { DuelForm } from './DuelForm';
 import { CryptoChampionButton } from '../CryptoChampionButton';
+import { challengeToDuel } from '../../services/weatherWars';
 
 const text = {
     confirmOpponentTitle: 'Confirm your opponent',
     selectYourChampionTitle: 'Select your champion',
     next: 'Next',
     back: 'Back',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    createDuel: 'Create Duel'
 };
 
 const MODAL_STEPS = {
@@ -32,9 +34,11 @@ export const DuelModalComp = ({
     userHeroes,
     initiatorHeroId,
     setDuelInitiatorHero,
-    resetDuel
+    resetDuel,
+    opponentAddress
 }) => {
     const [currentStep, setCurrentStep] = useState(MODAL_STEPS.CONFIRM_OPPONENT);
+    const [isCreatingDuel, setIsCreatingDuel] = useState(false);
     let content;
     let actions;
     let title;
@@ -45,6 +49,12 @@ export const DuelModalComp = ({
     const handleOnClose = () => {
         onClose();
         resetDuel();
+    };
+    const createDuel = async () => {
+        setIsCreatingDuel(true);
+        await challengeToDuel(bet, initiatorHeroId, opponentAddress);
+        setIsCreatingDuel(false);
+        goToNextStep();
     };
 
     switch (currentStep) {
@@ -59,7 +69,9 @@ export const DuelModalComp = ({
             break;
         case MODAL_STEPS.FORM:
             title = text.selectYourChampionTitle;
-            content = (
+            content = isCreatingDuel ? (
+                <CircularProgress />
+            ) : (
                 <DuelForm
                     userHeroes={userHeroes}
                     onSelectUserHero={selectUserHero}
@@ -69,7 +81,7 @@ export const DuelModalComp = ({
             actions = (
                 <React.Fragment>
                     <CryptoChampionButton label={text.back} onClick={goToPreviousStep} />
-                    <CryptoChampionButton label={text.next} onClick={goToNextStep} disabled={!initiatorHeroId} />
+                    <CryptoChampionButton label={text.createDuel} onClick={createDuel} disabled={!initiatorHeroId} />
                 </React.Fragment>
             );
             break;
@@ -94,13 +106,14 @@ export const DuelModalComp = ({
 
 const mapStateToProps = (state) => {
     const {
-        duel: { opponentHeroId, bet, initiatorHeroId }
+        duel: { opponentHeroId, bet, initiatorHeroId, opponentAddress }
     } = state;
     return {
         opponentHero: getHero(state, opponentHeroId),
         userHeroes: getUserOwnedHeros(state),
         bet,
-        initiatorHeroId
+        initiatorHeroId,
+        opponentAddress
     };
 };
 

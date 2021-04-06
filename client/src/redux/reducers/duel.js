@@ -1,6 +1,7 @@
 import { SET_DUEL_INITIATOR_HERO, SET_DUEL_OPPONENT_HERO, SET_DUEL_BET_AMOUNT, RESET_DUEL } from '../actions';
 
 const initialState = {
+    opponentAddress: '',
     opponentHeroId: null,
     initiatorHeroId: null,
     bet: null
@@ -16,7 +17,8 @@ export const duel = (state = initialState, action) => {
         case SET_DUEL_OPPONENT_HERO:
             return {
                 ...state,
-                opponentHeroId: action.heroId
+                opponentHeroId: action.heroId,
+                opponentAddress: action.opponentAddress
             };
         case SET_DUEL_BET_AMOUNT:
             return {
