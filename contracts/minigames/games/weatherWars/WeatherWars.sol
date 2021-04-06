@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.6.0;
 
-import "../../CappedMinigame.sol";
+import "../../Minigame.sol";
 import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/ChainlinkClient.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC1155Receiver.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 import "./WeatherWarsFactory.sol";
 
-contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
+contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
     using SafeMath for uint8;
 
     uint256 private constant MAX_PLAYERS = 2;
@@ -65,8 +65,8 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         bytes32 jobId,
         string memory apiKey,
         address weatherWarsFactoryAddress
-    ) public CappedMinigame(gameName, MAX_PLAYERS, _cryptoChampionsContractAddress) {
-        // setPublicChainlinkToken();
+    ) public Minigame(gameName, _cryptoChampionsContractAddress) {
+        setPublicChainlinkToken();
         _linkTokenAddress = linkTokenAddress;
         _fee = fee;
         _oracle = oracle;
@@ -90,16 +90,23 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
     }
 
     function play() internal override {
-        // Hardcoding for now so we can test on Rinkeby.  Make sure to replace with call to requestWeatherData()
-        if (city == "6173331"") {
+        mockGameplay();
+    }
+
+    // Hardcoding for now so we can test on Rinkeby.  Make sure to replace with call to requestWeatherData().  The issue is that we
+    // can't find a reliable oracle in Rinkeby and the Kovan faucet isn't working.
+    function mockGameplay() internal {
+        uint8 weatherId = _weatherWarsFactory.weatherMapping(city);
+        if (weatherId == 0) {
             cityWeather = "Clear";
-        } else if (city == "4671654") {
+        } else if (weatherId == 1) {
             cityWeather = "Clouds";
-        } else if (city == "4887398") {
+        } else if (weatherId == 2) {
             cityWeather = "Thunderstorm";
         } else {
             cityWeather = "Rain";
         }
+        hasBeenPlayed = true;
     }
 
     function requestWeatherData() internal {
@@ -148,8 +155,8 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
 
         uint256 initiatorHeroId = playerHero[initiator];
         uint256 opponentHeroId = playerHero[opponent];
-        initiatorScore = getHeroScore(initiatorHeroId);
-        opponentScore = getHeroScore(opponentHeroId);
+        initiatorScore = getHeroScore(initiatorHeroId, 0);
+        opponentScore = getHeroScore(opponentHeroId, 1);
 
         // Handle Draw
         if (initiatorScore == opponentScore) {
