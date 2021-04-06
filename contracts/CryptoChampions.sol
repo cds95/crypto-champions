@@ -389,7 +389,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         (_heroes[heroId].alignment, newRandomNumber) = _rollDice(9, newRandomNumber); // 1 out of 9
         (_heroes[heroId].background, newRandomNumber) = _rollDice(30, newRandomNumber); // 1 out of 30
         (_heroes[heroId].hometown, newRandomNumber) = _rollDice(24, newRandomNumber); // 1 out of 24
-        (_heroes[heroId].weather, newRandomNumber) = _rollDice(5, newRandomNumber); // 1 ouf of 5
+        (_heroes[heroId].weather, newRandomNumber) = _rollDice(7, newRandomNumber); // 1 ouf of 7
 
         (_heroes[heroId].hp, newRandomNumber) = _rollDice(21, newRandomNumber); // Roll 10-30
         _heroes[heroId].hp = uint8(_heroes[heroId].hp.add(9));

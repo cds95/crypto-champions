@@ -8,37 +8,13 @@ import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 contract WeatherWarsFactory is VRFConsumerBase {
     WeatherWars[] public games;
 
+    uint8 private constant MAX_CITIES = 24;
+
+    uint8 private constant MAX_WEATHERS = 7;
+
     uint256 private _fee;
 
     bytes32 internal _keyHash;
-
-    // City IDs based off open weather api docs
-    string[24] cities = [
-        "6173331",
-        "4671654",
-        "4887398",
-        "4164138",
-        "5128581",
-        "5391811",
-        "5391959",
-        "5809844",
-        "3530597",
-        "3435907",
-        "993800",
-        "360630",
-        "2643743",
-        "524894",
-        "2950158",
-        "2968815",
-        "2759794",
-        "2673722",
-        "1850147",
-        "1275339",
-        "1796236",
-        "1835847",
-        "1880252",
-        "2158177"
-    ];
 
     string private _nextCity;
 
@@ -51,6 +27,16 @@ contract WeatherWarsFactory is VRFConsumerBase {
     string private _weatherApiKey;
 
     bytes32 public jobId;
+
+    mapping(string => uint8) public weatherMapping;
+
+    mapping(uint8 => bool) private weatherMapIds;
+
+    mapping(string => uint8) public cities;
+
+    string[] private _openWeatherCityIds;
+
+    mapping(uint8 => bool) private _cityIds;
 
     event GameCreated(string gameName, string city);
 
@@ -77,6 +63,21 @@ contract WeatherWarsFactory is VRFConsumerBase {
         requestNextCity();
     }
 
+    function addWeatherMapping(string calldata weather, uint8 id) external {
+        require(!weatherMapIds[id]); // dev: Weather ID already taken
+        require(id >= 0 && id < MAX_WEATHERS); // dev: Weather ID is invalid.
+        weatherMapping[weather] = id;
+        weatherMapIds[id] = true;
+    }
+
+    function addCityMapping(string calldata openWeatherCityId, uint8 cityId) external {
+        require(!_cityIds[cityId]); // dev: City already taken
+        require(cityId >= 0 && cityId < MAX_CITIES); // dev: City ID is invalid.
+        cities[openWeatherCityId] = cityId;
+        _cityIds[cityId] = true;
+        _openWeatherCityIds.push(openWeatherCityId);
+    }
+
     function createWeatherWars(
         string calldata _gameName,
         uint256 _buyinAmount,
@@ -92,7 +93,8 @@ contract WeatherWarsFactory is VRFConsumerBase {
                 _buyinAmount,
                 _nextCity,
                 jobId,
-                _weatherApiKey
+                _weatherApiKey,
+                address(this)
             );
         games.push(newGame);
         requestNextCity();
@@ -104,7 +106,7 @@ contract WeatherWarsFactory is VRFConsumerBase {
     }
 
     function fulfillRandomness(bytes32 requestId, uint256 randomNum) internal override {
-        uint256 cityIdx = randomNum % cities.length;
-        _nextCity = cities[cityIdx];
+        uint256 cityIdx = randomNum % MAX_CITIES;
+        _nextCity = _openWeatherCityIds[cityIdx];
     }
 }

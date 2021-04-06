@@ -4,8 +4,12 @@ pragma solidity ^0.6.0;
 import "../../CappedMinigame.sol";
 import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/ChainlinkClient.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC1155Receiver.sol";
+import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
+import "./WeatherWarsFactory.sol";
 
 contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
+    using SafeMath for uint8;
+
     uint256 private constant MAX_PLAYERS = 2;
 
     address private _linkTokenAddress;
@@ -30,6 +34,8 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
     // API key to make call to get weather
     string private _apiKey;
 
+    WeatherWarsFactory private _weatherWarsFactory;
+
     constructor(
         address oracle,
         address linkTokenAddress,
@@ -39,7 +45,8 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         uint256 _buyinAmount,
         string memory _city,
         bytes32 jobId,
-        string memory apiKey
+        string memory apiKey,
+        address weatherWarsFactoryAddress
     ) public CappedMinigame(gameName, MAX_PLAYERS, _cryptoChampionsContractAddress) {
         setPublicChainlinkToken();
         _linkTokenAddress = linkTokenAddress;
@@ -49,6 +56,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         buyinAmount = _buyinAmount;
         _jobId = jobId;
         _apiKey = apiKey;
+        _weatherWarsFactory = WeatherWarsFactory(weatherWarsFactoryAddress);
     }
 
     function play() internal override {
@@ -92,8 +100,8 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
 
         uint256 heroOne = heroIds[0];
         uint256 heroTwo = heroIds[1];
-        uint8 heroOneScore = getHeroScore(heroOne);
-        uint8 heroTwoScore = getHeroScore(heroTwo);
+        uint256 heroOneScore = getHeroScore(heroOne);
+        uint256 heroTwoScore = getHeroScore(heroTwo);
 
         // Handle Draw
         if (heroOneScore == heroTwoScore) {
@@ -128,10 +136,70 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         setPhase(MinigamePhase.CLOSED);
     }
 
-    function getHeroScore(uint256 heroId) internal returns (uint8) {
-        (uint8 strength, uint8 dexterity, uint8 constitution, uint8 intelligence, uint8 wisom, uint8 charisma) =
+    function getHeroScore(uint256 heroId) internal returns (uint256) {
+        (, , uint8 hometown, uint8 weather) = cryptoChampions.getHeroLore(heroId);
+        uint256 score = 1;
+        if (hometown == _weatherWarsFactory.cities(city)) {
+            score = score.mul(11).div(10); // Multiply by 1.1
+        }
+        if (weather == _weatherWarsFactory.weatherMapping(cityWeather)) {
+            score = score.mul(11).div(10); // Multiply by 1.1
+        }
+        uint256 classStatScore = getClassStatScore(heroId);
+        uint256 weightedClassStatScore = classStatScore.mul(5).div(4); // Multiple by 1.25
+        uint256 highestNonClassStat = getHighestNonClassStat(heroId);
+        uint256 adjustedStatScore = weightedClassStatScore.add(highestNonClassStat);
+        score = score.mul(adjustedStatScore);
+        return score;
+    }
+
+    function getHighestNonClassStat(uint256 heroId) private returns (uint256) {
+        (uint8 traitOne, uint8 traitTwo, uint8 skillOne, uint8 skillTwo) = cryptoChampions.getHeroTraitsSkills(heroId);
+        uint256 highest = traitOne;
+        if (traitTwo > highest) {
+            highest = traitTwo;
+        }
+        if (skillOne > highest) {
+            highest = skillOne;
+        }
+        if (skillTwo > highest) {
+            highest = skillTwo;
+        }
+        return highest;
+    }
+
+    function getClassStatScore(uint256 heroId) private returns (uint256) {
+        (uint8 strength, uint8 dexterity, uint8 constitution, uint8 intelligence, uint8 wisdom, uint8 charisma) =
             cryptoChampions.getHeroStats(heroId);
-        return strength;
+        (, , uint256 classId, ) = cryptoChampions.getHeroVisuals(heroId);
+        // Warrior
+        if (classId == 0) {
+            return strength;
+        }
+        // Mage
+        if (classId == 1) {
+            return intelligence;
+        }
+        // Druid
+        if (classId == 2) {
+            return wisdom;
+        }
+        // Paladin
+        if (classId == 3) {
+            return constitution;
+        }
+        // Bard
+        if (classId == 4) {
+            return charisma;
+        }
+        if (classId == 5) {
+            return intelligence;
+        }
+        if (classId == 6) {
+            return wisdom;
+        }
+        // Rogue
+        return dexterity;
     }
 
     function onERC1155Received(
