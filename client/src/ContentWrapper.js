@@ -5,7 +5,8 @@ import {
     useGetElderSpirits,
     useGetMaxElderSpirits,
     useGetNumMintedElderSpirits,
-    useGetUserAccount
+    useGetUserAccount,
+    useGetUserTokenBalance
 } from './hooks/cryptoChampionsHook';
 import { LandingPage } from './pages/LandingPage';
 import {
@@ -33,6 +34,7 @@ export const ContentWrapperComp = ({
     const { elderSpirits } = useGetElderSpirits(numMintedElderSpirits);
     const { affinities } = useGetAffinities(maxElderSpirits);
     const { userAccount } = useGetUserAccount();
+    const { userTokenBalance } = useGetUserTokenBalance();
     useEffect(() => setMaxElderSpirits(maxElderSpirits), [maxElderSpirits]);
     useEffect(() => setNumMintedElderSpirits(numMintedElderSpirits), [numMintedElderSpirits]);
     useEffect(() => setElderSpirits(elderSpirits), [elderSpirits]);
@@ -40,7 +42,7 @@ export const ContentWrapperComp = ({
     useEffect(() => setUserAccount(userAccount));
     return (
         <Router>
-            <NavigationBar />
+            <NavigationBar userTokenBalance={userTokenBalance} />
             <Switch>
                 <Route path={routeDefinitions.ROOT} exact={true}>
                     <LandingPage />

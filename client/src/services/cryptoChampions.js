@@ -1,4 +1,4 @@
-import { CONTRACTS } from '../constants';
+import { CONTRACTS, IN_GAME_CURRENCY_ID } from '../constants';
 import { loadContract } from './contract';
 import { getUserAccount } from './web3';
 
@@ -122,4 +122,10 @@ export const getHeroes = async () => {
         }
     }
     return heroes;
+};
+
+export const getUserTokenBalance = async () => {
+    const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    const userAccount = await getUserAccount();
+    return await artifact.methods.balanceOf(userAccount, IN_GAME_CURRENCY_ID).call();
 };

@@ -6,17 +6,18 @@ header.navigation-bar {
     display: flex;
     flex: 1;
     justify-content: flex-end;
+    align-items: center;
 }
 
 .navigation-bar__options .navigation-bar__link {
-    margin-left: 15px;
+    margin-right: 15px;
     text-decoration: none;
 }
 
 header.navigation-bar .navigation-bar__text,
 .navigation-bar__options .navigation-bar__link {
     color: #fff;
-    font-family: 'LeagueSpartan';
+    font-family: 'LeagueSpartan' !important;
 }
 
 header.navigation-bar .navigation-bar__text {

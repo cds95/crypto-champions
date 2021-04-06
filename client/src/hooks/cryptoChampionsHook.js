@@ -5,7 +5,8 @@ import {
     getHeroes,
     getMaxElderSpirits,
     getNumMintedElderSpirits,
-    getPhase
+    getPhase,
+    getUserTokenBalance
 } from '../services/cryptoChampions';
 import { getAllWeatherDuels } from '../services/weatherWars';
 import { getUserAccount } from '../services/web3';
@@ -179,6 +180,32 @@ export const useGetWeatherDuels = () => {
                     isLoading: false,
                     isInErrorState: true,
                     weatherDuels: []
+                });
+            }
+        })();
+    }, []);
+    return state;
+};
+
+export const useGetUserTokenBalance = () => {
+    const [state, setState] = useState({
+        isLoading: false,
+        isInErrorState: false,
+        userTokenBalance: 0
+    });
+    useEffect(() => {
+        (async () => {
+            setState({ isLoading: true });
+            try {
+                const userTokenBalance = await getUserTokenBalance();
+                setState({
+                    isLoading: false,
+                    userTokenBalance
+                });
+            } catch (e) {
+                setState({
+                    isLoading: false,
+                    isInErrorState: true
                 });
             }
         })();
