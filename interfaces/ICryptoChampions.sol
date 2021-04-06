@@ -149,4 +149,10 @@ interface ICryptoChampions {
     function startNewPriceGame() external;
 
     function transferInGameTokens(address to, uint256 amount) external;
+
+    function delegatedTransferInGameTokens(
+        address from,
+        address to,
+        uint256 amount
+    ) external;
 }

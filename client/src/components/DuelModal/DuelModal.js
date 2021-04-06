@@ -2,27 +2,31 @@ import { CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle } f
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { DuelModalConfirmStep } from './DuelModalConfirmStep';
-import { DuelModalTransferStep } from './DuelModalTransferStep';
 import './DuelModal.css';
 import { getHero, getUserOwnedHeros } from '../../redux/selectors';
 import { resetDuelAction, setDuelBetAmountAction, setDuelInitiatorHeroAction } from '../../redux/actions';
 import { DuelForm } from './DuelForm';
 import { CryptoChampionButton } from '../CryptoChampionButton';
 import { challengeToDuel } from '../../services/weatherWars';
+import { allowWeatherWarToTransferBet } from '../../services/cryptoChampions';
+import { displayToken } from '../../AppUtils';
 
 const text = {
     confirmOpponentTitle: 'Confirm your opponent',
     selectYourChampionTitle: 'Select your champion',
+    allowTransfer: 'Allow Transfer',
     next: 'Next',
     back: 'Back',
     cancel: 'Cancel',
-    createDuel: 'Create Duel'
+    createDuel: 'Create Duel',
+    approve: 'Authorize',
+    authorizeText: (bet) => `You need to authorize the transfer of ${bet} CC to start the duel.`
 };
 
 const MODAL_STEPS = {
     CONFIRM_OPPONENT: 0,
-    FORM: 1,
-    TRANSFER: 2
+    ALLOW_TRANSFER: 1,
+    FORM: 2
 };
 
 export const DuelModalComp = ({
@@ -39,6 +43,7 @@ export const DuelModalComp = ({
 }) => {
     const [currentStep, setCurrentStep] = useState(MODAL_STEPS.CONFIRM_OPPONENT);
     const [isCreatingDuel, setIsCreatingDuel] = useState(false);
+    const [isApprovingTransfer, setIsApprovingTransfer] = useState(false);
     let content;
     let actions;
     let title;
@@ -54,7 +59,18 @@ export const DuelModalComp = ({
         setIsCreatingDuel(true);
         await challengeToDuel(bet, initiatorHeroId, opponentAddress, opponentHero.id);
         setIsCreatingDuel(false);
-        goToNextStep();
+        onClose();
+    };
+
+    const authorizeTransfer = async () => {
+        setIsApprovingTransfer(true);
+        try {
+            await allowWeatherWarToTransferBet();
+            goToNextStep();
+        } catch (e) {
+            console.error(e);
+        }
+        setIsApprovingTransfer(false);
     };
 
     switch (currentStep) {
@@ -64,6 +80,16 @@ export const DuelModalComp = ({
             actions = (
                 <React.Fragment>
                     <CryptoChampionButton label={text.next} onClick={goToNextStep} disabled={!bet} />
+                </React.Fragment>
+            );
+            break;
+        case MODAL_STEPS.ALLOW_TRANSFER:
+            title = text.approveTransfer;
+            content = isApprovingTransfer ? <CircularProgress /> : text.authorizeText(bet);
+            actions = (
+                <React.Fragment>
+                    <CryptoChampionButton label={text.back} onClick={goToPreviousStep} />
+                    <CryptoChampionButton label={text.approve} onClick={authorizeTransfer} />
                 </React.Fragment>
             );
             break;
@@ -84,9 +110,6 @@ export const DuelModalComp = ({
                     <CryptoChampionButton label={text.createDuel} onClick={createDuel} disabled={!initiatorHeroId} />
                 </React.Fragment>
             );
-            break;
-        case MODAL_STEPS.TRANSFER:
-            content = <DuelModalTransferStep />;
             break;
         default:
             throw new Error(`${currentStep} is invalid`);
