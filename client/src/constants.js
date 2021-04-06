@@ -24,6 +24,8 @@ export const GAME_PHASE = {
     CLOSED: '1'
 };
 
+export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+
 export const RACES = [
     {
         id: 0,

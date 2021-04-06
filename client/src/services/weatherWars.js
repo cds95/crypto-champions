@@ -3,6 +3,7 @@ import { loadContract, getContractInstanceAtAddress } from './contract';
 import { getUserAccount } from './web3';
 import BigNumber from 'bignumber.js';
 import WeatherWars from '../artifacts/contracts/WeatherWars.json';
+import { isZeroAddress } from '../AppUtils';
 
 const loadWeatherWarContract = async (address) => await getContractInstanceAtAddress(WeatherWars, address);
 
@@ -30,7 +31,9 @@ export const getAllWeatherDuels = async () => {
             1: opponent,
             2: initiatorHeroId,
             3: opponentHeroId,
-            4: phase
+            4: phase,
+            5: winner,
+            6: isDuelAccepted
         } = await weatherWar.methods.getMetaInformation().call();
         const weatherWarObj = {
             address: gameAddress,
@@ -38,7 +41,9 @@ export const getAllWeatherDuels = async () => {
             opponent,
             initiatorHeroId,
             opponentHeroId,
-            phase
+            phase,
+            winner: isZeroAddress(winner) ? null : winner,
+            isDuelAccepted
         };
         duels.push(weatherWarObj);
     }

@@ -1,4 +1,4 @@
-import { CHAINS, RACES, CLASSES } from './constants';
+import { CHAINS, RACES, CLASSES, ZERO_ADDRESS } from './constants';
 import { getRaceImage } from './images/races';
 import getWeb3 from './services/web3';
 import map from './artifacts/deployments/map.json';
@@ -24,3 +24,5 @@ export const getRaceClassLabel = (raceId, classId) => {
     const elderClass = getClass(classId);
     return `${race.label} - ${elderClass.label}`;
 };
+
+export const isZeroAddress = (address) => address && address === ZERO_ADDRESS;

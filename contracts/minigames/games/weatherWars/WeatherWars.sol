@@ -48,6 +48,8 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
 
     mapping(address => uint256) public playerHero;
 
+    bool public isDuelAccepted;
+
     constructor(
         address oracle,
         address linkTokenAddress,
@@ -128,6 +130,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         require(balances[msg.sender] > 0); // dev: Only a player who has bought in may determine a winner
         require(currentPhase == MinigamePhase.CLOSED); // dev: Game not yet over
         require(bytes(cityWeather).length != 0); // dev: City weather data has not been fetched yet
+        require(isDuelAccepted); // dev:  Opponent has not accepted the duel
 
         uint256 heroOne = heroIds[0];
         uint256 heroTwo = heroIds[1];
@@ -264,9 +267,15 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
             uint256,
             uint256,
             MinigamePhase,
-            address
+            address,
+            bool
         )
     {
-        return (initiator, opponent, playerHero[initiator], playerHero[opponent], currentPhase, winner);
+        return (initiator, opponent, playerHero[initiator], playerHero[opponent], currentPhase, winner, isDuelAccepted);
+    }
+
+    function acceptDuel() external {
+        require(msg.sender == opponent); // dev:  Only the opponent may accept a challenge
+        isDuelAccepted = true;
     }
 }

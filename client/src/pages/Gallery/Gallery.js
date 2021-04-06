@@ -35,8 +35,8 @@ export const GalleryComp = ({
     nonUserHeroes,
     setDuelOpponentHero,
     setWeatherDuels,
-    openDuels,
-    closedDuels
+    openUserDuels,
+    closedUserDuels
 }) => {
     const { isLoading: isLoadingHeroes, heroes = [] } = useGetHeroes();
     const { isLoading: isLoadingDuels, weatherDuels } = useGetWeatherDuels();
@@ -77,10 +77,10 @@ export const GalleryComp = ({
             );
             break;
         case galleryTabs.OPEN_DUELS:
-            content = <WeatherDuels duels={openDuels} />;
+            content = <WeatherDuels duels={openUserDuels} />;
             break;
         case galleryTabs.FINISHED_DUELS:
-            content = <WeatherDuels duels={closedDuels} />;
+            content = <WeatherDuels duels={closedUserDuels} />;
             break;
         default:
             break;
@@ -88,9 +88,9 @@ export const GalleryComp = ({
     return (
         <div className="gallery">
             <Tabs className="gallery__tabs" value={currentTab} onChange={changeTabs}>
-                <Tab className="gallery__tab-item" label={text.challengeTab} />
-                <Tab className="gallery__tab-item" label={text.openDuels} />
-                <Tab className="gallery__tab-item" label={text.pastDuels} />
+                <Tab className="gallery__tab-item" label={text.challengeTab} value={galleryTabs.CHALLENGE} />
+                <Tab className="gallery__tab-item" label={text.openDuels} value={galleryTabs.OPEN_DUELS} />
+                <Tab className="gallery__tab-item" label={text.pastDuels} value={galleryTabs.FINISHED_DUELS} />
             </Tabs>
             <div className="gallery-content">{content}</div>
         </div>

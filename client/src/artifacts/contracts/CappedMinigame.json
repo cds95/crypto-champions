@@ -198,15 +198,15 @@
     "absolutePath": "contracts/minigames/CappedMinigame.sol",
     "exportedSymbols": {
       "CappedMinigame": [
-        2074
+        2110
       ]
     },
-    "id": 2075,
+    "id": 2111,
     "license": "UNLICENSED",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2025,
+        "id": 2061,
         "literals": [
           "solidity",
           "^",
@@ -219,10 +219,10 @@
       {
         "absolutePath": "contracts/minigames/Minigame.sol",
         "file": "./Minigame.sol",
-        "id": 2026,
+        "id": 2062,
         "nodeType": "ImportDirective",
-        "scope": 2075,
-        "sourceUnit": 3091,
+        "scope": 2111,
+        "sourceUnit": 3127,
         "src": "64:24:17",
         "symbolAliases": [],
         "unitAlias": ""
@@ -234,36 +234,36 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 2028,
+              "id": 2064,
               "name": "Minigame",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3090,
+              "referencedDeclaration": 3126,
               "src": "221:8:17",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Minigame_$3090",
+                "typeIdentifier": "t_contract$_Minigame_$3126",
                 "typeString": "contract Minigame"
               }
             },
-            "id": 2029,
+            "id": 2065,
             "nodeType": "InheritanceSpecifier",
             "src": "221:8:17"
           }
         ],
         "contractDependencies": [
-          3090
+          3126
         ],
         "contractKind": "contract",
         "documentation": {
-          "id": 2027,
+          "id": 2063,
           "nodeType": "StructuredDocumentation",
           "src": "90:95:17",
           "text": "@title CappedMinigame\n @author cds95\n @notice This is contract for a capped minigame"
         },
         "fullyImplemented": false,
-        "id": 2074,
+        "id": 2110,
         "linearizedBaseContracts": [
-          2074,
-          3090
+          2110,
+          3126
         ],
         "name": "CappedMinigame",
         "nodeType": "ContractDefinition",
@@ -271,12 +271,12 @@
           {
             "constant": false,
             "functionSelector": "4c2412a2",
-            "id": 2031,
+            "id": 2067,
             "mutability": "mutable",
             "name": "maxPlayers",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 2074,
+            "scope": 2110,
             "src": "293:25:17",
             "stateVariable": true,
             "storageLocation": "default",
@@ -285,7 +285,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 2030,
+              "id": 2066,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "293:7:17",
@@ -300,11 +300,11 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 2033,
+            "id": 2069,
             "name": "MaxPlayersReached",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 2032,
+              "id": 2068,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "423:2:17"
@@ -313,25 +313,25 @@
           },
           {
             "body": {
-              "id": 2050,
+              "id": 2086,
               "nodeType": "Block",
               "src": "646:41:17",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 2048,
+                    "id": 2084,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 2046,
+                      "id": 2082,
                       "name": "maxPlayers",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2031,
+                      "referencedDeclaration": 2067,
                       "src": "656:10:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -342,11 +342,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 2047,
+                      "id": 2083,
                       "name": "_maxPlayers",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2037,
+                      "referencedDeclaration": 2073,
                       "src": "669:11:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -359,14 +359,14 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 2049,
+                  "id": 2085,
                   "nodeType": "ExpressionStatement",
                   "src": "656:24:17"
                 }
               ]
             },
             "documentation": null,
-            "id": 2051,
+            "id": 2087,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [
@@ -374,11 +374,11 @@
                 "arguments": [
                   {
                     "argumentTypes": null,
-                    "id": 2042,
+                    "id": 2078,
                     "name": "_gameName",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 2035,
+                    "referencedDeclaration": 2071,
                     "src": "610:9:17",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_memory_ptr",
@@ -387,11 +387,11 @@
                   },
                   {
                     "argumentTypes": null,
-                    "id": 2043,
+                    "id": 2079,
                     "name": "_cryptoChampionsAddress",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 2039,
+                    "referencedDeclaration": 2075,
                     "src": "621:23:17",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -399,17 +399,17 @@
                     }
                   }
                 ],
-                "id": 2044,
+                "id": 2080,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 2041,
+                  "id": 2077,
                   "name": "Minigame",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 3090,
+                  "referencedDeclaration": 3126,
                   "src": "601:8:17",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_type$_t_contract$_Minigame_$3090_$",
+                    "typeIdentifier": "t_type$_t_contract$_Minigame_$3126_$",
                     "typeString": "type(contract Minigame)"
                   }
                 },
@@ -421,17 +421,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 2040,
+              "id": 2076,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2035,
+                  "id": 2071,
                   "mutability": "mutable",
                   "name": "_gameName",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 2051,
+                  "scope": 2087,
                   "src": "494:23:17",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -440,7 +440,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 2034,
+                    "id": 2070,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "494:6:17",
@@ -454,12 +454,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2037,
+                  "id": 2073,
                   "mutability": "mutable",
                   "name": "_maxPlayers",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 2051,
+                  "scope": 2087,
                   "src": "527:19:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -468,7 +468,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2036,
+                    "id": 2072,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "527:7:17",
@@ -482,12 +482,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 2039,
+                  "id": 2075,
                   "mutability": "mutable",
                   "name": "_cryptoChampionsAddress",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 2051,
+                  "scope": 2087,
                   "src": "556:31:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -496,7 +496,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2038,
+                    "id": 2074,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "556:7:17",
@@ -513,12 +513,12 @@
               "src": "484:109:17"
             },
             "returnParameters": {
-              "id": 2045,
+              "id": 2081,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "646:0:17"
             },
-            "scope": 2074,
+            "scope": 2110,
             "src": "473:214:17",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -526,10 +526,10 @@
           },
           {
             "baseFunctions": [
-              3010
+              3046
             ],
             "body": {
-              "id": 2072,
+              "id": 2108,
               "nodeType": "Block",
               "src": "838:92:17",
               "statements": [
@@ -543,7 +543,7 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 2063,
+                        "id": 2099,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -555,32 +555,32 @@
                             "argumentTypes": [],
                             "expression": {
                               "argumentTypes": null,
-                              "id": 2059,
+                              "id": 2095,
                               "name": "super",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": -25,
                               "src": "856:5:17",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_super$_CappedMinigame_$2074",
+                                "typeIdentifier": "t_super$_CappedMinigame_$2110",
                                 "typeString": "contract super CappedMinigame"
                               }
                             },
-                            "id": 2060,
+                            "id": 2096,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "getNumPlayers",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 3085,
+                            "referencedDeclaration": 3121,
                             "src": "856:19:17",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_view$__$returns$_t_uint256_$",
                               "typeString": "function () view returns (uint256)"
                             }
                           },
-                          "id": 2061,
+                          "id": 2097,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -599,11 +599,11 @@
                         "operator": "<",
                         "rightExpression": {
                           "argumentTypes": null,
-                          "id": 2062,
+                          "id": 2098,
                           "name": "maxPlayers",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 2031,
+                          "referencedDeclaration": 2067,
                           "src": "880:10:17",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -624,7 +624,7 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 2058,
+                      "id": 2094,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -638,7 +638,7 @@
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 2064,
+                    "id": 2100,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -653,7 +653,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 2065,
+                  "id": 2101,
                   "nodeType": "ExpressionStatement",
                   "src": "848:43:17"
                 },
@@ -663,11 +663,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 2069,
+                        "id": 2105,
                         "name": "heroId",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2054,
+                        "referencedDeclaration": 2090,
                         "src": "916:6:17",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -684,32 +684,32 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 2066,
+                        "id": 2102,
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": -25,
                         "src": "901:5:17",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_super$_CappedMinigame_$2074",
+                          "typeIdentifier": "t_super$_CappedMinigame_$2110",
                           "typeString": "contract super CappedMinigame"
                         }
                       },
-                      "id": 2068,
+                      "id": 2104,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "joinGame",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3010,
+                      "referencedDeclaration": 3046,
                       "src": "901:14:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$returns$__$",
                         "typeString": "function (uint256)"
                       }
                     },
-                    "id": 2070,
+                    "id": 2106,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -724,43 +724,43 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 2071,
+                  "id": 2107,
                   "nodeType": "ExpressionStatement",
                   "src": "901:22:17"
                 }
               ]
             },
             "documentation": {
-              "id": 2052,
+              "id": 2088,
               "nodeType": "StructuredDocumentation",
               "src": "693:82:17",
               "text": "@notice Joins a game\n @param heroId The id of the joining player's hero"
             },
             "functionSelector": "efaa55a0",
-            "id": 2073,
+            "id": 2109,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "joinGame",
             "nodeType": "FunctionDefinition",
             "overrides": {
-              "id": 2056,
+              "id": 2092,
               "nodeType": "OverrideSpecifier",
               "overrides": [],
               "src": "829:8:17"
             },
             "parameters": {
-              "id": 2055,
+              "id": 2091,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2054,
+                  "id": 2090,
                   "mutability": "mutable",
                   "name": "heroId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 2073,
+                  "scope": 2109,
                   "src": "798:14:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -769,7 +769,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2053,
+                    "id": 2089,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "798:7:17",
@@ -785,19 +785,19 @@
               "src": "797:16:17"
             },
             "returnParameters": {
-              "id": 2057,
+              "id": 2093,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "838:0:17"
             },
-            "scope": 2074,
+            "scope": 2110,
             "src": "780:150:17",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           }
         ],
-        "scope": 2075,
+        "scope": 2111,
         "src": "185:747:17"
       }
     ],

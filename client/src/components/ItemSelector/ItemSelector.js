@@ -11,7 +11,8 @@ export const ItemSelector = ({
     onSelect,
     selectedItemId,
     isBlackText,
-    isMini
+    isMini,
+    renderItem
 }) => {
     items = items.map((item) => {
         if (selectedItemId && item.id === selectedItemId) {
@@ -28,7 +29,13 @@ export const ItemSelector = ({
                 {caption}
             </Typography>
             <div className="item-selector__items">
-                <ItemGrid isBlackText={isBlackText} items={items} onSelect={onSelect} isMini={isMini} />
+                <ItemGrid
+                    isBlackText={isBlackText}
+                    items={items}
+                    onSelect={onSelect}
+                    isMini={isMini}
+                    renderItem={renderItem}
+                />
             </div>
             {subCaption && (
                 <Typography variant="h6" className="item-selector__sub__caption">
