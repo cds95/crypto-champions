@@ -69,7 +69,7 @@ export const getHerosUserCanChallenge = (state) => {
             ({ phase, initiatorHeroId, opponentHeroId }) =>
                 phase == GAME_PHASE.OPEN && initiatorHeroId != hero.id && opponentHeroId != hero.id
         );
-        return !duel;
+        return !duel && hero.owner !== userAccount;
     });
 };
 
