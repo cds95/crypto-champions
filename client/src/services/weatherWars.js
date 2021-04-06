@@ -20,7 +20,7 @@ export const challengeToDuel = async (bet, initiatorHeroId, opponent, opponentHe
 export const joinDuel = async (duelAddress, bet) => {
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
     const userAccount = await getUserAccount();
-    await artifact.methods.safeTransferFrom(userAccount, duelAddress, IN_GAME_CURRENCY_ID, bet, '0x0').send({
+    await artifact.methods.transferInGameTokens(duelAddress, bet).send({
         from: userAccount
     });
 };

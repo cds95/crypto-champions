@@ -124,6 +124,15 @@ export const getHeroes = async () => {
     return heroes;
 };
 
+export const allowWeatherWarToTransferBet = async () => {
+    const ccArtifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    const wwfArtifact = await loadContract(CONTRACTS.WEATHER_WARS_FACTORY);
+    const userAccount = await getUserAccount();
+    return await ccArtifact.methods.setApprovalForAll(wwfArtifact._address, true).send({
+        from: userAccount
+    });
+};
+
 export const getUserTokenBalance = async () => {
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
     const userAccount = await getUserAccount();

@@ -747,9 +747,24 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         priceWar.startGame();
     }
 
-    /// @notice Transfers in game currenct tokens from one address to another
+    /// @notice Transfers in game currency tokens from one address to another
+    /// @param to The receiving address
+    /// @param amount The amount to transfer
     function transferInGameTokens(address to, uint256 amount) external override {
         bytes memory data;
         safeTransferFrom(msg.sender, to, IN_GAME_CURRENCY_ID, amount, data);
+    }
+
+    /// @notice Transfers in game currency tokens from one address to another.
+    /// @param from The sending address.  Note that the sender must be authorized to transfer funds if the sender is different from the from address.
+    /// @param to The receiving address
+    /// @param amount The amount to transfer
+    function delegatedTransferInGameTokens(
+        address from,
+        address to,
+        uint256 amount
+    ) external override {
+        bytes memory data;
+        safeTransferFrom(from, to, IN_GAME_CURRENCY_ID, amount, data);
     }
 }

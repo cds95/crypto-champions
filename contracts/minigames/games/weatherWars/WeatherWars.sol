@@ -62,7 +62,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         string memory apiKey,
         address weatherWarsFactoryAddress
     ) public CappedMinigame(gameName, MAX_PLAYERS, _cryptoChampionsContractAddress) {
-        // setPublicChainlinkToken();
+        setPublicChainlinkToken();
         _linkTokenAddress = linkTokenAddress;
         _fee = fee;
         _oracle = oracle;
