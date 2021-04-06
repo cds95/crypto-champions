@@ -96,16 +96,7 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
     // Hardcoding for now so we can test on Rinkeby.  Make sure to replace with call to requestWeatherData().  The issue is that we
     // can't find a reliable oracle in Rinkeby and the Kovan faucet isn't working.
     function mockGameplay() internal {
-        uint8 weatherId = _weatherWarsFactory.weatherMapping(city);
-        if (weatherId == 0) {
-            cityWeather = "Clear";
-        } else if (weatherId == 1) {
-            cityWeather = "Clouds";
-        } else if (weatherId == 2) {
-            cityWeather = "Thunderstorm";
-        } else {
-            cityWeather = "Rain";
-        }
+        cityWeather = "Clear";
         hasBeenPlayed = true;
     }
 
@@ -155,8 +146,8 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
 
         uint256 initiatorHeroId = playerHero[initiator];
         uint256 opponentHeroId = playerHero[opponent];
-        initiatorScore = getHeroScore(initiatorHeroId, 0);
-        opponentScore = getHeroScore(opponentHeroId, 1);
+        initiatorScore = getHeroScore(initiatorHeroId);
+        opponentScore = getHeroScore(opponentHeroId);
 
         // Handle Draw
         if (initiatorScore == opponentScore) {
@@ -200,14 +191,16 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
     function getHeroScore(uint256 heroId) internal returns (uint256) {
         (, , uint8 hometown, uint8 weather) = cryptoChampions.getHeroLore(heroId);
         uint256 score = 1;
-        if (hometown == _weatherWarsFactory.cities(city)) {
-            score = score.mul(11).div(10); // Multiply by 1.1
+
+        // Weather and hometown are 1 based in the crypto champions contract and 0 based in weather factory
+        if (hometown - 1 == _weatherWarsFactory.cities(city)) {
+            score = score.mul(2); // Multiply by 2
         }
-        if (weather == _weatherWarsFactory.weatherMapping(cityWeather)) {
-            score = score.mul(11).div(10); // Multiply by 1.1
+        if (weather - 1 == _weatherWarsFactory.weatherMapping(cityWeather)) {
+            score = score.mul(2); // Multiply by 2
         }
         uint256 classStatScore = getClassStatScore(heroId);
-        uint256 weightedClassStatScore = classStatScore.mul(5).div(4); // Multiple by 1.25
+        uint256 weightedClassStatScore = classStatScore.mul(3); // Multiple by 3
         uint256 highestNonClassStat = getHighestNonClassStat(heroId);
         uint256 adjustedStatScore = weightedClassStatScore.add(highestNonClassStat);
         score = score.mul(adjustedStatScore);
