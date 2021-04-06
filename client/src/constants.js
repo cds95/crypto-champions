@@ -26,6 +26,8 @@ export const GAME_PHASE = {
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
+export const IN_GAME_CURRENCY_ID = 0;
+
 export const RACES = [
     {
         id: 0,

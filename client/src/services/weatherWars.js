@@ -1,4 +1,4 @@
-import { CONTRACTS } from '../constants';
+import { CONTRACTS, IN_GAME_CURRENCY_ID } from '../constants';
 import { loadContract, getContractInstanceAtAddress } from './contract';
 import { getUserAccount } from './web3';
 import BigNumber from 'bignumber.js';
@@ -12,9 +12,15 @@ export const challengeToDuel = async (bet, initiatorHeroId, opponent, opponentHe
     const smallestDenom = bigNum.multipliedBy(10 ** 18);
     const artifact = await loadContract(CONTRACTS.WEATHER_WARS_FACTORY);
     const userAccount = await getUserAccount();
+    await artifact.methods.createWeatherWars(smallestDenom.toString(), initiatorHeroId, opponent, opponentHeroId).send({
+        from: userAccount
+    });
+};
 
-    // TODO: Figure out how to set the bet amount using big nunber
-    await artifact.methods.createWeatherWars(10, initiatorHeroId, opponent, opponentHeroId).send({
+export const joinDuel = async (duelAddress, bet) => {
+    const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    const userAccount = await getUserAccount();
+    await artifact.methods.safeTransferFrom(userAccount, duelAddress, IN_GAME_CURRENCY_ID, bet, '0x0').send({
         from: userAccount
     });
 };
@@ -33,7 +39,8 @@ export const getAllWeatherDuels = async () => {
             3: opponentHeroId,
             4: phase,
             5: winner,
-            6: isDuelAccepted
+            6: isDuelAccepted,
+            7: bet
         } = await weatherWar.methods.getMetaInformation().call();
         const weatherWarObj = {
             address: gameAddress,
@@ -43,7 +50,8 @@ export const getAllWeatherDuels = async () => {
             opponentHeroId,
             phase,
             winner: isZeroAddress(winner) ? null : winner,
-            isDuelAccepted
+            isDuelAccepted,
+            bet
         };
         duels.push(weatherWarObj);
     }

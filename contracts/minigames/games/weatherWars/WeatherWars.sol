@@ -244,6 +244,10 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         uint256 value,
         bytes calldata data
     ) external override returns (bytes4) {
+        require(value == buyinAmount); // dev: Must send the exact buyin amount
+        if (from == opponent) {
+            isDuelAccepted = true;
+        }
         balances[from] = value;
         return this.onERC1155Received.selector;
     }
@@ -268,14 +272,19 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
             uint256,
             MinigamePhase,
             address,
-            bool
+            bool,
+            uint256
         )
     {
-        return (initiator, opponent, playerHero[initiator], playerHero[opponent], currentPhase, winner, isDuelAccepted);
-    }
-
-    function acceptDuel() external {
-        require(msg.sender == opponent); // dev:  Only the opponent may accept a challenge
-        isDuelAccepted = true;
+        return (
+            initiator,
+            opponent,
+            playerHero[initiator],
+            playerHero[opponent],
+            currentPhase,
+            winner,
+            isDuelAccepted,
+            buyinAmount
+        );
     }
 }

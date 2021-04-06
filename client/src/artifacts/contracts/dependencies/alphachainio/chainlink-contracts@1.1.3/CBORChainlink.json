@@ -8,15 +8,15 @@
     "absolutePath": "/Users/cds95/.brownie/packages/alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/vendor/CBORChainlink.sol",
     "exportedSymbols": {
       "CBORChainlink": [
-        3990
+        3993
       ]
     },
-    "id": 3991,
+    "id": 3994,
     "license": null,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3678,
+        "id": 3681,
         "literals": [
           "solidity",
           "^",
@@ -29,16 +29,16 @@
       {
         "absolutePath": "/Users/cds95/.brownie/packages/alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/vendor/BufferChainlink.sol",
         "file": "./BufferChainlink.sol",
-        "id": 3680,
+        "id": 3683,
         "nodeType": "ImportDirective",
-        "scope": 3991,
-        "sourceUnit": 3677,
+        "scope": 3994,
+        "sourceUnit": 3680,
         "src": "25:56:14",
         "symbolAliases": [
           {
             "foreign": {
               "argumentTypes": null,
-              "id": 3679,
+              "id": 3682,
               "name": "BufferChainlink",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -61,24 +61,24 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 3990,
+        "id": 3993,
         "linearizedBaseContracts": [
-          3990
+          3993
         ],
         "name": "CBORChainlink",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
-            "id": 3683,
+            "id": 3686,
             "libraryName": {
               "contractScope": null,
-              "id": 3681,
+              "id": 3684,
               "name": "BufferChainlink",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3676,
+              "referencedDeclaration": 3679,
               "src": "115:15:14",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_BufferChainlink_$3676",
+                "typeIdentifier": "t_contract$_BufferChainlink_$3679",
                 "typeString": "library BufferChainlink"
               }
             },
@@ -86,25 +86,25 @@
             "src": "109:49:14",
             "typeName": {
               "contractScope": null,
-              "id": 3682,
+              "id": 3685,
               "name": "BufferChainlink.buffer",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3196,
+              "referencedDeclaration": 3199,
               "src": "135:22:14",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_buffer_$3196_storage_ptr",
+                "typeIdentifier": "t_struct$_buffer_$3199_storage_ptr",
                 "typeString": "struct BufferChainlink.buffer"
               }
             }
           },
           {
             "constant": true,
-            "id": 3686,
+            "id": 3689,
             "mutability": "constant",
             "name": "MAJOR_TYPE_INT",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 3990,
+            "scope": 3993,
             "src": "162:41:14",
             "stateVariable": true,
             "storageLocation": "default",
@@ -113,7 +113,7 @@
               "typeString": "uint8"
             },
             "typeName": {
-              "id": 3684,
+              "id": 3687,
               "name": "uint8",
               "nodeType": "ElementaryTypeName",
               "src": "162:5:14",
@@ -125,7 +125,7 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "30",
-              "id": 3685,
+              "id": 3688,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -144,12 +144,12 @@
           },
           {
             "constant": true,
-            "id": 3689,
+            "id": 3692,
             "mutability": "constant",
             "name": "MAJOR_TYPE_NEGATIVE_INT",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 3990,
+            "scope": 3993,
             "src": "207:50:14",
             "stateVariable": true,
             "storageLocation": "default",
@@ -158,7 +158,7 @@
               "typeString": "uint8"
             },
             "typeName": {
-              "id": 3687,
+              "id": 3690,
               "name": "uint8",
               "nodeType": "ElementaryTypeName",
               "src": "207:5:14",
@@ -170,7 +170,7 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "31",
-              "id": 3688,
+              "id": 3691,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -189,12 +189,12 @@
           },
           {
             "constant": true,
-            "id": 3692,
+            "id": 3695,
             "mutability": "constant",
             "name": "MAJOR_TYPE_BYTES",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 3990,
+            "scope": 3993,
             "src": "261:43:14",
             "stateVariable": true,
             "storageLocation": "default",
@@ -203,7 +203,7 @@
               "typeString": "uint8"
             },
             "typeName": {
-              "id": 3690,
+              "id": 3693,
               "name": "uint8",
               "nodeType": "ElementaryTypeName",
               "src": "261:5:14",
@@ -215,7 +215,7 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "32",
-              "id": 3691,
+              "id": 3694,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -234,12 +234,12 @@
           },
           {
             "constant": true,
-            "id": 3695,
+            "id": 3698,
             "mutability": "constant",
             "name": "MAJOR_TYPE_STRING",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 3990,
+            "scope": 3993,
             "src": "308:44:14",
             "stateVariable": true,
             "storageLocation": "default",
@@ -248,7 +248,7 @@
               "typeString": "uint8"
             },
             "typeName": {
-              "id": 3693,
+              "id": 3696,
               "name": "uint8",
               "nodeType": "ElementaryTypeName",
               "src": "308:5:14",
@@ -260,7 +260,7 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "33",
-              "id": 3694,
+              "id": 3697,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -279,12 +279,12 @@
           },
           {
             "constant": true,
-            "id": 3698,
+            "id": 3701,
             "mutability": "constant",
             "name": "MAJOR_TYPE_ARRAY",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 3990,
+            "scope": 3993,
             "src": "356:43:14",
             "stateVariable": true,
             "storageLocation": "default",
@@ -293,7 +293,7 @@
               "typeString": "uint8"
             },
             "typeName": {
-              "id": 3696,
+              "id": 3699,
               "name": "uint8",
               "nodeType": "ElementaryTypeName",
               "src": "356:5:14",
@@ -305,7 +305,7 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "34",
-              "id": 3697,
+              "id": 3700,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -324,12 +324,12 @@
           },
           {
             "constant": true,
-            "id": 3701,
+            "id": 3704,
             "mutability": "constant",
             "name": "MAJOR_TYPE_MAP",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 3990,
+            "scope": 3993,
             "src": "403:41:14",
             "stateVariable": true,
             "storageLocation": "default",
@@ -338,7 +338,7 @@
               "typeString": "uint8"
             },
             "typeName": {
-              "id": 3699,
+              "id": 3702,
               "name": "uint8",
               "nodeType": "ElementaryTypeName",
               "src": "403:5:14",
@@ -350,7 +350,7 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "35",
-              "id": 3700,
+              "id": 3703,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -369,12 +369,12 @@
           },
           {
             "constant": true,
-            "id": 3704,
+            "id": 3707,
             "mutability": "constant",
             "name": "MAJOR_TYPE_CONTENT_FREE",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 3990,
+            "scope": 3993,
             "src": "448:50:14",
             "stateVariable": true,
             "storageLocation": "default",
@@ -383,7 +383,7 @@
               "typeString": "uint8"
             },
             "typeName": {
-              "id": 3702,
+              "id": 3705,
               "name": "uint8",
               "nodeType": "ElementaryTypeName",
               "src": "448:5:14",
@@ -395,7 +395,7 @@
             "value": {
               "argumentTypes": null,
               "hexValue": "37",
-              "id": 3703,
+              "id": 3706,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -414,7 +414,7 @@
           },
           {
             "body": {
-              "id": 3836,
+              "id": 3839,
               "nodeType": "Block",
               "src": "596:551:14",
               "statements": [
@@ -425,18 +425,18 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 3715,
+                    "id": 3718,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
                       "argumentTypes": null,
-                      "id": 3713,
+                      "id": 3716,
                       "name": "value",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3710,
+                      "referencedDeclaration": 3713,
                       "src": "605:5:14",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -448,7 +448,7 @@
                     "rightExpression": {
                       "argumentTypes": null,
                       "hexValue": "3233",
-                      "id": 3714,
+                      "id": 3717,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -476,18 +476,18 @@
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       },
-                      "id": 3733,
+                      "id": 3736,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "leftExpression": {
                         "argumentTypes": null,
-                        "id": 3731,
+                        "id": 3734,
                         "name": "value",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3710,
+                        "referencedDeclaration": 3713,
                         "src": "686:5:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -499,7 +499,7 @@
                       "rightExpression": {
                         "argumentTypes": null,
                         "hexValue": "30784646",
-                        "id": 3732,
+                        "id": 3735,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -527,18 +527,18 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 3758,
+                        "id": 3761,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 3756,
+                          "id": 3759,
                           "name": "value",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 3710,
+                          "referencedDeclaration": 3713,
                           "src": "797:5:14",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
@@ -550,7 +550,7 @@
                         "rightExpression": {
                           "argumentTypes": null,
                           "hexValue": "307846464646",
-                          "id": 3757,
+                          "id": 3760,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -578,18 +578,18 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 3783,
+                          "id": 3786,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftExpression": {
                             "argumentTypes": null,
-                            "id": 3781,
+                            "id": 3784,
                             "name": "value",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 3710,
+                            "referencedDeclaration": 3713,
                             "src": "910:5:14",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -601,7 +601,7 @@
                           "rightExpression": {
                             "argumentTypes": null,
                             "hexValue": "30784646464646464646",
-                            "id": 3782,
+                            "id": 3785,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -629,18 +629,18 @@
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
                             },
-                            "id": 3808,
+                            "id": 3811,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "leftExpression": {
                               "argumentTypes": null,
-                              "id": 3806,
+                              "id": 3809,
                               "name": "value",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 3710,
+                              "referencedDeclaration": 3713,
                               "src": "1027:5:14",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
@@ -652,7 +652,7 @@
                             "rightExpression": {
                               "argumentTypes": null,
                               "hexValue": "307846464646464646464646464646464646",
-                              "id": 3807,
+                              "id": 3810,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -674,11 +674,11 @@
                             }
                           },
                           "falseBody": null,
-                          "id": 3831,
+                          "id": 3834,
                           "nodeType": "IfStatement",
                           "src": "1024:119:14",
                           "trueBody": {
-                            "id": 3830,
+                            "id": 3833,
                             "nodeType": "Block",
                             "src": "1056:87:14",
                             "statements": [
@@ -695,7 +695,7 @@
                                             "typeIdentifier": "t_uint8",
                                             "typeString": "uint8"
                                           },
-                                          "id": 3819,
+                                          "id": 3822,
                                           "isConstant": false,
                                           "isLValue": false,
                                           "isPure": false,
@@ -709,18 +709,18 @@
                                                   "typeIdentifier": "t_uint8",
                                                   "typeString": "uint8"
                                                 },
-                                                "id": 3816,
+                                                "id": 3819,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": false,
                                                 "lValueRequested": false,
                                                 "leftExpression": {
                                                   "argumentTypes": null,
-                                                  "id": 3814,
+                                                  "id": 3817,
                                                   "name": "major",
                                                   "nodeType": "Identifier",
                                                   "overloadedDeclarations": [],
-                                                  "referencedDeclaration": 3708,
+                                                  "referencedDeclaration": 3711,
                                                   "src": "1087:5:14",
                                                   "typeDescriptions": {
                                                     "typeIdentifier": "t_uint8",
@@ -732,7 +732,7 @@
                                                 "rightExpression": {
                                                   "argumentTypes": null,
                                                   "hexValue": "35",
-                                                  "id": 3815,
+                                                  "id": 3818,
                                                   "isConstant": false,
                                                   "isLValue": false,
                                                   "isPure": true,
@@ -754,7 +754,7 @@
                                                 }
                                               }
                                             ],
-                                            "id": 3817,
+                                            "id": 3820,
                                             "isConstant": false,
                                             "isInlineArray": false,
                                             "isLValue": false,
@@ -772,7 +772,7 @@
                                           "rightExpression": {
                                             "argumentTypes": null,
                                             "hexValue": "3237",
-                                            "id": 3818,
+                                            "id": 3821,
                                             "isConstant": false,
                                             "isLValue": false,
                                             "isPure": true,
@@ -801,7 +801,7 @@
                                             "typeString": "uint8"
                                           }
                                         ],
-                                        "id": 3813,
+                                        "id": 3816,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": true,
@@ -813,7 +813,7 @@
                                           "typeString": "type(uint8)"
                                         },
                                         "typeName": {
-                                          "id": 3812,
+                                          "id": 3815,
                                           "name": "uint8",
                                           "nodeType": "ElementaryTypeName",
                                           "src": "1080:5:14",
@@ -823,7 +823,7 @@
                                           }
                                         }
                                       },
-                                      "id": 3820,
+                                      "id": 3823,
                                       "isConstant": false,
                                       "isLValue": false,
                                       "isPure": false,
@@ -848,32 +848,32 @@
                                     ],
                                     "expression": {
                                       "argumentTypes": null,
-                                      "id": 3809,
+                                      "id": 3812,
                                       "name": "buf",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 3706,
+                                      "referencedDeclaration": 3709,
                                       "src": "1064:3:14",
                                       "typeDescriptions": {
-                                        "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                        "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                         "typeString": "struct BufferChainlink.buffer memory"
                                       }
                                     },
-                                    "id": 3811,
+                                    "id": 3814,
                                     "isConstant": false,
                                     "isLValue": true,
                                     "isPure": false,
                                     "lValueRequested": false,
                                     "memberName": "appendUint8",
                                     "nodeType": "MemberAccess",
-                                    "referencedDeclaration": 3487,
+                                    "referencedDeclaration": 3490,
                                     "src": "1064:15:14",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$returns$_t_struct$_buffer_$3196_memory_ptr_$bound_to$_t_struct$_buffer_$3196_memory_ptr_$",
+                                      "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$returns$_t_struct$_buffer_$3199_memory_ptr_$bound_to$_t_struct$_buffer_$3199_memory_ptr_$",
                                       "typeString": "function (struct BufferChainlink.buffer memory,uint8) pure returns (struct BufferChainlink.buffer memory)"
                                     }
                                   },
-                                  "id": 3821,
+                                  "id": 3824,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
@@ -884,11 +884,11 @@
                                   "src": "1064:41:14",
                                   "tryCall": false,
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                    "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                     "typeString": "struct BufferChainlink.buffer memory"
                                   }
                                 },
-                                "id": 3822,
+                                "id": 3825,
                                 "nodeType": "ExpressionStatement",
                                 "src": "1064:41:14"
                               },
@@ -898,11 +898,11 @@
                                   "arguments": [
                                     {
                                       "argumentTypes": null,
-                                      "id": 3826,
+                                      "id": 3829,
                                       "name": "value",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 3710,
+                                      "referencedDeclaration": 3713,
                                       "src": "1127:5:14",
                                       "typeDescriptions": {
                                         "typeIdentifier": "t_uint256",
@@ -912,7 +912,7 @@
                                     {
                                       "argumentTypes": null,
                                       "hexValue": "38",
-                                      "id": 3827,
+                                      "id": 3830,
                                       "isConstant": false,
                                       "isLValue": false,
                                       "isPure": true,
@@ -941,32 +941,32 @@
                                     ],
                                     "expression": {
                                       "argumentTypes": null,
-                                      "id": 3823,
+                                      "id": 3826,
                                       "name": "buf",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 3706,
+                                      "referencedDeclaration": 3709,
                                       "src": "1113:3:14",
                                       "typeDescriptions": {
-                                        "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                        "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                         "typeString": "struct BufferChainlink.buffer memory"
                                       }
                                     },
-                                    "id": 3825,
+                                    "id": 3828,
                                     "isConstant": false,
                                     "isLValue": true,
                                     "isPure": false,
                                     "lValueRequested": false,
                                     "memberName": "appendInt",
                                     "nodeType": "MemberAccess",
-                                    "referencedDeclaration": 3675,
+                                    "referencedDeclaration": 3678,
                                     "src": "1113:13:14",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint256_$_t_uint256_$returns$_t_struct$_buffer_$3196_memory_ptr_$bound_to$_t_struct$_buffer_$3196_memory_ptr_$",
+                                      "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint256_$_t_uint256_$returns$_t_struct$_buffer_$3199_memory_ptr_$bound_to$_t_struct$_buffer_$3199_memory_ptr_$",
                                       "typeString": "function (struct BufferChainlink.buffer memory,uint256,uint256) pure returns (struct BufferChainlink.buffer memory)"
                                     }
                                   },
-                                  "id": 3828,
+                                  "id": 3831,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
@@ -977,22 +977,22 @@
                                   "src": "1113:23:14",
                                   "tryCall": false,
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                    "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                     "typeString": "struct BufferChainlink.buffer memory"
                                   }
                                 },
-                                "id": 3829,
+                                "id": 3832,
                                 "nodeType": "ExpressionStatement",
                                 "src": "1113:23:14"
                               }
                             ]
                           }
                         },
-                        "id": 3832,
+                        "id": 3835,
                         "nodeType": "IfStatement",
                         "src": "907:236:14",
                         "trueBody": {
-                          "id": 3805,
+                          "id": 3808,
                           "nodeType": "Block",
                           "src": "931:87:14",
                           "statements": [
@@ -1009,7 +1009,7 @@
                                           "typeIdentifier": "t_uint8",
                                           "typeString": "uint8"
                                         },
-                                        "id": 3794,
+                                        "id": 3797,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
@@ -1023,18 +1023,18 @@
                                                 "typeIdentifier": "t_uint8",
                                                 "typeString": "uint8"
                                               },
-                                              "id": 3791,
+                                              "id": 3794,
                                               "isConstant": false,
                                               "isLValue": false,
                                               "isPure": false,
                                               "lValueRequested": false,
                                               "leftExpression": {
                                                 "argumentTypes": null,
-                                                "id": 3789,
+                                                "id": 3792,
                                                 "name": "major",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 3708,
+                                                "referencedDeclaration": 3711,
                                                 "src": "962:5:14",
                                                 "typeDescriptions": {
                                                   "typeIdentifier": "t_uint8",
@@ -1046,7 +1046,7 @@
                                               "rightExpression": {
                                                 "argumentTypes": null,
                                                 "hexValue": "35",
-                                                "id": 3790,
+                                                "id": 3793,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": true,
@@ -1068,7 +1068,7 @@
                                               }
                                             }
                                           ],
-                                          "id": 3792,
+                                          "id": 3795,
                                           "isConstant": false,
                                           "isInlineArray": false,
                                           "isLValue": false,
@@ -1086,7 +1086,7 @@
                                         "rightExpression": {
                                           "argumentTypes": null,
                                           "hexValue": "3236",
-                                          "id": 3793,
+                                          "id": 3796,
                                           "isConstant": false,
                                           "isLValue": false,
                                           "isPure": true,
@@ -1115,7 +1115,7 @@
                                           "typeString": "uint8"
                                         }
                                       ],
-                                      "id": 3788,
+                                      "id": 3791,
                                       "isConstant": false,
                                       "isLValue": false,
                                       "isPure": true,
@@ -1127,7 +1127,7 @@
                                         "typeString": "type(uint8)"
                                       },
                                       "typeName": {
-                                        "id": 3787,
+                                        "id": 3790,
                                         "name": "uint8",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "955:5:14",
@@ -1137,7 +1137,7 @@
                                         }
                                       }
                                     },
-                                    "id": 3795,
+                                    "id": 3798,
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": false,
@@ -1162,32 +1162,32 @@
                                   ],
                                   "expression": {
                                     "argumentTypes": null,
-                                    "id": 3784,
+                                    "id": 3787,
                                     "name": "buf",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 3706,
+                                    "referencedDeclaration": 3709,
                                     "src": "939:3:14",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                      "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                       "typeString": "struct BufferChainlink.buffer memory"
                                     }
                                   },
-                                  "id": 3786,
+                                  "id": 3789,
                                   "isConstant": false,
                                   "isLValue": true,
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "memberName": "appendUint8",
                                   "nodeType": "MemberAccess",
-                                  "referencedDeclaration": 3487,
+                                  "referencedDeclaration": 3490,
                                   "src": "939:15:14",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$returns$_t_struct$_buffer_$3196_memory_ptr_$bound_to$_t_struct$_buffer_$3196_memory_ptr_$",
+                                    "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$returns$_t_struct$_buffer_$3199_memory_ptr_$bound_to$_t_struct$_buffer_$3199_memory_ptr_$",
                                     "typeString": "function (struct BufferChainlink.buffer memory,uint8) pure returns (struct BufferChainlink.buffer memory)"
                                   }
                                 },
-                                "id": 3796,
+                                "id": 3799,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": false,
@@ -1198,11 +1198,11 @@
                                 "src": "939:41:14",
                                 "tryCall": false,
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                  "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                   "typeString": "struct BufferChainlink.buffer memory"
                                 }
                               },
-                              "id": 3797,
+                              "id": 3800,
                               "nodeType": "ExpressionStatement",
                               "src": "939:41:14"
                             },
@@ -1212,11 +1212,11 @@
                                 "arguments": [
                                   {
                                     "argumentTypes": null,
-                                    "id": 3801,
+                                    "id": 3804,
                                     "name": "value",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 3710,
+                                    "referencedDeclaration": 3713,
                                     "src": "1002:5:14",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_uint256",
@@ -1226,7 +1226,7 @@
                                   {
                                     "argumentTypes": null,
                                     "hexValue": "34",
-                                    "id": 3802,
+                                    "id": 3805,
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": true,
@@ -1255,32 +1255,32 @@
                                   ],
                                   "expression": {
                                     "argumentTypes": null,
-                                    "id": 3798,
+                                    "id": 3801,
                                     "name": "buf",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 3706,
+                                    "referencedDeclaration": 3709,
                                     "src": "988:3:14",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                      "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                       "typeString": "struct BufferChainlink.buffer memory"
                                     }
                                   },
-                                  "id": 3800,
+                                  "id": 3803,
                                   "isConstant": false,
                                   "isLValue": true,
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "memberName": "appendInt",
                                   "nodeType": "MemberAccess",
-                                  "referencedDeclaration": 3675,
+                                  "referencedDeclaration": 3678,
                                   "src": "988:13:14",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint256_$_t_uint256_$returns$_t_struct$_buffer_$3196_memory_ptr_$bound_to$_t_struct$_buffer_$3196_memory_ptr_$",
+                                    "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint256_$_t_uint256_$returns$_t_struct$_buffer_$3199_memory_ptr_$bound_to$_t_struct$_buffer_$3199_memory_ptr_$",
                                     "typeString": "function (struct BufferChainlink.buffer memory,uint256,uint256) pure returns (struct BufferChainlink.buffer memory)"
                                   }
                                 },
-                                "id": 3803,
+                                "id": 3806,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": false,
@@ -1291,22 +1291,22 @@
                                 "src": "988:23:14",
                                 "tryCall": false,
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                  "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                   "typeString": "struct BufferChainlink.buffer memory"
                                 }
                               },
-                              "id": 3804,
+                              "id": 3807,
                               "nodeType": "ExpressionStatement",
                               "src": "988:23:14"
                             }
                           ]
                         }
                       },
-                      "id": 3833,
+                      "id": 3836,
                       "nodeType": "IfStatement",
                       "src": "794:349:14",
                       "trueBody": {
-                        "id": 3780,
+                        "id": 3783,
                         "nodeType": "Block",
                         "src": "814:87:14",
                         "statements": [
@@ -1323,7 +1323,7 @@
                                         "typeIdentifier": "t_uint8",
                                         "typeString": "uint8"
                                       },
-                                      "id": 3769,
+                                      "id": 3772,
                                       "isConstant": false,
                                       "isLValue": false,
                                       "isPure": false,
@@ -1337,18 +1337,18 @@
                                               "typeIdentifier": "t_uint8",
                                               "typeString": "uint8"
                                             },
-                                            "id": 3766,
+                                            "id": 3769,
                                             "isConstant": false,
                                             "isLValue": false,
                                             "isPure": false,
                                             "lValueRequested": false,
                                             "leftExpression": {
                                               "argumentTypes": null,
-                                              "id": 3764,
+                                              "id": 3767,
                                               "name": "major",
                                               "nodeType": "Identifier",
                                               "overloadedDeclarations": [],
-                                              "referencedDeclaration": 3708,
+                                              "referencedDeclaration": 3711,
                                               "src": "845:5:14",
                                               "typeDescriptions": {
                                                 "typeIdentifier": "t_uint8",
@@ -1360,7 +1360,7 @@
                                             "rightExpression": {
                                               "argumentTypes": null,
                                               "hexValue": "35",
-                                              "id": 3765,
+                                              "id": 3768,
                                               "isConstant": false,
                                               "isLValue": false,
                                               "isPure": true,
@@ -1382,7 +1382,7 @@
                                             }
                                           }
                                         ],
-                                        "id": 3767,
+                                        "id": 3770,
                                         "isConstant": false,
                                         "isInlineArray": false,
                                         "isLValue": false,
@@ -1400,7 +1400,7 @@
                                       "rightExpression": {
                                         "argumentTypes": null,
                                         "hexValue": "3235",
-                                        "id": 3768,
+                                        "id": 3771,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": true,
@@ -1429,7 +1429,7 @@
                                         "typeString": "uint8"
                                       }
                                     ],
-                                    "id": 3763,
+                                    "id": 3766,
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": true,
@@ -1441,7 +1441,7 @@
                                       "typeString": "type(uint8)"
                                     },
                                     "typeName": {
-                                      "id": 3762,
+                                      "id": 3765,
                                       "name": "uint8",
                                       "nodeType": "ElementaryTypeName",
                                       "src": "838:5:14",
@@ -1451,7 +1451,7 @@
                                       }
                                     }
                                   },
-                                  "id": 3770,
+                                  "id": 3773,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
@@ -1476,32 +1476,32 @@
                                 ],
                                 "expression": {
                                   "argumentTypes": null,
-                                  "id": 3759,
+                                  "id": 3762,
                                   "name": "buf",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 3706,
+                                  "referencedDeclaration": 3709,
                                   "src": "822:3:14",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                    "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                     "typeString": "struct BufferChainlink.buffer memory"
                                   }
                                 },
-                                "id": 3761,
+                                "id": 3764,
                                 "isConstant": false,
                                 "isLValue": true,
                                 "isPure": false,
                                 "lValueRequested": false,
                                 "memberName": "appendUint8",
                                 "nodeType": "MemberAccess",
-                                "referencedDeclaration": 3487,
+                                "referencedDeclaration": 3490,
                                 "src": "822:15:14",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$returns$_t_struct$_buffer_$3196_memory_ptr_$bound_to$_t_struct$_buffer_$3196_memory_ptr_$",
+                                  "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$returns$_t_struct$_buffer_$3199_memory_ptr_$bound_to$_t_struct$_buffer_$3199_memory_ptr_$",
                                   "typeString": "function (struct BufferChainlink.buffer memory,uint8) pure returns (struct BufferChainlink.buffer memory)"
                                 }
                               },
-                              "id": 3771,
+                              "id": 3774,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -1512,11 +1512,11 @@
                               "src": "822:41:14",
                               "tryCall": false,
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                 "typeString": "struct BufferChainlink.buffer memory"
                               }
                             },
-                            "id": 3772,
+                            "id": 3775,
                             "nodeType": "ExpressionStatement",
                             "src": "822:41:14"
                           },
@@ -1526,11 +1526,11 @@
                               "arguments": [
                                 {
                                   "argumentTypes": null,
-                                  "id": 3776,
+                                  "id": 3779,
                                   "name": "value",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 3710,
+                                  "referencedDeclaration": 3713,
                                   "src": "885:5:14",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_uint256",
@@ -1540,7 +1540,7 @@
                                 {
                                   "argumentTypes": null,
                                   "hexValue": "32",
-                                  "id": 3777,
+                                  "id": 3780,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
@@ -1569,32 +1569,32 @@
                                 ],
                                 "expression": {
                                   "argumentTypes": null,
-                                  "id": 3773,
+                                  "id": 3776,
                                   "name": "buf",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 3706,
+                                  "referencedDeclaration": 3709,
                                   "src": "871:3:14",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                    "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                     "typeString": "struct BufferChainlink.buffer memory"
                                   }
                                 },
-                                "id": 3775,
+                                "id": 3778,
                                 "isConstant": false,
                                 "isLValue": true,
                                 "isPure": false,
                                 "lValueRequested": false,
                                 "memberName": "appendInt",
                                 "nodeType": "MemberAccess",
-                                "referencedDeclaration": 3675,
+                                "referencedDeclaration": 3678,
                                 "src": "871:13:14",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint256_$_t_uint256_$returns$_t_struct$_buffer_$3196_memory_ptr_$bound_to$_t_struct$_buffer_$3196_memory_ptr_$",
+                                  "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint256_$_t_uint256_$returns$_t_struct$_buffer_$3199_memory_ptr_$bound_to$_t_struct$_buffer_$3199_memory_ptr_$",
                                   "typeString": "function (struct BufferChainlink.buffer memory,uint256,uint256) pure returns (struct BufferChainlink.buffer memory)"
                                 }
                               },
-                              "id": 3778,
+                              "id": 3781,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -1605,22 +1605,22 @@
                               "src": "871:23:14",
                               "tryCall": false,
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                 "typeString": "struct BufferChainlink.buffer memory"
                               }
                             },
-                            "id": 3779,
+                            "id": 3782,
                             "nodeType": "ExpressionStatement",
                             "src": "871:23:14"
                           }
                         ]
                       }
                     },
-                    "id": 3834,
+                    "id": 3837,
                     "nodeType": "IfStatement",
                     "src": "683:460:14",
                     "trueBody": {
-                      "id": 3755,
+                      "id": 3758,
                       "nodeType": "Block",
                       "src": "701:87:14",
                       "statements": [
@@ -1637,7 +1637,7 @@
                                       "typeIdentifier": "t_uint8",
                                       "typeString": "uint8"
                                     },
-                                    "id": 3744,
+                                    "id": 3747,
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": false,
@@ -1651,18 +1651,18 @@
                                             "typeIdentifier": "t_uint8",
                                             "typeString": "uint8"
                                           },
-                                          "id": 3741,
+                                          "id": 3744,
                                           "isConstant": false,
                                           "isLValue": false,
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "leftExpression": {
                                             "argumentTypes": null,
-                                            "id": 3739,
+                                            "id": 3742,
                                             "name": "major",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 3708,
+                                            "referencedDeclaration": 3711,
                                             "src": "732:5:14",
                                             "typeDescriptions": {
                                               "typeIdentifier": "t_uint8",
@@ -1674,7 +1674,7 @@
                                           "rightExpression": {
                                             "argumentTypes": null,
                                             "hexValue": "35",
-                                            "id": 3740,
+                                            "id": 3743,
                                             "isConstant": false,
                                             "isLValue": false,
                                             "isPure": true,
@@ -1696,7 +1696,7 @@
                                           }
                                         }
                                       ],
-                                      "id": 3742,
+                                      "id": 3745,
                                       "isConstant": false,
                                       "isInlineArray": false,
                                       "isLValue": false,
@@ -1714,7 +1714,7 @@
                                     "rightExpression": {
                                       "argumentTypes": null,
                                       "hexValue": "3234",
-                                      "id": 3743,
+                                      "id": 3746,
                                       "isConstant": false,
                                       "isLValue": false,
                                       "isPure": true,
@@ -1743,7 +1743,7 @@
                                       "typeString": "uint8"
                                     }
                                   ],
-                                  "id": 3738,
+                                  "id": 3741,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
@@ -1755,7 +1755,7 @@
                                     "typeString": "type(uint8)"
                                   },
                                   "typeName": {
-                                    "id": 3737,
+                                    "id": 3740,
                                     "name": "uint8",
                                     "nodeType": "ElementaryTypeName",
                                     "src": "725:5:14",
@@ -1765,7 +1765,7 @@
                                     }
                                   }
                                 },
-                                "id": 3745,
+                                "id": 3748,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": false,
@@ -1790,32 +1790,32 @@
                               ],
                               "expression": {
                                 "argumentTypes": null,
-                                "id": 3734,
+                                "id": 3737,
                                 "name": "buf",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 3706,
+                                "referencedDeclaration": 3709,
                                 "src": "709:3:14",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                  "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                   "typeString": "struct BufferChainlink.buffer memory"
                                 }
                               },
-                              "id": 3736,
+                              "id": 3739,
                               "isConstant": false,
                               "isLValue": true,
                               "isPure": false,
                               "lValueRequested": false,
                               "memberName": "appendUint8",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 3487,
+                              "referencedDeclaration": 3490,
                               "src": "709:15:14",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$returns$_t_struct$_buffer_$3196_memory_ptr_$bound_to$_t_struct$_buffer_$3196_memory_ptr_$",
+                                "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$returns$_t_struct$_buffer_$3199_memory_ptr_$bound_to$_t_struct$_buffer_$3199_memory_ptr_$",
                                 "typeString": "function (struct BufferChainlink.buffer memory,uint8) pure returns (struct BufferChainlink.buffer memory)"
                               }
                             },
-                            "id": 3746,
+                            "id": 3749,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -1826,11 +1826,11 @@
                             "src": "709:41:14",
                             "tryCall": false,
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                              "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                               "typeString": "struct BufferChainlink.buffer memory"
                             }
                           },
-                          "id": 3747,
+                          "id": 3750,
                           "nodeType": "ExpressionStatement",
                           "src": "709:41:14"
                         },
@@ -1840,11 +1840,11 @@
                             "arguments": [
                               {
                                 "argumentTypes": null,
-                                "id": 3751,
+                                "id": 3754,
                                 "name": "value",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 3710,
+                                "referencedDeclaration": 3713,
                                 "src": "772:5:14",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -1854,7 +1854,7 @@
                               {
                                 "argumentTypes": null,
                                 "hexValue": "31",
-                                "id": 3752,
+                                "id": 3755,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": true,
@@ -1883,32 +1883,32 @@
                               ],
                               "expression": {
                                 "argumentTypes": null,
-                                "id": 3748,
+                                "id": 3751,
                                 "name": "buf",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 3706,
+                                "referencedDeclaration": 3709,
                                 "src": "758:3:14",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                  "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                   "typeString": "struct BufferChainlink.buffer memory"
                                 }
                               },
-                              "id": 3750,
+                              "id": 3753,
                               "isConstant": false,
                               "isLValue": true,
                               "isPure": false,
                               "lValueRequested": false,
                               "memberName": "appendInt",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 3675,
+                              "referencedDeclaration": 3678,
                               "src": "758:13:14",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint256_$_t_uint256_$returns$_t_struct$_buffer_$3196_memory_ptr_$bound_to$_t_struct$_buffer_$3196_memory_ptr_$",
+                                "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint256_$_t_uint256_$returns$_t_struct$_buffer_$3199_memory_ptr_$bound_to$_t_struct$_buffer_$3199_memory_ptr_$",
                                 "typeString": "function (struct BufferChainlink.buffer memory,uint256,uint256) pure returns (struct BufferChainlink.buffer memory)"
                               }
                             },
-                            "id": 3753,
+                            "id": 3756,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -1919,22 +1919,22 @@
                             "src": "758:23:14",
                             "tryCall": false,
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                              "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                               "typeString": "struct BufferChainlink.buffer memory"
                             }
                           },
-                          "id": 3754,
+                          "id": 3757,
                           "nodeType": "ExpressionStatement",
                           "src": "758:23:14"
                         }
                       ]
                     }
                   },
-                  "id": 3835,
+                  "id": 3838,
                   "nodeType": "IfStatement",
                   "src": "602:541:14",
                   "trueBody": {
-                    "id": 3730,
+                    "id": 3733,
                     "nodeType": "Block",
                     "src": "618:59:14",
                     "statements": [
@@ -1951,7 +1951,7 @@
                                     "typeIdentifier": "t_uint256",
                                     "typeString": "uint256"
                                   },
-                                  "id": 3726,
+                                  "id": 3729,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
@@ -1965,18 +1965,18 @@
                                           "typeIdentifier": "t_uint8",
                                           "typeString": "uint8"
                                         },
-                                        "id": 3723,
+                                        "id": 3726,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftExpression": {
                                           "argumentTypes": null,
-                                          "id": 3721,
+                                          "id": 3724,
                                           "name": "major",
                                           "nodeType": "Identifier",
                                           "overloadedDeclarations": [],
-                                          "referencedDeclaration": 3708,
+                                          "referencedDeclaration": 3711,
                                           "src": "649:5:14",
                                           "typeDescriptions": {
                                             "typeIdentifier": "t_uint8",
@@ -1988,7 +1988,7 @@
                                         "rightExpression": {
                                           "argumentTypes": null,
                                           "hexValue": "35",
-                                          "id": 3722,
+                                          "id": 3725,
                                           "isConstant": false,
                                           "isLValue": false,
                                           "isPure": true,
@@ -2010,7 +2010,7 @@
                                         }
                                       }
                                     ],
-                                    "id": 3724,
+                                    "id": 3727,
                                     "isConstant": false,
                                     "isInlineArray": false,
                                     "isLValue": false,
@@ -2027,11 +2027,11 @@
                                   "operator": "|",
                                   "rightExpression": {
                                     "argumentTypes": null,
-                                    "id": 3725,
+                                    "id": 3728,
                                     "name": "value",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 3710,
+                                    "referencedDeclaration": 3713,
                                     "src": "663:5:14",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_uint256",
@@ -2052,7 +2052,7 @@
                                     "typeString": "uint256"
                                   }
                                 ],
-                                "id": 3720,
+                                "id": 3723,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": true,
@@ -2064,7 +2064,7 @@
                                   "typeString": "type(uint8)"
                                 },
                                 "typeName": {
-                                  "id": 3719,
+                                  "id": 3722,
                                   "name": "uint8",
                                   "nodeType": "ElementaryTypeName",
                                   "src": "642:5:14",
@@ -2074,7 +2074,7 @@
                                   }
                                 }
                               },
-                              "id": 3727,
+                              "id": 3730,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -2099,32 +2099,32 @@
                             ],
                             "expression": {
                               "argumentTypes": null,
-                              "id": 3716,
+                              "id": 3719,
                               "name": "buf",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 3706,
+                              "referencedDeclaration": 3709,
                               "src": "626:3:14",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                 "typeString": "struct BufferChainlink.buffer memory"
                               }
                             },
-                            "id": 3718,
+                            "id": 3721,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "appendUint8",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 3487,
+                            "referencedDeclaration": 3490,
                             "src": "626:15:14",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$returns$_t_struct$_buffer_$3196_memory_ptr_$bound_to$_t_struct$_buffer_$3196_memory_ptr_$",
+                              "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$returns$_t_struct$_buffer_$3199_memory_ptr_$bound_to$_t_struct$_buffer_$3199_memory_ptr_$",
                               "typeString": "function (struct BufferChainlink.buffer memory,uint8) pure returns (struct BufferChainlink.buffer memory)"
                             }
                           },
-                          "id": 3728,
+                          "id": 3731,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2135,11 +2135,11 @@
                           "src": "626:44:14",
                           "tryCall": false,
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                            "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                             "typeString": "struct BufferChainlink.buffer memory"
                           }
                         },
-                        "id": 3729,
+                        "id": 3732,
                         "nodeType": "ExpressionStatement",
                         "src": "626:44:14"
                       }
@@ -2149,7 +2149,7 @@
               ]
             },
             "documentation": null,
-            "id": 3837,
+            "id": 3840,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -2157,33 +2157,33 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 3711,
+              "id": 3714,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3706,
+                  "id": 3709,
                   "mutability": "mutable",
                   "name": "buf",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3837,
+                  "scope": 3840,
                   "src": "523:33:14",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                    "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                     "typeString": "struct BufferChainlink.buffer"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3705,
+                    "id": 3708,
                     "name": "BufferChainlink.buffer",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 3196,
+                    "referencedDeclaration": 3199,
                     "src": "523:22:14",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_buffer_$3196_storage_ptr",
+                      "typeIdentifier": "t_struct$_buffer_$3199_storage_ptr",
                       "typeString": "struct BufferChainlink.buffer"
                     }
                   },
@@ -2192,12 +2192,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3708,
+                  "id": 3711,
                   "mutability": "mutable",
                   "name": "major",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3837,
+                  "scope": 3840,
                   "src": "558:11:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2206,7 +2206,7 @@
                     "typeString": "uint8"
                   },
                   "typeName": {
-                    "id": 3707,
+                    "id": 3710,
                     "name": "uint8",
                     "nodeType": "ElementaryTypeName",
                     "src": "558:5:14",
@@ -2220,12 +2220,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3710,
+                  "id": 3713,
                   "mutability": "mutable",
                   "name": "value",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3837,
+                  "scope": 3840,
                   "src": "571:10:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2234,7 +2234,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3709,
+                    "id": 3712,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "571:4:14",
@@ -2250,12 +2250,12 @@
               "src": "522:60:14"
             },
             "returnParameters": {
-              "id": 3712,
+              "id": 3715,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "596:0:14"
             },
-            "scope": 3990,
+            "scope": 3993,
             "src": "503:644:14",
             "stateMutability": "pure",
             "virtual": false,
@@ -2263,7 +2263,7 @@
           },
           {
             "body": {
-              "id": 3858,
+              "id": 3861,
               "nodeType": "Block",
               "src": "1248:52:14",
               "statements": [
@@ -2280,7 +2280,7 @@
                               "typeIdentifier": "t_uint8",
                               "typeString": "uint8"
                             },
-                            "id": 3854,
+                            "id": 3857,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -2294,18 +2294,18 @@
                                     "typeIdentifier": "t_uint8",
                                     "typeString": "uint8"
                                   },
-                                  "id": 3851,
+                                  "id": 3854,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "leftExpression": {
                                     "argumentTypes": null,
-                                    "id": 3849,
+                                    "id": 3852,
                                     "name": "major",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 3841,
+                                    "referencedDeclaration": 3844,
                                     "src": "1277:5:14",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_uint8",
@@ -2317,7 +2317,7 @@
                                   "rightExpression": {
                                     "argumentTypes": null,
                                     "hexValue": "35",
-                                    "id": 3850,
+                                    "id": 3853,
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": true,
@@ -2339,7 +2339,7 @@
                                   }
                                 }
                               ],
-                              "id": 3852,
+                              "id": 3855,
                               "isConstant": false,
                               "isInlineArray": false,
                               "isLValue": false,
@@ -2357,7 +2357,7 @@
                             "rightExpression": {
                               "argumentTypes": null,
                               "hexValue": "3331",
-                              "id": 3853,
+                              "id": 3856,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -2386,7 +2386,7 @@
                               "typeString": "uint8"
                             }
                           ],
-                          "id": 3848,
+                          "id": 3851,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -2398,7 +2398,7 @@
                             "typeString": "type(uint8)"
                           },
                           "typeName": {
-                            "id": 3847,
+                            "id": 3850,
                             "name": "uint8",
                             "nodeType": "ElementaryTypeName",
                             "src": "1270:5:14",
@@ -2408,7 +2408,7 @@
                             }
                           }
                         },
-                        "id": 3855,
+                        "id": 3858,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2433,32 +2433,32 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 3844,
+                        "id": 3847,
                         "name": "buf",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3839,
+                        "referencedDeclaration": 3842,
                         "src": "1254:3:14",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         }
                       },
-                      "id": 3846,
+                      "id": 3849,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "appendUint8",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3487,
+                      "referencedDeclaration": 3490,
                       "src": "1254:15:14",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$returns$_t_struct$_buffer_$3196_memory_ptr_$bound_to$_t_struct$_buffer_$3196_memory_ptr_$",
+                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$returns$_t_struct$_buffer_$3199_memory_ptr_$bound_to$_t_struct$_buffer_$3199_memory_ptr_$",
                         "typeString": "function (struct BufferChainlink.buffer memory,uint8) pure returns (struct BufferChainlink.buffer memory)"
                       }
                     },
-                    "id": 3856,
+                    "id": 3859,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2469,18 +2469,18 @@
                     "src": "1254:41:14",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                      "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                       "typeString": "struct BufferChainlink.buffer memory"
                     }
                   },
-                  "id": 3857,
+                  "id": 3860,
                   "nodeType": "ExpressionStatement",
                   "src": "1254:41:14"
                 }
               ]
             },
             "documentation": null,
-            "id": 3859,
+            "id": 3862,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -2488,33 +2488,33 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 3842,
+              "id": 3845,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3839,
+                  "id": 3842,
                   "mutability": "mutable",
                   "name": "buf",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3859,
+                  "scope": 3862,
                   "src": "1187:33:14",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                    "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                     "typeString": "struct BufferChainlink.buffer"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3838,
+                    "id": 3841,
                     "name": "BufferChainlink.buffer",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 3196,
+                    "referencedDeclaration": 3199,
                     "src": "1187:22:14",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_buffer_$3196_storage_ptr",
+                      "typeIdentifier": "t_struct$_buffer_$3199_storage_ptr",
                       "typeString": "struct BufferChainlink.buffer"
                     }
                   },
@@ -2523,12 +2523,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3841,
+                  "id": 3844,
                   "mutability": "mutable",
                   "name": "major",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3859,
+                  "scope": 3862,
                   "src": "1222:11:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2537,7 +2537,7 @@
                     "typeString": "uint8"
                   },
                   "typeName": {
-                    "id": 3840,
+                    "id": 3843,
                     "name": "uint8",
                     "nodeType": "ElementaryTypeName",
                     "src": "1222:5:14",
@@ -2553,12 +2553,12 @@
               "src": "1186:48:14"
             },
             "returnParameters": {
-              "id": 3843,
+              "id": 3846,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1248:0:14"
             },
-            "scope": 3990,
+            "scope": 3993,
             "src": "1151:149:14",
             "stateMutability": "pure",
             "virtual": false,
@@ -2566,7 +2566,7 @@
           },
           {
             "body": {
-              "id": 3872,
+              "id": 3875,
               "nodeType": "Block",
               "src": "1385:49:14",
               "statements": [
@@ -2576,24 +2576,24 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 3867,
+                        "id": 3870,
                         "name": "buf",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3861,
+                        "referencedDeclaration": 3864,
                         "src": "1402:3:14",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         }
                       },
                       {
                         "argumentTypes": null,
-                        "id": 3868,
+                        "id": 3871,
                         "name": "MAJOR_TYPE_INT",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3686,
+                        "referencedDeclaration": 3689,
                         "src": "1407:14:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint8",
@@ -2602,11 +2602,11 @@
                       },
                       {
                         "argumentTypes": null,
-                        "id": 3869,
+                        "id": 3872,
                         "name": "value",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3863,
+                        "referencedDeclaration": 3866,
                         "src": "1423:5:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -2617,7 +2617,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         },
                         {
@@ -2629,18 +2629,18 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 3866,
+                      "id": 3869,
                       "name": "encodeType",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3837,
+                      "referencedDeclaration": 3840,
                       "src": "1391:10:14",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$_t_uint256_$returns$__$",
+                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$_t_uint256_$returns$__$",
                         "typeString": "function (struct BufferChainlink.buffer memory,uint8,uint256) pure"
                       }
                     },
-                    "id": 3870,
+                    "id": 3873,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2655,14 +2655,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3871,
+                  "id": 3874,
                   "nodeType": "ExpressionStatement",
                   "src": "1391:38:14"
                 }
               ]
             },
             "documentation": null,
-            "id": 3873,
+            "id": 3876,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -2670,33 +2670,33 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 3864,
+              "id": 3867,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3861,
+                  "id": 3864,
                   "mutability": "mutable",
                   "name": "buf",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3873,
+                  "scope": 3876,
                   "src": "1324:33:14",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                    "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                     "typeString": "struct BufferChainlink.buffer"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3860,
+                    "id": 3863,
                     "name": "BufferChainlink.buffer",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 3196,
+                    "referencedDeclaration": 3199,
                     "src": "1324:22:14",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_buffer_$3196_storage_ptr",
+                      "typeIdentifier": "t_struct$_buffer_$3199_storage_ptr",
                       "typeString": "struct BufferChainlink.buffer"
                     }
                   },
@@ -2705,12 +2705,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3863,
+                  "id": 3866,
                   "mutability": "mutable",
                   "name": "value",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3873,
+                  "scope": 3876,
                   "src": "1359:10:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2719,7 +2719,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3862,
+                    "id": 3865,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1359:4:14",
@@ -2735,12 +2735,12 @@
               "src": "1323:47:14"
             },
             "returnParameters": {
-              "id": 3865,
+              "id": 3868,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1385:0:14"
             },
-            "scope": 3990,
+            "scope": 3993,
             "src": "1304:130:14",
             "stateMutability": "pure",
             "virtual": false,
@@ -2748,7 +2748,7 @@
           },
           {
             "body": {
-              "id": 3907,
+              "id": 3910,
               "nodeType": "Block",
               "src": "1517:163:14",
               "statements": [
@@ -2759,18 +2759,18 @@
                       "typeIdentifier": "t_int256",
                       "typeString": "int256"
                     },
-                    "id": 3882,
+                    "id": 3885,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
                       "argumentTypes": null,
-                      "id": 3880,
+                      "id": 3883,
                       "name": "value",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3877,
+                      "referencedDeclaration": 3880,
                       "src": "1526:5:14",
                       "typeDescriptions": {
                         "typeIdentifier": "t_int256",
@@ -2782,7 +2782,7 @@
                     "rightExpression": {
                       "argumentTypes": null,
                       "hexValue": "30",
-                      "id": 3881,
+                      "id": 3884,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -2804,7 +2804,7 @@
                     }
                   },
                   "falseBody": {
-                    "id": 3905,
+                    "id": 3908,
                     "nodeType": "Block",
                     "src": "1603:73:14",
                     "statements": [
@@ -2814,24 +2814,24 @@
                           "arguments": [
                             {
                               "argumentTypes": null,
-                              "id": 3894,
+                              "id": 3897,
                               "name": "buf",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 3875,
+                              "referencedDeclaration": 3878,
                               "src": "1622:3:14",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                 "typeString": "struct BufferChainlink.buffer memory"
                               }
                             },
                             {
                               "argumentTypes": null,
-                              "id": 3895,
+                              "id": 3898,
                               "name": "MAJOR_TYPE_NEGATIVE_INT",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 3689,
+                              "referencedDeclaration": 3692,
                               "src": "1627:23:14",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint8",
@@ -2847,14 +2847,14 @@
                                     "typeIdentifier": "t_int256",
                                     "typeString": "int256"
                                   },
-                                  "id": 3901,
+                                  "id": 3904,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "leftExpression": {
                                     "argumentTypes": null,
-                                    "id": 3899,
+                                    "id": 3902,
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": true,
@@ -2866,7 +2866,7 @@
                                     "subExpression": {
                                       "argumentTypes": null,
                                       "hexValue": "31",
-                                      "id": 3898,
+                                      "id": 3901,
                                       "isConstant": false,
                                       "isLValue": false,
                                       "isPure": true,
@@ -2890,11 +2890,11 @@
                                   "operator": "-",
                                   "rightExpression": {
                                     "argumentTypes": null,
-                                    "id": 3900,
+                                    "id": 3903,
                                     "name": "value",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 3877,
+                                    "referencedDeclaration": 3880,
                                     "src": "1662:5:14",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_int256",
@@ -2915,7 +2915,7 @@
                                     "typeString": "int256"
                                   }
                                 ],
-                                "id": 3897,
+                                "id": 3900,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": true,
@@ -2927,7 +2927,7 @@
                                   "typeString": "type(uint256)"
                                 },
                                 "typeName": {
-                                  "id": 3896,
+                                  "id": 3899,
                                   "name": "uint",
                                   "nodeType": "ElementaryTypeName",
                                   "src": "1652:4:14",
@@ -2937,7 +2937,7 @@
                                   }
                                 }
                               },
-                              "id": 3902,
+                              "id": 3905,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -2956,7 +2956,7 @@
                           "expression": {
                             "argumentTypes": [
                               {
-                                "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                 "typeString": "struct BufferChainlink.buffer memory"
                               },
                               {
@@ -2968,18 +2968,18 @@
                                 "typeString": "uint256"
                               }
                             ],
-                            "id": 3893,
+                            "id": 3896,
                             "name": "encodeType",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 3837,
+                            "referencedDeclaration": 3840,
                             "src": "1611:10:14",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$_t_uint256_$returns$__$",
+                              "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$_t_uint256_$returns$__$",
                               "typeString": "function (struct BufferChainlink.buffer memory,uint8,uint256) pure"
                             }
                           },
-                          "id": 3903,
+                          "id": 3906,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2994,17 +2994,17 @@
                             "typeString": "tuple()"
                           }
                         },
-                        "id": 3904,
+                        "id": 3907,
                         "nodeType": "ExpressionStatement",
                         "src": "1611:58:14"
                       }
                     ]
                   },
-                  "id": 3906,
+                  "id": 3909,
                   "nodeType": "IfStatement",
                   "src": "1523:153:14",
                   "trueBody": {
-                    "id": 3892,
+                    "id": 3895,
                     "nodeType": "Block",
                     "src": "1538:59:14",
                     "statements": [
@@ -3014,24 +3014,24 @@
                           "arguments": [
                             {
                               "argumentTypes": null,
-                              "id": 3884,
+                              "id": 3887,
                               "name": "buf",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 3875,
+                              "referencedDeclaration": 3878,
                               "src": "1557:3:14",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                 "typeString": "struct BufferChainlink.buffer memory"
                               }
                             },
                             {
                               "argumentTypes": null,
-                              "id": 3885,
+                              "id": 3888,
                               "name": "MAJOR_TYPE_INT",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 3686,
+                              "referencedDeclaration": 3689,
                               "src": "1562:14:14",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint8",
@@ -3043,11 +3043,11 @@
                               "arguments": [
                                 {
                                   "argumentTypes": null,
-                                  "id": 3888,
+                                  "id": 3891,
                                   "name": "value",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 3877,
+                                  "referencedDeclaration": 3880,
                                   "src": "1583:5:14",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_int256",
@@ -3062,7 +3062,7 @@
                                     "typeString": "int256"
                                   }
                                 ],
-                                "id": 3887,
+                                "id": 3890,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": true,
@@ -3074,7 +3074,7 @@
                                   "typeString": "type(uint256)"
                                 },
                                 "typeName": {
-                                  "id": 3886,
+                                  "id": 3889,
                                   "name": "uint",
                                   "nodeType": "ElementaryTypeName",
                                   "src": "1578:4:14",
@@ -3084,7 +3084,7 @@
                                   }
                                 }
                               },
-                              "id": 3889,
+                              "id": 3892,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -3103,7 +3103,7 @@
                           "expression": {
                             "argumentTypes": [
                               {
-                                "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                                "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                                 "typeString": "struct BufferChainlink.buffer memory"
                               },
                               {
@@ -3115,18 +3115,18 @@
                                 "typeString": "uint256"
                               }
                             ],
-                            "id": 3883,
+                            "id": 3886,
                             "name": "encodeType",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 3837,
+                            "referencedDeclaration": 3840,
                             "src": "1546:10:14",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$_t_uint256_$returns$__$",
+                              "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$_t_uint256_$returns$__$",
                               "typeString": "function (struct BufferChainlink.buffer memory,uint8,uint256) pure"
                             }
                           },
-                          "id": 3890,
+                          "id": 3893,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -3141,7 +3141,7 @@
                             "typeString": "tuple()"
                           }
                         },
-                        "id": 3891,
+                        "id": 3894,
                         "nodeType": "ExpressionStatement",
                         "src": "1546:44:14"
                       }
@@ -3151,7 +3151,7 @@
               ]
             },
             "documentation": null,
-            "id": 3908,
+            "id": 3911,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -3159,33 +3159,33 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 3878,
+              "id": 3881,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3875,
+                  "id": 3878,
                   "mutability": "mutable",
                   "name": "buf",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3908,
+                  "scope": 3911,
                   "src": "1457:33:14",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                    "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                     "typeString": "struct BufferChainlink.buffer"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3874,
+                    "id": 3877,
                     "name": "BufferChainlink.buffer",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 3196,
+                    "referencedDeclaration": 3199,
                     "src": "1457:22:14",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_buffer_$3196_storage_ptr",
+                      "typeIdentifier": "t_struct$_buffer_$3199_storage_ptr",
                       "typeString": "struct BufferChainlink.buffer"
                     }
                   },
@@ -3194,12 +3194,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3877,
+                  "id": 3880,
                   "mutability": "mutable",
                   "name": "value",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3908,
+                  "scope": 3911,
                   "src": "1492:9:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3208,7 +3208,7 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 3876,
+                    "id": 3879,
                     "name": "int",
                     "nodeType": "ElementaryTypeName",
                     "src": "1492:3:14",
@@ -3224,12 +3224,12 @@
               "src": "1456:46:14"
             },
             "returnParameters": {
-              "id": 3879,
+              "id": 3882,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1517:0:14"
             },
-            "scope": 3990,
+            "scope": 3993,
             "src": "1438:242:14",
             "stateMutability": "pure",
             "virtual": false,
@@ -3237,7 +3237,7 @@
           },
           {
             "body": {
-              "id": 3928,
+              "id": 3931,
               "nodeType": "Block",
               "src": "1774:81:14",
               "statements": [
@@ -3247,24 +3247,24 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 3916,
+                        "id": 3919,
                         "name": "buf",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3910,
+                        "referencedDeclaration": 3913,
                         "src": "1791:3:14",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         }
                       },
                       {
                         "argumentTypes": null,
-                        "id": 3917,
+                        "id": 3920,
                         "name": "MAJOR_TYPE_BYTES",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3692,
+                        "referencedDeclaration": 3695,
                         "src": "1796:16:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint8",
@@ -3275,18 +3275,18 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 3918,
+                          "id": 3921,
                           "name": "value",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 3912,
+                          "referencedDeclaration": 3915,
                           "src": "1814:5:14",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes_memory_ptr",
                             "typeString": "bytes memory"
                           }
                         },
-                        "id": 3919,
+                        "id": 3922,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -3304,7 +3304,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         },
                         {
@@ -3316,18 +3316,18 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 3915,
+                      "id": 3918,
                       "name": "encodeType",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3837,
+                      "referencedDeclaration": 3840,
                       "src": "1780:10:14",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$_t_uint256_$returns$__$",
+                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$_t_uint256_$returns$__$",
                         "typeString": "function (struct BufferChainlink.buffer memory,uint8,uint256) pure"
                       }
                     },
-                    "id": 3920,
+                    "id": 3923,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3342,7 +3342,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3921,
+                  "id": 3924,
                   "nodeType": "ExpressionStatement",
                   "src": "1780:47:14"
                 },
@@ -3352,11 +3352,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 3925,
+                        "id": 3928,
                         "name": "value",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3912,
+                        "referencedDeclaration": 3915,
                         "src": "1844:5:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_memory_ptr",
@@ -3373,32 +3373,32 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 3922,
+                        "id": 3925,
                         "name": "buf",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3910,
+                        "referencedDeclaration": 3913,
                         "src": "1833:3:14",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         }
                       },
-                      "id": 3924,
+                      "id": 3927,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "append",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3438,
+                      "referencedDeclaration": 3441,
                       "src": "1833:10:14",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_bytes_memory_ptr_$returns$_t_struct$_buffer_$3196_memory_ptr_$bound_to$_t_struct$_buffer_$3196_memory_ptr_$",
+                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_bytes_memory_ptr_$returns$_t_struct$_buffer_$3199_memory_ptr_$bound_to$_t_struct$_buffer_$3199_memory_ptr_$",
                         "typeString": "function (struct BufferChainlink.buffer memory,bytes memory) pure returns (struct BufferChainlink.buffer memory)"
                       }
                     },
-                    "id": 3926,
+                    "id": 3929,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3409,18 +3409,18 @@
                     "src": "1833:17:14",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                      "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                       "typeString": "struct BufferChainlink.buffer memory"
                     }
                   },
-                  "id": 3927,
+                  "id": 3930,
                   "nodeType": "ExpressionStatement",
                   "src": "1833:17:14"
                 }
               ]
             },
             "documentation": null,
-            "id": 3929,
+            "id": 3932,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -3428,33 +3428,33 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 3913,
+              "id": 3916,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3910,
+                  "id": 3913,
                   "mutability": "mutable",
                   "name": "buf",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3929,
+                  "scope": 3932,
                   "src": "1705:33:14",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                    "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                     "typeString": "struct BufferChainlink.buffer"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3909,
+                    "id": 3912,
                     "name": "BufferChainlink.buffer",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 3196,
+                    "referencedDeclaration": 3199,
                     "src": "1705:22:14",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_buffer_$3196_storage_ptr",
+                      "typeIdentifier": "t_struct$_buffer_$3199_storage_ptr",
                       "typeString": "struct BufferChainlink.buffer"
                     }
                   },
@@ -3463,12 +3463,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3912,
+                  "id": 3915,
                   "mutability": "mutable",
                   "name": "value",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3929,
+                  "scope": 3932,
                   "src": "1740:18:14",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -3477,7 +3477,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 3911,
+                    "id": 3914,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "1740:5:14",
@@ -3493,12 +3493,12 @@
               "src": "1704:55:14"
             },
             "returnParameters": {
-              "id": 3914,
+              "id": 3917,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1774:0:14"
             },
-            "scope": 3990,
+            "scope": 3993,
             "src": "1684:171:14",
             "stateMutability": "pure",
             "virtual": false,
@@ -3506,7 +3506,7 @@
           },
           {
             "body": {
-              "id": 3955,
+              "id": 3958,
               "nodeType": "Block",
               "src": "1951:96:14",
               "statements": [
@@ -3516,24 +3516,24 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 3937,
+                        "id": 3940,
                         "name": "buf",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3931,
+                        "referencedDeclaration": 3934,
                         "src": "1968:3:14",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         }
                       },
                       {
                         "argumentTypes": null,
-                        "id": 3938,
+                        "id": 3941,
                         "name": "MAJOR_TYPE_STRING",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3695,
+                        "referencedDeclaration": 3698,
                         "src": "1973:17:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint8",
@@ -3547,11 +3547,11 @@
                           "arguments": [
                             {
                               "argumentTypes": null,
-                              "id": 3941,
+                              "id": 3944,
                               "name": "value",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 3933,
+                              "referencedDeclaration": 3936,
                               "src": "1998:5:14",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_string_memory_ptr",
@@ -3566,7 +3566,7 @@
                                 "typeString": "string memory"
                               }
                             ],
-                            "id": 3940,
+                            "id": 3943,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -3578,7 +3578,7 @@
                               "typeString": "type(bytes storage pointer)"
                             },
                             "typeName": {
-                              "id": 3939,
+                              "id": 3942,
                               "name": "bytes",
                               "nodeType": "ElementaryTypeName",
                               "src": "1992:5:14",
@@ -3588,7 +3588,7 @@
                               }
                             }
                           },
-                          "id": 3942,
+                          "id": 3945,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -3603,7 +3603,7 @@
                             "typeString": "bytes memory"
                           }
                         },
-                        "id": 3943,
+                        "id": 3946,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -3621,7 +3621,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         },
                         {
@@ -3633,18 +3633,18 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 3936,
+                      "id": 3939,
                       "name": "encodeType",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3837,
+                      "referencedDeclaration": 3840,
                       "src": "1957:10:14",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$_t_uint256_$returns$__$",
+                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$_t_uint256_$returns$__$",
                         "typeString": "function (struct BufferChainlink.buffer memory,uint8,uint256) pure"
                       }
                     },
-                    "id": 3944,
+                    "id": 3947,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3659,7 +3659,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3945,
+                  "id": 3948,
                   "nodeType": "ExpressionStatement",
                   "src": "1957:55:14"
                 },
@@ -3672,11 +3672,11 @@
                         "arguments": [
                           {
                             "argumentTypes": null,
-                            "id": 3951,
+                            "id": 3954,
                             "name": "value",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 3933,
+                            "referencedDeclaration": 3936,
                             "src": "2035:5:14",
                             "typeDescriptions": {
                               "typeIdentifier": "t_string_memory_ptr",
@@ -3691,7 +3691,7 @@
                               "typeString": "string memory"
                             }
                           ],
-                          "id": 3950,
+                          "id": 3953,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -3703,7 +3703,7 @@
                             "typeString": "type(bytes storage pointer)"
                           },
                           "typeName": {
-                            "id": 3949,
+                            "id": 3952,
                             "name": "bytes",
                             "nodeType": "ElementaryTypeName",
                             "src": "2029:5:14",
@@ -3713,7 +3713,7 @@
                             }
                           }
                         },
-                        "id": 3952,
+                        "id": 3955,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -3738,32 +3738,32 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 3946,
+                        "id": 3949,
                         "name": "buf",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3931,
+                        "referencedDeclaration": 3934,
                         "src": "2018:3:14",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         }
                       },
-                      "id": 3948,
+                      "id": 3951,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
                       "memberName": "append",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3438,
+                      "referencedDeclaration": 3441,
                       "src": "2018:10:14",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_bytes_memory_ptr_$returns$_t_struct$_buffer_$3196_memory_ptr_$bound_to$_t_struct$_buffer_$3196_memory_ptr_$",
+                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_bytes_memory_ptr_$returns$_t_struct$_buffer_$3199_memory_ptr_$bound_to$_t_struct$_buffer_$3199_memory_ptr_$",
                         "typeString": "function (struct BufferChainlink.buffer memory,bytes memory) pure returns (struct BufferChainlink.buffer memory)"
                       }
                     },
-                    "id": 3953,
+                    "id": 3956,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3774,18 +3774,18 @@
                     "src": "2018:24:14",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                      "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                       "typeString": "struct BufferChainlink.buffer memory"
                     }
                   },
-                  "id": 3954,
+                  "id": 3957,
                   "nodeType": "ExpressionStatement",
                   "src": "2018:24:14"
                 }
               ]
             },
             "documentation": null,
-            "id": 3956,
+            "id": 3959,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -3793,33 +3793,33 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 3934,
+              "id": 3937,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3931,
+                  "id": 3934,
                   "mutability": "mutable",
                   "name": "buf",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3956,
+                  "scope": 3959,
                   "src": "1881:33:14",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                    "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                     "typeString": "struct BufferChainlink.buffer"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3930,
+                    "id": 3933,
                     "name": "BufferChainlink.buffer",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 3196,
+                    "referencedDeclaration": 3199,
                     "src": "1881:22:14",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_buffer_$3196_storage_ptr",
+                      "typeIdentifier": "t_struct$_buffer_$3199_storage_ptr",
                       "typeString": "struct BufferChainlink.buffer"
                     }
                   },
@@ -3828,12 +3828,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3933,
+                  "id": 3936,
                   "mutability": "mutable",
                   "name": "value",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3956,
+                  "scope": 3959,
                   "src": "1916:19:14",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -3842,7 +3842,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 3932,
+                    "id": 3935,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1916:6:14",
@@ -3858,12 +3858,12 @@
               "src": "1880:56:14"
             },
             "returnParameters": {
-              "id": 3935,
+              "id": 3938,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1951:0:14"
             },
-            "scope": 3990,
+            "scope": 3993,
             "src": "1859:188:14",
             "stateMutability": "pure",
             "virtual": false,
@@ -3871,7 +3871,7 @@
           },
           {
             "body": {
-              "id": 3966,
+              "id": 3969,
               "nodeType": "Block",
               "src": "2120:60:14",
               "statements": [
@@ -3881,24 +3881,24 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 3962,
+                        "id": 3965,
                         "name": "buf",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3958,
+                        "referencedDeclaration": 3961,
                         "src": "2153:3:14",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         }
                       },
                       {
                         "argumentTypes": null,
-                        "id": 3963,
+                        "id": 3966,
                         "name": "MAJOR_TYPE_ARRAY",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3698,
+                        "referencedDeclaration": 3701,
                         "src": "2158:16:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint8",
@@ -3909,7 +3909,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         },
                         {
@@ -3917,18 +3917,18 @@
                           "typeString": "uint8"
                         }
                       ],
-                      "id": 3961,
+                      "id": 3964,
                       "name": "encodeIndefiniteLengthType",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3859,
+                      "referencedDeclaration": 3862,
                       "src": "2126:26:14",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$returns$__$",
+                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$returns$__$",
                         "typeString": "function (struct BufferChainlink.buffer memory,uint8) pure"
                       }
                     },
-                    "id": 3964,
+                    "id": 3967,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3943,14 +3943,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3965,
+                  "id": 3968,
                   "nodeType": "ExpressionStatement",
                   "src": "2126:49:14"
                 }
               ]
             },
             "documentation": null,
-            "id": 3967,
+            "id": 3970,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -3958,33 +3958,33 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 3959,
+              "id": 3962,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3958,
+                  "id": 3961,
                   "mutability": "mutable",
                   "name": "buf",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3967,
+                  "scope": 3970,
                   "src": "2071:33:14",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                    "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                     "typeString": "struct BufferChainlink.buffer"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3957,
+                    "id": 3960,
                     "name": "BufferChainlink.buffer",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 3196,
+                    "referencedDeclaration": 3199,
                     "src": "2071:22:14",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_buffer_$3196_storage_ptr",
+                      "typeIdentifier": "t_struct$_buffer_$3199_storage_ptr",
                       "typeString": "struct BufferChainlink.buffer"
                     }
                   },
@@ -3995,12 +3995,12 @@
               "src": "2070:35:14"
             },
             "returnParameters": {
-              "id": 3960,
+              "id": 3963,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2120:0:14"
             },
-            "scope": 3990,
+            "scope": 3993,
             "src": "2051:129:14",
             "stateMutability": "pure",
             "virtual": false,
@@ -4008,7 +4008,7 @@
           },
           {
             "body": {
-              "id": 3977,
+              "id": 3980,
               "nodeType": "Block",
               "src": "2251:58:14",
               "statements": [
@@ -4018,24 +4018,24 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 3973,
+                        "id": 3976,
                         "name": "buf",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3969,
+                        "referencedDeclaration": 3972,
                         "src": "2284:3:14",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         }
                       },
                       {
                         "argumentTypes": null,
-                        "id": 3974,
+                        "id": 3977,
                         "name": "MAJOR_TYPE_MAP",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3701,
+                        "referencedDeclaration": 3704,
                         "src": "2289:14:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint8",
@@ -4046,7 +4046,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         },
                         {
@@ -4054,18 +4054,18 @@
                           "typeString": "uint8"
                         }
                       ],
-                      "id": 3972,
+                      "id": 3975,
                       "name": "encodeIndefiniteLengthType",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3859,
+                      "referencedDeclaration": 3862,
                       "src": "2257:26:14",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$returns$__$",
+                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$returns$__$",
                         "typeString": "function (struct BufferChainlink.buffer memory,uint8) pure"
                       }
                     },
-                    "id": 3975,
+                    "id": 3978,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -4080,14 +4080,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3976,
+                  "id": 3979,
                   "nodeType": "ExpressionStatement",
                   "src": "2257:47:14"
                 }
               ]
             },
             "documentation": null,
-            "id": 3978,
+            "id": 3981,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -4095,33 +4095,33 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 3970,
+              "id": 3973,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3969,
+                  "id": 3972,
                   "mutability": "mutable",
                   "name": "buf",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3978,
+                  "scope": 3981,
                   "src": "2202:33:14",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                    "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                     "typeString": "struct BufferChainlink.buffer"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3968,
+                    "id": 3971,
                     "name": "BufferChainlink.buffer",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 3196,
+                    "referencedDeclaration": 3199,
                     "src": "2202:22:14",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_buffer_$3196_storage_ptr",
+                      "typeIdentifier": "t_struct$_buffer_$3199_storage_ptr",
                       "typeString": "struct BufferChainlink.buffer"
                     }
                   },
@@ -4132,12 +4132,12 @@
               "src": "2201:35:14"
             },
             "returnParameters": {
-              "id": 3971,
+              "id": 3974,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2251:0:14"
             },
-            "scope": 3990,
+            "scope": 3993,
             "src": "2184:125:14",
             "stateMutability": "pure",
             "virtual": false,
@@ -4145,7 +4145,7 @@
           },
           {
             "body": {
-              "id": 3988,
+              "id": 3991,
               "nodeType": "Block",
               "src": "2383:67:14",
               "statements": [
@@ -4155,24 +4155,24 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 3984,
+                        "id": 3987,
                         "name": "buf",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3980,
+                        "referencedDeclaration": 3983,
                         "src": "2416:3:14",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         }
                       },
                       {
                         "argumentTypes": null,
-                        "id": 3985,
+                        "id": 3988,
                         "name": "MAJOR_TYPE_CONTENT_FREE",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3704,
+                        "referencedDeclaration": 3707,
                         "src": "2421:23:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint8",
@@ -4183,7 +4183,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                          "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                           "typeString": "struct BufferChainlink.buffer memory"
                         },
                         {
@@ -4191,18 +4191,18 @@
                           "typeString": "uint8"
                         }
                       ],
-                      "id": 3983,
+                      "id": 3986,
                       "name": "encodeIndefiniteLengthType",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3859,
+                      "referencedDeclaration": 3862,
                       "src": "2389:26:14",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3196_memory_ptr_$_t_uint8_$returns$__$",
+                        "typeIdentifier": "t_function_internal_pure$_t_struct$_buffer_$3199_memory_ptr_$_t_uint8_$returns$__$",
                         "typeString": "function (struct BufferChainlink.buffer memory,uint8) pure"
                       }
                     },
-                    "id": 3986,
+                    "id": 3989,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -4217,14 +4217,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 3987,
+                  "id": 3990,
                   "nodeType": "ExpressionStatement",
                   "src": "2389:56:14"
                 }
               ]
             },
             "documentation": null,
-            "id": 3989,
+            "id": 3992,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -4232,33 +4232,33 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 3981,
+              "id": 3984,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3980,
+                  "id": 3983,
                   "mutability": "mutable",
                   "name": "buf",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 3989,
+                  "scope": 3992,
                   "src": "2334:33:14",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_buffer_$3196_memory_ptr",
+                    "typeIdentifier": "t_struct$_buffer_$3199_memory_ptr",
                     "typeString": "struct BufferChainlink.buffer"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 3979,
+                    "id": 3982,
                     "name": "BufferChainlink.buffer",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 3196,
+                    "referencedDeclaration": 3199,
                     "src": "2334:22:14",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_buffer_$3196_storage_ptr",
+                      "typeIdentifier": "t_struct$_buffer_$3199_storage_ptr",
                       "typeString": "struct BufferChainlink.buffer"
                     }
                   },
@@ -4269,19 +4269,19 @@
               "src": "2333:35:14"
             },
             "returnParameters": {
-              "id": 3982,
+              "id": 3985,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2383:0:14"
             },
-            "scope": 3990,
+            "scope": 3993,
             "src": "2313:137:14",
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "internal"
           }
         ],
-        "scope": 3991,
+        "scope": 3994,
         "src": "83:2369:14"
       }
     ],

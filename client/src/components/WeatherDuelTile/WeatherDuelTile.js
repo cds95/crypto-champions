@@ -1,9 +1,10 @@
 import { Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { getRaceClassLabel } from '../../AppUtils';
+import { displayToken, getRaceClassLabel } from '../../AppUtils';
 import { getRaceImage } from '../../images/races';
 import { getHero } from '../../redux/selectors';
+import { AcceptDuelModal } from '../AcceptDuelModal';
 import { ItemGridTile } from '../ItemGridTile/ItemGridTile';
 import './WeatherDuelTile.css';
 
@@ -11,13 +12,18 @@ const text = {
     accept: 'Accept Challenge',
     begin: 'Begin Challenge',
     victory: 'Victory',
-    defeat: 'Defeat'
+    defeat: 'Defeat',
+    waitingForResponse: 'Waiting for challenger to accept',
+    waitForResult: 'Waiting for initiator to start the duel'
 };
 
-export const WeatherDuelTileComp = ({ duel, opponentHero, userAccount }) => {
-    const { isDuelAccepted, opponent, initiator, winner } = duel;
-    const itemImage = getRaceImage(opponentHero.raceId);
-    const itemLabel = getRaceClassLabel(opponentHero.raceId, opponentHero.classId);
+export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAccount }) => {
+    const { isDuelAccepted, initiator, winner, address, bet } = duel;
+    const isInitiator = userAccount == initiator;
+    const displayedHero = isInitiator ? opponentHero : initiatorHero;
+    const itemImage = getRaceImage(displayedHero.raceId);
+    const itemLabel = getRaceClassLabel(displayedHero.raceId, opponentHero.classId);
+    const [isAcceptModalOpen, setIsSetAcceptModalOpen] = useState(false);
     let actions;
     if (winner) {
         if (winner == userAccount) {
@@ -34,16 +40,40 @@ export const WeatherDuelTileComp = ({ duel, opponentHero, userAccount }) => {
             );
         }
     } else {
-        if (opponent == userAccount && !isDuelAccepted) {
+        if (!isInitiator && !isDuelAccepted) {
+            actions = (
+                <React.Fragment>
+                    <AcceptDuelModal
+                        duelAddress={address}
+                        bet={bet}
+                        onClose={() => setIsSetAcceptModalOpen(false)}
+                        isOpen={isAcceptModalOpen}
+                    />
+                    <Typography
+                        className="weather-duel-tile__action"
+                        variant="body1"
+                        onClick={() => setIsSetAcceptModalOpen(address)}
+                    >
+                        {text.accept}
+                    </Typography>
+                </React.Fragment>
+            );
+        } else if (!isInitiator && isDuelAccepted) {
             actions = (
                 <Typography className="weather-duel-tile__action" variant="body1">
-                    {text.accept}
+                    {text.waitForResult}
                 </Typography>
             );
-        } else if (initiator == userAccount && isDuelAccepted) {
+        } else if (isInitiator && isDuelAccepted) {
             actions = (
                 <Typography className="weather-duel-tile__action" variant="body1">
                     {text.begin}
+                </Typography>
+            );
+        } else if (isInitiator && !isDuelAccepted) {
+            actions = (
+                <Typography className="weather-duel-tile__action" variant="body1">
+                    {text.waitingForResponse}
                 </Typography>
             );
         }
@@ -51,13 +81,21 @@ export const WeatherDuelTileComp = ({ duel, opponentHero, userAccount }) => {
     return (
         <div className="weather-duel-tile">
             <ItemGridTile itemImage={itemImage} itemLabel={itemLabel} />
-            <div className="weather-duel-tile__actions">{actions}</div>
+            <div className="weather-duel-tile__actions">
+                <div>{actions}</div>
+                <div>
+                    <Typography className="weather-duel-tile__action" variant="body1">
+                        {`${displayToken(bet)} CC`}
+                    </Typography>
+                </div>
+            </div>
         </div>
     );
 };
 
 const mapStateToProps = (state, { duel }) => {
     return {
+        initiatorHero: getHero(state, duel.initiatorHeroId),
         opponentHero: getHero(state, duel.opponentHeroId),
         userAccount: state.cryptoChampions.userAccount
     };
