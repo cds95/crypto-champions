@@ -8,11 +8,16 @@ def main():
     keyHash = 0
     fee = 0 
 
+    # Does not point to anything
+    MOCK_ORACLE_ADD = "0xA5A407B4c0f32c621521d8556212fC22B5410E6A" 
+    WEATHER_API_KEY = ""
+    JOB_ID = "0x6237323835643438353964613462323839633738363164623937316261663061"
+
     minigameFactoryRegistry = MinigameFactoryRegistry.deploy({ "from": accounts[0] })
     linkToken = LinkToken.deploy({ "from": accounts[0] })
     vrfCoordinatorMock = VRFCoordinatorMock.deploy(linkToken.address, { "from": accounts[0] })
     cc = CryptoChampions.deploy(keyHash, vrfCoordinatorMock.address, linkToken.address, minigameFactoryRegistry.address, { "from": accounts[0] })
-    wwf = WeatherWarsFactory.deploy(cc.address, vrfCoordinatorMock.address, linkToken.address, fee, keyHash, { "from": accounts[0] })
+    wwf = WeatherWarsFactory.deploy(MOCK_ORACLE_ADD, vrfCoordinatorMock.address, linkToken.address, fee, keyHash, WEATHER_API_KEY, JOB_ID, { "from": accounts[0] })
     
     linkToken.transfer(cc.address, 1 * 10**18, { "from": accounts[0] })
     linkToken.transfer(wwf.address, 1 * 10**18, { "from": accounts[0] })
@@ -38,22 +43,7 @@ def main():
     
     wwf.init()
 
-    BUYIN_AMOUNT = 10**18
-    wwf.createWeatherWars("test", 10**18, cc.address, { "from": accounts[0] })
-    ww_add = wwf.games(0)
-    ww = WeatherWars.at(ww_add)
-
-    cc.transferInGameTokens(ww.address, BUYIN_AMOUNT, { "from": accounts[3] })
-    cc.transferInGameTokens(ww.address, BUYIN_AMOUNT, { "from": accounts[4] })
-
-    # 8 and 9 are the hero ids
-    ww.joinGame(8, { "from": accounts[3] })
-    ww.joinGame(9, { "from": accounts[4] })
-
-    ww.determineWinner({ "from": accounts[0] })
-
-    // City IDs based off open weather api docs
-    string[24] cities = [
+    cities = [
         "6173331",
         "4671654",
         "4887398",
@@ -78,4 +68,32 @@ def main():
         "1835847",
         "1880252",
         "2158177"
-    ];
+    ]
+    for i in range(0, len(cities)):
+        wwf.addCityMapping(cities[i], i)
+    
+    weathers = [
+        "Clouds",
+        "Clear",
+        "Atmosphere",
+        "Snow",
+        "Rain",
+        "Drizzle",
+        "Thunderstorm"
+    ]
+    for i in range(0, len(weathers)):
+        wwf.addWeatherMapping(weathers[i], i)
+
+    BUYIN_AMOUNT = 10**18
+    wwf.createWeatherWars("test", 10**18, cc.address, { "from": accounts[0] })
+    ww_add = wwf.games(0)
+    ww = WeatherWars.at(ww_add)
+
+    cc.transferInGameTokens(ww.address, BUYIN_AMOUNT, { "from": accounts[3] })
+    cc.transferInGameTokens(ww.address, BUYIN_AMOUNT, { "from": accounts[4] })
+
+    # 8 and 9 are the hero ids
+    ww.joinGame(8, { "from": accounts[3] })
+    ww.joinGame(9, { "from": accounts[4] })
+
+    ww.determineWinner({ "from": accounts[0] })
