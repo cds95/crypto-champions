@@ -8,7 +8,7 @@ export const getMaxElderSpirits = async () => {
     return parseInt(maxElderSpirits);
 };
 
-export const getAffinities = async (maxElders) => {
+export const getAffinities = async () => {
     const affinities = [];
     let currIdx = 0;
     let affinity = await getAffinity(currIdx);

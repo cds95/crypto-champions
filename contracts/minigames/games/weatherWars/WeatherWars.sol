@@ -36,6 +36,10 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
 
     WeatherWarsFactory private _weatherWarsFactory;
 
+    address public initiator;
+
+    address public opponent;
+
     constructor(
         address oracle,
         address linkTokenAddress,
@@ -46,7 +50,9 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         string memory _city,
         bytes32 jobId,
         string memory apiKey,
-        address weatherWarsFactoryAddress
+        address weatherWarsFactoryAddress,
+        address duelInitiator,
+        address duelOpponent
     ) public CappedMinigame(gameName, MAX_PLAYERS, _cryptoChampionsContractAddress) {
         setPublicChainlinkToken();
         _linkTokenAddress = linkTokenAddress;
@@ -57,6 +63,8 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         _jobId = jobId;
         _apiKey = apiKey;
         _weatherWarsFactory = WeatherWarsFactory(weatherWarsFactoryAddress);
+        initiator = duelInitiator;
+        opponent = duelOpponent;
     }
 
     function play() internal override {
@@ -82,7 +90,13 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         cityWeather = string(abi.encodePacked(_weather));
     }
 
+    function joinGame(uint256 heroId) public override {
+        require(msg.sender == initiator || msg.sender == opponent); // dev: Address not part of the game
+        super.joinGame(heroId);
+    }
+
     function leaveGame(uint256 heroId) public override {
+        require(msg.sender == initiator || msg.sender == opponent); // dev: Address not part of the game
         require(_currentPhase == MinigamePhase.OPEN); // dev: Game already closed
         require(bytes(cityWeather).length == 0); // dev: City weather data already fetched
 

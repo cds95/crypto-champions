@@ -17,7 +17,7 @@ def main():
     linkToken = LinkToken.deploy({ "from": accounts[0] })
     vrfCoordinatorMock = VRFCoordinatorMock.deploy(linkToken.address, { "from": accounts[0] })
     cc = CryptoChampions.deploy(keyHash, vrfCoordinatorMock.address, linkToken.address, minigameFactoryRegistry.address, { "from": accounts[0] })
-    wwf = WeatherWarsFactory.deploy(MOCK_ORACLE_ADD, vrfCoordinatorMock.address, linkToken.address, fee, keyHash, WEATHER_API_KEY, JOB_ID, { "from": accounts[0] })
+    wwf = WeatherWarsFactory.deploy(MOCK_ORACLE_ADD, vrfCoordinatorMock.address, linkToken.address, fee, keyHash, WEATHER_API_KEY, JOB_ID, cc.address, { "from": accounts[0] })
     
     linkToken.transfer(cc.address, 1 * 10**18, { "from": accounts[0] })
     linkToken.transfer(wwf.address, 1 * 10**18, { "from": accounts[0] })

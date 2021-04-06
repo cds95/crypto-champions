@@ -38,6 +38,8 @@ contract WeatherWarsFactory is VRFConsumerBase {
 
     mapping(uint8 => bool) private _cityIds;
 
+    address private _cryptoChampionsAddress;
+
     event GameCreated(string gameName, string city);
 
     event CreatingGame(string city);
@@ -49,7 +51,8 @@ contract WeatherWarsFactory is VRFConsumerBase {
         uint256 feeInLink,
         bytes32 keyHash,
         string memory weatherApiKey,
-        bytes32 oracleJobId
+        bytes32 oracleJobId,
+        address cryptoChampionsAddress
     ) public VRFConsumerBase(vrfCoordinateAdddress, linkTokenAddress) {
         _fee = feeInLink;
         _keyHash = keyHash;
@@ -57,6 +60,7 @@ contract WeatherWarsFactory is VRFConsumerBase {
         _weatherApiKey = weatherApiKey;
         oracle = oracleAddress;
         jobId = oracleJobId;
+        _cryptoChampionsAddress = cryptoChampionsAddress;
     }
 
     function init() external {
@@ -79,23 +83,26 @@ contract WeatherWarsFactory is VRFConsumerBase {
     }
 
     function createWeatherWars(
-        string calldata _gameName,
         uint256 _buyinAmount,
-        address cryptoChampionsContractAddress
+        uint256 heroId,
+        address opponent
     ) external returns (bytes32) {
         WeatherWars newGame =
             new WeatherWars(
                 oracle,
                 _linkTokenAddress,
                 _fee,
-                _gameName,
-                cryptoChampionsContractAddress,
+                "weather-wars",
+                _cryptoChampionsAddress,
                 _buyinAmount,
                 _nextCity,
                 jobId,
                 _weatherApiKey,
-                address(this)
+                address(this),
+                msg.sender,
+                opponent
             );
+        newGame.joinGame(heroId);
         games.push(newGame);
         requestNextCity();
     }

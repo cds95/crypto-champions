@@ -3,7 +3,8 @@ export const CHAINS = {
 };
 
 export const CONTRACTS = {
-    CRYPTO_CHAMPIONS: 'CryptoChampions'
+    CRYPTO_CHAMPIONS: 'CryptoChampions',
+    WEATHER_WARS_FACTORY: 'WeatherWarsFactory'
 };
 
 export const PHASES = {
