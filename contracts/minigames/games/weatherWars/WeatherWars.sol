@@ -95,7 +95,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
     function determineWinner() external {
         require(super.getNumPlayers() == MAX_PLAYERS); // dev: Weather Wars can only have two players
         require(balances[msg.sender] > 0); // dev: Only a player who has bought in may determine a winner
-        require(_currentPhase == MinigamePhase.OPEN); // dev: Game already closed
+        require(_currentPhase == MinigamePhase.CLOSED); // dev: Game not yet over
         require(bytes(cityWeather).length != 0); // dev: City weather data has not been fetched yet
 
         uint256 heroOne = heroIds[0];
