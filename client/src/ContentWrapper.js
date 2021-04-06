@@ -4,14 +4,16 @@ import {
     useGetAffinities,
     useGetElderSpirits,
     useGetMaxElderSpirits,
-    useGetNumMintedElderSpirits
+    useGetNumMintedElderSpirits,
+    useGetUserAccount
 } from './hooks/cryptoChampionsHook';
 import { LandingPage } from './pages/LandingPage';
 import {
     setMaxElderSpiritsAction,
     setNumMintedElderSpiritsAction,
     setElderSpiritsAction,
-    setAffinitiesAction
+    setAffinitiesAction,
+    setUserAccountAction
 } from './redux/actions';
 import { Route, HashRouter as Router, Switch } from 'react-router-dom';
 import { routeDefinitions } from './routeDefinitions';
@@ -23,16 +25,19 @@ export const ContentWrapperComp = ({
     setMaxElderSpirits,
     setNumMintedElderSpirits,
     setElderSpirits,
-    setAffinities
+    setAffinities,
+    setUserAccount
 }) => {
     const { maxElderSpirits } = useGetMaxElderSpirits();
     const { numMintedElderSpirits } = useGetNumMintedElderSpirits();
     const { elderSpirits } = useGetElderSpirits(numMintedElderSpirits);
     const { affinities } = useGetAffinities(maxElderSpirits);
+    const { userAccount } = useGetUserAccount();
     useEffect(() => setMaxElderSpirits(maxElderSpirits), [maxElderSpirits]);
     useEffect(() => setNumMintedElderSpirits(numMintedElderSpirits), [numMintedElderSpirits]);
     useEffect(() => setElderSpirits(elderSpirits), [elderSpirits]);
     useEffect(() => setAffinities(affinities), [affinities]);
+    useEffect(() => setUserAccount(userAccount));
     return (
         <Router>
             <NavigationBar />
@@ -64,6 +69,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setAffinities: (affinities) => {
             dispatch(setAffinitiesAction(affinities));
+        },
+        setUserAccount: (account) => {
+            dispatch(setUserAccountAction(account));
         }
     };
 };

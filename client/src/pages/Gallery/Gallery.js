@@ -1,25 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useGetHeroes } from '../../hooks/cryptoChampionsHook';
-import { setHeroesAction, setIsLoadingHeroesAction } from '../../redux/actions';
+import { setDuelOpponentHeroAction, setHeroesAction, setIsLoadingHeroesAction } from '../../redux/actions';
 import './Gallery.css';
 import { ItemSelector } from '../../components/ItemSelector';
 import { getRaceImage } from '../../images/races';
 import { CLASSES, RACES } from '../../constants';
 import { getRaceClassLabel } from '../../AppUtils';
+import { getNonUserOwnedHeros } from '../../redux/selectors';
+import { DuelModal } from '../../components/DuelModal/DuelModal';
 
 const text = {
     title: 'Click on a hero below to challenge them to a duel!'
 };
 
-export const GalleryComp = ({ setHeroes, setIsLoadingHeroes }) => {
-    const { isLoading, heroes = [] } = useGetHeroes();
-    useEffect(() => setHeroes, [heroes]);
-    useEffect(() => setIsLoadingHeroes(isLoading), [isLoading]);
-    const onSelect = () => {};
-    const items = heroes.map((hero) => {
+export const GalleryComp = ({ setHeroes, setIsLoadingHeroes, nonUserHeroes, setDuelOpponentHero }) => {
+    const { isLoading: isLoadingHeroes, heroes = [] } = useGetHeroes();
+    useEffect(() => {
+        setIsLoadingHeroes(isLoadingHeroes);
+        setHeroes(heroes);
+    }, [isLoadingHeroes]);
+    const onSelect = (hero) => {
+        setDuelOpponentHero(hero.id);
+        setIsDuelModalOpen(true);
+    };
+    const [isDuelModalOpen, setIsDuelModalOpen] = useState(false);
+    const handleOnClose = () => setIsDuelModalOpen(false);
+    const items = nonUserHeroes.map((hero) => {
         return {
-            ...heroes,
+            ...hero,
             image: getRaceImage(hero.raceId),
             isSelectable: true,
             label: getRaceClassLabel(hero.raceId, hero.classId),
@@ -29,8 +38,15 @@ export const GalleryComp = ({ setHeroes, setIsLoadingHeroes }) => {
     return (
         <div className="gallery">
             <ItemSelector title={text.title} caption={text.caption} items={items} onSelect={onSelect} />
+            <DuelModal isOpen={isDuelModalOpen} onClose={handleOnClose} />
         </div>
     );
+};
+
+const mapStateToProps = (state) => {
+    return {
+        nonUserHeroes: getNonUserOwnedHeros(state)
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -40,8 +56,11 @@ const mapDispatchToProps = (dispatch) => {
         },
         setIsLoadingHeroes: (isLoadingHeroes) => {
             dispatch(setIsLoadingHeroesAction(isLoadingHeroes));
+        },
+        setDuelOpponentHero: (heroId) => {
+            dispatch(setDuelOpponentHeroAction(heroId));
         }
     };
 };
 
-export const Gallery = connect(null, mapDispatchToProps)(GalleryComp);
+export const Gallery = connect(mapStateToProps, mapDispatchToProps)(GalleryComp);

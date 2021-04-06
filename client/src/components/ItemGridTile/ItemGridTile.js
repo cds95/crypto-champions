@@ -4,10 +4,11 @@ import clsx from 'clsx';
 import { Typography } from '@material-ui/core';
 import emptySpace from '../../images/not-summoned.png';
 
-export const ItemGridTile = ({ itemLabel, itemImage, isSelectable, isSelected, itemSublabel }) => {
+export const ItemGridTile = ({ itemLabel, itemImage, isSelectable, isSelected, itemSublabel, isBlackText }) => {
     const classNames = clsx('item-grid-tile', {
         'item-grid-tile--selectable': isSelectable,
-        'item-grid-tile--selected': isSelected
+        'item-grid-tile--selected': isSelected,
+        'item-grid-tile--black-text': isBlackText
     });
     return (
         <div className={classNames}>

@@ -14,14 +14,14 @@
 }
 
 @media (min-width: 768px) {
-    .item-grid__item {
+    .item-grid:not(.item-grid--mini) .item-grid__item {
         width: calc(33.3333% - 50px);
         padding: 25px;
     }
 }
 
 @media (min-width: 1200px) {
-    .item-grid__item {
+    .item-grid:not(.item-grid--mini) .item-grid__item {
         width: calc(20% - 50px);
     }
 }

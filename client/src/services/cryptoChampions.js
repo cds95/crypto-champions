@@ -109,12 +109,15 @@ export const getHeroes = async () => {
     for (let i = 8; i < 8 + parseInt(numMintedHeroes); i++) {
         const { 0: heroName, 1: raceId, 2: classId } = await artifact.methods.getHeroVisuals(i).call();
         const { 0: isValid, 1: affinity } = await artifact.methods.getHeroGameData(i).call();
+        const owner = await artifact.methods.getHeroOwner(i).call();
         if (isValid) {
             heroes.push({
+                id: i,
                 heroName,
                 raceId,
                 classId,
-                affinity
+                affinity,
+                owner
             });
         }
     }

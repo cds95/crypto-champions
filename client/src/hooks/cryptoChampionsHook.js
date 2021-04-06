@@ -7,6 +7,7 @@ import {
     getNumMintedElderSpirits,
     getPhase
 } from '../services/cryptoChampions';
+import { getUserAccount } from '../services/web3';
 
 export const useGetNumMintedElderSpirits = () => {
     const [state, setState] = useState({
@@ -109,6 +110,24 @@ export const useGetAffinities = (maxElders) => {
             });
         })();
     }, [maxElders]);
+    return state;
+};
+
+export const useGetUserAccount = () => {
+    const [state, setState] = useState({
+        isLoading: false,
+        userAccount: ''
+    });
+    useEffect(() => {
+        (async () => {
+            setState({ ...state, isLoading: true });
+            const userAccount = await getUserAccount();
+            setState({
+                isLoading: false,
+                userAccount
+            });
+        })();
+    }, []);
     return state;
 };
 

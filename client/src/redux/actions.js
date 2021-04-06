@@ -157,3 +157,42 @@ export const setIsLoadingHeroesAction = (isLoading) => {
         isLoading
     };
 };
+
+export const SET_USER_ACCOUNT = 'SET_USER_ACCOUNT';
+export const setUserAccountAction = (account) => {
+    return {
+        type: SET_USER_ACCOUNT,
+        account
+    };
+};
+
+export const SET_DUEL_INITIATOR_HERO = 'SET_DUEL_INITIATOR_HERO';
+export const setDuelInitiatorHeroAction = (heroId) => {
+    return {
+        type: SET_DUEL_INITIATOR_HERO,
+        heroId
+    };
+};
+
+export const SET_DUEL_OPPONENT_HERO = 'SET_DUEL_OPPONENT_HERO';
+export const setDuelOpponentHeroAction = (heroId) => {
+    return {
+        type: SET_DUEL_OPPONENT_HERO,
+        heroId
+    };
+};
+
+export const SET_DUEL_BET_AMOUNT = 'SET_DUEL_BET_AMOUNT';
+export const setDuelBetAmountAction = (bet) => {
+    return {
+        type: SET_DUEL_BET_AMOUNT,
+        bet
+    };
+};
+
+export const RESET_DUEL = 'RESET_DUEL';
+export const resetDuelAction = () => {
+    return {
+        type: RESET_DUEL
+    };
+};

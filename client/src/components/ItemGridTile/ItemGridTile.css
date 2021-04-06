@@ -3,8 +3,11 @@
 }
 
 .item-grid-tile .item-grid-tile__label {
-    color: #fff;
     font-family: 'Pronciono';
+}
+
+.item-grid-tile:not(.item-grid-tile--black-text) .item-grid-tile__label {
+    color: #fff;
 }
 
 .item-grid-tile__image {
