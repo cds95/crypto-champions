@@ -17,7 +17,7 @@ abstract contract Minigame {
     enum MinigamePhase { OPEN, CLOSED }
 
     // The current game's phase
-    MinigamePhase internal _currentPhase;
+    MinigamePhase public currentPhase;
 
     // Map of hero ids to player struct
     mapping(uint256 => MinigamePlayer) public players;
@@ -45,14 +45,14 @@ abstract contract Minigame {
     /// @param cryptoChampionsAddress The address of the cryptoChampions contract
     constructor(string memory nameOfGame, address cryptoChampionsAddress) public {
         gameName = nameOfGame;
-        _currentPhase = MinigamePhase.OPEN;
+        currentPhase = MinigamePhase.OPEN;
         cryptoChampions = ICryptoChampions(cryptoChampionsAddress);
     }
 
     /// @notice Joins a game
     /// @param heroId The id of the joining player's hero
     function joinGame(uint256 heroId) public virtual {
-        require(_currentPhase == MinigamePhase.OPEN);
+        require(currentPhase == MinigamePhase.OPEN);
         MinigamePlayer memory player;
         player.isInGame = true;
         players[heroId] = player;
@@ -63,7 +63,7 @@ abstract contract Minigame {
     /// @notice Leaves a game
     /// @param heroId The id of the leaving player's hero
     function leaveGame(uint256 heroId) public virtual {
-        require(_currentPhase == MinigamePhase.OPEN);
+        require(currentPhase == MinigamePhase.OPEN);
         MinigamePlayer storage player = players[heroId];
         player.isInGame = false;
         numPlayers--;
@@ -71,7 +71,7 @@ abstract contract Minigame {
 
     /// @notice Starts a new game and closes it when it's finished
     function startGame() external {
-        require(_currentPhase == MinigamePhase.OPEN);
+        require(currentPhase == MinigamePhase.OPEN);
         emit GameStarted();
         play();
         setPhase(MinigamePhase.CLOSED);
@@ -81,7 +81,7 @@ abstract contract Minigame {
     /// @notice Sets the current game's phase
     /// @param phase The phase the game should be set to
     function setPhase(MinigamePhase phase) internal {
-        _currentPhase = phase;
+        currentPhase = phase;
     }
 
     /// @notice Gets the number of players in the game

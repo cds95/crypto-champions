@@ -10,7 +10,8 @@ const initialState = {
     opponentAddress: '',
     opponentHeroId: null,
     initiatorHeroId: null,
-    bet: null
+    bet: null,
+    weatherDuels: []
 };
 
 export const duel = (state = initialState, action) => {

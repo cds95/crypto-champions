@@ -25,12 +25,20 @@ export const getAllWeatherDuels = async () => {
     for (let i = 0; i < numDuels; i++) {
         const gameAddress = await artifact.methods.games(i).call();
         const weatherWar = await loadWeatherWarContract(gameAddress);
+        const {
+            0: initiator,
+            1: opponent,
+            2: initiatorHeroId,
+            3: opponentHeroId,
+            4: phase
+        } = await weatherWar.methods.getMetaInformation().call();
         const weatherWarObj = {
             address: gameAddress,
-            initiator: await weatherWar.methods.initiator().call(),
-            opponent: await weatherWar.methods.opponent().call(),
-            initiatorHeroId: await weatherWar.methods.initiatorHeroId().call(),
-            opponentHeroId: await weatherWar.methods.opponentHeroId().call()
+            initiator,
+            opponent,
+            initiatorHeroId,
+            opponentHeroId,
+            phase
         };
         duels.push(weatherWarObj);
     }

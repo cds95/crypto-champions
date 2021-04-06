@@ -1,3 +1,5 @@
+import { GAME_PHASE } from '../constants';
+
 export const getAllowedAffinities = (state) => {
     const {
         cryptoChampions: { affinities, mintedAffinities }
@@ -29,4 +31,52 @@ export const getHero = (state, heroId) => {
         heroes: { heroes }
     } = state;
     return heroes.find(({ id }) => id == heroId);
+};
+
+export const getUserInitiatedWeatherGames = (state) => {
+    const {
+        duel: { weatherDuels = [] },
+        cryptoChampions: { userAccount }
+    } = state;
+    if (!userAccount) {
+        return [];
+    }
+    return weatherDuels.filter((duel) => duel.initiator == userAccount);
+};
+
+export const getUserChallengedWeatherGames = (state) => {
+    const {
+        duel: { weatherDuels = [] },
+        cryptoChampions: { userAccount }
+    } = state;
+    if (!userAccount) {
+        return [];
+    }
+    return weatherDuels.filter((duel) => duel.opponent == userAccount);
+};
+
+export const getPastUserDuels = (state) => {
+    const {
+        duel: { weatherDuels = [] },
+        cryptoChampions: { userAccount }
+    } = state;
+    if (!userAccount) {
+        return [];
+    }
+    return weatherDuels.filter(
+        (duel) => duel.phase == GAME_PHASE.CLOSED && (duel.opponent == userAccount || duel.initiator == userAccount)
+    );
+};
+
+export const getOpenUserDuels = (state) => {
+    const {
+        duel: { weatherDuels = [] },
+        cryptoChampions: { userAccount }
+    } = state;
+    if (!userAccount) {
+        return [];
+    }
+    return weatherDuels.filter(
+        (duel) => duel.phase == GAME_PHASE.OPEN && (duel.opponent == userAccount || duel.initiator == userAccount)
+    );
 };

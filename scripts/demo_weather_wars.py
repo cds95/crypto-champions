@@ -87,6 +87,7 @@ def main():
         wwf.addWeatherMapping(weathers[i], i)
 
     wwf.createWeatherWars(10 ** 18, 10, accounts[3], 8, {'from': accounts[0]})
+    wwf.createWeatherWars(10 ** 18, 9, accounts[0], 10, {'from': accounts[4]})
 
     
     

@@ -84,8 +84,9 @@ contract WeatherWarsFactory is VRFConsumerBase {
 
     function createWeatherWars(
         uint256 _buyinAmount,
-        uint256 heroId,
-        address opponent
+        uint256 initiatorHeroId,
+        address opponent,
+        uint256 opponentHeroId
     ) external returns (bytes32) {
         WeatherWars newGame =
             new WeatherWars(
@@ -98,11 +99,9 @@ contract WeatherWarsFactory is VRFConsumerBase {
                 _nextCity,
                 jobId,
                 _weatherApiKey,
-                address(this),
-                msg.sender,
-                opponent
+                address(this)
             );
-        newGame.joinGame(heroId);
+        newGame.setPlayerInformation(msg.sender, initiatorHeroId, opponent, opponentHeroId);
         games.push(newGame);
         requestNextCity();
     }
@@ -115,5 +114,9 @@ contract WeatherWarsFactory is VRFConsumerBase {
     function fulfillRandomness(bytes32 requestId, uint256 randomNum) internal override {
         uint256 cityIdx = randomNum % MAX_CITIES;
         _nextCity = _openWeatherCityIds[cityIdx];
+    }
+
+    function getNumGames() external returns (uint256) {
+        return games.length;
     }
 }

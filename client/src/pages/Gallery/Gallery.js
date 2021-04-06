@@ -11,14 +11,16 @@ import './Gallery.css';
 import { ItemSelector } from '../../components/ItemSelector';
 import { getRaceImage } from '../../images/races';
 import { getRaceClassLabel } from '../../AppUtils';
-import { getNonUserOwnedHeros } from '../../redux/selectors';
+import { getNonUserOwnedHeros, getOpenUserDuels, getPastUserDuels } from '../../redux/selectors';
 import { DuelModal } from '../../components/DuelModal/DuelModal';
 import { Tab, Tabs } from '@material-ui/core';
+import { WeatherDuels } from '../../components/WeatherDuels/WeatherDuels';
 
 const text = {
     title: 'Click on a hero below to challenge them to a duel!',
     challengeTab: 'Challenge',
-    myDuels: 'My Duels'
+    openDuels: 'Open Duels',
+    pastDuels: 'Past Duels'
 };
 
 const galleryTabs = {
@@ -27,7 +29,15 @@ const galleryTabs = {
     OPEN_DUELS: 2
 };
 
-export const GalleryComp = ({ setHeroes, setIsLoadingHeroes, nonUserHeroes, setDuelOpponentHero, setWeatherDuels }) => {
+export const GalleryComp = ({
+    setHeroes,
+    setIsLoadingHeroes,
+    nonUserHeroes,
+    setDuelOpponentHero,
+    setWeatherDuels,
+    openDuels,
+    closedDuels
+}) => {
     const { isLoading: isLoadingHeroes, heroes = [] } = useGetHeroes();
     const { isLoading: isLoadingDuels, weatherDuels } = useGetWeatherDuels();
     useEffect(() => {
@@ -66,8 +76,12 @@ export const GalleryComp = ({ setHeroes, setIsLoadingHeroes, nonUserHeroes, setD
                 </React.Fragment>
             );
             break;
-        case galleryTabs.FINISHED_DUELS:
         case galleryTabs.OPEN_DUELS:
+            content = <WeatherDuels duels={openDuels} />;
+            break;
+        case galleryTabs.FINISHED_DUELS:
+            content = <WeatherDuels duels={closedDuels} />;
+            break;
         default:
             break;
     }
@@ -75,7 +89,8 @@ export const GalleryComp = ({ setHeroes, setIsLoadingHeroes, nonUserHeroes, setD
         <div className="gallery">
             <Tabs className="gallery__tabs" value={currentTab} onChange={changeTabs}>
                 <Tab className="gallery__tab-item" label={text.challengeTab} />
-                <Tab className="gallery__tab-item" label={text.myDuels} />
+                <Tab className="gallery__tab-item" label={text.openDuels} />
+                <Tab className="gallery__tab-item" label={text.pastDuels} />
             </Tabs>
             <div className="gallery-content">{content}</div>
         </div>
@@ -84,7 +99,9 @@ export const GalleryComp = ({ setHeroes, setIsLoadingHeroes, nonUserHeroes, setD
 
 const mapStateToProps = (state) => {
     return {
-        nonUserHeroes: getNonUserOwnedHeros(state)
+        nonUserHeroes: getNonUserOwnedHeros(state),
+        openUserDuels: getOpenUserDuels(state),
+        closedUserDuels: getPastUserDuels(state)
     };
 };
 

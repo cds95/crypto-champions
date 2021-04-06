@@ -44,6 +44,10 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
 
     uint256 public opponentHeroId;
 
+    address public winner;
+
+    mapping(address => uint256) public playerHero;
+
     constructor(
         address oracle,
         address linkTokenAddress,
@@ -75,8 +79,8 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
     ) external {
         initiator = duelInitiator;
         opponent = duelOpponent;
-        initiatorHeroId = duelInitiatorHeroId;
-        opponentHeroId = duelOpponentHeroId;
+        playerHero[initiator] = duelInitiatorHeroId;
+        playerHero[opponent] = duelOpponentHeroId;
     }
 
     function play() internal override {
@@ -110,7 +114,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
 
     function leaveGame(uint256 heroId) public override {
         require(msg.sender == initiator || msg.sender == opponent); // dev: Address not part of the game
-        require(_currentPhase == MinigamePhase.OPEN); // dev: Game already closed
+        require(currentPhase == MinigamePhase.OPEN); // dev: Game already closed
         require(bytes(cityWeather).length == 0); // dev: City weather data already fetched
 
         super.leaveGame(heroId);
@@ -122,7 +126,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
     function determineWinner() external {
         require(super.getNumPlayers() == MAX_PLAYERS); // dev: Weather Wars can only have two players
         require(balances[msg.sender] > 0); // dev: Only a player who has bought in may determine a winner
-        require(_currentPhase == MinigamePhase.CLOSED); // dev: Game not yet over
+        require(currentPhase == MinigamePhase.CLOSED); // dev: Game not yet over
         require(bytes(cityWeather).length != 0); // dev: City weather data has not been fetched yet
 
         uint256 heroOne = heroIds[0];
@@ -144,22 +148,23 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         }
 
         // Handle winner and loser
-        uint256 winner;
-        uint256 loser;
+        uint256 winnerHeroId;
+        uint256 loserHeroId;
         if (heroOneScore < heroTwoScore) {
-            winner = heroTwo;
-            loser = heroOne;
+            winnerHeroId = heroTwo;
+            loserHeroId = heroOne;
         } else if (heroOneScore > heroTwoScore) {
-            winner = heroOne;
-            loser = heroTwo;
+            winnerHeroId = heroOne;
+            loserHeroId = heroTwo;
         }
-        address winnerAddress = cryptoChampions.getHeroOwner(winner);
-        address loserAddress = cryptoChampions.getHeroOwner(loser);
+        address winnerAddress = cryptoChampions.getHeroOwner(winnerHeroId);
+        address loserAddress = cryptoChampions.getHeroOwner(loserHeroId);
         uint256 winnerBalance = balances[winnerAddress];
         uint256 loserBalance = balances[loserAddress];
         balances[winnerAddress] = 0;
         balances[loserAddress] = 0;
         cryptoChampions.transferInGameTokens(winnerAddress, winnerBalance + loserBalance);
+        winner = winnerAddress;
         setPhase(MinigamePhase.CLOSED);
     }
 
@@ -248,5 +253,20 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         bytes calldata data
     ) external override returns (bytes4) {
         return this.onERC1155BatchReceived.selector;
+    }
+
+    function getMetaInformation()
+        external
+        view
+        returns (
+            address,
+            address,
+            uint256,
+            uint256,
+            MinigamePhase,
+            address
+        )
+    {
+        return (initiator, opponent, playerHero[initiator], playerHero[opponent], currentPhase, winner);
     }
 }

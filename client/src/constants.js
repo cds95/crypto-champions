@@ -19,6 +19,11 @@ export const MINT_ELDER_SPIRIT_STEPS = {
     MINT: 3
 };
 
+export const GAME_PHASE = {
+    OPEN: '0',
+    CLOSED: '1'
+};
+
 export const RACES = [
     {
         id: 0,
