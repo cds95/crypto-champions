@@ -55,6 +55,24 @@ export const getUserChallengedWeatherGames = (state) => {
     return weatherDuels.filter((duel) => duel.opponent == userAccount);
 };
 
+export const getHerosUserCanChallenge = (state) => {
+    const {
+        duel: { weatherDuels = [] },
+        cryptoChampions: { userAccount },
+        heroes: { heroes }
+    } = state;
+    if (!userAccount) {
+        return [];
+    }
+    return heroes.filter((hero) => {
+        const duel = weatherDuels.find(
+            ({ phase, initiatorHeroId, opponentHeroId }) =>
+                phase == GAME_PHASE.OPEN && initiatorHeroId != hero.id && opponentHeroId != hero.id
+        );
+        return !duel;
+    });
+};
+
 export const getPastUserDuels = (state) => {
     const {
         duel: { weatherDuels = [] },

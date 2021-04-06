@@ -22,7 +22,8 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
     const isInitiator = userAccount == initiator;
     const displayedHero = isInitiator ? opponentHero : initiatorHero;
     const itemImage = getRaceImage(displayedHero.raceId);
-    const itemLabel = getRaceClassLabel(displayedHero.raceId, opponentHero.classId);
+    const itemLabel = displayedHero.heroName;
+    const itemSublabel = getRaceClassLabel(displayedHero.raceId, opponentHero.classId) + ` - ${displayedHero.affinity}`;
     const [isAcceptModalOpen, setIsSetAcceptModalOpen] = useState(false);
     let actions;
     if (winner) {
@@ -80,7 +81,7 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
     }
     return (
         <div className="weather-duel-tile">
-            <ItemGridTile itemImage={itemImage} itemLabel={itemLabel} />
+            <ItemGridTile itemImage={itemImage} itemLabel={itemLabel} itemSublabel={itemSublabel} />
             <div className="weather-duel-tile__actions">
                 <div>{actions}</div>
                 <div>

@@ -11,7 +11,12 @@ import './Gallery.css';
 import { ItemSelector } from '../../components/ItemSelector';
 import { getRaceImage } from '../../images/races';
 import { getRaceClassLabel } from '../../AppUtils';
-import { getNonUserOwnedHeros, getOpenUserDuels, getPastUserDuels } from '../../redux/selectors';
+import {
+    getHerosUserCanChallenge,
+    getNonUserOwnedHeros,
+    getOpenUserDuels,
+    getPastUserDuels
+} from '../../redux/selectors';
 import { DuelModal } from '../../components/DuelModal/DuelModal';
 import { Tab, Tabs } from '@material-ui/core';
 import { WeatherDuels } from '../../components/WeatherDuels/WeatherDuels';
@@ -32,7 +37,7 @@ const galleryTabs = {
 export const GalleryComp = ({
     setHeroes,
     setIsLoadingHeroes,
-    nonUserHeroes,
+    heroesUserCanChallenge,
     setDuelOpponentHero,
     setWeatherDuels,
     openUserDuels,
@@ -57,13 +62,13 @@ export const GalleryComp = ({
     const changeTabs = (event, newTab) => {
         setCurrentTab(newTab);
     };
-    const items = nonUserHeroes.map((hero) => {
+    const items = heroesUserCanChallenge.map((hero) => {
         return {
             ...hero,
             image: getRaceImage(hero.raceId),
             isSelectable: true,
-            label: getRaceClassLabel(hero.raceId, hero.classId),
-            subLabel: hero.affinity
+            label: hero.heroName,
+            subLabel: getRaceClassLabel(hero.raceId, hero.classId) + ` - ${hero.affinity}`
         };
     });
     let content;
@@ -99,7 +104,7 @@ export const GalleryComp = ({
 
 const mapStateToProps = (state) => {
     return {
-        nonUserHeroes: getNonUserOwnedHeros(state),
+        heroesUserCanChallenge: getHerosUserCanChallenge(state),
         openUserDuels: getOpenUserDuels(state),
         closedUserDuels: getPastUserDuels(state)
     };
