@@ -1,0 +1,2513 @@
+{
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [],
+      "name": "PriceWarCreated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "cryptoChampionsContractAddress",
+          "type": "address"
+        }
+      ],
+      "name": "createPriceWar",
+      "outputs": [
+        {
+          "internalType": "contract PriceWars",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "games",
+      "outputs": [
+        {
+          "internalType": "contract PriceWars",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "allSourcePaths": {
+    "26": "contracts/chainlink_contracts/AggregatorV3Interface.sol",
+    "31": "contracts/minigames/Minigame.sol",
+    "32": "contracts/minigames/games/priceWars/PriceWars.sol",
+    "33": "contracts/minigames/games/priceWars/PriceWarsFactory.sol",
+    "37": "interfaces/ICryptoChampions.sol",
+    "4": "/Users/cds95/.brownie/packages/OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SignedSafeMath.sol"
+  },
+  "ast": {
+    "absolutePath": "contracts/minigames/games/priceWars/PriceWarsFactory.sol",
+    "exportedSymbols": {
+      "PriceWarsFactory": [
+        5078
+      ]
+    },
+    "id": 5079,
+    "license": "UNLICENSED",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5042,
+        "literals": [
+          "solidity",
+          "^",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "39:23:33"
+      },
+      {
+        "absolutePath": "contracts/minigames/games/priceWars/PriceWars.sol",
+        "file": "./PriceWars.sol",
+        "id": 5043,
+        "nodeType": "ImportDirective",
+        "scope": 5079,
+        "sourceUnit": 5041,
+        "src": "64:25:33",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [
+          5040
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 5044,
+          "nodeType": "StructuredDocumentation",
+          "src": "91:141:33",
+          "text": "@title PriceWarsFactory\n @author cds95\n @notice This is the price wars factory contract to manage creating new price war contracts"
+        },
+        "fullyImplemented": true,
+        "id": 5078,
+        "linearizedBaseContracts": [
+          5078
+        ],
+        "name": "PriceWarsFactory",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "functionSelector": "117a5b90",
+            "id": 5047,
+            "mutability": "mutable",
+            "name": "games",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 5078,
+            "src": "323:24:33",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_contract$_PriceWars_$5040_$dyn_storage",
+              "typeString": "contract PriceWars[]"
+            },
+            "typeName": {
+              "baseType": {
+                "contractScope": null,
+                "id": 5045,
+                "name": "PriceWars",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 5040,
+                "src": "323:9:33",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_contract$_PriceWars_$5040",
+                  "typeString": "contract PriceWars"
+                }
+              },
+              "id": 5046,
+              "length": null,
+              "nodeType": "ArrayTypeName",
+              "src": "323:11:33",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_contract$_PriceWars_$5040_$dyn_storage_ptr",
+                "typeString": "contract PriceWars[]"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 5048,
+              "nodeType": "StructuredDocumentation",
+              "src": "354:62:33",
+              "text": "@notice Triggered when a new price war contract is created"
+            },
+            "id": 5050,
+            "name": "PriceWarCreated",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 5049,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "442:2:33"
+            },
+            "src": "421:24:33"
+          },
+          {
+            "body": {
+              "id": 5076,
+              "nodeType": "Block",
+              "src": "689:214:33",
+              "statements": [
+                {
+                  "assignments": [
+                    5059
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 5059,
+                      "mutability": "mutable",
+                      "name": "game",
+                      "nodeType": "VariableDeclaration",
+                      "overrides": null,
+                      "scope": 5076,
+                      "src": "755:14:33",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_PriceWars_$5040",
+                        "typeString": "contract PriceWars"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 5058,
+                        "name": "PriceWars",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 5040,
+                        "src": "755:9:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PriceWars_$5040",
+                          "typeString": "contract PriceWars"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 5064,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 5062,
+                        "name": "cryptoChampionsContractAddress",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5053,
+                        "src": "786:30:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 5061,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "NewExpression",
+                      "src": "772:13:33",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_creation_nonpayable$_t_address_$returns$_t_contract$_PriceWars_$5040_$",
+                        "typeString": "function (address) returns (contract PriceWars)"
+                      },
+                      "typeName": {
+                        "contractScope": null,
+                        "id": 5060,
+                        "name": "PriceWars",
+                        "nodeType": "UserDefinedTypeName",
+                        "referencedDeclaration": 5040,
+                        "src": "776:9:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PriceWars_$5040",
+                          "typeString": "contract PriceWars"
+                        }
+                      }
+                    },
+                    "id": 5063,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "772:45:33",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PriceWars_$5040",
+                      "typeString": "contract PriceWars"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "755:62:33"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 5068,
+                        "name": "game",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5059,
+                        "src": "838:4:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_PriceWars_$5040",
+                          "typeString": "contract PriceWars"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_contract$_PriceWars_$5040",
+                          "typeString": "contract PriceWars"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 5065,
+                        "name": "games",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 5047,
+                        "src": "827:5:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_array$_t_contract$_PriceWars_$5040_$dyn_storage",
+                          "typeString": "contract PriceWars[] storage ref"
+                        }
+                      },
+                      "id": 5067,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "push",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "827:10:33",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_contract$_PriceWars_$5040_$returns$__$",
+                        "typeString": "function (contract PriceWars)"
+                      }
+                    },
+                    "id": 5069,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "827:16:33",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5070,
+                  "nodeType": "ExpressionStatement",
+                  "src": "827:16:33"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 5071,
+                      "name": "PriceWarCreated",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 5050,
+                      "src": "858:15:33",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 5072,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "858:17:33",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 5073,
+                  "nodeType": "EmitStatement",
+                  "src": "853:22:33"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 5074,
+                    "name": "game",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 5059,
+                    "src": "892:4:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PriceWars_$5040",
+                      "typeString": "contract PriceWars"
+                    }
+                  },
+                  "functionReturnParameters": 5057,
+                  "id": 5075,
+                  "nodeType": "Return",
+                  "src": "885:11:33"
+                }
+              ]
+            },
+            "documentation": {
+              "id": 5051,
+              "nodeType": "StructuredDocumentation",
+              "src": "451:140:33",
+              "text": "@notice Creates a new price war game contract\n @param cryptoChampionsContractAddress The address of the crypto champions contract"
+            },
+            "functionSelector": "e5afecca",
+            "id": 5077,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createPriceWar",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 5054,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5053,
+                  "mutability": "mutable",
+                  "name": "cryptoChampionsContractAddress",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 5077,
+                  "src": "620:38:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5052,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "620:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "619:40:33"
+            },
+            "returnParameters": {
+              "id": 5057,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5056,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 5077,
+                  "src": "678:9:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_PriceWars_$5040",
+                    "typeString": "contract PriceWars"
+                  },
+                  "typeName": {
+                    "contractScope": null,
+                    "id": 5055,
+                    "name": "PriceWars",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 5040,
+                    "src": "678:9:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_PriceWars_$5040",
+                      "typeString": "contract PriceWars"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "677:11:33"
+            },
+            "scope": 5078,
+            "src": "596:307:33",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 5079,
+        "src": "232:673:33"
+      }
+    ],
+    "src": "39:867:33"
+  },
+  "bytecode": "608060405234801561001057600080fd5b50610e08806100206000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c8063117a5b901461003b578063e5afecca14610074575b600080fd5b6100586004803603602081101561005157600080fd5b503561009a565b604080516001600160a01b039092168252519081900360200190f35b6100586004803603602081101561008a57600080fd5b50356001600160a01b03166100c1565b600081815481106100a757fe5b6000918252602090912001546001600160a01b0316905081565b600080826040516100d190610176565b6001600160a01b03909116815260405190819003602001906000f0801580156100fe573d6000803e3d6000fd5b50600080546001810182558180527f290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e5630180546001600160a01b0319166001600160a01b0384161790556040519192507f3cf6f02227a36289115eab1930d6f44420e1163fd17dc6c14c8769e159133c3291a192915050565b610c4f806101848339019056fe608060405234801561001057600080fd5b50604051610c4f380380610c4f8339818101604052602081101561003357600080fd5b505160408051808201909152600a8082526970726963652d7761727360b01b6020830190815283916100679160049161009a565b506000805460ff19169055600580546001600160a01b0319166001600160a01b03929092169190911790555061012d9050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106100db57805160ff1916838001178555610108565b82800160010185558215610108579182015b828111156101085782518255916020019190600101906100ed565b50610114929150610118565b5090565b5b808211156101145760008155600101610119565b610b138061013c6000396000f3fe608060405234801561001057600080fd5b50600436106100935760003560e01c8063614a4e4411610066578063614a4e441461017257806397b2f5561461018f578063d65ab5f214610197578063efaa55a01461019f578063f71d96cb146101bc57610093565b8063053e4fb6146100985780633feef58a146100bc578063473bc223146100db57806355c9e92614610158575b600080fd5b6100a06101ed565b604080516001600160a01b039092168252519081900360200190f35b6100d9600480360360208110156100d257600080fd5b50356101fc565b005b6100e361023a565b6040805160208082528351818301528351919283929083019185019080838360005b8381101561011d578181015183820152602001610105565b50505050905090810190601f16801561014a5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6101606102c8565b60408051918252519081900360200190f35b6101606004803603602081101561018857600080fd5b50356102ce565b6101606102ec565b6100d96102f2565b6100d9600480360360208110156101b557600080fd5b5035610374565b6101d9600480360360208110156101d257600080fd5b50356103f8565b604080519115158252519081900360200190f35b6005546001600160a01b031681565b6000805460ff16600181111561020e57fe5b1461021857600080fd5b6000908152600160205260409020805460ff1916905560038054600019019055565b6004805460408051602060026001851615610100026000190190941693909304601f810184900484028201840190925281815292918301828280156102c05780601f10610295576101008083540402835291602001916102c0565b820191906000526020600020905b8154815290600101906020018083116102a357829003601f168201915b505050505081565b60035490565b600281815481106102db57fe5b600091825260209091200154905081565b60035481565b6000805460ff16600181111561030457fe5b1461030e57600080fd5b6040517f762f260439bb4be3ef6e4dc2786e2e7bd187d3d80b79057d7a424fe98563e33590600090a161033f61040d565b61034960016106f0565b6040517f1084d47e99647565312e58bba004b0fc3088c683fa22f3925f1cf5fb0955402990600090a1565b6000805460ff16600181111561038657fe5b1461039057600080fd5b610398610a5f565b600180825260008381526020829052604081209251835460ff19169015151790925560028054808301825592527f405787fa12a823e0f2b7631cc41b3ba8828b3321ca811111fa75cd3aa3bb5ace90910191909155600380549091019055565b60016020526000908152604090205460ff1681565b6060600060015b600560009054906101000a90046001600160a01b03166001600160a01b0316634c52b2a96040518163ffffffff1660e01b815260040160206040518083038186803b15801561046257600080fd5b505afa158015610476573d6000803e3d6000fd5b505050506040513d602081101561048c57600080fd5b5051811161062757600554604080516310e17b9560e11b81526004810184905290516060926000926001600160a01b03909116916321c2f72a916024808201928692909190829003018186803b1580156104e557600080fd5b505afa1580156104f9573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f1916820160405260a081101561052257600080fd5b81516020830151604080850151606086018051925194969395919493918201928464010000000082111561055557600080fd5b90830190602082018581111561056a57600080fd5b825164010000000081118282018810171561058457600080fd5b82525081516020918201929091019080838360005b838110156105b1578181015183820152602001610599565b50505050905090810190601f1680156105de5780820380516001836020036101000a031916815260200191505b50604052602001519297509195506000945061060293508592508691506107109050565b905084811380610610575084155b1561061c578094508295505b505050600101610414565b506005546040516313c62a0160e31b81526020600482018181528551602484015285516001600160a01b0390941693639e31500893879383926044909201919085019080838360005b83811015610688578181015183820152602001610670565b50505050905090810190601f1680156106b55780820380516001836020036101000a031916815260200191505b5092505050600060405180830381600087803b1580156106d457600080fd5b505af11580156106e8573d6000803e3d6000fd5b505050505050565b6000805482919060ff19166001838181111561070857fe5b021790555050565b60055460405163136a68ad60e11b815260206004820181815284516024840152845160009485946001600160a01b03909116936326d4d15a93889390928392604490910191908501908083838b5b8381101561077657818101518382015260200161075e565b50505050905090810190601f1680156107a35780820380516001836020036101000a031916815260200191505b509250505060206040518083038186803b1580156107c057600080fd5b505afa1580156107d4573d6000803e3d6000fd5b505050506040513d60208110156107ea57600080fd5b505160408051633fabe5a360e21b815290519192506000916001600160a01b0384169163feaf968c9160048083019260a0929190829003018186803b15801561083257600080fd5b505afa158015610846573d6000803e3d6000fd5b505050506040513d60a081101561085c57600080fd5b50602001519050600061086f8287610892565b9050610886866108808360646108fe565b906109a7565b93505050505b92915050565b60008183038183128015906108a75750838113155b806108bc57506000831280156108bc57508381135b6108f75760405162461bcd60e51b8152600401808060200182810382526024815260200180610aba6024913960400191505060405180910390fd5b9392505050565b60008261090d5750600061088c565b826000191480156109215750600160ff1b82145b1561095d5760405162461bcd60e51b8152600401808060200182810382526027815260200180610a936027913960400191505060405180910390fd5b8282028284828161096a57fe5b05146108f75760405162461bcd60e51b8152600401808060200182810382526027815260200180610a936027913960400191505060405180910390fd5b6000816109fb576040805162461bcd60e51b815260206004820181905260248201527f5369676e6564536166654d6174683a206469766973696f6e206279207a65726f604482015290519081900360640190fd5b81600019148015610a0f5750600160ff1b83145b15610a4b5760405162461bcd60e51b8152600401808060200182810382526021815260200180610a726021913960400191505060405180910390fd5b6000828481610a5657fe5b05949350505050565b6040805160208101909152600081529056fe5369676e6564536166654d6174683a206469766973696f6e206f766572666c6f775369676e6564536166654d6174683a206d756c7469706c69636174696f6e206f766572666c6f775369676e6564536166654d6174683a207375627472616374696f6e206f766572666c6f77a2646970667358221220efd08a98f4692e2833f7c52af92d6a1e59774f74507e4d3acb5bcc5aab60136864736f6c634300060c0033a2646970667358221220378ad6dac649d6fe71a4beeaae76edf41268d6035a5767915f132f126a55a6c464736f6c634300060c0033",
+  "bytecodeSha1": "d4dc580b1338f135dbb2654785ff9cba446b7406",
+  "compiler": {
+    "evm_version": "istanbul",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "version": "0.6.12+commit.27d51765"
+  },
+  "contractName": "PriceWarsFactory",
+  "coverageMap": {
+    "branches": {
+      "26": {},
+      "31": {},
+      "32": {},
+      "33": {},
+      "37": {},
+      "4": {}
+    },
+    "statements": {
+      "26": {},
+      "31": {},
+      "32": {},
+      "33": {
+        "PriceWarsFactory.createPriceWar": {
+          "0": [
+            827,
+            843
+          ],
+          "1": [
+            853,
+            875
+          ],
+          "2": [
+            885,
+            896
+          ]
+        }
+      },
+      "37": {},
+      "4": {}
+    }
+  },
+  "dependencies": [
+    "AggregatorV3Interface",
+    "ICryptoChampions",
+    "Minigame",
+    "PriceWars",
+    "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath"
+  ],
+  "deployedBytecode": "608060405234801561001057600080fd5b50600436106100365760003560e01c8063117a5b901461003b578063e5afecca14610074575b600080fd5b6100586004803603602081101561005157600080fd5b503561009a565b604080516001600160a01b039092168252519081900360200190f35b6100586004803603602081101561008a57600080fd5b50356001600160a01b03166100c1565b600081815481106100a757fe5b6000918252602090912001546001600160a01b0316905081565b600080826040516100d190610176565b6001600160a01b03909116815260405190819003602001906000f0801580156100fe573d6000803e3d6000fd5b50600080546001810182558180527f290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e5630180546001600160a01b0319166001600160a01b0384161790556040519192507f3cf6f02227a36289115eab1930d6f44420e1163fd17dc6c14c8769e159133c3291a192915050565b610c4f806101848339019056fe608060405234801561001057600080fd5b50604051610c4f380380610c4f8339818101604052602081101561003357600080fd5b505160408051808201909152600a8082526970726963652d7761727360b01b6020830190815283916100679160049161009a565b506000805460ff19169055600580546001600160a01b0319166001600160a01b03929092169190911790555061012d9050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106100db57805160ff1916838001178555610108565b82800160010185558215610108579182015b828111156101085782518255916020019190600101906100ed565b50610114929150610118565b5090565b5b808211156101145760008155600101610119565b610b138061013c6000396000f3fe608060405234801561001057600080fd5b50600436106100935760003560e01c8063614a4e4411610066578063614a4e441461017257806397b2f5561461018f578063d65ab5f214610197578063efaa55a01461019f578063f71d96cb146101bc57610093565b8063053e4fb6146100985780633feef58a146100bc578063473bc223146100db57806355c9e92614610158575b600080fd5b6100a06101ed565b604080516001600160a01b039092168252519081900360200190f35b6100d9600480360360208110156100d257600080fd5b50356101fc565b005b6100e361023a565b6040805160208082528351818301528351919283929083019185019080838360005b8381101561011d578181015183820152602001610105565b50505050905090810190601f16801561014a5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6101606102c8565b60408051918252519081900360200190f35b6101606004803603602081101561018857600080fd5b50356102ce565b6101606102ec565b6100d96102f2565b6100d9600480360360208110156101b557600080fd5b5035610374565b6101d9600480360360208110156101d257600080fd5b50356103f8565b604080519115158252519081900360200190f35b6005546001600160a01b031681565b6000805460ff16600181111561020e57fe5b1461021857600080fd5b6000908152600160205260409020805460ff1916905560038054600019019055565b6004805460408051602060026001851615610100026000190190941693909304601f810184900484028201840190925281815292918301828280156102c05780601f10610295576101008083540402835291602001916102c0565b820191906000526020600020905b8154815290600101906020018083116102a357829003601f168201915b505050505081565b60035490565b600281815481106102db57fe5b600091825260209091200154905081565b60035481565b6000805460ff16600181111561030457fe5b1461030e57600080fd5b6040517f762f260439bb4be3ef6e4dc2786e2e7bd187d3d80b79057d7a424fe98563e33590600090a161033f61040d565b61034960016106f0565b6040517f1084d47e99647565312e58bba004b0fc3088c683fa22f3925f1cf5fb0955402990600090a1565b6000805460ff16600181111561038657fe5b1461039057600080fd5b610398610a5f565b600180825260008381526020829052604081209251835460ff19169015151790925560028054808301825592527f405787fa12a823e0f2b7631cc41b3ba8828b3321ca811111fa75cd3aa3bb5ace90910191909155600380549091019055565b60016020526000908152604090205460ff1681565b6060600060015b600560009054906101000a90046001600160a01b03166001600160a01b0316634c52b2a96040518163ffffffff1660e01b815260040160206040518083038186803b15801561046257600080fd5b505afa158015610476573d6000803e3d6000fd5b505050506040513d602081101561048c57600080fd5b5051811161062757600554604080516310e17b9560e11b81526004810184905290516060926000926001600160a01b03909116916321c2f72a916024808201928692909190829003018186803b1580156104e557600080fd5b505afa1580156104f9573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f1916820160405260a081101561052257600080fd5b81516020830151604080850151606086018051925194969395919493918201928464010000000082111561055557600080fd5b90830190602082018581111561056a57600080fd5b825164010000000081118282018810171561058457600080fd5b82525081516020918201929091019080838360005b838110156105b1578181015183820152602001610599565b50505050905090810190601f1680156105de5780820380516001836020036101000a031916815260200191505b50604052602001519297509195506000945061060293508592508691506107109050565b905084811380610610575084155b1561061c578094508295505b505050600101610414565b506005546040516313c62a0160e31b81526020600482018181528551602484015285516001600160a01b0390941693639e31500893879383926044909201919085019080838360005b83811015610688578181015183820152602001610670565b50505050905090810190601f1680156106b55780820380516001836020036101000a031916815260200191505b5092505050600060405180830381600087803b1580156106d457600080fd5b505af11580156106e8573d6000803e3d6000fd5b505050505050565b6000805482919060ff19166001838181111561070857fe5b021790555050565b60055460405163136a68ad60e11b815260206004820181815284516024840152845160009485946001600160a01b03909116936326d4d15a93889390928392604490910191908501908083838b5b8381101561077657818101518382015260200161075e565b50505050905090810190601f1680156107a35780820380516001836020036101000a031916815260200191505b509250505060206040518083038186803b1580156107c057600080fd5b505afa1580156107d4573d6000803e3d6000fd5b505050506040513d60208110156107ea57600080fd5b505160408051633fabe5a360e21b815290519192506000916001600160a01b0384169163feaf968c9160048083019260a0929190829003018186803b15801561083257600080fd5b505afa158015610846573d6000803e3d6000fd5b505050506040513d60a081101561085c57600080fd5b50602001519050600061086f8287610892565b9050610886866108808360646108fe565b906109a7565b93505050505b92915050565b60008183038183128015906108a75750838113155b806108bc57506000831280156108bc57508381135b6108f75760405162461bcd60e51b8152600401808060200182810382526024815260200180610aba6024913960400191505060405180910390fd5b9392505050565b60008261090d5750600061088c565b826000191480156109215750600160ff1b82145b1561095d5760405162461bcd60e51b8152600401808060200182810382526027815260200180610a936027913960400191505060405180910390fd5b8282028284828161096a57fe5b05146108f75760405162461bcd60e51b8152600401808060200182810382526027815260200180610a936027913960400191505060405180910390fd5b6000816109fb576040805162461bcd60e51b815260206004820181905260248201527f5369676e6564536166654d6174683a206469766973696f6e206279207a65726f604482015290519081900360640190fd5b81600019148015610a0f5750600160ff1b83145b15610a4b5760405162461bcd60e51b8152600401808060200182810382526021815260200180610a726021913960400191505060405180910390fd5b6000828481610a5657fe5b05949350505050565b6040805160208101909152600081529056fe5369676e6564536166654d6174683a206469766973696f6e206f766572666c6f775369676e6564536166654d6174683a206d756c7469706c69636174696f6e206f766572666c6f775369676e6564536166654d6174683a207375627472616374696f6e206f766572666c6f77a2646970667358221220efd08a98f4692e2833f7c52af92d6a1e59774f74507e4d3acb5bcc5aab60136864736f6c634300060c0033a2646970667358221220378ad6dac649d6fe71a4beeaae76edf41268d6035a5767915f132f126a55a6c464736f6c634300060c0033",
+  "deployedSourceMap": "232:673:33:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;323:24;;;;;;;;;;;;;;;;-1:-1:-1;323:24:33;;:::i;:::-;;;;-1:-1:-1;;;;;323:24:33;;;;;;;;;;;;;;596:307;;;;;;;;;;;;;;;;-1:-1:-1;596:307:33;-1:-1:-1;;;;;596:307:33;;:::i;323:24::-;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;323:24:33;;-1:-1:-1;323:24:33;:::o;596:307::-;678:9;755:14;786:30;772:45;;;;;:::i;:::-;-1:-1:-1;;;;;772:45:33;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;827:5:33;:16;;;;;;;;;;;;;;-1:-1:-1;;;;;;827:16:33;-1:-1:-1;;;;;827:16:33;;;;;858:17;;827:16;;-1:-1:-1;858:17:33;;;892:4;596:307;-1:-1:-1;;596:307:33:o;-1:-1:-1:-;;;;;;;;:::o",
+  "language": "Solidity",
+  "natspec": {
+    "author": "cds95",
+    "events": {
+      "PriceWarCreated()": {
+        "notice": "Triggered when a new price war contract is created"
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "createPriceWar(address)": {
+        "notice": "Creates a new price war game contract",
+        "params": {
+          "cryptoChampionsContractAddress": "The address of the crypto champions contract"
+        }
+      }
+    },
+    "notice": "This is the price wars factory contract to manage creating new price war contracts",
+    "title": "PriceWarsFactory",
+    "version": 1
+  },
+  "offset": [
+    232,
+    905
+  ],
+  "opcodes": "PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2 0x36 JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x117A5B90 EQ PUSH2 0x3B JUMPI DUP1 PUSH4 0xE5AFECCA EQ PUSH2 0x74 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x58 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x51 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH2 0x9A JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB SWAP1 SWAP3 AND DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST PUSH2 0x58 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x8A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB AND PUSH2 0xC1 JUMP JUMPDEST PUSH1 0x0 DUP2 DUP2 SLOAD DUP2 LT PUSH2 0xA7 JUMPI INVALID JUMPDEST PUSH1 0x0 SWAP2 DUP3 MSTORE PUSH1 0x20 SWAP1 SWAP2 KECCAK256 ADD SLOAD PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB AND SWAP1 POP DUP2 JUMP JUMPDEST PUSH1 0x0 DUP1 DUP3 PUSH1 0x40 MLOAD PUSH2 0xD1 SWAP1 PUSH2 0x176 JUMP JUMPDEST PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB SWAP1 SWAP2 AND DUP2 MSTORE PUSH1 0x40 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 PUSH1 0x0 CREATE DUP1 ISZERO DUP1 ISZERO PUSH2 0xFE JUMPI RETURNDATASIZE PUSH1 0x0 DUP1 RETURNDATACOPY RETURNDATASIZE PUSH1 0x0 REVERT JUMPDEST POP PUSH1 0x0 DUP1 SLOAD PUSH1 0x1 DUP2 ADD DUP3 SSTORE DUP2 DUP1 MSTORE PUSH32 0x290DECD9548B62A8D60345A988386FC84BA6BC95484008F6362F93160EF3E563 ADD DUP1 SLOAD PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB NOT AND PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB DUP5 AND OR SWAP1 SSTORE PUSH1 0x40 MLOAD SWAP2 SWAP3 POP PUSH32 0x3CF6F02227A36289115EAB1930D6F44420E1163FD17DC6C14C8769E159133C32 SWAP2 LOG1 SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH2 0xC4F DUP1 PUSH2 0x184 DUP4 CODECOPY ADD SWAP1 JUMP INVALID PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x40 MLOAD PUSH2 0xC4F CODESIZE SUB DUP1 PUSH2 0xC4F DUP4 CODECOPY DUP2 DUP2 ADD PUSH1 0x40 MSTORE PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x33 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP MLOAD PUSH1 0x40 DUP1 MLOAD DUP1 DUP3 ADD SWAP1 SWAP2 MSTORE PUSH1 0xA DUP1 DUP3 MSTORE PUSH10 0x70726963652D77617273 PUSH1 0xB0 SHL PUSH1 0x20 DUP4 ADD SWAP1 DUP2 MSTORE DUP4 SWAP2 PUSH2 0x67 SWAP2 PUSH1 0x4 SWAP2 PUSH2 0x9A JUMP JUMPDEST POP PUSH1 0x0 DUP1 SLOAD PUSH1 0xFF NOT AND SWAP1 SSTORE PUSH1 0x5 DUP1 SLOAD PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB NOT AND PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB SWAP3 SWAP1 SWAP3 AND SWAP2 SWAP1 SWAP2 OR SWAP1 SSTORE POP PUSH2 0x12D SWAP1 POP JUMP JUMPDEST DUP3 DUP1 SLOAD PUSH1 0x1 DUP2 PUSH1 0x1 AND ISZERO PUSH2 0x100 MUL SUB AND PUSH1 0x2 SWAP1 DIV SWAP1 PUSH1 0x0 MSTORE PUSH1 0x20 PUSH1 0x0 KECCAK256 SWAP1 PUSH1 0x1F ADD PUSH1 0x20 SWAP1 DIV DUP2 ADD SWAP3 DUP3 PUSH1 0x1F LT PUSH2 0xDB JUMPI DUP1 MLOAD PUSH1 0xFF NOT AND DUP4 DUP1 ADD OR DUP6 SSTORE PUSH2 0x108 JUMP JUMPDEST DUP3 DUP1 ADD PUSH1 0x1 ADD DUP6 SSTORE DUP3 ISZERO PUSH2 0x108 JUMPI SWAP2 DUP3 ADD JUMPDEST DUP3 DUP2 GT ISZERO PUSH2 0x108 JUMPI DUP3 MLOAD DUP3 SSTORE SWAP2 PUSH1 0x20 ADD SWAP2 SWAP1 PUSH1 0x1 ADD SWAP1 PUSH2 0xED JUMP JUMPDEST POP PUSH2 0x114 SWAP3 SWAP2 POP PUSH2 0x118 JUMP JUMPDEST POP SWAP1 JUMP JUMPDEST JUMPDEST DUP1 DUP3 GT ISZERO PUSH2 0x114 JUMPI PUSH1 0x0 DUP2 SSTORE PUSH1 0x1 ADD PUSH2 0x119 JUMP JUMPDEST PUSH2 0xB13 DUP1 PUSH2 0x13C PUSH1 0x0 CODECOPY PUSH1 0x0 RETURN INVALID PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH2 0x10 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x4 CALLDATASIZE LT PUSH2 0x93 JUMPI PUSH1 0x0 CALLDATALOAD PUSH1 0xE0 SHR DUP1 PUSH4 0x614A4E44 GT PUSH2 0x66 JUMPI DUP1 PUSH4 0x614A4E44 EQ PUSH2 0x172 JUMPI DUP1 PUSH4 0x97B2F556 EQ PUSH2 0x18F JUMPI DUP1 PUSH4 0xD65AB5F2 EQ PUSH2 0x197 JUMPI DUP1 PUSH4 0xEFAA55A0 EQ PUSH2 0x19F JUMPI DUP1 PUSH4 0xF71D96CB EQ PUSH2 0x1BC JUMPI PUSH2 0x93 JUMP JUMPDEST DUP1 PUSH4 0x53E4FB6 EQ PUSH2 0x98 JUMPI DUP1 PUSH4 0x3FEEF58A EQ PUSH2 0xBC JUMPI DUP1 PUSH4 0x473BC223 EQ PUSH2 0xDB JUMPI DUP1 PUSH4 0x55C9E926 EQ PUSH2 0x158 JUMPI JUMPDEST PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0xA0 PUSH2 0x1ED JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB SWAP1 SWAP3 AND DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST PUSH2 0xD9 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0xD2 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH2 0x1FC JUMP JUMPDEST STOP JUMPDEST PUSH2 0xE3 PUSH2 0x23A JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x20 DUP1 DUP3 MSTORE DUP4 MLOAD DUP2 DUP4 ADD MSTORE DUP4 MLOAD SWAP2 SWAP3 DUP4 SWAP3 SWAP1 DUP4 ADD SWAP2 DUP6 ADD SWAP1 DUP1 DUP4 DUP4 PUSH1 0x0 JUMPDEST DUP4 DUP2 LT ISZERO PUSH2 0x11D JUMPI DUP2 DUP2 ADD MLOAD DUP4 DUP3 ADD MSTORE PUSH1 0x20 ADD PUSH2 0x105 JUMP JUMPDEST POP POP POP POP SWAP1 POP SWAP1 DUP2 ADD SWAP1 PUSH1 0x1F AND DUP1 ISZERO PUSH2 0x14A JUMPI DUP1 DUP3 SUB DUP1 MLOAD PUSH1 0x1 DUP4 PUSH1 0x20 SUB PUSH2 0x100 EXP SUB NOT AND DUP2 MSTORE PUSH1 0x20 ADD SWAP2 POP JUMPDEST POP SWAP3 POP POP POP PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 RETURN JUMPDEST PUSH2 0x160 PUSH2 0x2C8 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD SWAP2 DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST PUSH2 0x160 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x188 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH2 0x2CE JUMP JUMPDEST PUSH2 0x160 PUSH2 0x2EC JUMP JUMPDEST PUSH2 0xD9 PUSH2 0x2F2 JUMP JUMPDEST PUSH2 0xD9 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x1B5 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH2 0x374 JUMP JUMPDEST PUSH2 0x1D9 PUSH1 0x4 DUP1 CALLDATASIZE SUB PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x1D2 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP CALLDATALOAD PUSH2 0x3F8 JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD SWAP2 ISZERO ISZERO DUP3 MSTORE MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x20 ADD SWAP1 RETURN JUMPDEST PUSH1 0x5 SLOAD PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB AND DUP2 JUMP JUMPDEST PUSH1 0x0 DUP1 SLOAD PUSH1 0xFF AND PUSH1 0x1 DUP2 GT ISZERO PUSH2 0x20E JUMPI INVALID JUMPDEST EQ PUSH2 0x218 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x1 PUSH1 0x20 MSTORE PUSH1 0x40 SWAP1 KECCAK256 DUP1 SLOAD PUSH1 0xFF NOT AND SWAP1 SSTORE PUSH1 0x3 DUP1 SLOAD PUSH1 0x0 NOT ADD SWAP1 SSTORE JUMP JUMPDEST PUSH1 0x4 DUP1 SLOAD PUSH1 0x40 DUP1 MLOAD PUSH1 0x20 PUSH1 0x2 PUSH1 0x1 DUP6 AND ISZERO PUSH2 0x100 MUL PUSH1 0x0 NOT ADD SWAP1 SWAP5 AND SWAP4 SWAP1 SWAP4 DIV PUSH1 0x1F DUP2 ADD DUP5 SWAP1 DIV DUP5 MUL DUP3 ADD DUP5 ADD SWAP1 SWAP3 MSTORE DUP2 DUP2 MSTORE SWAP3 SWAP2 DUP4 ADD DUP3 DUP3 DUP1 ISZERO PUSH2 0x2C0 JUMPI DUP1 PUSH1 0x1F LT PUSH2 0x295 JUMPI PUSH2 0x100 DUP1 DUP4 SLOAD DIV MUL DUP4 MSTORE SWAP2 PUSH1 0x20 ADD SWAP2 PUSH2 0x2C0 JUMP JUMPDEST DUP3 ADD SWAP2 SWAP1 PUSH1 0x0 MSTORE PUSH1 0x20 PUSH1 0x0 KECCAK256 SWAP1 JUMPDEST DUP2 SLOAD DUP2 MSTORE SWAP1 PUSH1 0x1 ADD SWAP1 PUSH1 0x20 ADD DUP1 DUP4 GT PUSH2 0x2A3 JUMPI DUP3 SWAP1 SUB PUSH1 0x1F AND DUP3 ADD SWAP2 JUMPDEST POP POP POP POP POP DUP2 JUMP JUMPDEST PUSH1 0x3 SLOAD SWAP1 JUMP JUMPDEST PUSH1 0x2 DUP2 DUP2 SLOAD DUP2 LT PUSH2 0x2DB JUMPI INVALID JUMPDEST PUSH1 0x0 SWAP2 DUP3 MSTORE PUSH1 0x20 SWAP1 SWAP2 KECCAK256 ADD SLOAD SWAP1 POP DUP2 JUMP JUMPDEST PUSH1 0x3 SLOAD DUP2 JUMP JUMPDEST PUSH1 0x0 DUP1 SLOAD PUSH1 0xFF AND PUSH1 0x1 DUP2 GT ISZERO PUSH2 0x304 JUMPI INVALID JUMPDEST EQ PUSH2 0x30E JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH1 0x40 MLOAD PUSH32 0x762F260439BB4BE3EF6E4DC2786E2E7BD187D3D80B79057D7A424FE98563E335 SWAP1 PUSH1 0x0 SWAP1 LOG1 PUSH2 0x33F PUSH2 0x40D JUMP JUMPDEST PUSH2 0x349 PUSH1 0x1 PUSH2 0x6F0 JUMP JUMPDEST PUSH1 0x40 MLOAD PUSH32 0x1084D47E99647565312E58BBA004B0FC3088C683FA22F3925F1CF5FB09554029 SWAP1 PUSH1 0x0 SWAP1 LOG1 JUMP JUMPDEST PUSH1 0x0 DUP1 SLOAD PUSH1 0xFF AND PUSH1 0x1 DUP2 GT ISZERO PUSH2 0x386 JUMPI INVALID JUMPDEST EQ PUSH2 0x390 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST PUSH2 0x398 PUSH2 0xA5F JUMP JUMPDEST PUSH1 0x1 DUP1 DUP3 MSTORE PUSH1 0x0 DUP4 DUP2 MSTORE PUSH1 0x20 DUP3 SWAP1 MSTORE PUSH1 0x40 DUP2 KECCAK256 SWAP3 MLOAD DUP4 SLOAD PUSH1 0xFF NOT AND SWAP1 ISZERO ISZERO OR SWAP1 SWAP3 SSTORE PUSH1 0x2 DUP1 SLOAD DUP1 DUP4 ADD DUP3 SSTORE SWAP3 MSTORE PUSH32 0x405787FA12A823E0F2B7631CC41B3BA8828B3321CA811111FA75CD3AA3BB5ACE SWAP1 SWAP2 ADD SWAP2 SWAP1 SWAP2 SSTORE PUSH1 0x3 DUP1 SLOAD SWAP1 SWAP2 ADD SWAP1 SSTORE JUMP JUMPDEST PUSH1 0x1 PUSH1 0x20 MSTORE PUSH1 0x0 SWAP1 DUP2 MSTORE PUSH1 0x40 SWAP1 KECCAK256 SLOAD PUSH1 0xFF AND DUP2 JUMP JUMPDEST PUSH1 0x60 PUSH1 0x0 PUSH1 0x1 JUMPDEST PUSH1 0x5 PUSH1 0x0 SWAP1 SLOAD SWAP1 PUSH2 0x100 EXP SWAP1 DIV PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB AND PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB AND PUSH4 0x4C52B2A9 PUSH1 0x40 MLOAD DUP2 PUSH4 0xFFFFFFFF AND PUSH1 0xE0 SHL DUP2 MSTORE PUSH1 0x4 ADD PUSH1 0x20 PUSH1 0x40 MLOAD DUP1 DUP4 SUB DUP2 DUP7 DUP1 EXTCODESIZE ISZERO DUP1 ISZERO PUSH2 0x462 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP GAS STATICCALL ISZERO DUP1 ISZERO PUSH2 0x476 JUMPI RETURNDATASIZE PUSH1 0x0 DUP1 RETURNDATACOPY RETURNDATASIZE PUSH1 0x0 REVERT JUMPDEST POP POP POP POP PUSH1 0x40 MLOAD RETURNDATASIZE PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x48C JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP MLOAD DUP2 GT PUSH2 0x627 JUMPI PUSH1 0x5 SLOAD PUSH1 0x40 DUP1 MLOAD PUSH4 0x10E17B95 PUSH1 0xE1 SHL DUP2 MSTORE PUSH1 0x4 DUP2 ADD DUP5 SWAP1 MSTORE SWAP1 MLOAD PUSH1 0x60 SWAP3 PUSH1 0x0 SWAP3 PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB SWAP1 SWAP2 AND SWAP2 PUSH4 0x21C2F72A SWAP2 PUSH1 0x24 DUP1 DUP3 ADD SWAP3 DUP7 SWAP3 SWAP1 SWAP2 SWAP1 DUP3 SWAP1 SUB ADD DUP2 DUP7 DUP1 EXTCODESIZE ISZERO DUP1 ISZERO PUSH2 0x4E5 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP GAS STATICCALL ISZERO DUP1 ISZERO PUSH2 0x4F9 JUMPI RETURNDATASIZE PUSH1 0x0 DUP1 RETURNDATACOPY RETURNDATASIZE PUSH1 0x0 REVERT JUMPDEST POP POP POP POP PUSH1 0x40 MLOAD RETURNDATASIZE PUSH1 0x0 DUP3 RETURNDATACOPY PUSH1 0x1F RETURNDATASIZE SWAP1 DUP2 ADD PUSH1 0x1F NOT AND DUP3 ADD PUSH1 0x40 MSTORE PUSH1 0xA0 DUP2 LT ISZERO PUSH2 0x522 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP2 MLOAD PUSH1 0x20 DUP4 ADD MLOAD PUSH1 0x40 DUP1 DUP6 ADD MLOAD PUSH1 0x60 DUP7 ADD DUP1 MLOAD SWAP3 MLOAD SWAP5 SWAP7 SWAP4 SWAP6 SWAP2 SWAP5 SWAP4 SWAP2 DUP3 ADD SWAP3 DUP5 PUSH5 0x100000000 DUP3 GT ISZERO PUSH2 0x555 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST SWAP1 DUP4 ADD SWAP1 PUSH1 0x20 DUP3 ADD DUP6 DUP2 GT ISZERO PUSH2 0x56A JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP3 MLOAD PUSH5 0x100000000 DUP2 GT DUP3 DUP3 ADD DUP9 LT OR ISZERO PUSH2 0x584 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST DUP3 MSTORE POP DUP2 MLOAD PUSH1 0x20 SWAP2 DUP3 ADD SWAP3 SWAP1 SWAP2 ADD SWAP1 DUP1 DUP4 DUP4 PUSH1 0x0 JUMPDEST DUP4 DUP2 LT ISZERO PUSH2 0x5B1 JUMPI DUP2 DUP2 ADD MLOAD DUP4 DUP3 ADD MSTORE PUSH1 0x20 ADD PUSH2 0x599 JUMP JUMPDEST POP POP POP POP SWAP1 POP SWAP1 DUP2 ADD SWAP1 PUSH1 0x1F AND DUP1 ISZERO PUSH2 0x5DE JUMPI DUP1 DUP3 SUB DUP1 MLOAD PUSH1 0x1 DUP4 PUSH1 0x20 SUB PUSH2 0x100 EXP SUB NOT AND DUP2 MSTORE PUSH1 0x20 ADD SWAP2 POP JUMPDEST POP PUSH1 0x40 MSTORE PUSH1 0x20 ADD MLOAD SWAP3 SWAP8 POP SWAP2 SWAP6 POP PUSH1 0x0 SWAP5 POP PUSH2 0x602 SWAP4 POP DUP6 SWAP3 POP DUP7 SWAP2 POP PUSH2 0x710 SWAP1 POP JUMP JUMPDEST SWAP1 POP DUP5 DUP2 SGT DUP1 PUSH2 0x610 JUMPI POP DUP5 ISZERO JUMPDEST ISZERO PUSH2 0x61C JUMPI DUP1 SWAP5 POP DUP3 SWAP6 POP JUMPDEST POP POP POP PUSH1 0x1 ADD PUSH2 0x414 JUMP JUMPDEST POP PUSH1 0x5 SLOAD PUSH1 0x40 MLOAD PUSH4 0x13C62A01 PUSH1 0xE3 SHL DUP2 MSTORE PUSH1 0x20 PUSH1 0x4 DUP3 ADD DUP2 DUP2 MSTORE DUP6 MLOAD PUSH1 0x24 DUP5 ADD MSTORE DUP6 MLOAD PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB SWAP1 SWAP5 AND SWAP4 PUSH4 0x9E315008 SWAP4 DUP8 SWAP4 DUP4 SWAP3 PUSH1 0x44 SWAP1 SWAP3 ADD SWAP2 SWAP1 DUP6 ADD SWAP1 DUP1 DUP4 DUP4 PUSH1 0x0 JUMPDEST DUP4 DUP2 LT ISZERO PUSH2 0x688 JUMPI DUP2 DUP2 ADD MLOAD DUP4 DUP3 ADD MSTORE PUSH1 0x20 ADD PUSH2 0x670 JUMP JUMPDEST POP POP POP POP SWAP1 POP SWAP1 DUP2 ADD SWAP1 PUSH1 0x1F AND DUP1 ISZERO PUSH2 0x6B5 JUMPI DUP1 DUP3 SUB DUP1 MLOAD PUSH1 0x1 DUP4 PUSH1 0x20 SUB PUSH2 0x100 EXP SUB NOT AND DUP2 MSTORE PUSH1 0x20 ADD SWAP2 POP JUMPDEST POP SWAP3 POP POP POP PUSH1 0x0 PUSH1 0x40 MLOAD DUP1 DUP4 SUB DUP2 PUSH1 0x0 DUP8 DUP1 EXTCODESIZE ISZERO DUP1 ISZERO PUSH2 0x6D4 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP GAS CALL ISZERO DUP1 ISZERO PUSH2 0x6E8 JUMPI RETURNDATASIZE PUSH1 0x0 DUP1 RETURNDATACOPY RETURNDATASIZE PUSH1 0x0 REVERT JUMPDEST POP POP POP POP POP POP JUMP JUMPDEST PUSH1 0x0 DUP1 SLOAD DUP3 SWAP2 SWAP1 PUSH1 0xFF NOT AND PUSH1 0x1 DUP4 DUP2 DUP2 GT ISZERO PUSH2 0x708 JUMPI INVALID JUMPDEST MUL OR SWAP1 SSTORE POP POP JUMP JUMPDEST PUSH1 0x5 SLOAD PUSH1 0x40 MLOAD PUSH4 0x136A68AD PUSH1 0xE1 SHL DUP2 MSTORE PUSH1 0x20 PUSH1 0x4 DUP3 ADD DUP2 DUP2 MSTORE DUP5 MLOAD PUSH1 0x24 DUP5 ADD MSTORE DUP5 MLOAD PUSH1 0x0 SWAP5 DUP6 SWAP5 PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB SWAP1 SWAP2 AND SWAP4 PUSH4 0x26D4D15A SWAP4 DUP9 SWAP4 SWAP1 SWAP3 DUP4 SWAP3 PUSH1 0x44 SWAP1 SWAP2 ADD SWAP2 SWAP1 DUP6 ADD SWAP1 DUP1 DUP4 DUP4 DUP12 JUMPDEST DUP4 DUP2 LT ISZERO PUSH2 0x776 JUMPI DUP2 DUP2 ADD MLOAD DUP4 DUP3 ADD MSTORE PUSH1 0x20 ADD PUSH2 0x75E JUMP JUMPDEST POP POP POP POP SWAP1 POP SWAP1 DUP2 ADD SWAP1 PUSH1 0x1F AND DUP1 ISZERO PUSH2 0x7A3 JUMPI DUP1 DUP3 SUB DUP1 MLOAD PUSH1 0x1 DUP4 PUSH1 0x20 SUB PUSH2 0x100 EXP SUB NOT AND DUP2 MSTORE PUSH1 0x20 ADD SWAP2 POP JUMPDEST POP SWAP3 POP POP POP PUSH1 0x20 PUSH1 0x40 MLOAD DUP1 DUP4 SUB DUP2 DUP7 DUP1 EXTCODESIZE ISZERO DUP1 ISZERO PUSH2 0x7C0 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP GAS STATICCALL ISZERO DUP1 ISZERO PUSH2 0x7D4 JUMPI RETURNDATASIZE PUSH1 0x0 DUP1 RETURNDATACOPY RETURNDATASIZE PUSH1 0x0 REVERT JUMPDEST POP POP POP POP PUSH1 0x40 MLOAD RETURNDATASIZE PUSH1 0x20 DUP2 LT ISZERO PUSH2 0x7EA JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP MLOAD PUSH1 0x40 DUP1 MLOAD PUSH4 0x3FABE5A3 PUSH1 0xE2 SHL DUP2 MSTORE SWAP1 MLOAD SWAP2 SWAP3 POP PUSH1 0x0 SWAP2 PUSH1 0x1 PUSH1 0x1 PUSH1 0xA0 SHL SUB DUP5 AND SWAP2 PUSH4 0xFEAF968C SWAP2 PUSH1 0x4 DUP1 DUP4 ADD SWAP3 PUSH1 0xA0 SWAP3 SWAP2 SWAP1 DUP3 SWAP1 SUB ADD DUP2 DUP7 DUP1 EXTCODESIZE ISZERO DUP1 ISZERO PUSH2 0x832 JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP GAS STATICCALL ISZERO DUP1 ISZERO PUSH2 0x846 JUMPI RETURNDATASIZE PUSH1 0x0 DUP1 RETURNDATACOPY RETURNDATASIZE PUSH1 0x0 REVERT JUMPDEST POP POP POP POP PUSH1 0x40 MLOAD RETURNDATASIZE PUSH1 0xA0 DUP2 LT ISZERO PUSH2 0x85C JUMPI PUSH1 0x0 DUP1 REVERT JUMPDEST POP PUSH1 0x20 ADD MLOAD SWAP1 POP PUSH1 0x0 PUSH2 0x86F DUP3 DUP8 PUSH2 0x892 JUMP JUMPDEST SWAP1 POP PUSH2 0x886 DUP7 PUSH2 0x880 DUP4 PUSH1 0x64 PUSH2 0x8FE JUMP JUMPDEST SWAP1 PUSH2 0x9A7 JUMP JUMPDEST SWAP4 POP POP POP POP JUMPDEST SWAP3 SWAP2 POP POP JUMP JUMPDEST PUSH1 0x0 DUP2 DUP4 SUB DUP2 DUP4 SLT DUP1 ISZERO SWAP1 PUSH2 0x8A7 JUMPI POP DUP4 DUP2 SGT ISZERO JUMPDEST DUP1 PUSH2 0x8BC JUMPI POP PUSH1 0x0 DUP4 SLT DUP1 ISZERO PUSH2 0x8BC JUMPI POP DUP4 DUP2 SGT JUMPDEST PUSH2 0x8F7 JUMPI PUSH1 0x40 MLOAD PUSH3 0x461BCD PUSH1 0xE5 SHL DUP2 MSTORE PUSH1 0x4 ADD DUP1 DUP1 PUSH1 0x20 ADD DUP3 DUP2 SUB DUP3 MSTORE PUSH1 0x24 DUP2 MSTORE PUSH1 0x20 ADD DUP1 PUSH2 0xABA PUSH1 0x24 SWAP2 CODECOPY PUSH1 0x40 ADD SWAP2 POP POP PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 REVERT JUMPDEST SWAP4 SWAP3 POP POP POP JUMP JUMPDEST PUSH1 0x0 DUP3 PUSH2 0x90D JUMPI POP PUSH1 0x0 PUSH2 0x88C JUMP JUMPDEST DUP3 PUSH1 0x0 NOT EQ DUP1 ISZERO PUSH2 0x921 JUMPI POP PUSH1 0x1 PUSH1 0xFF SHL DUP3 EQ JUMPDEST ISZERO PUSH2 0x95D JUMPI PUSH1 0x40 MLOAD PUSH3 0x461BCD PUSH1 0xE5 SHL DUP2 MSTORE PUSH1 0x4 ADD DUP1 DUP1 PUSH1 0x20 ADD DUP3 DUP2 SUB DUP3 MSTORE PUSH1 0x27 DUP2 MSTORE PUSH1 0x20 ADD DUP1 PUSH2 0xA93 PUSH1 0x27 SWAP2 CODECOPY PUSH1 0x40 ADD SWAP2 POP POP PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 REVERT JUMPDEST DUP3 DUP3 MUL DUP3 DUP5 DUP3 DUP2 PUSH2 0x96A JUMPI INVALID JUMPDEST SDIV EQ PUSH2 0x8F7 JUMPI PUSH1 0x40 MLOAD PUSH3 0x461BCD PUSH1 0xE5 SHL DUP2 MSTORE PUSH1 0x4 ADD DUP1 DUP1 PUSH1 0x20 ADD DUP3 DUP2 SUB DUP3 MSTORE PUSH1 0x27 DUP2 MSTORE PUSH1 0x20 ADD DUP1 PUSH2 0xA93 PUSH1 0x27 SWAP2 CODECOPY PUSH1 0x40 ADD SWAP2 POP POP PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 REVERT JUMPDEST PUSH1 0x0 DUP2 PUSH2 0x9FB JUMPI PUSH1 0x40 DUP1 MLOAD PUSH3 0x461BCD PUSH1 0xE5 SHL DUP2 MSTORE PUSH1 0x20 PUSH1 0x4 DUP3 ADD DUP2 SWAP1 MSTORE PUSH1 0x24 DUP3 ADD MSTORE PUSH32 0x5369676E6564536166654D6174683A206469766973696F6E206279207A65726F PUSH1 0x44 DUP3 ADD MSTORE SWAP1 MLOAD SWAP1 DUP2 SWAP1 SUB PUSH1 0x64 ADD SWAP1 REVERT JUMPDEST DUP2 PUSH1 0x0 NOT EQ DUP1 ISZERO PUSH2 0xA0F JUMPI POP PUSH1 0x1 PUSH1 0xFF SHL DUP4 EQ JUMPDEST ISZERO PUSH2 0xA4B JUMPI PUSH1 0x40 MLOAD PUSH3 0x461BCD PUSH1 0xE5 SHL DUP2 MSTORE PUSH1 0x4 ADD DUP1 DUP1 PUSH1 0x20 ADD DUP3 DUP2 SUB DUP3 MSTORE PUSH1 0x21 DUP2 MSTORE PUSH1 0x20 ADD DUP1 PUSH2 0xA72 PUSH1 0x21 SWAP2 CODECOPY PUSH1 0x40 ADD SWAP2 POP POP PUSH1 0x40 MLOAD DUP1 SWAP2 SUB SWAP1 REVERT JUMPDEST PUSH1 0x0 DUP3 DUP5 DUP2 PUSH2 0xA56 JUMPI INVALID JUMPDEST SDIV SWAP5 SWAP4 POP POP POP POP JUMP JUMPDEST PUSH1 0x40 DUP1 MLOAD PUSH1 0x20 DUP2 ADD SWAP1 SWAP2 MSTORE PUSH1 0x0 DUP2 MSTORE SWAP1 JUMP INVALID MSTORE8 PUSH10 0x676E6564536166654D61 PUSH21 0x683A206469766973696F6E206F766572666C6F7753 PUSH10 0x676E6564536166654D61 PUSH21 0x683A206D756C7469706C69636174696F6E206F7665 PUSH19 0x666C6F775369676E6564536166654D6174683A KECCAK256 PUSH20 0x75627472616374696F6E206F766572666C6F77A2 PUSH5 0x6970667358 0x22 SLT KECCAK256 0xEF 0xD0 DUP11 SWAP9 DELEGATECALL PUSH10 0x2E2833F7C52AF92D6A1E MSIZE PUSH24 0x4F74507E4D3ACB5BCC5AAB60136864736F6C634300060C00 CALLER LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 CALLDATACOPY DUP11 0xD6 0xDA 0xC6 0x49 0xD6 INVALID PUSH18 0xA4BEEAAE76EDF41268D6035A5767915F132F SLT PUSH11 0x55A6C464736F6C63430006 0xC STOP CALLER ",
+  "pcMap": {
+    "0": {
+      "offset": [
+        232,
+        905
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x80"
+    },
+    "2": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x40"
+    },
+    "4": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "MSTORE",
+      "path": "33"
+    },
+    "5": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "CALLVALUE",
+      "path": "33"
+    },
+    "6": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "7": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "ISZERO",
+      "path": "33"
+    },
+    "8": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0x10"
+    },
+    "11": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "JUMPI",
+      "path": "33"
+    },
+    "12": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x0"
+    },
+    "14": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "15": {
+      "dev": "Cannot send ether to nonpayable function",
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "REVERT",
+      "path": "33"
+    },
+    "16": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "JUMPDEST",
+      "path": "33"
+    },
+    "17": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "POP",
+      "path": "33"
+    },
+    "18": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x4"
+    },
+    "20": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "CALLDATASIZE",
+      "path": "33"
+    },
+    "21": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "LT",
+      "path": "33"
+    },
+    "22": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0x36"
+    },
+    "25": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "JUMPI",
+      "path": "33"
+    },
+    "26": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x0"
+    },
+    "28": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "CALLDATALOAD",
+      "path": "33"
+    },
+    "29": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0xE0"
+    },
+    "31": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "SHR",
+      "path": "33"
+    },
+    "32": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "33": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "PUSH4",
+      "path": "33",
+      "value": "0x117A5B90"
+    },
+    "38": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "EQ",
+      "path": "33"
+    },
+    "39": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0x3B"
+    },
+    "42": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "JUMPI",
+      "path": "33"
+    },
+    "43": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "44": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "PUSH4",
+      "path": "33",
+      "value": "0xE5AFECCA"
+    },
+    "49": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "EQ",
+      "path": "33"
+    },
+    "50": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0x74"
+    },
+    "53": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "JUMPI",
+      "path": "33"
+    },
+    "54": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "JUMPDEST",
+      "path": "33"
+    },
+    "55": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x0"
+    },
+    "57": {
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "58": {
+      "first_revert": true,
+      "fn": null,
+      "offset": [
+        232,
+        905
+      ],
+      "op": "REVERT",
+      "path": "33"
+    },
+    "59": {
+      "offset": [
+        323,
+        347
+      ],
+      "op": "JUMPDEST",
+      "path": "33"
+    },
+    "60": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0x58"
+    },
+    "63": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x4"
+    },
+    "65": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "66": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "CALLDATASIZE",
+      "path": "33"
+    },
+    "67": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "SUB",
+      "path": "33"
+    },
+    "68": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x20"
+    },
+    "70": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "DUP2",
+      "path": "33"
+    },
+    "71": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "LT",
+      "path": "33"
+    },
+    "72": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "ISZERO",
+      "path": "33"
+    },
+    "73": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0x51"
+    },
+    "76": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "JUMPI",
+      "path": "33"
+    },
+    "77": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x0"
+    },
+    "79": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "80": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "REVERT",
+      "path": "33"
+    },
+    "81": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "JUMPDEST",
+      "path": "33"
+    },
+    "82": {
+      "op": "POP"
+    },
+    "83": {
+      "offset": [
+        323,
+        347
+      ],
+      "op": "CALLDATALOAD",
+      "path": "33"
+    },
+    "84": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0x9A"
+    },
+    "87": {
+      "fn": null,
+      "jump": "i",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "JUMP",
+      "path": "33"
+    },
+    "88": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "JUMPDEST",
+      "path": "33"
+    },
+    "89": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x40"
+    },
+    "91": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "92": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "MLOAD",
+      "path": "33"
+    },
+    "93": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "95": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "97": {
+      "op": "PUSH1",
+      "value": "0xA0"
+    },
+    "99": {
+      "op": "SHL"
+    },
+    "100": {
+      "op": "SUB"
+    },
+    "101": {
+      "offset": [
+        323,
+        347
+      ],
+      "op": "SWAP1",
+      "path": "33"
+    },
+    "102": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "SWAP3",
+      "path": "33"
+    },
+    "103": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "AND",
+      "path": "33"
+    },
+    "104": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "DUP3",
+      "path": "33"
+    },
+    "105": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "MSTORE",
+      "path": "33"
+    },
+    "106": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "MLOAD",
+      "path": "33"
+    },
+    "107": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "SWAP1",
+      "path": "33"
+    },
+    "108": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "DUP2",
+      "path": "33"
+    },
+    "109": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "SWAP1",
+      "path": "33"
+    },
+    "110": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "SUB",
+      "path": "33"
+    },
+    "111": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x20"
+    },
+    "113": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "ADD",
+      "path": "33"
+    },
+    "114": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "SWAP1",
+      "path": "33"
+    },
+    "115": {
+      "fn": null,
+      "offset": [
+        323,
+        347
+      ],
+      "op": "RETURN",
+      "path": "33"
+    },
+    "116": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "JUMPDEST",
+      "path": "33"
+    },
+    "117": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0x58"
+    },
+    "120": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x4"
+    },
+    "122": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "123": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "CALLDATASIZE",
+      "path": "33"
+    },
+    "124": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "SUB",
+      "path": "33"
+    },
+    "125": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x20"
+    },
+    "127": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "DUP2",
+      "path": "33"
+    },
+    "128": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "LT",
+      "path": "33"
+    },
+    "129": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "ISZERO",
+      "path": "33"
+    },
+    "130": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0x8A"
+    },
+    "133": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "JUMPI",
+      "path": "33"
+    },
+    "134": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x0"
+    },
+    "136": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "137": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "REVERT",
+      "path": "33"
+    },
+    "138": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "JUMPDEST",
+      "path": "33"
+    },
+    "139": {
+      "op": "POP"
+    },
+    "140": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "CALLDATALOAD",
+      "path": "33"
+    },
+    "141": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "143": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "145": {
+      "op": "PUSH1",
+      "value": "0xA0"
+    },
+    "147": {
+      "op": "SHL"
+    },
+    "148": {
+      "op": "SUB"
+    },
+    "149": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "AND",
+      "path": "33"
+    },
+    "150": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0xC1"
+    },
+    "153": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "jump": "i",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "JUMP",
+      "path": "33"
+    },
+    "154": {
+      "offset": [
+        323,
+        347
+      ],
+      "op": "JUMPDEST",
+      "path": "33"
+    },
+    "155": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x0"
+    },
+    "157": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "DUP2",
+      "path": "33"
+    },
+    "158": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "DUP2",
+      "path": "33"
+    },
+    "159": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "SLOAD",
+      "path": "33"
+    },
+    "160": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "DUP2",
+      "path": "33"
+    },
+    "161": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "LT",
+      "path": "33"
+    },
+    "162": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0xA7"
+    },
+    "165": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "JUMPI",
+      "path": "33"
+    },
+    "166": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "INVALID",
+      "path": "33"
+    },
+    "167": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "JUMPDEST",
+      "path": "33"
+    },
+    "168": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x0"
+    },
+    "170": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "SWAP2",
+      "path": "33"
+    },
+    "171": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "DUP3",
+      "path": "33"
+    },
+    "172": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "MSTORE",
+      "path": "33"
+    },
+    "173": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x20"
+    },
+    "175": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "SWAP1",
+      "path": "33"
+    },
+    "176": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "SWAP2",
+      "path": "33"
+    },
+    "177": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "KECCAK256",
+      "path": "33"
+    },
+    "178": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "ADD",
+      "path": "33"
+    },
+    "179": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "SLOAD",
+      "path": "33"
+    },
+    "180": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "182": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "184": {
+      "op": "PUSH1",
+      "value": "0xA0"
+    },
+    "186": {
+      "op": "SHL"
+    },
+    "187": {
+      "op": "SUB"
+    },
+    "188": {
+      "offset": [
+        323,
+        347
+      ],
+      "op": "AND",
+      "path": "33"
+    },
+    "189": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "SWAP1",
+      "path": "33"
+    },
+    "190": {
+      "op": "POP"
+    },
+    "191": {
+      "offset": [
+        323,
+        347
+      ],
+      "op": "DUP2",
+      "path": "33"
+    },
+    "192": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "jump": "o",
+      "offset": [
+        323,
+        347
+      ],
+      "op": "JUMP",
+      "path": "33"
+    },
+    "193": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "JUMPDEST",
+      "path": "33"
+    },
+    "194": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        678,
+        687
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x0"
+    },
+    "196": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        755,
+        769
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "197": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        786,
+        816
+      ],
+      "op": "DUP3",
+      "path": "33"
+    },
+    "198": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x40"
+    },
+    "200": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "MLOAD",
+      "path": "33"
+    },
+    "201": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0xD1"
+    },
+    "204": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "SWAP1",
+      "path": "33"
+    },
+    "205": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0x176"
+    },
+    "208": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "jump": "i",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "JUMP",
+      "path": "33"
+    },
+    "209": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "JUMPDEST",
+      "path": "33"
+    },
+    "210": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "212": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "214": {
+      "op": "PUSH1",
+      "value": "0xA0"
+    },
+    "216": {
+      "op": "SHL"
+    },
+    "217": {
+      "op": "SUB"
+    },
+    "218": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "SWAP1",
+      "path": "33"
+    },
+    "219": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "SWAP2",
+      "path": "33"
+    },
+    "220": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "AND",
+      "path": "33"
+    },
+    "221": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "DUP2",
+      "path": "33"
+    },
+    "222": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "MSTORE",
+      "path": "33"
+    },
+    "223": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x40"
+    },
+    "225": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "MLOAD",
+      "path": "33"
+    },
+    "226": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "SWAP1",
+      "path": "33"
+    },
+    "227": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "DUP2",
+      "path": "33"
+    },
+    "228": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "SWAP1",
+      "path": "33"
+    },
+    "229": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "SUB",
+      "path": "33"
+    },
+    "230": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x20"
+    },
+    "232": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "ADD",
+      "path": "33"
+    },
+    "233": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "SWAP1",
+      "path": "33"
+    },
+    "234": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x0"
+    },
+    "236": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "CREATE",
+      "path": "33"
+    },
+    "237": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "238": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "ISZERO",
+      "path": "33"
+    },
+    "239": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "240": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "ISZERO",
+      "path": "33"
+    },
+    "241": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "PUSH2",
+      "path": "33",
+      "value": "0xFE"
+    },
+    "244": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "JUMPI",
+      "path": "33"
+    },
+    "245": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "RETURNDATASIZE",
+      "path": "33"
+    },
+    "246": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x0"
+    },
+    "248": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "249": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "RETURNDATACOPY",
+      "path": "33"
+    },
+    "250": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "RETURNDATASIZE",
+      "path": "33"
+    },
+    "251": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x0"
+    },
+    "253": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "REVERT",
+      "path": "33"
+    },
+    "254": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        772,
+        817
+      ],
+      "op": "JUMPDEST",
+      "path": "33"
+    },
+    "255": {
+      "op": "POP"
+    },
+    "256": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        832
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "statement": 0,
+      "value": "0x0"
+    },
+    "258": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "259": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "SLOAD",
+      "path": "33"
+    },
+    "260": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "value": "0x1"
+    },
+    "262": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "DUP2",
+      "path": "33"
+    },
+    "263": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "ADD",
+      "path": "33"
+    },
+    "264": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "DUP3",
+      "path": "33"
+    },
+    "265": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "SSTORE",
+      "path": "33"
+    },
+    "266": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "DUP2",
+      "path": "33"
+    },
+    "267": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "268": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "MSTORE",
+      "path": "33"
+    },
+    "269": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "PUSH32",
+      "path": "33",
+      "value": "0x290DECD9548B62A8D60345A988386FC84BA6BC95484008F6362F93160EF3E563"
+    },
+    "302": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "ADD",
+      "path": "33"
+    },
+    "303": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "DUP1",
+      "path": "33"
+    },
+    "304": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "SLOAD",
+      "path": "33"
+    },
+    "305": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "307": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "309": {
+      "op": "PUSH1",
+      "value": "0xA0"
+    },
+    "311": {
+      "op": "SHL"
+    },
+    "312": {
+      "op": "SUB"
+    },
+    "313": {
+      "op": "NOT"
+    },
+    "314": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "AND",
+      "path": "33"
+    },
+    "315": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "317": {
+      "op": "PUSH1",
+      "value": "0x1"
+    },
+    "319": {
+      "op": "PUSH1",
+      "value": "0xA0"
+    },
+    "321": {
+      "op": "SHL"
+    },
+    "322": {
+      "op": "SUB"
+    },
+    "323": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "DUP5",
+      "path": "33"
+    },
+    "324": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "AND",
+      "path": "33"
+    },
+    "325": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "OR",
+      "path": "33"
+    },
+    "326": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "SWAP1",
+      "path": "33"
+    },
+    "327": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "SSTORE",
+      "path": "33"
+    },
+    "328": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        858,
+        875
+      ],
+      "op": "PUSH1",
+      "path": "33",
+      "statement": 1,
+      "value": "0x40"
+    },
+    "330": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        858,
+        875
+      ],
+      "op": "MLOAD",
+      "path": "33"
+    },
+    "331": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "SWAP2",
+      "path": "33"
+    },
+    "332": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        827,
+        843
+      ],
+      "op": "SWAP3",
+      "path": "33"
+    },
+    "333": {
+      "op": "POP"
+    },
+    "334": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        858,
+        875
+      ],
+      "op": "PUSH32",
+      "path": "33",
+      "value": "0x3CF6F02227A36289115EAB1930D6F44420E1163FD17DC6C14C8769E159133C32"
+    },
+    "367": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        858,
+        875
+      ],
+      "op": "SWAP2",
+      "path": "33"
+    },
+    "368": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        858,
+        875
+      ],
+      "op": "LOG1",
+      "path": "33"
+    },
+    "369": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        892,
+        896
+      ],
+      "op": "SWAP3",
+      "path": "33",
+      "statement": 2
+    },
+    "370": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "SWAP2",
+      "path": "33"
+    },
+    "371": {
+      "op": "POP"
+    },
+    "372": {
+      "op": "POP"
+    },
+    "373": {
+      "fn": "PriceWarsFactory.createPriceWar",
+      "jump": "o",
+      "offset": [
+        596,
+        903
+      ],
+      "op": "JUMP",
+      "path": "33"
+    },
+    "374": {
+      "op": "JUMPDEST"
+    },
+    "375": {
+      "op": "PUSH2",
+      "value": "0xC4F"
+    },
+    "378": {
+      "op": "DUP1"
+    },
+    "379": {
+      "op": "PUSH2",
+      "value": "0x184"
+    },
+    "382": {
+      "op": "DUP4"
+    },
+    "383": {
+      "op": "CODECOPY"
+    },
+    "384": {
+      "op": "ADD"
+    },
+    "385": {
+      "op": "SWAP1"
+    },
+    "386": {
+      "op": "JUMP"
+    }
+  },
+  "sha1": "a5c9f0a576b9e4e727214a7c14dd11094f1b4dba",
+  "source": "// SPDX-License-Identifier: UNLICENSED\npragma solidity ^0.6.0;\n\nimport \"./PriceWars.sol\";\n\n/// @title PriceWarsFactory\n/// @author cds95\n/// @notice This is the price wars factory contract to manage creating new price war contracts\ncontract PriceWarsFactory {\n    // List of price war contracts that have been deployed\n    PriceWars[] public games;\n\n    /// @notice Triggered when a new price war contract is created\n    event PriceWarCreated();\n\n    /// @notice Creates a new price war game contract\n    /// @param cryptoChampionsContractAddress The address of the crypto champions contract\n    function createPriceWar(address cryptoChampionsContractAddress) external returns (PriceWars) {\n        // TODO:  Look into clone factories to save gas\n        PriceWars game = new PriceWars(cryptoChampionsContractAddress);\n        games.push(game);\n        emit PriceWarCreated();\n        return game;\n    }\n}\n",
+  "sourceMap": "232:673:33:-:0;;;;;;;;;;;;;;;;;;;",
+  "sourcePath": "contracts/minigames/games/priceWars/PriceWarsFactory.sol",
+  "type": "contract"
+}

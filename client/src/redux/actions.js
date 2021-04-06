@@ -197,3 +197,11 @@ export const resetDuelAction = () => {
         type: RESET_DUEL
     };
 };
+
+export const SET_WEATHER_DUELS = 'SET_WEATHER_DUELS';
+export const setWeatherDuelsAction = (weatherDuels) => {
+    return {
+        type: SET_WEATHER_DUELS,
+        weatherDuels
+    };
+};

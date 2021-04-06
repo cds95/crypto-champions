@@ -32,3 +32,9 @@ const getContractArtifact = async (chain, contractAddress) => {
         return undefined;
     }
 };
+
+export const getContractInstanceAtAddress = async (contractJson, contractAddress) => {
+    const { abi } = contractJson;
+    const web3 = await getWeb3();
+    return new web3.eth.Contract(abi, contractAddress);
+};

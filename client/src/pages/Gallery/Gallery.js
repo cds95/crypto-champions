@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useGetHeroes } from '../../hooks/cryptoChampionsHook';
-import { setDuelOpponentHeroAction, setHeroesAction, setIsLoadingHeroesAction } from '../../redux/actions';
+import { useGetHeroes, useGetWeatherDuels } from '../../hooks/cryptoChampionsHook';
+import {
+    setDuelOpponentHeroAction,
+    setHeroesAction,
+    setIsLoadingHeroesAction,
+    setWeatherDuelsAction
+} from '../../redux/actions';
 import './Gallery.css';
 import { ItemSelector } from '../../components/ItemSelector';
 import { getRaceImage } from '../../images/races';
@@ -18,15 +23,20 @@ const text = {
 
 const galleryTabs = {
     CHALLENGE: 0,
-    USER_DUELS: 1
+    FINISHED_DUELS: 1,
+    OPEN_DUELS: 2
 };
 
-export const GalleryComp = ({ setHeroes, setIsLoadingHeroes, nonUserHeroes, setDuelOpponentHero }) => {
+export const GalleryComp = ({ setHeroes, setIsLoadingHeroes, nonUserHeroes, setDuelOpponentHero, setWeatherDuels }) => {
     const { isLoading: isLoadingHeroes, heroes = [] } = useGetHeroes();
+    const { isLoading: isLoadingDuels, weatherDuels } = useGetWeatherDuels();
     useEffect(() => {
         setIsLoadingHeroes(isLoadingHeroes);
         setHeroes(heroes);
     }, [isLoadingHeroes]);
+    useEffect(() => {
+        setWeatherDuels(weatherDuels);
+    }, [isLoadingDuels]);
     const onSelect = (hero) => {
         setDuelOpponentHero(hero.id, hero.owner);
         setIsDuelModalOpen(true);
@@ -56,8 +66,8 @@ export const GalleryComp = ({ setHeroes, setIsLoadingHeroes, nonUserHeroes, setD
                 </React.Fragment>
             );
             break;
-        case galleryTabs.USER_DUELS:
-
+        case galleryTabs.FINISHED_DUELS:
+        case galleryTabs.OPEN_DUELS:
         default:
             break;
     }
@@ -88,6 +98,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setDuelOpponentHero: (heroId, opponentAddress) => {
             dispatch(setDuelOpponentHeroAction(heroId, opponentAddress));
+        },
+        setWeatherDuels: (duels) => {
+            dispatch(setWeatherDuelsAction(duels));
         }
     };
 };

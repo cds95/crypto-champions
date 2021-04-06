@@ -52,7 +52,7 @@ export const DuelModalComp = ({
     };
     const createDuel = async () => {
         setIsCreatingDuel(true);
-        await challengeToDuel(bet, initiatorHeroId, opponentAddress);
+        await challengeToDuel(bet, initiatorHeroId, opponentAddress, opponentHero.id);
         setIsCreatingDuel(false);
         goToNextStep();
     };

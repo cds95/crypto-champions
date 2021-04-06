@@ -40,6 +40,10 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
 
     address public opponent;
 
+    uint256 public initiatorHeroId;
+
+    uint256 public opponentHeroId;
+
     constructor(
         address oracle,
         address linkTokenAddress,
@@ -50,11 +54,9 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         string memory _city,
         bytes32 jobId,
         string memory apiKey,
-        address weatherWarsFactoryAddress,
-        address duelInitiator,
-        address duelOpponent
+        address weatherWarsFactoryAddress
     ) public CappedMinigame(gameName, MAX_PLAYERS, _cryptoChampionsContractAddress) {
-        setPublicChainlinkToken();
+        // setPublicChainlinkToken();
         _linkTokenAddress = linkTokenAddress;
         _fee = fee;
         _oracle = oracle;
@@ -63,8 +65,18 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         _jobId = jobId;
         _apiKey = apiKey;
         _weatherWarsFactory = WeatherWarsFactory(weatherWarsFactoryAddress);
+    }
+
+    function setPlayerInformation(
+        address duelInitiator,
+        uint256 duelInitiatorHeroId,
+        address duelOpponent,
+        uint256 duelOpponentHeroId
+    ) external {
         initiator = duelInitiator;
         opponent = duelOpponent;
+        initiatorHeroId = duelInitiatorHeroId;
+        opponentHeroId = duelOpponentHeroId;
     }
 
     function play() internal override {
@@ -91,6 +103,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
     }
 
     function joinGame(uint256 heroId) public override {
+        require(heroId == opponentHeroId || heroId == initiatorHeroId); // dev: Invalid hero id
         require(msg.sender == address(_weatherWarsFactory) || msg.sender == initiator || msg.sender == opponent); // dev: Address not part of the game
         super.joinGame(heroId);
     }

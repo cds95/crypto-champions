@@ -1,4 +1,10 @@
-import { SET_DUEL_INITIATOR_HERO, SET_DUEL_OPPONENT_HERO, SET_DUEL_BET_AMOUNT, RESET_DUEL } from '../actions';
+import {
+    SET_DUEL_INITIATOR_HERO,
+    SET_DUEL_OPPONENT_HERO,
+    SET_DUEL_BET_AMOUNT,
+    RESET_DUEL,
+    SET_WEATHER_DUELS
+} from '../actions';
 
 const initialState = {
     opponentAddress: '',
@@ -24,6 +30,11 @@ export const duel = (state = initialState, action) => {
             return {
                 ...state,
                 bet: action.bet
+            };
+        case SET_WEATHER_DUELS:
+            return {
+                ...state,
+                weatherDuels: action.weatherDuels
             };
         case RESET_DUEL:
             return initialState;
