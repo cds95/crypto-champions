@@ -74,11 +74,9 @@ export const getElderSpirit = async (elderSpiritId) => {
 };
 
 export const mintHero = async (elderSpiritId, heroName) => {
-    console.log(elderSpiritId);
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
     const userAccount = await getUserAccount();
     const price = await getHeroPrice(elderSpiritId);
-    console.log(price);
     await artifact.methods.mintHero(elderSpiritId, heroName).send({
         from: userAccount,
         value: price
@@ -100,4 +98,25 @@ export const getCurrentRound = async () => {
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
     const currentRound = await artifact.methods.currentRound().call();
     return parseInt(currentRound);
+};
+
+// TODO:  Implement pagination in the future.  For now just fetch all minted heroes
+export const getHeroes = async () => {
+    const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    const numMintedHeroes = await artifact.methods.heroesMinted().call();
+    const heroes = [];
+    // HeroId starts at 8
+    for (let i = 8; i < 8 + parseInt(numMintedHeroes); i++) {
+        const { 0: heroName, 1: raceId, 2: classId } = await artifact.methods.getHeroVisuals(i).call();
+        const { 0: isValid, 1: affinity } = await artifact.methods.getHeroGameData(i).call();
+        if (isValid) {
+            heroes.push({
+                heroName,
+                raceId,
+                classId,
+                affinity
+            });
+        }
+    }
+    return heroes;
 };

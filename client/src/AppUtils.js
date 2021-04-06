@@ -19,8 +19,8 @@ export const getRace = (raceId) => RACES[raceId];
 
 export const getClass = (classId) => CLASSES[classId];
 
-export const getElderSpiritLabel = (elder) => {
-    const race = getRace(elder.raceId);
-    const elderClass = getClass(elder.classId);
+export const getRaceClassLabel = (raceId, classId) => {
+    const race = getRace(raceId);
+    const elderClass = getClass(classId);
     return `${race.label} - ${elderClass.label}`;
 };

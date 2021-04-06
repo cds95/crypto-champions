@@ -1,5 +1,5 @@
 import React from 'react';
-import { getElderSpiritLabel } from '../../AppUtils';
+import { getRaceClassLabel } from '../../AppUtils';
 import { getRaceImage } from '../../images/races';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 
@@ -12,7 +12,7 @@ const text = {
 export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElderSpirits }) => {
     const items = elderSpirits.map((spirit) => ({
         id: spirit.id,
-        label: getElderSpiritLabel(spirit),
+        label: getRaceClassLabel(spirit.raceId, spirit.classId),
         image: getRaceImage(spirit.raceId),
         subLabel: spirit.affinity
     }));

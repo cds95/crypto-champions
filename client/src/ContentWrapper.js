@@ -17,6 +17,7 @@ import { Route, HashRouter as Router, Switch } from 'react-router-dom';
 import { routeDefinitions } from './routeDefinitions';
 import { Play } from './pages/PlayPage';
 import { NavigationBar } from './components/NavigationBar';
+import { Gallery } from './pages/Gallery';
 
 export const ContentWrapperComp = ({
     setMaxElderSpirits,
@@ -41,6 +42,9 @@ export const ContentWrapperComp = ({
                 </Route>
                 <Route path={routeDefinitions.PLAY}>
                     <Play />
+                </Route>
+                <Route path={routeDefinitions.GALLERY}>
+                    <Gallery />
                 </Route>
             </Switch>
         </Router>

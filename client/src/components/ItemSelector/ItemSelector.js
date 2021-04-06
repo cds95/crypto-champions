@@ -5,7 +5,7 @@ import './ItemSelector.css';
 
 export const ItemSelector = ({ items = [], title, caption, subCaption, onSelect, selectedItemId }) => {
     items = items.map((item) => {
-        if (item.id === selectedItemId) {
+        if (selectedItemId && item.id === selectedItemId) {
             item.isSelected = true;
         }
         return item;

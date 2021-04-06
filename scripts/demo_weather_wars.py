@@ -39,7 +39,7 @@ def main():
     cc.setPhase(1)
 
     cc.mintHero(1, "heroName", { "from": accounts[3], "value": 0.271 * 10**18 })
-    cc.mintHero(1, "heroName", { "from": accounts[4], "value": 0.271 * 10**18 })
+    cc.mintHero(2, "heroName", { "from": accounts[4], "value": 0.271 * 10**18 })
     
     wwf.init()
 
@@ -84,16 +84,5 @@ def main():
     for i in range(0, len(weathers)):
         wwf.addWeatherMapping(weathers[i], i)
 
-    BUYIN_AMOUNT = 10**18
-    wwf.createWeatherWars("test", 10**18, cc.address, { "from": accounts[0] })
-    ww_add = wwf.games(0)
-    ww = WeatherWars.at(ww_add)
-
-    cc.transferInGameTokens(ww.address, BUYIN_AMOUNT, { "from": accounts[3] })
-    cc.transferInGameTokens(ww.address, BUYIN_AMOUNT, { "from": accounts[4] })
-
-    # 8 and 9 are the hero ids
-    ww.joinGame(8, { "from": accounts[3] })
-    ww.joinGame(9, { "from": accounts[4] })
-
-    ww.determineWinner({ "from": accounts[0] })
+    
+    

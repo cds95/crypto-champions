@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import {
     getAffinities,
     getElderSpirits,
+    getHeroes,
     getMaxElderSpirits,
     getNumMintedElderSpirits,
     getPhase
@@ -108,5 +109,32 @@ export const useGetAffinities = (maxElders) => {
             });
         })();
     }, [maxElders]);
+    return state;
+};
+
+export const useGetHeroes = () => {
+    const [state, setState] = useState({
+        isLoading: false,
+        isInErrorState: false,
+        heroes: []
+    });
+    useEffect(() => {
+        (async () => {
+            setState({ isLoading: true });
+            try {
+                const heroes = await getHeroes();
+                setState({
+                    isLoading: false,
+                    heroes
+                });
+            } catch (e) {
+                setState({
+                    isLoading: false,
+                    isInErrorState: true,
+                    heroes: []
+                });
+            }
+        })();
+    }, []);
     return state;
 };

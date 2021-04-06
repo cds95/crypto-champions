@@ -141,3 +141,19 @@ export const resetMintingHeroWorkflowAction = () => {
         type: RESET_MINTING_HERO_WORKFLOW
     };
 };
+
+export const SET_HEROES = 'SET_HEROES';
+export const setHeroesAction = (heroes) => {
+    return {
+        type: SET_HEROES,
+        heroes
+    };
+};
+
+export const SET_IS_LOADING_HEROES = 'SET_IS_LOADING_HEROES';
+export const setIsLoadingHeroesAction = (isLoading) => {
+    return {
+        type: SET_IS_LOADING_HEROES,
+        isLoading
+    };
+};

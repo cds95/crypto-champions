@@ -8,7 +8,8 @@ const text = {
     cryptoChampions: 'Crypto Champions',
     links: {
         home: 'Home',
-        play: 'Play'
+        play: 'Play',
+        gallery: 'Gallery'
     }
 };
 
@@ -25,6 +26,13 @@ export const NavigationBar = () => {
                     </Link>
                     <Link className="navigation-bar__text" to={routeDefinitions.PLAY} className="navigation-bar__link">
                         <Typography variant="h6">{text.links.play}</Typography>
+                    </Link>
+                    <Link
+                        className="navigation-bar__text"
+                        to={routeDefinitions.GALLERY}
+                        className="navigation-bar__link"
+                    >
+                        <Typography variant="h6">{text.links.gallery}</Typography>
                     </Link>
                 </div>
             </Toolbar>

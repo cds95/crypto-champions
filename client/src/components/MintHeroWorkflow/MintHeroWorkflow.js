@@ -2,7 +2,7 @@ import { TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import { getElderSpiritImage, getElderSpiritLabel } from '../../AppUtils';
+import { getElderSpiritImage, getRaceClassLabel } from '../../AppUtils';
 import {
     resetMintingHeroWorkflowAction,
     setElderSpiritForHeroAction,
@@ -43,7 +43,7 @@ export const MintHeroWorkflowComp = ({
         .map((elder) => {
             return {
                 id: elder.id,
-                label: getElderSpiritLabel(elder),
+                label: getRaceClassLabel(elder.raceId, elder.classId),
                 subLabel: elder.affinity,
                 image: getElderSpiritImage(elder),
                 isSelectable: true
