@@ -105,6 +105,10 @@ contract WeatherWarsFactory is VRFConsumerBase {
         ICryptoChampions cc = ICryptoChampions(_cryptoChampionsAddress);
         cc.delegatedTransferInGameTokens(msg.sender, address(newGame), _buyinAmount);
         newGame.setPlayerInformation(msg.sender, initiatorHeroId, opponent, opponentHeroId);
+
+        // Transfer some link to the newly created game so that it can interact with Chainlink
+        LINK.transfer(address(newGame), _fee);
+
         games.push(newGame);
         requestNextCity();
     }

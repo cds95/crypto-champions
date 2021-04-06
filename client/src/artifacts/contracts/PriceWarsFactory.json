@@ -57,15 +57,15 @@
     "absolutePath": "contracts/minigames/games/priceWars/PriceWarsFactory.sol",
     "exportedSymbols": {
       "PriceWarsFactory": [
-        5542
+        5495
       ]
     },
-    "id": 5543,
+    "id": 5496,
     "license": "UNLICENSED",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 5506,
+        "id": 5459,
         "literals": [
           "solidity",
           "^",
@@ -78,10 +78,10 @@
       {
         "absolutePath": "contracts/minigames/games/priceWars/PriceWars.sol",
         "file": "./PriceWars.sol",
-        "id": 5507,
+        "id": 5460,
         "nodeType": "ImportDirective",
-        "scope": 5543,
-        "sourceUnit": 5505,
+        "scope": 5496,
+        "sourceUnit": 5458,
         "src": "64:25:32",
         "symbolAliases": [],
         "unitAlias": ""
@@ -90,19 +90,19 @@
         "abstract": false,
         "baseContracts": [],
         "contractDependencies": [
-          5504
+          5457
         ],
         "contractKind": "contract",
         "documentation": {
-          "id": 5508,
+          "id": 5461,
           "nodeType": "StructuredDocumentation",
           "src": "91:141:32",
           "text": "@title PriceWarsFactory\n @author cds95\n @notice This is the price wars factory contract to manage creating new price war contracts"
         },
         "fullyImplemented": true,
-        "id": 5542,
+        "id": 5495,
         "linearizedBaseContracts": [
-          5542
+          5495
         ],
         "name": "PriceWarsFactory",
         "nodeType": "ContractDefinition",
@@ -110,38 +110,38 @@
           {
             "constant": false,
             "functionSelector": "117a5b90",
-            "id": 5511,
+            "id": 5464,
             "mutability": "mutable",
             "name": "games",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 5542,
+            "scope": 5495,
             "src": "323:24:32",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_array$_t_contract$_PriceWars_$5504_$dyn_storage",
+              "typeIdentifier": "t_array$_t_contract$_PriceWars_$5457_$dyn_storage",
               "typeString": "contract PriceWars[]"
             },
             "typeName": {
               "baseType": {
                 "contractScope": null,
-                "id": 5509,
+                "id": 5462,
                 "name": "PriceWars",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 5504,
+                "referencedDeclaration": 5457,
                 "src": "323:9:32",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_contract$_PriceWars_$5504",
+                  "typeIdentifier": "t_contract$_PriceWars_$5457",
                   "typeString": "contract PriceWars"
                 }
               },
-              "id": 5510,
+              "id": 5463,
               "length": null,
               "nodeType": "ArrayTypeName",
               "src": "323:11:32",
               "typeDescriptions": {
-                "typeIdentifier": "t_array$_t_contract$_PriceWars_$5504_$dyn_storage_ptr",
+                "typeIdentifier": "t_array$_t_contract$_PriceWars_$5457_$dyn_storage_ptr",
                 "typeString": "contract PriceWars[]"
               }
             },
@@ -151,16 +151,16 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 5512,
+              "id": 5465,
               "nodeType": "StructuredDocumentation",
               "src": "354:62:32",
               "text": "@notice Triggered when a new price war contract is created"
             },
-            "id": 5514,
+            "id": 5467,
             "name": "PriceWarCreated",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 5513,
+              "id": 5466,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "442:2:32"
@@ -169,39 +169,39 @@
           },
           {
             "body": {
-              "id": 5540,
+              "id": 5493,
               "nodeType": "Block",
               "src": "689:214:32",
               "statements": [
                 {
                   "assignments": [
-                    5523
+                    5476
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 5523,
+                      "id": 5476,
                       "mutability": "mutable",
                       "name": "game",
                       "nodeType": "VariableDeclaration",
                       "overrides": null,
-                      "scope": 5540,
+                      "scope": 5493,
                       "src": "755:14:32",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_PriceWars_$5504",
+                        "typeIdentifier": "t_contract$_PriceWars_$5457",
                         "typeString": "contract PriceWars"
                       },
                       "typeName": {
                         "contractScope": null,
-                        "id": 5522,
+                        "id": 5475,
                         "name": "PriceWars",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 5504,
+                        "referencedDeclaration": 5457,
                         "src": "755:9:32",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_PriceWars_$5504",
+                          "typeIdentifier": "t_contract$_PriceWars_$5457",
                           "typeString": "contract PriceWars"
                         }
                       },
@@ -209,17 +209,17 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 5528,
+                  "id": 5481,
                   "initialValue": {
                     "argumentTypes": null,
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 5526,
+                        "id": 5479,
                         "name": "cryptoChampionsContractAddress",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5517,
+                        "referencedDeclaration": 5470,
                         "src": "786:30:32",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -234,7 +234,7 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 5525,
+                      "id": 5478,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -242,23 +242,23 @@
                       "nodeType": "NewExpression",
                       "src": "772:13:32",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_creation_nonpayable$_t_address_$returns$_t_contract$_PriceWars_$5504_$",
+                        "typeIdentifier": "t_function_creation_nonpayable$_t_address_$returns$_t_contract$_PriceWars_$5457_$",
                         "typeString": "function (address) returns (contract PriceWars)"
                       },
                       "typeName": {
                         "contractScope": null,
-                        "id": 5524,
+                        "id": 5477,
                         "name": "PriceWars",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 5504,
+                        "referencedDeclaration": 5457,
                         "src": "776:9:32",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_PriceWars_$5504",
+                          "typeIdentifier": "t_contract$_PriceWars_$5457",
                           "typeString": "contract PriceWars"
                         }
                       }
                     },
-                    "id": 5527,
+                    "id": 5480,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -269,7 +269,7 @@
                     "src": "772:45:32",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_PriceWars_$5504",
+                      "typeIdentifier": "t_contract$_PriceWars_$5457",
                       "typeString": "contract PriceWars"
                     }
                   },
@@ -282,14 +282,14 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 5532,
+                        "id": 5485,
                         "name": "game",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5523,
+                        "referencedDeclaration": 5476,
                         "src": "838:4:32",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_PriceWars_$5504",
+                          "typeIdentifier": "t_contract$_PriceWars_$5457",
                           "typeString": "contract PriceWars"
                         }
                       }
@@ -297,24 +297,24 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_contract$_PriceWars_$5504",
+                          "typeIdentifier": "t_contract$_PriceWars_$5457",
                           "typeString": "contract PriceWars"
                         }
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 5529,
+                        "id": 5482,
                         "name": "games",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5511,
+                        "referencedDeclaration": 5464,
                         "src": "827:5:32",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_array$_t_contract$_PriceWars_$5504_$dyn_storage",
+                          "typeIdentifier": "t_array$_t_contract$_PriceWars_$5457_$dyn_storage",
                           "typeString": "contract PriceWars[] storage ref"
                         }
                       },
-                      "id": 5531,
+                      "id": 5484,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -324,11 +324,11 @@
                       "referencedDeclaration": null,
                       "src": "827:10:32",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_contract$_PriceWars_$5504_$returns$__$",
+                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_contract$_PriceWars_$5457_$returns$__$",
                         "typeString": "function (contract PriceWars)"
                       }
                     },
-                    "id": 5533,
+                    "id": 5486,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -343,7 +343,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5534,
+                  "id": 5487,
                   "nodeType": "ExpressionStatement",
                   "src": "827:16:32"
                 },
@@ -353,18 +353,18 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 5535,
+                      "id": 5488,
                       "name": "PriceWarCreated",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5514,
+                      "referencedDeclaration": 5467,
                       "src": "858:15:32",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
                         "typeString": "function ()"
                       }
                     },
-                    "id": 5536,
+                    "id": 5489,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -379,39 +379,39 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5537,
+                  "id": 5490,
                   "nodeType": "EmitStatement",
                   "src": "853:22:32"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 5538,
+                    "id": 5491,
                     "name": "game",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 5523,
+                    "referencedDeclaration": 5476,
                     "src": "892:4:32",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_PriceWars_$5504",
+                      "typeIdentifier": "t_contract$_PriceWars_$5457",
                       "typeString": "contract PriceWars"
                     }
                   },
-                  "functionReturnParameters": 5521,
-                  "id": 5539,
+                  "functionReturnParameters": 5474,
+                  "id": 5492,
                   "nodeType": "Return",
                   "src": "885:11:32"
                 }
               ]
             },
             "documentation": {
-              "id": 5515,
+              "id": 5468,
               "nodeType": "StructuredDocumentation",
               "src": "451:140:32",
               "text": "@notice Creates a new price war game contract\n @param cryptoChampionsContractAddress The address of the crypto champions contract"
             },
             "functionSelector": "e5afecca",
-            "id": 5541,
+            "id": 5494,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -419,17 +419,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 5518,
+              "id": 5471,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5517,
+                  "id": 5470,
                   "mutability": "mutable",
                   "name": "cryptoChampionsContractAddress",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 5541,
+                  "scope": 5494,
                   "src": "620:38:32",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -438,7 +438,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5516,
+                    "id": 5469,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "620:7:32",
@@ -455,33 +455,33 @@
               "src": "619:40:32"
             },
             "returnParameters": {
-              "id": 5521,
+              "id": 5474,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5520,
+                  "id": 5473,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 5541,
+                  "scope": 5494,
                   "src": "678:9:32",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_PriceWars_$5504",
+                    "typeIdentifier": "t_contract$_PriceWars_$5457",
                     "typeString": "contract PriceWars"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 5519,
+                    "id": 5472,
                     "name": "PriceWars",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 5504,
+                    "referencedDeclaration": 5457,
                     "src": "678:9:32",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_PriceWars_$5504",
+                      "typeIdentifier": "t_contract$_PriceWars_$5457",
                       "typeString": "contract PriceWars"
                     }
                   },
@@ -491,14 +491,14 @@
               ],
               "src": "677:11:32"
             },
-            "scope": 5542,
+            "scope": 5495,
             "src": "596:307:32",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 5543,
+        "scope": 5496,
         "src": "232:673:32"
       }
     ],
