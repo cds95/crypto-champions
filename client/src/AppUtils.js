@@ -7,7 +7,7 @@ import BigNumber from 'bignumber.js';
 export const getChain = async () => {
     const web3 = await getWeb3();
     const networkId = await web3.eth.net.getId();
-    if (Object.keys(map).indexOf(networkId) === -1) {
+    if (Object.keys(map).indexOf(`${networkId}`) === -1) {
         return CHAINS.DEV;
     }
     return networkId;
