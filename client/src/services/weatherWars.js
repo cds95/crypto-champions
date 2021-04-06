@@ -25,6 +25,22 @@ export const joinDuel = async (duelAddress, bet) => {
     });
 };
 
+export const startWeatherDuel = async (duelAddress) => {
+    const artifact = await loadWeatherWarContract(duelAddress);
+    const userAccount = await getUserAccount();
+    await artifact.methods.startGame().send({
+        from: userAccount
+    });
+};
+
+export const determineWeatherDuelWinner = async (duelAddress) => {
+    const artifact = await loadWeatherWarContract(duelAddress);
+    const userAccount = await getUserAccount();
+    await artifact.methods.determineWinner().send({
+        from: userAccount
+    });
+};
+
 export const getAllWeatherDuels = async () => {
     const artifact = await loadContract(CONTRACTS.WEATHER_WARS_FACTORY);
     const numDuels = await artifact.methods.getNumGames().call();
@@ -40,7 +56,9 @@ export const getAllWeatherDuels = async () => {
             4: phase,
             5: winner,
             6: isDuelAccepted,
-            7: bet
+            7: bet,
+            8: hasBeenPlayed,
+            9: isFetchingWeather
         } = await weatherWar.methods.getMetaInformation().call();
         const weatherWarObj = {
             address: gameAddress,
@@ -51,7 +69,9 @@ export const getAllWeatherDuels = async () => {
             phase,
             winner: isZeroAddress(winner) ? null : winner,
             isDuelAccepted,
-            bet
+            bet,
+            hasBeenPlayed,
+            isFetchingWeather
         };
         duels.push(weatherWarObj);
     }

@@ -82,7 +82,7 @@ export const getPastUserDuels = (state) => {
         return [];
     }
     return weatherDuels.filter(
-        (duel) => duel.phase == GAME_PHASE.CLOSED && (duel.opponent == userAccount || duel.initiator == userAccount)
+        (duel) => duel.winner && (duel.opponent == userAccount || duel.initiator == userAccount)
     );
 };
 
@@ -95,6 +95,6 @@ export const getOpenUserDuels = (state) => {
         return [];
     }
     return weatherDuels.filter(
-        (duel) => duel.phase == GAME_PHASE.OPEN && (duel.opponent == userAccount || duel.initiator == userAccount)
+        (duel) => !duel.winner && (duel.opponent == userAccount || duel.initiator == userAccount)
     );
 };

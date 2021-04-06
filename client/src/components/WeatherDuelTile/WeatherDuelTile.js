@@ -7,24 +7,31 @@ import { getHero } from '../../redux/selectors';
 import { AcceptDuelModal } from '../AcceptDuelModal';
 import { ItemGridTile } from '../ItemGridTile/ItemGridTile';
 import './WeatherDuelTile.css';
+import { determineWeatherDuelWinner, startWeatherDuel } from '../../services/weatherWars';
+import { GAME_PHASE } from '../../constants';
 
 const text = {
     accept: 'Accept Challenge',
-    begin: 'Begin Challenge',
+    begin: 'Start Duel',
     victory: 'Victory',
     defeat: 'Defeat',
     waitingForResponse: 'Waiting for challenger to accept',
-    waitForResult: 'Waiting for initiator to start the duel'
+    waitForResult: 'Waiting for initiator to start the duel',
+    determineWinner: 'Reveal Winner',
+    fetchingWeatherInformation: 'Is Fetching weather information'
 };
 
 export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAccount }) => {
-    const { isDuelAccepted, initiator, winner, address, bet } = duel;
+    const { isDuelAccepted, initiator, winner, address, bet, phase, hasBeenPlayed, isFetchingWeather } = duel;
     const isInitiator = userAccount == initiator;
     const displayedHero = isInitiator ? opponentHero : initiatorHero;
     const itemImage = getRaceImage(displayedHero.raceId);
     const itemLabel = displayedHero.heroName;
     const itemSublabel = getRaceClassLabel(displayedHero.raceId, opponentHero.classId) + ` - ${displayedHero.affinity}`;
     const [isAcceptModalOpen, setIsSetAcceptModalOpen] = useState(false);
+    const startDuel = async () => await startWeatherDuel(address);
+    const determineWinner = async () => await determineWeatherDuelWinner(address);
+
     let actions;
     if (winner) {
         if (winner == userAccount) {
@@ -41,7 +48,27 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
             );
         }
     } else {
-        if (!isInitiator && !isDuelAccepted) {
+        if (phase == GAME_PHASE.CLOSED && hasBeenPlayed) {
+            actions = (
+                <React.Fragment>
+                    <Typography className="weather-duel-tile__action" variant="body1" onClick={determineWinner}>
+                        {text.determineWinner}
+                    </Typography>
+                </React.Fragment>
+            );
+        } else if (phase == GAME_PHASE.OPEN && isDuelAccepted && !hasBeenPlayed) {
+            actions = (
+                <Typography className="weather-duel-tile__action" variant="body1" onClick={startDuel}>
+                    {text.begin}
+                </Typography>
+            );
+        } else if (phase == GAME_PHASE.OPEN && isFetchingWeather) {
+            actions = (
+                <Typography className="weather-duel-tile__action" variant="body1">
+                    {text.fetchingWeatherInformation}
+                </Typography>
+            );
+        } else if (!isInitiator && !isDuelAccepted) {
             actions = (
                 <React.Fragment>
                     <AcceptDuelModal
@@ -58,24 +85,6 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
                         {text.accept}
                     </Typography>
                 </React.Fragment>
-            );
-        } else if (!isInitiator && isDuelAccepted) {
-            actions = (
-                <Typography className="weather-duel-tile__action" variant="body1">
-                    {text.waitForResult}
-                </Typography>
-            );
-        } else if (isInitiator && isDuelAccepted) {
-            actions = (
-                <Typography className="weather-duel-tile__action" variant="body1">
-                    {text.begin}
-                </Typography>
-            );
-        } else if (isInitiator && !isDuelAccepted) {
-            actions = (
-                <Typography className="weather-duel-tile__action" variant="body1">
-                    {text.waitingForResponse}
-                </Typography>
             );
         }
     }

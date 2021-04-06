@@ -40,15 +40,19 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
 
     address public opponent;
 
-    uint256 public initiatorHeroId;
+    uint256 public initiatorScore;
 
-    uint256 public opponentHeroId;
+    uint256 public opponentScore;
 
     address public winner;
 
     mapping(address => uint256) public playerHero;
 
     bool public isDuelAccepted;
+
+    bool public hasBeenPlayed;
+
+    bool public isFetchingWeather;
 
     constructor(
         address oracle,
@@ -62,7 +66,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         string memory apiKey,
         address weatherWarsFactoryAddress
     ) public CappedMinigame(gameName, MAX_PLAYERS, _cryptoChampionsContractAddress) {
-        setPublicChainlinkToken();
+        // setPublicChainlinkToken();
         _linkTokenAddress = linkTokenAddress;
         _fee = fee;
         _oracle = oracle;
@@ -86,6 +90,19 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
     }
 
     function play() internal override {
+        // Hardcoding for now so we can test on Rinkeby.  Make sure to replace with call to requestWeatherData()
+        if (city == "6173331"") {
+            cityWeather = "Clear";
+        } else if (city == "4671654") {
+            cityWeather = "Clouds";
+        } else if (city == "4887398") {
+            cityWeather = "Thunderstorm";
+        } else {
+            cityWeather = "Rain";
+        }
+    }
+
+    function requestWeatherData() internal {
         Chainlink.Request memory request = buildChainlinkRequest(_jobId, address(this), this.fulfill.selector);
 
         // Build URL
@@ -96,6 +113,8 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         // Send Request
         request.add("get", reqUrlWithCity);
         request.add("path", "weather.0.main");
+
+        isFetchingWeather = true;
         sendChainlinkRequestTo(_oracle, request, _fee);
     }
 
@@ -106,12 +125,8 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
 
     function fulfill(bytes32 _requestId, bytes32 _weather) public recordChainlinkFulfillment(_requestId) {
         cityWeather = string(abi.encodePacked(_weather));
-    }
-
-    function joinGame(uint256 heroId) public override {
-        require(heroId == opponentHeroId || heroId == initiatorHeroId); // dev: Invalid hero id
-        require(msg.sender == address(_weatherWarsFactory) || msg.sender == initiator || msg.sender == opponent); // dev: Address not part of the game
-        super.joinGame(heroId);
+        hasBeenPlayed = true;
+        isFetchingWeather = false;
     }
 
     function leaveGame(uint256 heroId) public override {
@@ -125,43 +140,46 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         cryptoChampions.transferInGameTokens(msg.sender, addressBalance);
     }
 
-    function determineWinner() external {
-        require(super.getNumPlayers() == MAX_PLAYERS); // dev: Weather Wars can only have two players
-        require(balances[msg.sender] > 0); // dev: Only a player who has bought in may determine a winner
+    function determineWinner() external returns (address, uint256) {
+        require(msg.sender == initiator || msg.sender == opponent); // dev: Address not part of the game
         require(currentPhase == MinigamePhase.CLOSED); // dev: Game not yet over
         require(bytes(cityWeather).length != 0); // dev: City weather data has not been fetched yet
         require(isDuelAccepted); // dev:  Opponent has not accepted the duel
 
-        uint256 heroOne = heroIds[0];
-        uint256 heroTwo = heroIds[1];
-        uint256 heroOneScore = getHeroScore(heroOne);
-        uint256 heroTwoScore = getHeroScore(heroTwo);
+        uint256 initiatorHeroId = playerHero[initiator];
+        uint256 opponentHeroId = playerHero[opponent];
+        initiatorScore = getHeroScore(initiatorHeroId);
+        opponentScore = getHeroScore(opponentHeroId);
 
         // Handle Draw
-        if (heroOneScore == heroTwoScore) {
-            address playerOne = cryptoChampions.getHeroOwner(heroOne);
-            address playerTwo = cryptoChampions.getHeroOwner(heroTwo);
+        if (initiatorScore == opponentScore) {
+            address playerOne = cryptoChampions.getHeroOwner(initiatorHeroId);
+            address playerTwo = cryptoChampions.getHeroOwner(opponentHeroId);
             uint256 balancePlayerOne = balances[playerOne];
             uint256 balancePlayerTwo = balances[playerTwo];
             balances[playerOne] = 0;
             balances[playerTwo] = 0;
             cryptoChampions.transferInGameTokens(playerOne, balancePlayerOne);
             cryptoChampions.transferInGameTokens(playerTwo, balancePlayerTwo);
-            return;
+            return (address(0), 0);
         }
 
         // Handle winner and loser
         uint256 winnerHeroId;
         uint256 loserHeroId;
-        if (heroOneScore < heroTwoScore) {
-            winnerHeroId = heroTwo;
-            loserHeroId = heroOne;
-        } else if (heroOneScore > heroTwoScore) {
-            winnerHeroId = heroOne;
-            loserHeroId = heroTwo;
+        address winnerAddress;
+        address loserAddress;
+        if (initiatorScore < opponentScore) {
+            winnerHeroId = opponentHeroId;
+            loserHeroId = initiatorHeroId;
+            winnerAddress = opponent;
+            loserAddress = initiator;
+        } else if (initiatorScore > opponentScore) {
+            winnerHeroId = initiatorHeroId;
+            loserHeroId = opponentHeroId;
+            winnerAddress = initiator;
+            loserAddress = opponent;
         }
-        address winnerAddress = cryptoChampions.getHeroOwner(winnerHeroId);
-        address loserAddress = cryptoChampions.getHeroOwner(loserHeroId);
         uint256 winnerBalance = balances[winnerAddress];
         uint256 loserBalance = balances[loserAddress];
         balances[winnerAddress] = 0;
@@ -169,6 +187,7 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
         cryptoChampions.transferInGameTokens(winnerAddress, winnerBalance + loserBalance);
         winner = winnerAddress;
         setPhase(MinigamePhase.CLOSED);
+        return (winner, winnerHeroId);
     }
 
     function getHeroScore(uint256 heroId) internal returns (uint256) {
@@ -273,7 +292,9 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
             MinigamePhase,
             address,
             bool,
-            uint256
+            uint256,
+            bool,
+            bool
         )
     {
         return (
@@ -284,7 +305,9 @@ contract WeatherWars is CappedMinigame, ChainlinkClient, ERC1155Receiver {
             currentPhase,
             winner,
             isDuelAccepted,
-            buyinAmount
+            buyinAmount,
+            hasBeenPlayed,
+            isFetchingWeather
         );
     }
 }
