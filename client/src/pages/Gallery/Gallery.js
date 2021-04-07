@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useGetHeroes, useGetWeatherDuels } from '../../hooks/cryptoChampionsHook';
-import {
-    setDuelOpponentHeroAction,
-    setHeroesAction,
-    setIsLoadingHeroesAction,
-    setWeatherDuelsAction
-} from '../../redux/actions';
+import { useGetWeatherDuels } from '../../hooks/cryptoChampionsHook';
+import { setDuelOpponentHeroAction, setWeatherDuelsAction } from '../../redux/actions';
 import './Gallery.css';
 import { ItemSelector } from '../../components/ItemSelector';
 import { getRaceImage } from '../../images/races';
 import { getRaceClassLabel } from '../../AppUtils';
-import {
-    getHerosUserCanChallenge,
-    getNonUserOwnedHeros,
-    getOpenUserDuels,
-    getPastUserDuels
-} from '../../redux/selectors';
+import { getHerosUserCanChallenge, getOpenUserDuels, getPastUserDuels } from '../../redux/selectors';
 import { DuelModal } from '../../components/DuelModal/DuelModal';
 import { Tab, Tabs } from '@material-ui/core';
 import { WeatherDuels } from '../../components/WeatherDuels/WeatherDuels';
@@ -35,20 +25,13 @@ const galleryTabs = {
 };
 
 export const GalleryComp = ({
-    setHeroes,
-    setIsLoadingHeroes,
     heroesUserCanChallenge,
     setDuelOpponentHero,
     setWeatherDuels,
     openUserDuels,
     closedUserDuels
 }) => {
-    const { isLoading: isLoadingHeroes, heroes = [] } = useGetHeroes();
     const { isLoading: isLoadingDuels, weatherDuels } = useGetWeatherDuels();
-    useEffect(() => {
-        setIsLoadingHeroes(isLoadingHeroes);
-        setHeroes(heroes);
-    }, [isLoadingHeroes]);
     useEffect(() => {
         setWeatherDuels(weatherDuels);
     }, [isLoadingDuels]);
@@ -59,7 +42,7 @@ export const GalleryComp = ({
     const [isDuelModalOpen, setIsDuelModalOpen] = useState(false);
     const [currentTab, setCurrentTab] = useState(galleryTabs.CHALLENGE);
     const handleOnClose = () => setIsDuelModalOpen(false);
-    const changeTabs = (event, newTab) => {
+    const changeTabs = (_, newTab) => {
         setCurrentTab(newTab);
     };
     const items = heroesUserCanChallenge.map((hero) => {
@@ -112,12 +95,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setHeroes: (heroes) => {
-            dispatch(setHeroesAction(heroes));
-        },
-        setIsLoadingHeroes: (isLoadingHeroes) => {
-            dispatch(setIsLoadingHeroesAction(isLoadingHeroes));
-        },
         setDuelOpponentHero: (heroId, opponentAddress) => {
             dispatch(setDuelOpponentHeroAction(heroId, opponentAddress));
         },

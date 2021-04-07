@@ -5,6 +5,7 @@ import { mintElderSpiritWorkflow } from './mintElderSpiritWorkflow';
 import { mintHeroWorkflow } from './mintHeroWorkflow';
 import { heroes } from './heroes';
 import { duel } from './duel';
+import { collection } from './collection';
 
 export const reducers = combineReducers({
     cryptoChampions,
@@ -12,5 +13,6 @@ export const reducers = combineReducers({
     mintHeroWorkflow,
     workflow,
     heroes,
-    duel
+    duel,
+    collection
 });
