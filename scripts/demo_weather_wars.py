@@ -42,8 +42,6 @@ def main():
     cc.mintHero(1, "hero 3", { "from": accounts[3], "value": 0.271 * 10**18 })
     cc.mintHero(2, "hero 4", { "from": accounts[4], "value": 0.271 * 10**18 })
     cc.mintHero(3, "hero 4", { "from": accounts[0], "value": 0.271 * 10**18 })
-    
-    wwf.init()
 
     cities = [
         "6173331",
