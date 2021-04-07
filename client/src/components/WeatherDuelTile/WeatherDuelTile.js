@@ -43,17 +43,22 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
     const [hasDuelBeenStarted, setHasDuelBeenStarted] = useState(false);
     const [hasWinnerBeenRevealed, setHasWinnerBeenRevealed] = useState(false);
     const [isWaitModalOpen, setIsWaitModalOpen] = useState(false);
+    const [isWaitingForContractResponse, setIsWaitingForContractResponse] = useState(false);
     const isLoading = !initiatorHero || !opponentHero;
 
     const startDuel = async () => {
+        setIsWaitModalOpen(true);
+        setIsWaitingForContractResponse(true);
         await startWeatherDuel(address);
         setHasDuelBeenStarted(true);
-        setIsWaitModalOpen(true);
+        setIsWaitingForContractResponse(false);
     };
     const determineWinner = async () => {
+        setIsWaitModalOpen(true);
+        setIsWaitingForContractResponse(true);
         await determineWeatherDuelWinner(address);
         setHasWinnerBeenRevealed(true);
-        setIsWaitModalOpen(true);
+        setIsWaitingForContractResponse(false);
     };
 
     let actions;
@@ -106,7 +111,7 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
                     <CryptoChampionButton
                         className="weather-duel-tile__action"
                         label={text.accept}
-                        onClick={() => setIsSetAcceptModalOpen(address)}
+                        onClick={() => setIsSetAcceptModalOpen(true)}
                     />
                 </React.Fragment>
             );
@@ -118,7 +123,13 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
         <React.Fragment>
             <Dialog open={isWaitModalOpen} onClose={closeModal}>
                 <DialogContent className="weather-duel-tile__modal pronciono">
-                    {hasWinnerBeenRevealed ? text.winnerRevealed : text.duelStarted}
+                    {isWaitingForContractResponse ? (
+                        <CircularProgress />
+                    ) : hasWinnerBeenRevealed ? (
+                        text.winnerRevealed
+                    ) : (
+                        text.duelStarted
+                    )}
                 </DialogContent>
                 <DialogActions>
                     <CryptoChampionButton label={text.ok} onClick={closeModal} />
