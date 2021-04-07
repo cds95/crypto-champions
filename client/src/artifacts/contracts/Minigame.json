@@ -173,18 +173,18 @@
     "absolutePath": "contracts/minigames/Minigame.sol",
     "exportedSymbols": {
       "Minigame": [
-        5081
+        6301
       ],
       "MinigamePlayer": [
-        4916
+        6136
       ]
     },
-    "id": 5082,
+    "id": 6302,
     "license": "UNLICENSED",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 4912,
+        "id": 6132,
         "literals": [
           "solidity",
           "^",
@@ -197,26 +197,26 @@
       {
         "absolutePath": "interfaces/ICryptoChampions.sol",
         "file": "../../interfaces/ICryptoChampions.sol",
-        "id": 4913,
+        "id": 6133,
         "nodeType": "ImportDirective",
-        "scope": 5082,
-        "sourceUnit": 4715,
+        "scope": 6302,
+        "sourceUnit": 4744,
         "src": "64:47:17",
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
         "canonicalName": "MinigamePlayer",
-        "id": 4916,
+        "id": 6136,
         "members": [
           {
             "constant": false,
-            "id": 4915,
+            "id": 6135,
             "mutability": "mutable",
             "name": "isInGame",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 4916,
+            "scope": 6136,
             "src": "141:13:17",
             "stateVariable": false,
             "storageLocation": "default",
@@ -225,7 +225,7 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 4914,
+              "id": 6134,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
               "src": "141:4:17",
@@ -240,7 +240,7 @@
         ],
         "name": "MinigamePlayer",
         "nodeType": "StructDefinition",
-        "scope": 5082,
+        "scope": 6302,
         "src": "113:76:17",
         "visibility": "public"
       },
@@ -250,31 +250,31 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "documentation": {
-          "id": 4917,
+          "id": 6137,
           "nodeType": "StructuredDocumentation",
           "src": "191:82:17",
           "text": "@title Minigame\n @author cds95\n @notice This is contract for a minigame"
         },
         "fullyImplemented": false,
-        "id": 5081,
+        "id": 6301,
         "linearizedBaseContracts": [
-          5081
+          6301
         ],
         "name": "Minigame",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "Minigame.MinigamePhase",
-            "id": 4920,
+            "id": 6140,
             "members": [
               {
-                "id": 4918,
+                "id": 6138,
                 "name": "OPEN",
                 "nodeType": "EnumValue",
                 "src": "355:4:17"
               },
               {
-                "id": 4919,
+                "id": 6139,
                 "name": "CLOSED",
                 "nodeType": "EnumValue",
                 "src": "361:6:17"
@@ -287,28 +287,28 @@
           {
             "constant": false,
             "functionSelector": "055ad42e",
-            "id": 4922,
+            "id": 6142,
             "mutability": "mutable",
             "name": "currentPhase",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 5081,
+            "scope": 6301,
             "src": "407:33:17",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+              "typeIdentifier": "t_enum$_MinigamePhase_$6140",
               "typeString": "enum Minigame.MinigamePhase"
             },
             "typeName": {
               "contractScope": null,
-              "id": 4921,
+              "id": 6141,
               "name": "MinigamePhase",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4920,
+              "referencedDeclaration": 6140,
               "src": "407:13:17",
               "typeDescriptions": {
-                "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                 "typeString": "enum Minigame.MinigamePhase"
               }
             },
@@ -318,23 +318,23 @@
           {
             "constant": false,
             "functionSelector": "f71d96cb",
-            "id": 4926,
+            "id": 6146,
             "mutability": "mutable",
             "name": "players",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 5081,
+            "scope": 6301,
             "src": "487:49:17",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_MinigamePlayer_$4916_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_MinigamePlayer_$6136_storage_$",
               "typeString": "mapping(uint256 => struct MinigamePlayer)"
             },
             "typeName": {
-              "id": 4925,
+              "id": 6145,
               "keyType": {
-                "id": 4923,
+                "id": 6143,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
                 "src": "495:7:17",
@@ -346,18 +346,18 @@
               "nodeType": "Mapping",
               "src": "487:34:17",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_MinigamePlayer_$4916_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_MinigamePlayer_$6136_storage_$",
                 "typeString": "mapping(uint256 => struct MinigamePlayer)"
               },
               "valueType": {
                 "contractScope": null,
-                "id": 4924,
+                "id": 6144,
                 "name": "MinigamePlayer",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 4916,
+                "referencedDeclaration": 6136,
                 "src": "506:14:17",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_MinigamePlayer_$4916_storage_ptr",
+                  "typeIdentifier": "t_struct$_MinigamePlayer_$6136_storage_ptr",
                   "typeString": "struct MinigamePlayer"
                 }
               }
@@ -368,12 +368,12 @@
           {
             "constant": false,
             "functionSelector": "614a4e44",
-            "id": 4929,
+            "id": 6149,
             "mutability": "mutable",
             "name": "heroIds",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 5081,
+            "scope": 6301,
             "src": "579:24:17",
             "stateVariable": true,
             "storageLocation": "default",
@@ -383,7 +383,7 @@
             },
             "typeName": {
               "baseType": {
-                "id": 4927,
+                "id": 6147,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
                 "src": "579:7:17",
@@ -392,7 +392,7 @@
                   "typeString": "uint256"
                 }
               },
-              "id": 4928,
+              "id": 6148,
               "length": null,
               "nodeType": "ArrayTypeName",
               "src": "579:9:17",
@@ -407,12 +407,12 @@
           {
             "constant": false,
             "functionSelector": "97b2f556",
-            "id": 4931,
+            "id": 6151,
             "mutability": "mutable",
             "name": "numPlayers",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 5081,
+            "scope": 6301,
             "src": "657:25:17",
             "stateVariable": true,
             "storageLocation": "default",
@@ -421,7 +421,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 4930,
+              "id": 6150,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "657:7:17",
@@ -436,12 +436,12 @@
           {
             "constant": false,
             "functionSelector": "473bc223",
-            "id": 4933,
+            "id": 6153,
             "mutability": "mutable",
             "name": "gameName",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 5081,
+            "scope": 6301,
             "src": "713:22:17",
             "stateVariable": true,
             "storageLocation": "default",
@@ -450,7 +450,7 @@
               "typeString": "string"
             },
             "typeName": {
-              "id": 4932,
+              "id": 6152,
               "name": "string",
               "nodeType": "ElementaryTypeName",
               "src": "713:6:17",
@@ -465,28 +465,28 @@
           {
             "constant": false,
             "functionSelector": "053e4fb6",
-            "id": 4935,
+            "id": 6155,
             "mutability": "mutable",
             "name": "cryptoChampions",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 5081,
+            "scope": 6301,
             "src": "788:39:17",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_ICryptoChampions_$4714",
+              "typeIdentifier": "t_contract$_ICryptoChampions_$4743",
               "typeString": "contract ICryptoChampions"
             },
             "typeName": {
               "contractScope": null,
-              "id": 4934,
+              "id": 6154,
               "name": "ICryptoChampions",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4714,
+              "referencedDeclaration": 4743,
               "src": "788:16:17",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_ICryptoChampions_$4714",
+                "typeIdentifier": "t_contract$_ICryptoChampions_$4743",
                 "typeString": "contract ICryptoChampions"
               }
             },
@@ -496,11 +496,11 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 4937,
+            "id": 6157,
             "name": "GameStarted",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 4936,
+              "id": 6156,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "898:2:17"
@@ -510,11 +510,11 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 4939,
+            "id": 6159,
             "name": "GameEnded",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 4938,
+              "id": 6158,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "967:2:17"
@@ -523,25 +523,25 @@
           },
           {
             "body": {
-              "id": 4962,
+              "id": 6182,
               "nodeType": "Block",
               "src": "1215:149:17",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 4949,
+                    "id": 6169,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 4947,
+                      "id": 6167,
                       "name": "gameName",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4933,
+                      "referencedDeclaration": 6153,
                       "src": "1225:8:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_storage",
@@ -552,11 +552,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 4948,
+                      "id": 6168,
                       "name": "nameOfGame",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4942,
+                      "referencedDeclaration": 6162,
                       "src": "1236:10:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_memory_ptr",
@@ -569,28 +569,28 @@
                       "typeString": "string storage ref"
                     }
                   },
-                  "id": 4950,
+                  "id": 6170,
                   "nodeType": "ExpressionStatement",
                   "src": "1225:21:17"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 4954,
+                    "id": 6174,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 4951,
+                      "id": 6171,
                       "name": "currentPhase",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4922,
+                      "referencedDeclaration": 6142,
                       "src": "1256:12:17",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                        "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                         "typeString": "enum Minigame.MinigamePhase"
                       }
                     },
@@ -600,18 +600,18 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 4952,
+                        "id": 6172,
                         "name": "MinigamePhase",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4920,
+                        "referencedDeclaration": 6140,
                         "src": "1271:13:17",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_enum$_MinigamePhase_$4920_$",
+                          "typeIdentifier": "t_type$_t_enum$_MinigamePhase_$6140_$",
                           "typeString": "type(enum Minigame.MinigamePhase)"
                         }
                       },
-                      "id": 4953,
+                      "id": 6173,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -621,38 +621,38 @@
                       "referencedDeclaration": null,
                       "src": "1271:18:17",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                        "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                         "typeString": "enum Minigame.MinigamePhase"
                       }
                     },
                     "src": "1256:33:17",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                      "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                       "typeString": "enum Minigame.MinigamePhase"
                     }
                   },
-                  "id": 4955,
+                  "id": 6175,
                   "nodeType": "ExpressionStatement",
                   "src": "1256:33:17"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 4960,
+                    "id": 6180,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 4956,
+                      "id": 6176,
                       "name": "cryptoChampions",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4935,
+                      "referencedDeclaration": 6155,
                       "src": "1299:15:17",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_ICryptoChampions_$4714",
+                        "typeIdentifier": "t_contract$_ICryptoChampions_$4743",
                         "typeString": "contract ICryptoChampions"
                       }
                     },
@@ -663,11 +663,11 @@
                       "arguments": [
                         {
                           "argumentTypes": null,
-                          "id": 4958,
+                          "id": 6178,
                           "name": "cryptoChampionsAddress",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 4944,
+                          "referencedDeclaration": 6164,
                           "src": "1334:22:17",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -682,18 +682,18 @@
                             "typeString": "address"
                           }
                         ],
-                        "id": 4957,
+                        "id": 6177,
                         "name": "ICryptoChampions",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4714,
+                        "referencedDeclaration": 4743,
                         "src": "1317:16:17",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_ICryptoChampions_$4714_$",
+                          "typeIdentifier": "t_type$_t_contract$_ICryptoChampions_$4743_$",
                           "typeString": "type(contract ICryptoChampions)"
                         }
                       },
-                      "id": 4959,
+                      "id": 6179,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -704,29 +704,29 @@
                       "src": "1317:40:17",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_ICryptoChampions_$4714",
+                        "typeIdentifier": "t_contract$_ICryptoChampions_$4743",
                         "typeString": "contract ICryptoChampions"
                       }
                     },
                     "src": "1299:58:17",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_ICryptoChampions_$4714",
+                      "typeIdentifier": "t_contract$_ICryptoChampions_$4743",
                       "typeString": "contract ICryptoChampions"
                     }
                   },
-                  "id": 4961,
+                  "id": 6181,
                   "nodeType": "ExpressionStatement",
                   "src": "1299:58:17"
                 }
               ]
             },
             "documentation": {
-              "id": 4940,
+              "id": 6160,
               "nodeType": "StructuredDocumentation",
               "src": "1010:123:17",
               "text": "@param nameOfGame The minigame's name\n @param cryptoChampionsAddress The address of the cryptoChampions contract"
             },
-            "id": 4963,
+            "id": 6183,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
@@ -734,17 +734,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 4945,
+              "id": 6165,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4942,
+                  "id": 6162,
                   "mutability": "mutable",
                   "name": "nameOfGame",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 4963,
+                  "scope": 6183,
                   "src": "1150:24:17",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -753,7 +753,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 4941,
+                    "id": 6161,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1150:6:17",
@@ -767,12 +767,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 4944,
+                  "id": 6164,
                   "mutability": "mutable",
                   "name": "cryptoChampionsAddress",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 4963,
+                  "scope": 6183,
                   "src": "1176:30:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -781,7 +781,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 4943,
+                    "id": 6163,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1176:7:17",
@@ -798,12 +798,12 @@
               "src": "1149:58:17"
             },
             "returnParameters": {
-              "id": 4946,
+              "id": 6166,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1215:0:17"
             },
-            "scope": 5081,
+            "scope": 6301,
             "src": "1138:226:17",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -811,7 +811,7 @@
           },
           {
             "body": {
-              "id": 5000,
+              "id": 6220,
               "nodeType": "Block",
               "src": "1506:216:17",
               "statements": [
@@ -822,24 +822,24 @@
                       {
                         "argumentTypes": null,
                         "commonType": {
-                          "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                          "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                           "typeString": "enum Minigame.MinigamePhase"
                         },
-                        "id": 4973,
+                        "id": 6193,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 4970,
+                          "id": 6190,
                           "name": "currentPhase",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 4922,
+                          "referencedDeclaration": 6142,
                           "src": "1524:12:17",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                            "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                             "typeString": "enum Minigame.MinigamePhase"
                           }
                         },
@@ -849,18 +849,18 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 4971,
+                            "id": 6191,
                             "name": "MinigamePhase",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 4920,
+                            "referencedDeclaration": 6140,
                             "src": "1540:13:17",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_enum$_MinigamePhase_$4920_$",
+                              "typeIdentifier": "t_type$_t_enum$_MinigamePhase_$6140_$",
                               "typeString": "type(enum Minigame.MinigamePhase)"
                             }
                           },
-                          "id": 4972,
+                          "id": 6192,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -870,7 +870,7 @@
                           "referencedDeclaration": null,
                           "src": "1540:18:17",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                            "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                             "typeString": "enum Minigame.MinigamePhase"
                           }
                         },
@@ -888,7 +888,7 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 4969,
+                      "id": 6189,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -902,7 +902,7 @@
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 4974,
+                    "id": 6194,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -917,39 +917,39 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 4975,
+                  "id": 6195,
                   "nodeType": "ExpressionStatement",
                   "src": "1516:43:17"
                 },
                 {
                   "assignments": [
-                    4977
+                    6197
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 4977,
+                      "id": 6197,
                       "mutability": "mutable",
                       "name": "player",
                       "nodeType": "VariableDeclaration",
                       "overrides": null,
-                      "scope": 5000,
+                      "scope": 6220,
                       "src": "1569:28:17",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_MinigamePlayer_$4916_memory_ptr",
+                        "typeIdentifier": "t_struct$_MinigamePlayer_$6136_memory_ptr",
                         "typeString": "struct MinigamePlayer"
                       },
                       "typeName": {
                         "contractScope": null,
-                        "id": 4976,
+                        "id": 6196,
                         "name": "MinigamePlayer",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 4916,
+                        "referencedDeclaration": 6136,
                         "src": "1569:14:17",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_MinigamePlayer_$4916_storage_ptr",
+                          "typeIdentifier": "t_struct$_MinigamePlayer_$6136_storage_ptr",
                           "typeString": "struct MinigamePlayer"
                         }
                       },
@@ -957,7 +957,7 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 4978,
+                  "id": 6198,
                   "initialValue": null,
                   "nodeType": "VariableDeclarationStatement",
                   "src": "1569:28:17"
@@ -965,7 +965,7 @@
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 4983,
+                    "id": 6203,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -974,25 +974,25 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 4979,
+                        "id": 6199,
                         "name": "player",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4977,
+                        "referencedDeclaration": 6197,
                         "src": "1607:6:17",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_MinigamePlayer_$4916_memory_ptr",
+                          "typeIdentifier": "t_struct$_MinigamePlayer_$6136_memory_ptr",
                           "typeString": "struct MinigamePlayer memory"
                         }
                       },
-                      "id": 4981,
+                      "id": 6201,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "isInGame",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4915,
+                      "referencedDeclaration": 6135,
                       "src": "1607:15:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -1004,7 +1004,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "74727565",
-                      "id": 4982,
+                      "id": 6202,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1025,14 +1025,14 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 4984,
+                  "id": 6204,
                   "nodeType": "ExpressionStatement",
                   "src": "1607:22:17"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 4989,
+                    "id": 6209,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1041,25 +1041,25 @@
                       "argumentTypes": null,
                       "baseExpression": {
                         "argumentTypes": null,
-                        "id": 4985,
+                        "id": 6205,
                         "name": "players",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4926,
+                        "referencedDeclaration": 6146,
                         "src": "1639:7:17",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_MinigamePlayer_$4916_storage_$",
+                          "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_MinigamePlayer_$6136_storage_$",
                           "typeString": "mapping(uint256 => struct MinigamePlayer storage ref)"
                         }
                       },
-                      "id": 4987,
+                      "id": 6207,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 4986,
+                        "id": 6206,
                         "name": "heroId",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4966,
+                        "referencedDeclaration": 6186,
                         "src": "1647:6:17",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -1073,7 +1073,7 @@
                       "nodeType": "IndexAccess",
                       "src": "1639:15:17",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_MinigamePlayer_$4916_storage",
+                        "typeIdentifier": "t_struct$_MinigamePlayer_$6136_storage",
                         "typeString": "struct MinigamePlayer storage ref"
                       }
                     },
@@ -1081,24 +1081,24 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 4988,
+                      "id": 6208,
                       "name": "player",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4977,
+                      "referencedDeclaration": 6197,
                       "src": "1657:6:17",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_MinigamePlayer_$4916_memory_ptr",
+                        "typeIdentifier": "t_struct$_MinigamePlayer_$6136_memory_ptr",
                         "typeString": "struct MinigamePlayer memory"
                       }
                     },
                     "src": "1639:24:17",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_MinigamePlayer_$4916_storage",
+                      "typeIdentifier": "t_struct$_MinigamePlayer_$6136_storage",
                       "typeString": "struct MinigamePlayer storage ref"
                     }
                   },
-                  "id": 4990,
+                  "id": 6210,
                   "nodeType": "ExpressionStatement",
                   "src": "1639:24:17"
                 },
@@ -1108,11 +1108,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 4994,
+                        "id": 6214,
                         "name": "heroId",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4966,
+                        "referencedDeclaration": 6186,
                         "src": "1686:6:17",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -1129,18 +1129,18 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 4991,
+                        "id": 6211,
                         "name": "heroIds",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 4929,
+                        "referencedDeclaration": 6149,
                         "src": "1673:7:17",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 4993,
+                      "id": 6213,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1154,7 +1154,7 @@
                         "typeString": "function (uint256)"
                       }
                     },
-                    "id": 4995,
+                    "id": 6215,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1169,14 +1169,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 4996,
+                  "id": 6216,
                   "nodeType": "ExpressionStatement",
                   "src": "1673:20:17"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 4998,
+                    "id": 6218,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1187,11 +1187,11 @@
                     "src": "1703:12:17",
                     "subExpression": {
                       "argumentTypes": null,
-                      "id": 4997,
+                      "id": 6217,
                       "name": "numPlayers",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4931,
+                      "referencedDeclaration": 6151,
                       "src": "1703:10:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1203,20 +1203,20 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 4999,
+                  "id": 6219,
                   "nodeType": "ExpressionStatement",
                   "src": "1703:12:17"
                 }
               ]
             },
             "documentation": {
-              "id": 4964,
+              "id": 6184,
               "nodeType": "StructuredDocumentation",
               "src": "1370:82:17",
               "text": "@notice Joins a game\n @param heroId The id of the joining player's hero"
             },
             "functionSelector": "efaa55a0",
-            "id": 5001,
+            "id": 6221,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -1224,17 +1224,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 4967,
+              "id": 6187,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 4966,
+                  "id": 6186,
                   "mutability": "mutable",
                   "name": "heroId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 5001,
+                  "scope": 6221,
                   "src": "1475:14:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1243,7 +1243,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 4965,
+                    "id": 6185,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1475:7:17",
@@ -1259,12 +1259,12 @@
               "src": "1474:16:17"
             },
             "returnParameters": {
-              "id": 4968,
+              "id": 6188,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1506:0:17"
             },
-            "scope": 5081,
+            "scope": 6301,
             "src": "1457:265:17",
             "stateMutability": "nonpayable",
             "virtual": true,
@@ -1272,7 +1272,7 @@
           },
           {
             "body": {
-              "id": 5029,
+              "id": 6249,
               "nodeType": "Block",
               "src": "1866:172:17",
               "statements": [
@@ -1283,24 +1283,24 @@
                       {
                         "argumentTypes": null,
                         "commonType": {
-                          "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                          "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                           "typeString": "enum Minigame.MinigamePhase"
                         },
-                        "id": 5011,
+                        "id": 6231,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 5008,
+                          "id": 6228,
                           "name": "currentPhase",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 4922,
+                          "referencedDeclaration": 6142,
                           "src": "1884:12:17",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                            "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                             "typeString": "enum Minigame.MinigamePhase"
                           }
                         },
@@ -1310,18 +1310,18 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 5009,
+                            "id": 6229,
                             "name": "MinigamePhase",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 4920,
+                            "referencedDeclaration": 6140,
                             "src": "1900:13:17",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_enum$_MinigamePhase_$4920_$",
+                              "typeIdentifier": "t_type$_t_enum$_MinigamePhase_$6140_$",
                               "typeString": "type(enum Minigame.MinigamePhase)"
                             }
                           },
-                          "id": 5010,
+                          "id": 6230,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -1331,7 +1331,7 @@
                           "referencedDeclaration": null,
                           "src": "1900:18:17",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                            "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                             "typeString": "enum Minigame.MinigamePhase"
                           }
                         },
@@ -1349,7 +1349,7 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 5007,
+                      "id": 6227,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -1363,7 +1363,7 @@
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 5012,
+                    "id": 6232,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1378,39 +1378,39 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5013,
+                  "id": 6233,
                   "nodeType": "ExpressionStatement",
                   "src": "1876:43:17"
                 },
                 {
                   "assignments": [
-                    5015
+                    6235
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 5015,
+                      "id": 6235,
                       "mutability": "mutable",
                       "name": "player",
                       "nodeType": "VariableDeclaration",
                       "overrides": null,
-                      "scope": 5029,
+                      "scope": 6249,
                       "src": "1929:29:17",
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_MinigamePlayer_$4916_storage_ptr",
+                        "typeIdentifier": "t_struct$_MinigamePlayer_$6136_storage_ptr",
                         "typeString": "struct MinigamePlayer"
                       },
                       "typeName": {
                         "contractScope": null,
-                        "id": 5014,
+                        "id": 6234,
                         "name": "MinigamePlayer",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 4916,
+                        "referencedDeclaration": 6136,
                         "src": "1929:14:17",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_MinigamePlayer_$4916_storage_ptr",
+                          "typeIdentifier": "t_struct$_MinigamePlayer_$6136_storage_ptr",
                           "typeString": "struct MinigamePlayer"
                         }
                       },
@@ -1418,30 +1418,30 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 5019,
+                  "id": 6239,
                   "initialValue": {
                     "argumentTypes": null,
                     "baseExpression": {
                       "argumentTypes": null,
-                      "id": 5016,
+                      "id": 6236,
                       "name": "players",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4926,
+                      "referencedDeclaration": 6146,
                       "src": "1961:7:17",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_MinigamePlayer_$4916_storage_$",
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_MinigamePlayer_$6136_storage_$",
                         "typeString": "mapping(uint256 => struct MinigamePlayer storage ref)"
                       }
                     },
-                    "id": 5018,
+                    "id": 6238,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 5017,
+                      "id": 6237,
                       "name": "heroId",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5004,
+                      "referencedDeclaration": 6224,
                       "src": "1969:6:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1455,7 +1455,7 @@
                     "nodeType": "IndexAccess",
                     "src": "1961:15:17",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_MinigamePlayer_$4916_storage",
+                      "typeIdentifier": "t_struct$_MinigamePlayer_$6136_storage",
                       "typeString": "struct MinigamePlayer storage ref"
                     }
                   },
@@ -1465,7 +1465,7 @@
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 5024,
+                    "id": 6244,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1474,25 +1474,25 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 5020,
+                        "id": 6240,
                         "name": "player",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5015,
+                        "referencedDeclaration": 6235,
                         "src": "1986:6:17",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_MinigamePlayer_$4916_storage_ptr",
+                          "typeIdentifier": "t_struct$_MinigamePlayer_$6136_storage_ptr",
                           "typeString": "struct MinigamePlayer storage pointer"
                         }
                       },
-                      "id": 5022,
+                      "id": 6242,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "isInGame",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4915,
+                      "referencedDeclaration": 6135,
                       "src": "1986:15:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -1504,7 +1504,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "66616c7365",
-                      "id": 5023,
+                      "id": 6243,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1525,14 +1525,14 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 5025,
+                  "id": 6245,
                   "nodeType": "ExpressionStatement",
                   "src": "1986:23:17"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 5027,
+                    "id": 6247,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1543,11 +1543,11 @@
                     "src": "2019:12:17",
                     "subExpression": {
                       "argumentTypes": null,
-                      "id": 5026,
+                      "id": 6246,
                       "name": "numPlayers",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4931,
+                      "referencedDeclaration": 6151,
                       "src": "2019:10:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1559,20 +1559,20 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 5028,
+                  "id": 6248,
                   "nodeType": "ExpressionStatement",
                   "src": "2019:12:17"
                 }
               ]
             },
             "documentation": {
-              "id": 5002,
+              "id": 6222,
               "nodeType": "StructuredDocumentation",
               "src": "1728:83:17",
               "text": "@notice Leaves a game\n @param heroId The id of the leaving player's hero"
             },
             "functionSelector": "3feef58a",
-            "id": 5030,
+            "id": 6250,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -1580,17 +1580,17 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 5005,
+              "id": 6225,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5004,
+                  "id": 6224,
                   "mutability": "mutable",
                   "name": "heroId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 5030,
+                  "scope": 6250,
                   "src": "1835:14:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1599,7 +1599,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 5003,
+                    "id": 6223,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1835:7:17",
@@ -1615,12 +1615,12 @@
               "src": "1834:16:17"
             },
             "returnParameters": {
-              "id": 5006,
+              "id": 6226,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1866:0:17"
             },
-            "scope": 5081,
+            "scope": 6301,
             "src": "1816:222:17",
             "stateMutability": "nonpayable",
             "virtual": true,
@@ -1628,7 +1628,7 @@
           },
           {
             "body": {
-              "id": 5055,
+              "id": 6275,
               "nodeType": "Block",
               "src": "2141:170:17",
               "statements": [
@@ -1639,24 +1639,24 @@
                       {
                         "argumentTypes": null,
                         "commonType": {
-                          "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                          "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                           "typeString": "enum Minigame.MinigamePhase"
                         },
-                        "id": 5038,
+                        "id": 6258,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 5035,
+                          "id": 6255,
                           "name": "currentPhase",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 4922,
+                          "referencedDeclaration": 6142,
                           "src": "2159:12:17",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                            "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                             "typeString": "enum Minigame.MinigamePhase"
                           }
                         },
@@ -1666,18 +1666,18 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 5036,
+                            "id": 6256,
                             "name": "MinigamePhase",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 4920,
+                            "referencedDeclaration": 6140,
                             "src": "2175:13:17",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_enum$_MinigamePhase_$4920_$",
+                              "typeIdentifier": "t_type$_t_enum$_MinigamePhase_$6140_$",
                               "typeString": "type(enum Minigame.MinigamePhase)"
                             }
                           },
-                          "id": 5037,
+                          "id": 6257,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -1687,7 +1687,7 @@
                           "referencedDeclaration": null,
                           "src": "2175:18:17",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                            "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                             "typeString": "enum Minigame.MinigamePhase"
                           }
                         },
@@ -1705,7 +1705,7 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 5034,
+                      "id": 6254,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -1719,7 +1719,7 @@
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 5039,
+                    "id": 6259,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1734,7 +1734,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5040,
+                  "id": 6260,
                   "nodeType": "ExpressionStatement",
                   "src": "2151:43:17"
                 },
@@ -1744,18 +1744,18 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 5041,
+                      "id": 6261,
                       "name": "GameStarted",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4937,
+                      "referencedDeclaration": 6157,
                       "src": "2209:11:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
                         "typeString": "function ()"
                       }
                     },
-                    "id": 5042,
+                    "id": 6262,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1770,7 +1770,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5043,
+                  "id": 6263,
                   "nodeType": "EmitStatement",
                   "src": "2204:18:17"
                 },
@@ -1780,18 +1780,18 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 5044,
+                      "id": 6264,
                       "name": "play",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5080,
+                      "referencedDeclaration": 6300,
                       "src": "2232:4:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
                         "typeString": "function ()"
                       }
                     },
-                    "id": 5045,
+                    "id": 6265,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1806,7 +1806,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5046,
+                  "id": 6266,
                   "nodeType": "ExpressionStatement",
                   "src": "2232:6:17"
                 },
@@ -1818,18 +1818,18 @@
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 5048,
+                          "id": 6268,
                           "name": "MinigamePhase",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 4920,
+                          "referencedDeclaration": 6140,
                           "src": "2257:13:17",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_enum$_MinigamePhase_$4920_$",
+                            "typeIdentifier": "t_type$_t_enum$_MinigamePhase_$6140_$",
                             "typeString": "type(enum Minigame.MinigamePhase)"
                           }
                         },
-                        "id": 5049,
+                        "id": 6269,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -1839,7 +1839,7 @@
                         "referencedDeclaration": null,
                         "src": "2257:20:17",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                          "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                           "typeString": "enum Minigame.MinigamePhase"
                         }
                       }
@@ -1847,22 +1847,22 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                          "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                           "typeString": "enum Minigame.MinigamePhase"
                         }
                       ],
-                      "id": 5047,
+                      "id": 6267,
                       "name": "setPhase",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5067,
+                      "referencedDeclaration": 6287,
                       "src": "2248:8:17",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$_t_enum$_MinigamePhase_$4920_$returns$__$",
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_enum$_MinigamePhase_$6140_$returns$__$",
                         "typeString": "function (enum Minigame.MinigamePhase)"
                       }
                     },
-                    "id": 5050,
+                    "id": 6270,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1877,7 +1877,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5051,
+                  "id": 6271,
                   "nodeType": "ExpressionStatement",
                   "src": "2248:30:17"
                 },
@@ -1887,18 +1887,18 @@
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
-                      "id": 5052,
+                      "id": 6272,
                       "name": "GameEnded",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4939,
+                      "referencedDeclaration": 6159,
                       "src": "2293:9:17",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$__$returns$__$",
                         "typeString": "function ()"
                       }
                     },
-                    "id": 5053,
+                    "id": 6273,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1913,20 +1913,20 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 5054,
+                  "id": 6274,
                   "nodeType": "EmitStatement",
                   "src": "2288:16:17"
                 }
               ]
             },
             "documentation": {
-              "id": 5031,
+              "id": 6251,
               "nodeType": "StructuredDocumentation",
               "src": "2044:62:17",
               "text": "@notice Starts a new game and closes it when it's finished"
             },
             "functionSelector": "d65ab5f2",
-            "id": 5056,
+            "id": 6276,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -1934,18 +1934,18 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 5032,
+              "id": 6252,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2129:2:17"
             },
             "returnParameters": {
-              "id": 5033,
+              "id": 6253,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2141:0:17"
             },
-            "scope": 5081,
+            "scope": 6301,
             "src": "2111:200:17",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1953,28 +1953,28 @@
           },
           {
             "body": {
-              "id": 5066,
+              "id": 6286,
               "nodeType": "Block",
               "src": "2468:37:17",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 5064,
+                    "id": 6284,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 5062,
+                      "id": 6282,
                       "name": "currentPhase",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4922,
+                      "referencedDeclaration": 6142,
                       "src": "2478:12:17",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                        "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                         "typeString": "enum Minigame.MinigamePhase"
                       }
                     },
@@ -1982,36 +1982,36 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 5063,
+                      "id": 6283,
                       "name": "phase",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5059,
+                      "referencedDeclaration": 6279,
                       "src": "2493:5:17",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                        "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                         "typeString": "enum Minigame.MinigamePhase"
                       }
                     },
                     "src": "2478:20:17",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                      "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                       "typeString": "enum Minigame.MinigamePhase"
                     }
                   },
-                  "id": 5065,
+                  "id": 6285,
                   "nodeType": "ExpressionStatement",
                   "src": "2478:20:17"
                 }
               ]
             },
             "documentation": {
-              "id": 5057,
+              "id": 6277,
               "nodeType": "StructuredDocumentation",
               "src": "2317:98:17",
               "text": "@notice Sets the current game's phase\n @param phase The phase the game should be set to"
             },
-            "id": 5067,
+            "id": 6287,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -2019,33 +2019,33 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 5060,
+              "id": 6280,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5059,
+                  "id": 6279,
                   "mutability": "mutable",
                   "name": "phase",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 5067,
+                  "scope": 6287,
                   "src": "2438:19:17",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                    "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                     "typeString": "enum Minigame.MinigamePhase"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 5058,
+                    "id": 6278,
                     "name": "MinigamePhase",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 4920,
+                    "referencedDeclaration": 6140,
                     "src": "2438:13:17",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_MinigamePhase_$4920",
+                      "typeIdentifier": "t_enum$_MinigamePhase_$6140",
                       "typeString": "enum Minigame.MinigamePhase"
                     }
                   },
@@ -2056,12 +2056,12 @@
               "src": "2437:21:17"
             },
             "returnParameters": {
-              "id": 5061,
+              "id": 6281,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2468:0:17"
             },
-            "scope": 5081,
+            "scope": 6301,
             "src": "2420:85:17",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -2069,39 +2069,39 @@
           },
           {
             "body": {
-              "id": 5075,
+              "id": 6295,
               "nodeType": "Block",
               "src": "2621:34:17",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 5073,
+                    "id": 6293,
                     "name": "numPlayers",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 4931,
+                    "referencedDeclaration": 6151,
                     "src": "2638:10:17",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 5072,
-                  "id": 5074,
+                  "functionReturnParameters": 6292,
+                  "id": 6294,
                   "nodeType": "Return",
                   "src": "2631:17:17"
                 }
               ]
             },
             "documentation": {
-              "id": 5068,
+              "id": 6288,
               "nodeType": "StructuredDocumentation",
               "src": "2511:50:17",
               "text": "@notice Gets the number of players in the game"
             },
             "functionSelector": "55c9e926",
-            "id": 5076,
+            "id": 6296,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -2109,23 +2109,23 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 5069,
+              "id": 6289,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2588:2:17"
             },
             "returnParameters": {
-              "id": 5072,
+              "id": 6292,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5071,
+                  "id": 6291,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 5076,
+                  "scope": 6296,
                   "src": "2612:7:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2134,7 +2134,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 5070,
+                    "id": 6290,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2612:7:17",
@@ -2149,7 +2149,7 @@
               ],
               "src": "2611:9:17"
             },
-            "scope": 5081,
+            "scope": 6301,
             "src": "2566:89:17",
             "stateMutability": "view",
             "virtual": false,
@@ -2158,12 +2158,12 @@
           {
             "body": null,
             "documentation": {
-              "id": 5077,
+              "id": 6297,
               "nodeType": "StructuredDocumentation",
               "src": "2661:102:17",
               "text": "@notice Handler function to execute game logic.  This should be implemented by the concrete class."
             },
-            "id": 5080,
+            "id": 6300,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -2171,25 +2171,25 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 5078,
+              "id": 6298,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2781:2:17"
             },
             "returnParameters": {
-              "id": 5079,
+              "id": 6299,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2800:0:17"
             },
-            "scope": 5081,
+            "scope": 6301,
             "src": "2768:33:17",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "internal"
           }
         ],
-        "scope": 5082,
+        "scope": 6302,
         "src": "273:2530:17"
       }
     ],

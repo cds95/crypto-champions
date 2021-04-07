@@ -66,7 +66,7 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
         string memory apiKey,
         address weatherWarsFactoryAddress
     ) public Minigame(gameName, _cryptoChampionsContractAddress) {
-        setPublicChainlinkToken();
+        setChainlinkToken(linkTokenAddress);
         _linkTokenAddress = linkTokenAddress;
         _fee = fee;
         _oracle = oracle;

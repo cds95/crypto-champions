@@ -53,6 +53,14 @@ def main():
     cc.mintElderSpirit(6, 6, "UNI", { "from": accounts[2], "value": 0.3 * 10 ** 18 })
     cc.mintElderSpirit(7, 7, "ADA", { "from": accounts[0], "value": 0.3 * 10 ** 18 })
 
+    # Transition to ACTION phase
+    cc.refreshPhase()
+
+    cc.mintHero(1, "hero 2", { "from": accounts[2], "value": 0.271 * 10**18 })
+    cc.mintHero(2, "hero 1", { "from": accounts[1], "value": 0.271 * 10**18 })
+    cc.mintHero(3, "hero 0", { "from": accounts[0], "value": 0.271 * 10**18 })
+
+    # Update Mock Aggregator Answers
     btcV3Aggregator.updateAnswer(CURRENT_BTC_PRICE)
     ethV3Aggregator.updateAnswer(CURRENT_ETH_PRICE)
     linkV3Aggregator.updateAnswer(CURRENT_LINK_PRICE)
@@ -60,13 +68,6 @@ def main():
     bnbV3Aggregator.updateAnswer(CURRENT_BNB_PRICE)
     uniV3Aggregator.updateAnswer(CURRENT_UNI_PRICE)
     adaV3Aggregator.updateAnswer(CURRENT_ADA_PRICE)
-
-    # Transition to ACTION phase
-    cc.refreshPhase()
-
-    cc.mintHero(1, "hero 2", { "from": accounts[2], "value": 0.271 * 10**18 })
-    cc.mintHero(2, "hero 1", { "from": accounts[1], "value": 0.271 * 10**18 })
-    cc.mintHero(3, "hero 0", { "from": accounts[0], "value": 0.271 * 10**18 })
     
     PRICE_WARS = "PRICE_WARS"
     pwf = PriceWarsFactory.deploy({ "from": accounts[0] })
@@ -122,3 +123,4 @@ def main():
     ]
     for i in range(0, len(weathers)):
         wwf.addWeatherMapping(weathers[i], i)
+    
