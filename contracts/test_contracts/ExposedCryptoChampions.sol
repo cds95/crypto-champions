@@ -29,6 +29,11 @@ contract ExposedCryptoChampions is CryptoChampions {
         return _randomResultsVRF[requestId];
     }
 
+    /// See CryptoChampions::_burnElders
+    function burnElders() public {
+        _burnElders();
+    }
+
     /// See CryptoChampions::_burnElder
     function burnElder(uint256 elderId) public {
         _burnElder(elderId);
@@ -44,5 +49,20 @@ contract ExposedCryptoChampions is CryptoChampions {
         _heroRandomRequest[requestId] = heroId;
         _randomResultsVRF[requestId] = randomNumber;
         _trainHero(requestId);
+    }
+
+    /// See CryptoChampions::_startNewPriceGame
+    function startNewPriceGame() public {
+        _startNewPriceGame();
+    }
+
+    /// See CryptoChampions::_transitionNextPhase
+    function transitionNextPhase() public {
+        _transitionNextPhase();
+    }
+
+    /// See CryptoChampions::_heroRewardsShare
+    function heroRewardsShare() public view returns (uint256) {
+        return _heroRewardsShare;
     }
 }

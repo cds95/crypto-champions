@@ -11,8 +11,18 @@ def setup(fn_isolation):
 
 
 @pytest.fixture(scope="module")
+def price_wars_factory(accounts, PriceWarsFactory):
+    yield accounts[0].deploy(PriceWarsFactory)
+
+
+@pytest.fixture(scope="module")
 def minigame_factory_registry(accounts, MinigameFactoryRegistry):
     yield accounts[0].deploy(MinigameFactoryRegistry)
+
+
+@pytest.fixture(scope="module")
+def register_price_wars(accounts, price_wars_factory, minigame_factory_registry):
+    minigame_factory_registry.registerMinigame("PRICE_WARS", price_wars_factory.address)
 
 
 @pytest.fixture(scope="module")
@@ -70,12 +80,21 @@ def get_eth_usd_price_feed(accounts, MockV3Aggregator):
     yield accounts[0].deploy(MockV3Aggregator, 18, 2000)
 
 
+@pytest.fixture(scope="module")
+def get_btc_usd_price_feed(accounts, MockV3Aggregator):
+    """
+    Deploys the mock v3 aggregator and returns the deployed address
+    """
+    yield accounts[0].deploy(MockV3Aggregator, 18, 9000)
+
+
 @pytest.fixture
-def create_eth_affinity(accounts, crypto_champions, get_eth_usd_price_feed):
+def create_affinities(accounts, crypto_champions, get_eth_usd_price_feed, get_btc_usd_price_feed):
     """
     Creates the ETH affinity
     """
     crypto_champions.createAffinity("ETH", get_eth_usd_price_feed.address, {"from": accounts[0]})
+    crypto_champions.createAffinity("BTC", get_btc_usd_price_feed.address, {"from": accounts[0]})
 
 
 @pytest.fixture
@@ -84,7 +103,7 @@ def set_phase_to_mint_hero(accounts, crypto_champions):
 
 
 @pytest.fixture
-def mint_first_elder(accounts, crypto_champions, create_eth_affinity):
+def mint_first_elder(accounts, crypto_champions, create_affinities):
     """
     Mint the first elder for the CryptoChampions contract.
     """
@@ -102,7 +121,7 @@ def mint_first_hero(accounts, crypto_champions, mint_first_elder, set_phase_to_m
 
 
 @pytest.fixture
-def mint_max_elders(accounts, crypto_champions, create_eth_affinity):
+def mint_max_elders(accounts, crypto_champions, create_affinities):
     """
     Mint the max amount of elders for the CryptoChampions contract. Hero is based on the first elder minted.
     """

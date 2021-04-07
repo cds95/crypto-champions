@@ -56,12 +56,6 @@ interface ICryptoChampions {
 
     function getHeroOwner(uint256 heroId) external view returns (address);
 
-    function disburseRewards(string calldata winningAffinity) external;
-
-    function burnElders() external;
-
-    function burnHero(uint256 heroId) external;
-
     function getElderSpirit(uint256 elderId)
         external
         view
@@ -144,6 +138,8 @@ interface ICryptoChampions {
 
     function declareRoundWinner(string calldata winningAffinity) external;
 
+    function claimReward(uint256 heroId) external;
+
     function getNumEldersInGame() external view returns (uint256);
 
     function startNewPriceGame() external;
@@ -155,4 +151,6 @@ interface ICryptoChampions {
         address to,
         uint256 amount
     ) external;
+
+    function refreshPhase() external;
 }

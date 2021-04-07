@@ -7,5 +7,5 @@ def test_get_owner_of_invalid_id_hero(crypto_champions):
 
 
 def test_get_owner_of_non_existent_hero(crypto_champions):
-    with brownie.reverts("dev: Hero is not valid."):
+    with brownie.reverts():
         crypto_champions.getHeroOwner(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1)
