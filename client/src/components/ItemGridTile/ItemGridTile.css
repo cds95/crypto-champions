@@ -1,5 +1,6 @@
 .item-grid-tile {
     text-align: center;
+    position: relative;
 }
 
 .item-grid-tile .item-grid-tile__label {
@@ -20,4 +21,15 @@
 
 .item-grid-tile--selected {
     border: 1px solid #fff;
+}
+
+.item-grid-tile__decorator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #fff;
+    color: #000;
+    font-family: 'Pronciono';
+    padding: 5px;
+    font-weight: 10px;
 }
