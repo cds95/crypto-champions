@@ -43,6 +43,10 @@ def main():
     cc.createAffinity("UNI", uniV3Aggregator.address)
     cc.createAffinity("ADA", adaV3Aggregator.address)
     linkToken.transfer(cc.address, 1 * 10**18, { "from": accounts[0] })
+    
+    ## Set phase durations to 0 for dev purposes
+    cc.setSetupPhaseDuration(0, { "from": accounts[0] });
+    cc.setActionPhaseDuration(0, { "from": accounts[0] });
 
     ## Mint Elder Spirits
     cc.mintElderSpirit(1, 1, "BTC", { "from": accounts[0], "value": 0.3 * 10 ** 18 })

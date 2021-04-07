@@ -29,8 +29,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     uint256 internal constant NUM_TOKENS_MINTED = 500 * 10**18;
 
     // The duration of each phase in days
-    uint256 internal SETUP_PHASE_DURATION = 2 days;
-    uint256 internal ACTION_PHASE_DURATION = 2 days;
+    uint256 internal _setupPhaseDuration;
+    uint256 internal _actionPhaseDuration;
 
     // The current phase start time
     uint256 public currentPhaseStartTime;
@@ -167,6 +167,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         _keyHash = keyhash;
         _fee = 0.1 * 10**18; // 0.1 LINK
 
+        // Set phase durations
+        _setupPhaseDuration = 2 days;
+        _actionPhaseDuration = 2 days;
+
         _minigameFactoryRegistry = IMinigameFactoryRegistry(minigameFactoryRegistry);
     }
 
@@ -197,6 +201,18 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     modifier atPhase(Phase phase) {
         require(currentPhase == phase); // dev: Current phase prohibits action.
         _;
+    }
+
+    /// @notice Sets the duration of the setup phase
+    /// @param numDays Number of days for the setup phase duration
+    function setSetupPhaseDuration(uint256 numDays) external onlyAdmin {
+        _setupPhaseDuration = numDays * 1 days;
+    }
+
+    /// @notice Sets the duration of the action phase
+    /// @param numDays Number of days for the action phase
+    function setActionPhaseDuration(uint256 numDays) external onlyAdmin {
+        _actionPhaseDuration = numDays * 1 days;
     }
 
     /// @notice Transitions to the next phase
@@ -256,9 +272,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     function refreshPhase() external override {
         bool phaseChanged = false;
 
-        if (currentPhase == Phase.SETUP && now >= currentPhaseStartTime + SETUP_PHASE_DURATION) {
+        if (currentPhase == Phase.SETUP && now >= currentPhaseStartTime + _setupPhaseDuration) {
             _transitionNextPhase();
-        } else if (currentPhase == Phase.ACTION && now >= currentPhaseStartTime + ACTION_PHASE_DURATION) {
+        } else if (currentPhase == Phase.ACTION && now >= currentPhaseStartTime + _actionPhaseDuration) {
             _transitionNextPhase();
         }
 
