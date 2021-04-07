@@ -54,7 +54,9 @@ export const DuelModalComp = ({
     const handleOnClose = () => {
         onClose();
         resetDuel();
+        setCurrentStep(MODAL_STEPS.CONFIRM_OPPONENT);
     };
+
     const createDuel = async () => {
         setIsCreatingDuel(true);
         await challengeToDuel(bet, initiatorHeroId, opponentAddress, opponentHero.id);
@@ -118,7 +120,7 @@ export const DuelModalComp = ({
     return (
         <Dialog className="duel-modal" open={isOpen} onClose={handleOnClose}>
             <DialogTitle className="duel-modal__title">{title}</DialogTitle>
-            <DialogContent className="duel-modal__content">{content}</DialogContent>
+            <DialogContent className="duel-modal__content pronciono">{content}</DialogContent>
             <DialogActions>
                 <CryptoChampionButton label={text.cancel} onClick={handleOnClose} />
                 {actions}

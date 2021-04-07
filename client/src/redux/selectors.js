@@ -66,10 +66,11 @@ export const getHerosUserCanChallenge = (state) => {
     }
     return heroes.filter((hero) => {
         const duel = weatherDuels.find(
-            ({ phase, initiatorHeroId, opponentHeroId }) =>
-                phase == GAME_PHASE.OPEN && initiatorHeroId != hero.id && opponentHeroId != hero.id
+            ({ winner, initiatorHeroId, opponentHeroId }) =>
+                !winner && (initiatorHeroId == hero.id || opponentHeroId == hero.id)
         );
-        return !duel && hero.owner !== userAccount;
+        const isNotInvolvedInADuel = !duel;
+        return isNotInvolvedInADuel && hero.owner !== userAccount;
     });
 };
 

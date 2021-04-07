@@ -21,7 +21,7 @@ export const DuelModalConfirmStep = ({ opponentHero, bet, onBetChange }) => {
             <TextField
                 className="duel-modal-confirm__bet"
                 label={text.betField}
-                value={bet}
+                value={bet || ''}
                 onChange={onBetChange}
                 type="number"
             />

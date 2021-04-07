@@ -14,7 +14,7 @@ const defaultRenderItem = (item, isSelectable, isBlackText) => (
     />
 );
 
-export const ItemGrid = ({ items = [], onSelect, renderItem = defaultRenderItem, isMini }) => {
+export const ItemGrid = ({ items = [], onSelect, renderItem = defaultRenderItem, isMini, isBlackText }) => {
     const className = clsx('item-grid', {
         'item-grid--mini': isMini
     });
@@ -24,7 +24,7 @@ export const ItemGrid = ({ items = [], onSelect, renderItem = defaultRenderItem,
                 const handleOnClick = () => item.isSelectable && onSelect && onSelect(item);
                 return (
                     <div className="item-grid__item" key={item.id} onClick={handleOnClick}>
-                        {renderItem(item, !!onSelect && item.isSelectable)}
+                        {renderItem(item, !!onSelect && item.isSelectable, isBlackText)}
                     </div>
                 );
             })}
