@@ -7,10 +7,11 @@ import { CryptoChampionButton } from '../CryptoChampionButton';
 const text = {
     caption: 'You have Rewards!',
     noRewards: 'You have no rewards',
-    claim: 'Claim Reward'
+    claim: 'Claim Reward',
+    previousRoundWinner: (affinity) => `Previous Round Winner: ${affinity}`
 };
 
-export const Rewards = ({ winningHeroes = [], className, onClaim = () => {} }) => {
+export const Rewards = ({ winningAffinity, winningHeroes = [], className, onClaim = () => {} }) => {
     const elementClassName = clsx('rewards', className);
     return (
         <Card className={elementClassName}>
@@ -18,6 +19,9 @@ export const Rewards = ({ winningHeroes = [], className, onClaim = () => {} }) =
                 {winningHeroes.length > 0 ? text.caption : text.noRewards}
             </Typography>
             <CardContent>
+                <Typography className="pronciono" variant="h6">
+                    {text.previousRoundWinner(winningAffinity)}
+                </Typography>
                 {winningHeroes.map((hero) => {
                     const claimReward = () => onClaim(hero.id);
                     return (

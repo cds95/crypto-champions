@@ -12,7 +12,15 @@ const text = {
     heroes: 'Your Heroes'
 };
 
-export const MyCollectionComp = ({ userHeroes, selectedHeroId, setSelectedHero, winningHeroes, phase, updateHero }) => {
+export const MyCollectionComp = ({
+    userHeroes,
+    selectedHeroId,
+    setSelectedHero,
+    winningHeroes,
+    phase,
+    updateHero,
+    winningAffinity
+}) => {
     const handleOnSelect = (e) => setSelectedHero(e.target.value);
     const claimReward = async (heroId) => {
         await claimRoundReward(heroId);
@@ -23,7 +31,12 @@ export const MyCollectionComp = ({ userHeroes, selectedHeroId, setSelectedHero, 
     return (
         <div className="my-collection">
             {phase == PHASES.SETUP && (
-                <Rewards className="my-collection__rewards" winningHeroes={winningHeroes} onClaim={claimReward} />
+                <Rewards
+                    className="my-collection__rewards"
+                    winningHeroes={winningHeroes}
+                    onClaim={claimReward}
+                    winningAffinity={winningAffinity}
+                />
             )}
             <FormControl className="my-collection__selector pronciono">
                 <InputLabel>{text.heroes}</InputLabel>
@@ -42,14 +55,15 @@ export const MyCollectionComp = ({ userHeroes, selectedHeroId, setSelectedHero, 
 const mapStateToProps = (state) => {
     const {
         collection: { selectedHeroId },
-        cryptoChampions: { currentRound, phase }
+        cryptoChampions: { currentRound, phase, winningAffinity }
     } = state;
     return {
         userHeroes: getUserOwnedHeroes(state),
         selectedHeroId,
         winningHeroes: getWinningHeroes(state),
         currentRound,
-        phase
+        phase,
+        winningAffinity
     };
 };
 
