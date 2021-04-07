@@ -8,6 +8,7 @@ import {
     useGetHeroes,
     useGetMaxElderSpirits,
     useGetNumMintedElderSpirits,
+    useGetPhase,
     useGetUserAccount,
     useGetUserTokenBalance
 } from './hooks/cryptoChampionsHook';
@@ -21,7 +22,8 @@ import {
     setRoundWinningAffinity,
     setCurrentRoundAction,
     setHeroesAction,
-    setIsLoadingHeroesAction
+    setIsLoadingHeroesAction,
+    setPhaseAction
 } from './redux/actions';
 import { Route, HashRouter as Router, Switch } from 'react-router-dom';
 import { routeDefinitions } from './routeDefinitions';
@@ -39,7 +41,8 @@ export const ContentWrapperComp = ({
     setWinningAffinity,
     setCurrentRound,
     setHeroes,
-    setIsLoadingHeroes
+    setIsLoadingHeroes,
+    setPhase
 }) => {
     const { maxElderSpirits } = useGetMaxElderSpirits();
     const { numMintedElderSpirits } = useGetNumMintedElderSpirits();
@@ -50,7 +53,10 @@ export const ContentWrapperComp = ({
     const { affinity } = useGetCurrentRoundWinningAffinity();
     const { currentRound } = useGetCurrentRound();
     const { isLoading: isLoadingHeroes, heroes = [] } = useGetHeroes();
-
+    const { isLoading, phase, isInErrorState } = useGetPhase();
+    useEffect(() => {
+        setPhase(phase);
+    }, [phase]);
     useEffect(() => setMaxElderSpirits(maxElderSpirits), [maxElderSpirits]);
     useEffect(() => setNumMintedElderSpirits(numMintedElderSpirits), [numMintedElderSpirits]);
     useEffect(() => setElderSpirits(elderSpirits), [isLoadingElderSpirits]);
@@ -62,6 +68,17 @@ export const ContentWrapperComp = ({
         setIsLoadingHeroes(isLoadingHeroes);
         setHeroes(heroes);
     }, [isLoadingHeroes]);
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+    if (isInErrorState) {
+        return (
+            <div>
+                Failed to get current phase. Make sure you're MetaMask wallet is connected as we can't connect to the
+                blockchain without it.
+            </div>
+        );
+    }
     return (
         <Router>
             <NavigationBar userTokenBalance={userTokenBalance} />
@@ -111,6 +128,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setIsLoadingHeroes: (isLoadingHeroes) => {
             dispatch(setIsLoadingHeroesAction(isLoadingHeroes));
+        },
+        setPhase: (phase) => {
+            dispatch(setPhaseAction(phase));
         }
     };
 };

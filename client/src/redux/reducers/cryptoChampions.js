@@ -17,7 +17,8 @@ const initialState = {
     affinities: [],
     mintedAffinities: [],
     userAccount: null,
-    winningAffinity: ''
+    winningAffinity: '',
+    phase: 0
 };
 
 export const cryptoChampions = (state = initialState, action) => {

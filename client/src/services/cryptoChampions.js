@@ -104,6 +104,7 @@ export const getCurrentRound = async () => {
 export const getHeroes = async () => {
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
     const numMintedHeroes = await artifact.methods.heroesMinted().call();
+    const userAccount = await getUserAccount();
     const heroes = [];
     // HeroId starts at 8
     for (let i = 8; i < 8 + parseInt(numMintedHeroes); i++) {
@@ -118,11 +119,17 @@ export const getHeroes = async () => {
                 classId,
                 affinity,
                 owner,
-                roundMinted: parseInt(roundMinted)
+                roundMinted: parseInt(roundMinted),
+                hasRoundReward: owner === userAccount ? await hasRoundReward(i) : false
             });
         }
     }
     return heroes;
+};
+
+const hasRoundReward = async (heroId) => {
+    const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    return await artifact.methods.hasRoundReward(heroId).call();
 };
 
 export const allowWeatherWarToTransferBet = async () => {
@@ -144,4 +151,12 @@ export const getRoundWinningAffinity = async () => {
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
     const currentRound = await artifact.methods.currentRound().call();
     return await artifact.methods.winningAffinitiesByRound(currentRound).call();
+};
+
+export const claimRoundReward = async (heroId) => {
+    const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    const userAccount = await getUserAccount();
+    await artifact.methods.claimReward(heroId).send({
+        from: userAccount
+    });
 };

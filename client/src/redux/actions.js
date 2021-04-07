@@ -229,3 +229,12 @@ export const setSelectedCollectionHero = (heroId) => {
         heroId
     };
 };
+
+export const UPDATE_HERO = 'UPDATE_HERO';
+export const updateHeroAction = (heroId, params) => {
+    return {
+        type: UPDATE_HERO,
+        heroId,
+        params
+    };
+};

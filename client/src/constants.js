@@ -8,8 +8,8 @@ export const CONTRACTS = {
 };
 
 export const PHASES = {
-    MINT_ELDER: 0,
-    MINT_HERO: 1
+    SETUP: 0,
+    ACTION: 1
 };
 
 export const MINT_ELDER_SPIRIT_STEPS = {

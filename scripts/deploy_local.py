@@ -59,6 +59,7 @@ def main():
     cc.mintHero(1, "hero 2", { "from": accounts[2], "value": 0.271 * 10**18 })
     cc.mintHero(2, "hero 1", { "from": accounts[1], "value": 0.271 * 10**18 })
     cc.mintHero(3, "hero 0", { "from": accounts[0], "value": 0.271 * 10**18 })
+    cc.mintHero(7, "hero 0", { "from": accounts[0], "value": 0.271 * 10**18 })
 
     # Update Mock Aggregator Answers
     btcV3Aggregator.updateAnswer(CURRENT_BTC_PRICE)
@@ -123,4 +124,6 @@ def main():
     ]
     for i in range(0, len(weathers)):
         wwf.addWeatherMapping(weathers[i], i)
+    
+    cc.refreshPhase()
     

@@ -841,4 +841,14 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         bytes memory data;
         safeTransferFrom(from, to, IN_GAME_CURRENCY_ID, amount, data);
     }
+
+    /// @notice Returns whether or not hero has reward for the round
+    /// @param heroId The id of the hero being searched for
+    function hasRoundReward(uint256 heroId) external view returns (bool) {
+        Hero memory hero = _heroes[heroId];
+        string memory roundWinningAffinity = winningAffinitiesByRound[currentRound];
+        return
+            !_heroRewardsClaimed[heroId][currentRound] &&
+            keccak256(bytes(hero.affinity)) == keccak256(bytes(roundWinningAffinity));
+    }
 }
