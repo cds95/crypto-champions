@@ -11,12 +11,14 @@ export const ItemGridTile = ({
     isSelected,
     itemSublabel,
     isBlackText,
-    decorator
+    decorator,
+    isWhiteTile
 }) => {
     const classNames = clsx('item-grid-tile', {
         'item-grid-tile--selectable': isSelectable,
         'item-grid-tile--selected': isSelected,
-        'item-grid-tile--black-text': isBlackText
+        'item-grid-tile--black-text': isBlackText,
+        'item-grid-tile--white': isWhiteTile
     });
     return (
         <div className={classNames}>

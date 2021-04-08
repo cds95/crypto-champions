@@ -1,5 +1,6 @@
 import React from 'react';
 import { CLASSES } from '../../constants';
+import { getClassImage } from '../../images/classes';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 
 const text = {
@@ -10,7 +11,8 @@ const text = {
 export const ClassSelector = ({ onSelect, selectedClassId, mintedClasses }) => {
     const items = CLASSES.map((classItem) => ({
         ...classItem,
-        isSelectable: true
+        isSelectable: true,
+        image: getClassImage(classItem.id)
     })).filter((item) => mintedClasses.indexOf(item.id) === -1);
     return (
         <ItemSelector
@@ -19,6 +21,7 @@ export const ClassSelector = ({ onSelect, selectedClassId, mintedClasses }) => {
             items={items}
             onSelect={onSelect}
             selectedItemId={selectedClassId}
+            hasWhiteTiles={true}
         />
     );
 };

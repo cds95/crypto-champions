@@ -15,6 +15,7 @@ export const RaceSelector = ({ onSelect, selectedRaceId, mintedRaces = [] }) => 
         image: getRaceImage(race.id),
         isSelectable: true
     })).filter((race) => mintedRaces.indexOf(race.id) === -1);
+
     return (
         <ItemSelector
             title={text.title}

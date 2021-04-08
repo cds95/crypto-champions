@@ -93,7 +93,7 @@ export const CLASSES = [
         label: 'Priest'
     },
     {
-        id: 4,
+        id: 7,
         label: 'Rogue'
     }
 ];

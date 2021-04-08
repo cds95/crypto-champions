@@ -12,10 +12,11 @@ export const ItemSelector = ({
     selectedItemId,
     isBlackText,
     isMini,
-    renderItem
+    renderItem,
+    hasWhiteTiles
 }) => {
     items = items.map((item) => {
-        if (selectedItemId && item.id === selectedItemId) {
+        if (selectedItemId !== null && selectedItemId !== undefined && item.id === selectedItemId) {
             item.isSelected = true;
         }
         return item;
@@ -35,6 +36,7 @@ export const ItemSelector = ({
                     onSelect={onSelect}
                     isMini={isMini}
                     renderItem={renderItem}
+                    hasWhiteTiles={hasWhiteTiles}
                 />
             </div>
             {subCaption && (
