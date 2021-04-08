@@ -49,7 +49,7 @@ export const MyCollectionComp = ({
                         <InputLabel>{text.heroes}</InputLabel>
                         <Select
                             id="hero-selector"
-                            value={selectedHeroId}
+                            value={selectedHeroId || ''}
                             onChange={handleOnSelect}
                             className="my-collection__selector-comp"
                         >

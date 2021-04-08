@@ -1,10 +1,10 @@
 import { Chip, Typography } from '@material-ui/core';
 import React from 'react';
 import { getAlignment, getClass, getHometown, getRace } from '../../AppUtils';
-import { getRaceImage } from '../../images/races';
 import './HeroCard.css';
 import { WEATHERS } from '../../constants';
 import clsx from 'clsx';
+import { getCircleRaceImage } from '../../images/circleRaces';
 
 export const HeroCard = ({ hero, isVertical, isSelectable }) => {
     const {
@@ -17,9 +17,13 @@ export const HeroCard = ({ hero, isVertical, isSelectable }) => {
         wisdom,
         charisma,
         hometown,
-        weather
+        weather,
+        level,
+        hp,
+        mana,
+        stamina
     } = hero;
-    const image = getRaceImage(hero.raceId);
+    const image = getCircleRaceImage(hero.raceId);
     const race = getRace(hero.raceId);
     const heroClass = getClass(hero.classId);
     const className = clsx('hero-card', {
@@ -42,6 +46,7 @@ export const HeroCard = ({ hero, isVertical, isSelectable }) => {
                 <div className="hero-card__name">
                     <Chip className="hero-card__name-pill" label={hero.heroName} />
                 </div>
+
                 <div className="hero-card__stats">
                     <div className="hero-card__stats-top">
                         <div className="hero-card__stats-list">
