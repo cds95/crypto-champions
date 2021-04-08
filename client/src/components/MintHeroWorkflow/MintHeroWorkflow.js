@@ -36,7 +36,7 @@ export const MintHeroWorkflowComp = ({
     const [isModalOpen, setIsModalOpen] = useState(false);
     const history = useHistory();
     if (!elderSpirits) {
-        return <div>Loading...</div>;
+        return <></>;
     }
     const items = elderSpirits
         .filter(({ valid }) => valid)

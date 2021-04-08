@@ -1,4 +1,4 @@
-import { CONTRACTS, IN_GAME_CURRENCY_ID } from '../constants';
+import { CONTRACTS, IN_GAME_CURRENCY_ID, NUM_AFFINITIES } from '../constants';
 import { loadContract } from './contract';
 import { getUserAccount } from './web3';
 
@@ -10,13 +10,10 @@ export const getMaxElderSpirits = async () => {
 
 export const getAffinities = async () => {
     const affinities = [];
-    let currIdx = 0;
-    let affinity = await getAffinity(currIdx);
-    do {
+    for (let i = 0; i < NUM_AFFINITIES; i++) {
+        const affinity = await getAffinity(i);
         affinities.push(affinity);
-        currIdx++;
-        affinity = await getAffinity(currIdx);
-    } while (!!affinity);
+    }
     return affinities;
 };
 

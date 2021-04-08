@@ -140,3 +140,5 @@ export const ALIGNMENTS = [
     'Neutral Evil',
     'Chaotic Evil'
 ];
+
+export const NUM_AFFINITIES = 5;

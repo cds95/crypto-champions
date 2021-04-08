@@ -47,9 +47,14 @@ export const MyCollectionComp = ({
                     )}
                     <FormControl className="my-collection__selector pronciono">
                         <InputLabel>{text.heroes}</InputLabel>
-                        <Select id="hero-selector" value={selectedHeroId} onChange={handleOnSelect}>
+                        <Select
+                            id="hero-selector"
+                            value={selectedHeroId}
+                            onChange={handleOnSelect}
+                            className="my-collection__selector-comp"
+                        >
                             {userHeroes.map((hero) => (
-                                <MenuItem id={hero.id} value={hero.id}>
+                                <MenuItem id={hero.id} value={hero.id} key={hero.id}>
                                     {hero.heroName}
                                 </MenuItem>
                             ))}
