@@ -10,6 +10,7 @@ import { getHerosUserCanChallenge, getOpenUserDuels, getPastUserDuels } from '..
 import { DuelModal } from '../../components/DuelModal/DuelModal';
 import { Tab, Tabs } from '@material-ui/core';
 import { WeatherDuels } from '../../components/WeatherDuels/WeatherDuels';
+import { HeroCard } from '../../components/HeroCard';
 
 const text = {
     title: 'Click on a hero below to challenge them to a duel!',
@@ -59,7 +60,13 @@ export const GalleryComp = ({
         case galleryTabs.CHALLENGE:
             content = (
                 <React.Fragment>
-                    <ItemSelector title={text.title} caption={text.caption} items={items} onSelect={onSelect} />
+                    <ItemSelector
+                        renderItem={(hero) => <HeroCard isVertical={true} hero={hero} isSelectable={true} />}
+                        title={text.title}
+                        caption={text.caption}
+                        items={items}
+                        onSelect={onSelect}
+                    />
                     <DuelModal isOpen={isDuelModalOpen} onClose={handleOnClose} />
                 </React.Fragment>
             );

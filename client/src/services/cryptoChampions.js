@@ -110,6 +110,17 @@ export const getHeroes = async () => {
     for (let i = 8; i < 8 + parseInt(numMintedHeroes); i++) {
         const { 0: heroName, 1: raceId, 2: classId } = await artifact.methods.getHeroVisuals(i).call();
         const { 0: isValid, 1: affinity, 3: roundMinted } = await artifact.methods.getHeroGameData(i).call();
+
+        const {
+            0: strength,
+            1: dexterity,
+            2: constitution,
+            3: intelligence,
+            4: wisdom,
+            5: charisma
+        } = await artifact.methods.getHeroStats(i).call();
+        const { 0: alignment, 2: hometown, 3: weather } = await artifact.methods.getHeroLore(i).call();
+
         const owner = await artifact.methods.getHeroOwner(i).call();
         if (isValid) {
             heroes.push({
@@ -120,7 +131,16 @@ export const getHeroes = async () => {
                 affinity,
                 owner,
                 roundMinted: parseInt(roundMinted),
-                hasRoundReward: owner === userAccount ? await hasRoundReward(i) : false
+                hasRoundReward: owner === userAccount ? await hasRoundReward(i) : false,
+                strength,
+                dexterity,
+                constitution,
+                intelligence,
+                wisdom,
+                charisma,
+                hometown,
+                weather,
+                alignment
             });
         }
     }

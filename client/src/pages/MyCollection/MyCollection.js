@@ -1,10 +1,11 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
+import { HeroCard } from '../../components/HeroCard';
 import { Rewards } from '../../components/Rewards/Rewards';
-import { GAME_PHASE, PHASES } from '../../constants';
+import { PHASES } from '../../constants';
 import { setSelectedCollectionHero, updateHeroAction } from '../../redux/actions';
-import { getUserOwnedHeroes, getWinningHeroes } from '../../redux/selectors';
+import { getSelectedHero, getUserOwnedHeroes, getWinningHeroes } from '../../redux/selectors';
 import { claimRoundReward } from '../../services/cryptoChampions';
 import './MyCollection.css';
 
@@ -19,7 +20,8 @@ export const MyCollectionComp = ({
     winningHeroes,
     phase,
     updateHero,
-    winningAffinity
+    winningAffinity,
+    selectedHero
 }) => {
     const handleOnSelect = (e) => setSelectedHero(e.target.value);
     const claimReward = async (heroId) => {
@@ -48,6 +50,7 @@ export const MyCollectionComp = ({
                     ))}
                 </Select>
             </FormControl>
+            <div className="my-collection__hero-card">{selectedHero && <HeroCard hero={selectedHero} />}</div>
         </div>
     );
 };
@@ -57,13 +60,15 @@ const mapStateToProps = (state) => {
         collection: { selectedHeroId },
         cryptoChampions: { currentRound, phase, winningAffinity }
     } = state;
+
     return {
         userHeroes: getUserOwnedHeroes(state),
         selectedHeroId,
         winningHeroes: getWinningHeroes(state),
         currentRound,
         phase,
-        winningAffinity
+        winningAffinity,
+        selectedHero: getSelectedHero(state)
     };
 };
 

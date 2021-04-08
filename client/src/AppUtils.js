@@ -1,4 +1,4 @@
-import { CHAINS, RACES, CLASSES, ZERO_ADDRESS } from './constants';
+import { CHAINS, RACES, CLASSES, ZERO_ADDRESS, CITIES, ALIGNMENTS } from './constants';
 import { getRaceImage } from './images/races';
 import getWeb3 from './services/web3';
 import map from './artifacts/deployments/map.json';
@@ -32,4 +32,12 @@ export const displayToken = (tokenInSmallestDenom) => {
     const bigNum = new BigNumber(tokenInSmallestDenom);
     const smallerDenom = bigNum.dividedBy(10 ** 18);
     return smallerDenom.toString();
+};
+
+export const getHometown = (hometownId) => {
+    return CITIES[hometownId];
+};
+
+export const getAlignment = (alignment) => {
+    return ALIGNMENTS[alignment];
 };

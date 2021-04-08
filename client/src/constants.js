@@ -97,3 +97,46 @@ export const CLASSES = [
         label: 'Rogue'
     }
 ];
+
+// TODO: Move these to backend.  Note that everything is 1 based in the contract.  That's why there is a DUMMY in index 0
+export const WEATHERS = ['DUMMY', 'Clouds', 'Clear', 'Atmosphere', 'Snow', 'Rain', 'Drizzle', 'Thunderstorm'];
+export const CITIES = [
+    'DUMMY',
+    'Vancouver, Canada',
+    'Austin, USA',
+    'Chicago, USA',
+    'Miami, USA',
+    'NYC, USA',
+    'San Diego, USA',
+    'San Francisco, USA',
+    'Seattle, USA',
+    'Mexico City, Mexico',
+    'Buenos Aires, Argentina',
+    'Johannesburg, South Africa',
+    'Cairo, Egypt',
+    'London, UK',
+    'Moscow, Russia',
+    'Berlin, Germany',
+    'Paris, France',
+    'Amsterdam, The Netherlands',
+    'Stockholm, Sweden',
+    'Tokyo, Japan',
+    'Mumbai, India',
+    'Shanghai, China',
+    'Seoul, South Korea',
+    'Singapore, Singapore',
+    'Melbourne, Australia'
+];
+
+export const ALIGNMENTS = [
+    'DUMMY',
+    'Lawful Good',
+    'Neutral Good',
+    'Chaotic Good',
+    'Lawful Neutral',
+    'True Neutral',
+    'Chaotic Neutral',
+    'Lawful Evil',
+    'Neutral Evil',
+    'Chaotic Evil'
+];
