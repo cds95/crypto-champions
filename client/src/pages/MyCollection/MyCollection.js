@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { CircularProgress, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
 import { HeroCard } from '../../components/HeroCard';
@@ -21,7 +21,8 @@ export const MyCollectionComp = ({
     phase,
     updateHero,
     winningAffinity,
-    selectedHero
+    selectedHero,
+    isLoadingHeroes
 }) => {
     const handleOnSelect = (e) => setSelectedHero(e.target.value);
     const claimReward = async (heroId) => {
@@ -32,25 +33,31 @@ export const MyCollectionComp = ({
     };
     return (
         <div className="my-collection">
-            {phase == PHASES.SETUP && (
-                <Rewards
-                    className="my-collection__rewards"
-                    winningHeroes={winningHeroes}
-                    onClaim={claimReward}
-                    winningAffinity={winningAffinity}
-                />
+            {isLoadingHeroes ? (
+                <CircularProgress />
+            ) : (
+                <React.Fragment>
+                    {phase == PHASES.SETUP && (
+                        <Rewards
+                            className="my-collection__rewards"
+                            winningHeroes={winningHeroes}
+                            onClaim={claimReward}
+                            winningAffinity={winningAffinity}
+                        />
+                    )}
+                    <FormControl className="my-collection__selector pronciono">
+                        <InputLabel>{text.heroes}</InputLabel>
+                        <Select id="hero-selector" value={selectedHeroId} onChange={handleOnSelect}>
+                            {userHeroes.map((hero) => (
+                                <MenuItem id={hero.id} value={hero.id}>
+                                    {hero.heroName}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <div className="my-collection__hero-card">{selectedHero && <HeroCard hero={selectedHero} />}</div>
+                </React.Fragment>
             )}
-            <FormControl className="my-collection__selector pronciono">
-                <InputLabel>{text.heroes}</InputLabel>
-                <Select id="hero-selector" value={selectedHeroId} onChange={handleOnSelect}>
-                    {userHeroes.map((hero) => (
-                        <MenuItem id={hero.id} value={hero.id}>
-                            {hero.heroName}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-            <div className="my-collection__hero-card">{selectedHero && <HeroCard hero={selectedHero} />}</div>
         </div>
     );
 };
@@ -58,7 +65,8 @@ export const MyCollectionComp = ({
 const mapStateToProps = (state) => {
     const {
         collection: { selectedHeroId },
-        cryptoChampions: { currentRound, phase, winningAffinity }
+        cryptoChampions: { currentRound, phase, winningAffinity },
+        heroes: { isLoadingHeroes }
     } = state;
 
     return {
@@ -68,7 +76,8 @@ const mapStateToProps = (state) => {
         currentRound,
         phase,
         winningAffinity,
-        selectedHero: getSelectedHero(state)
+        selectedHero: getSelectedHero(state),
+        isLoadingHeroes
     };
 };
 
