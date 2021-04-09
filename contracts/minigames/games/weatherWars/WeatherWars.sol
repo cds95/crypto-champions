@@ -2,7 +2,7 @@
 pragma solidity ^0.6.0;
 
 import "../../Minigame.sol";
-import "../../../chainlink_contracts/ChainlinkClient";
+import "../../../chainlink_contracts/ChainlinkClient.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC1155Receiver.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 import "./WeatherWarsFactory.sol";
