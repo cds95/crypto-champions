@@ -242,12 +242,11 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
             for (; i <= eldersInGame; ++i) {
                 if (
                     keccak256(bytes(_elderSpirits[i].affinity)) ==
-                    keccak256(bytes(winningAffinitiesByRound[currentRound]))
+                    keccak256(bytes(winningAffinitiesByRound[currentRound])) &&
+                    getElderSpawnsAmount(currentRound, i) > 0
                 ) {
-                    if (getElderSpawnsAmount(currentRound, i) > 0) {
-                        _heroRewardsShare = rewardsPoolAmount.div(getElderSpawnsAmount(currentRound, i));
-                        break;
-                    }
+                    _heroRewardsShare = rewardsPoolAmount.div(getElderSpawnsAmount(currentRound, i));
+                    break;
                 }
             }
 
