@@ -103,8 +103,8 @@ export const getHeroes = async () => {
     const numMintedHeroes = await artifact.methods.heroesMinted().call();
     const userAccount = await getUserAccount();
     const heroes = [];
-    // HeroId starts at 8
     const maxElderSpirits = await getMaxElderSpirits();
+    const currentRound = await getCurrentRound();
     const firstHeroId = maxElderSpirits + 1;
     for (let i = firstHeroId; i < firstHeroId + parseInt(numMintedHeroes); i++) {
         const { 0: heroName, 1: raceId, 2: classId, 3: appearance } = await artifact.methods.getHeroVisuals(i).call();
@@ -130,7 +130,8 @@ export const getHeroes = async () => {
                 affinity,
                 owner,
                 roundMinted: parseInt(roundMinted),
-                hasRoundReward: owner === userAccount ? await hasRoundReward(i) : false,
+                hasRoundReward:
+                    owner === userAccount ? (await hasRoundReward(i)) && roundMinted === currentRound : false,
                 appearance,
                 strength,
                 dexterity,
