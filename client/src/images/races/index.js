@@ -1,15 +1,29 @@
-import humanMale from './C01_human_male.jpg';
-import humanFemale from './C02_human_female.jpg';
-import elfMale from './C03_elf_male.jpg';
-import elfFemale from './C04_elf_female.jpg';
-import bear from './C05_bear.jpg';
-import bull from './C06_bull.jpg';
-import frog from './C07_frog.jpg';
-import robot from './C08_robot.jpg';
+import humanMale from './FP01-human_male.png';
+import humanFemale from './FP02-human_female.png';
+import catMale from './FP13-cat_male.png';
+import catFemale from './FP14-cat_female.png';
+import elfMale from './FP03-elf_male.png';
+import elfFemale from './FP04-elf_female.png';
+import frogMale from './FP11-frog_male.png';
+import frogFemale from './FP12-frog_female.png';
+import bearMale from './FP09-bear_male.png';
+import bearFemale from './FP10-bear_female.png';
+import bullMale from './FP05-bull_male.png';
+import bullFemale from './FP06-bull_female.png';
+import robotMale from './FP07-robot_male.png';
+import robotFemale from './FP08-robot_female.png';
 
-// TODO:  We need to move thes to IPFS and we should record these in the CryptoChampions contract
-const images = [humanMale, humanFemale, elfMale, elfFemale, bear, bull, frog, robot];
+export const images = [
+    [humanMale, humanFemale],
+    [catMale, catFemale],
+    [elfMale, elfFemale],
+    [frogMale, frogFemale],
+    [bearMale, bearFemale],
+    [bullMale, bullFemale],
+    [robotMale, robotFemale]
+];
 
-export const getRaceImage = (id) => {
-    return images[id];
+export const getRaceImage = (id, appearance) => {
+    appearance = Math.max(0, appearance - 1); // Appearance is always 0 when using dummy data.  Also appearance is 1 based in the contract
+    return images[id][appearance];
 };

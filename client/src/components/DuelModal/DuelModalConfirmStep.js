@@ -12,7 +12,7 @@ export const DuelModalConfirmStep = ({ opponentHero, bet, onBetChange }) => {
     if (!opponentHero) {
         return <></>;
     }
-    const itemImage = getRaceImage(opponentHero.raceId);
+    const itemImage = getRaceImage(opponentHero.raceId, opponentHero.appearance);
     const itemLabel = getRaceClassLabel(opponentHero.raceId, opponentHero.classId);
     const itemSublabel = opponentHero.affinity;
     return (

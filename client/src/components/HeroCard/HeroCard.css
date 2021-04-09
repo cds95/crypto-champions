@@ -34,7 +34,7 @@
     display: flex;
     justify-content: center;
     width: 80%;
-    margin-top: 50px;
+    margin-top: 70px;
 }
 
 .hero-card__extension {
@@ -79,4 +79,8 @@
 
 .hero-card--vertical .hero-card__stats-bot {
     flex-direction: column;
+}
+
+.hero-card.hero-card--selected {
+    border: 2px solid #000;
 }

@@ -49,7 +49,7 @@ export const GalleryComp = ({
     const items = heroesUserCanChallenge.map((hero) => {
         return {
             ...hero,
-            image: getRaceImage(hero.raceId),
+            image: getRaceImage(hero.raceId, hero.appearance),
             isSelectable: true,
             label: hero.heroName,
             subLabel: getRaceClassLabel(hero.raceId, hero.classId) + ` - ${hero.affinity}`

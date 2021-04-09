@@ -138,3 +138,13 @@ export const ALIGNMENTS = [
 ];
 
 export const NUM_AFFINITIES = 5;
+
+export const RACE_APPEARANCES = [
+    ['Human Male', 'Human Female'],
+    ['Cat Male', 'Cat Female'],
+    ['Elf Male', 'Elf Female'],
+    ['Frog Male', 'Frog Female'],
+    ['Bear Male', 'Bear Female'],
+    ['Bull Male', 'Bull Female'],
+    ['Robot Male', 'Robot Female']
+];

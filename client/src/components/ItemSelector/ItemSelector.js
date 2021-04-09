@@ -13,7 +13,8 @@ export const ItemSelector = ({
     isBlackText,
     isMini,
     renderItem,
-    hasWhiteTiles
+    hasWhiteTiles,
+    isCentered
 }) => {
     items = items.map((item) => {
         if (selectedItemId !== null && selectedItemId !== undefined && item.id === selectedItemId) {
@@ -31,6 +32,7 @@ export const ItemSelector = ({
             </Typography>
             <div className="item-selector__items">
                 <ItemGrid
+                    isCentered={isCentered}
                     isBlackText={isBlackText}
                     items={items}
                     onSelect={onSelect}

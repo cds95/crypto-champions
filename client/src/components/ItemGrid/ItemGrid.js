@@ -21,10 +21,12 @@ export const ItemGrid = ({
     renderItem = defaultRenderItem,
     isMini,
     isBlackText,
-    hasWhiteTiles
+    hasWhiteTiles,
+    isCentered = true
 }) => {
     const className = clsx('item-grid', {
-        'item-grid--mini': isMini
+        'item-grid--mini': isMini,
+        'item-grid--centered': isCentered
     });
     return (
         <div className={className}>

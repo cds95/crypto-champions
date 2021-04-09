@@ -4,9 +4,9 @@ import { getAlignment, getClass, getHometown, getRace } from '../../AppUtils';
 import './HeroCard.css';
 import { WEATHERS } from '../../constants';
 import clsx from 'clsx';
-import { getCircleRaceImage } from '../../images/circleRaces';
+import { getRaceImage } from '../../images/races';
 
-export const HeroCard = ({ hero, isVertical, isSelectable }) => {
+export const HeroCard = ({ hero, isVertical, isSelectable, isSelected, onSelect }) => {
     const {
         affinity,
         alignment,
@@ -21,17 +21,19 @@ export const HeroCard = ({ hero, isVertical, isSelectable }) => {
         level,
         hp,
         mana,
-        stamina
+        stamina,
+        appearance
     } = hero;
-    const image = getCircleRaceImage(hero.raceId);
+    const image = getRaceImage(hero.raceId, appearance);
     const race = getRace(hero.raceId);
     const heroClass = getClass(hero.classId);
     const className = clsx('hero-card', {
         'hero-card--vertical': isVertical,
-        'hero-card--selectable': isSelectable
+        'hero-card--selectable': isSelectable,
+        'hero-card--selected': isSelected
     });
     return (
-        <div className={className}>
+        <div className={className} onClick={() => isSelectable && onSelect && onSelect(hero)}>
             <div className="hero-card__content">
                 <div className="hero-card__extension">
                     <Typography className="hero-card__extension-item pronciono">{race.label}</Typography>
