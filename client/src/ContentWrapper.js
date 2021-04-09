@@ -31,6 +31,7 @@ import { Play } from './pages/PlayPage';
 import { NavigationBar } from './components/NavigationBar';
 import { Gallery } from './pages/Gallery';
 import { MyCollection } from './pages/MyCollection';
+import { CircularProgress } from '@material-ui/core';
 
 export const ContentWrapperComp = ({
     setMaxElderSpirits,
@@ -68,8 +69,12 @@ export const ContentWrapperComp = ({
         setIsLoadingHeroes(isLoadingHeroes);
         setHeroes(heroes);
     }, [isLoadingHeroes]);
-    if (isLoading) {
-        return <div>Loading...</div>;
+    if (isLoading || isLoadingHeroes || isLoadingElderSpirits) {
+        return (
+            <div className="content-loading">
+                <CircularProgress />
+            </div>
+        );
     }
     if (isInErrorState) {
         return (

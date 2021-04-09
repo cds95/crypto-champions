@@ -1,4 +1,4 @@
-import { CONTRACTS, IN_GAME_CURRENCY_ID } from '../constants';
+import { CONTRACTS, IN_GAME_CURRENCY_ID, NUM_AFFINITIES } from '../constants';
 import { loadContract } from './contract';
 import { getUserAccount } from './web3';
 
@@ -10,13 +10,10 @@ export const getMaxElderSpirits = async () => {
 
 export const getAffinities = async () => {
     const affinities = [];
-    let currIdx = 0;
-    let affinity = await getAffinity(currIdx);
-    do {
+    for (let i = 0; i < NUM_AFFINITIES; i++) {
+        const affinity = await getAffinity(i);
         affinities.push(affinity);
-        currIdx++;
-        affinity = await getAffinity(currIdx);
-    } while (!!affinity);
+    }
     return affinities;
 };
 
@@ -106,10 +103,23 @@ export const getHeroes = async () => {
     const numMintedHeroes = await artifact.methods.heroesMinted().call();
     const userAccount = await getUserAccount();
     const heroes = [];
-    // HeroId starts at 8
-    for (let i = 8; i < 8 + parseInt(numMintedHeroes); i++) {
-        const { 0: heroName, 1: raceId, 2: classId } = await artifact.methods.getHeroVisuals(i).call();
+    const maxElderSpirits = await getMaxElderSpirits();
+    const currentRound = await getCurrentRound();
+    const firstHeroId = maxElderSpirits + 1;
+    for (let i = firstHeroId; i < firstHeroId + parseInt(numMintedHeroes); i++) {
+        const { 0: heroName, 1: raceId, 2: classId, 3: appearance } = await artifact.methods.getHeroVisuals(i).call();
         const { 0: isValid, 1: affinity, 3: roundMinted } = await artifact.methods.getHeroGameData(i).call();
+        const { 0: level, 1: hp, 2: mana, 3: stamina } = await artifact.methods.getHeroVitals(i).call();
+        const {
+            0: strength,
+            1: dexterity,
+            2: constitution,
+            3: intelligence,
+            4: wisdom,
+            5: charisma
+        } = await artifact.methods.getHeroStats(i).call();
+        const { 0: alignment, 2: hometown, 3: weather } = await artifact.methods.getHeroLore(i).call();
+
         const owner = await artifact.methods.getHeroOwner(i).call();
         if (isValid) {
             heroes.push({
@@ -120,7 +130,22 @@ export const getHeroes = async () => {
                 affinity,
                 owner,
                 roundMinted: parseInt(roundMinted),
-                hasRoundReward: owner === userAccount ? await hasRoundReward(i) : false
+                hasRoundReward:
+                    owner === userAccount ? (await hasRoundReward(i)) && roundMinted === currentRound : false,
+                appearance,
+                strength,
+                dexterity,
+                constitution,
+                intelligence,
+                wisdom,
+                charisma,
+                hometown,
+                weather,
+                alignment,
+                level,
+                hp,
+                mana,
+                stamina
             });
         }
     }

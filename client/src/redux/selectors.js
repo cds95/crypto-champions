@@ -107,3 +107,10 @@ export const getWinningHeroes = (state) => {
     } = state;
     return heroes.filter((hero) => hero.owner === userAccount && hero.hasRoundReward);
 };
+
+export const getSelectedHero = (state) => {
+    const {
+        collection: { selectedHeroId }
+    } = state;
+    return getHero(state, selectedHeroId);
+};

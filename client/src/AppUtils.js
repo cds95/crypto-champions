@@ -1,4 +1,4 @@
-import { CHAINS, RACES, CLASSES, ZERO_ADDRESS } from './constants';
+import { CHAINS, RACES, CLASSES, ZERO_ADDRESS, CITIES, ALIGNMENTS } from './constants';
 import { getRaceImage } from './images/races';
 import getWeb3 from './services/web3';
 import map from './artifacts/deployments/map.json';
@@ -12,9 +12,6 @@ export const getChain = async () => {
     }
     return networkId;
 };
-
-// TODO:  Replace once images are on IPFS
-export const getElderSpiritImage = (elderSpirit) => getRaceImage(elderSpirit.raceId);
 
 export const getRace = (raceId) => RACES[raceId];
 
@@ -32,4 +29,12 @@ export const displayToken = (tokenInSmallestDenom) => {
     const bigNum = new BigNumber(tokenInSmallestDenom);
     const smallerDenom = bigNum.dividedBy(10 ** 18);
     return smallerDenom.toString();
+};
+
+export const getHometown = (hometownId) => {
+    return CITIES[hometownId];
+};
+
+export const getAlignment = (alignment) => {
+    return ALIGNMENTS[alignment];
 };

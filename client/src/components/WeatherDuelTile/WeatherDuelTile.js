@@ -143,7 +143,7 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
                         <React.Fragment>
                             <div className="weather-duel-tile__players">
                                 <ItemGridTile
-                                    itemImage={getRaceImage(initiatorHero.raceId)}
+                                    itemImage={getRaceImage(initiatorHero.raceId, initiatorHero.appearance)}
                                     itemLabel={initiatorHero.heroName}
                                     itemSublabel={
                                         getRaceClassLabel(initiatorHero.raceId, initiatorHero.classId) +
@@ -156,7 +156,7 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
                                     {text.challenged}
                                 </Typography>
                                 <ItemGridTile
-                                    itemImage={getRaceImage(opponentHero.raceId)}
+                                    itemImage={getRaceImage(opponentHero.raceId, opponentHero.appearance)}
                                     itemLabel={opponentHero.heroName}
                                     itemSublabel={
                                         getRaceClassLabel(opponentHero.raceId, opponentHero.classId) +

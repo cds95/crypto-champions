@@ -1,10 +1,11 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { CircularProgress, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import React from 'react';
 import { connect } from 'react-redux';
+import { HeroCard } from '../../components/HeroCard';
 import { Rewards } from '../../components/Rewards/Rewards';
-import { GAME_PHASE, PHASES } from '../../constants';
+import { PHASES } from '../../constants';
 import { setSelectedCollectionHero, updateHeroAction } from '../../redux/actions';
-import { getUserOwnedHeroes, getWinningHeroes } from '../../redux/selectors';
+import { getSelectedHero, getUserOwnedHeroes, getWinningHeroes } from '../../redux/selectors';
 import { claimRoundReward } from '../../services/cryptoChampions';
 import './MyCollection.css';
 
@@ -19,7 +20,9 @@ export const MyCollectionComp = ({
     winningHeroes,
     phase,
     updateHero,
-    winningAffinity
+    winningAffinity,
+    selectedHero,
+    isLoadingHeroes
 }) => {
     const handleOnSelect = (e) => setSelectedHero(e.target.value);
     const claimReward = async (heroId) => {
@@ -30,24 +33,36 @@ export const MyCollectionComp = ({
     };
     return (
         <div className="my-collection">
-            {phase == PHASES.SETUP && (
-                <Rewards
-                    className="my-collection__rewards"
-                    winningHeroes={winningHeroes}
-                    onClaim={claimReward}
-                    winningAffinity={winningAffinity}
-                />
+            {isLoadingHeroes ? (
+                <CircularProgress />
+            ) : (
+                <React.Fragment>
+                    {phase == PHASES.SETUP && (
+                        <Rewards
+                            className="my-collection__rewards"
+                            winningHeroes={winningHeroes}
+                            onClaim={claimReward}
+                            winningAffinity={winningAffinity}
+                        />
+                    )}
+                    <FormControl className="my-collection__selector pronciono">
+                        <InputLabel>{text.heroes}</InputLabel>
+                        <Select
+                            id="hero-selector"
+                            value={selectedHeroId || ''}
+                            onChange={handleOnSelect}
+                            className="my-collection__selector-comp"
+                        >
+                            {userHeroes.map((hero) => (
+                                <MenuItem id={hero.id} value={hero.id} key={hero.id}>
+                                    {hero.heroName}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <div className="my-collection__hero-card">{selectedHero && <HeroCard hero={selectedHero} />}</div>
+                </React.Fragment>
             )}
-            <FormControl className="my-collection__selector pronciono">
-                <InputLabel>{text.heroes}</InputLabel>
-                <Select id="hero-selector" value={selectedHeroId} onChange={handleOnSelect}>
-                    {userHeroes.map((hero) => (
-                        <MenuItem id={hero.id} value={hero.id}>
-                            {hero.heroName}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
         </div>
     );
 };
@@ -55,15 +70,19 @@ export const MyCollectionComp = ({
 const mapStateToProps = (state) => {
     const {
         collection: { selectedHeroId },
-        cryptoChampions: { currentRound, phase, winningAffinity }
+        cryptoChampions: { currentRound, phase, winningAffinity },
+        heroes: { isLoadingHeroes }
     } = state;
+
     return {
         userHeroes: getUserOwnedHeroes(state),
         selectedHeroId,
         winningHeroes: getWinningHeroes(state),
         currentRound,
         phase,
-        winningAffinity
+        winningAffinity,
+        selectedHero: getSelectedHero(state),
+        isLoadingHeroes
     };
 };
 
