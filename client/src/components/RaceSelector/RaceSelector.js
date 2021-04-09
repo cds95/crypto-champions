@@ -1,7 +1,6 @@
 import React from 'react';
-import { getRace } from '../../AppUtils';
 import { RACES } from '../../constants';
-import { getRaceImage } from '../../images/races';
+import { getRaceGif } from '../../images/alternateRaces/images';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 
 const text = {
@@ -12,7 +11,7 @@ const text = {
 export const RaceSelector = ({ onSelect, selectedRaceId, mintedRaces = [] }) => {
     const items = RACES.map((race) => ({
         ...race,
-        image: getRaceImage(race.id),
+        image: getRaceGif(race.id),
         isSelectable: true
     })).filter((race) => mintedRaces.indexOf(race.id) === -1);
 

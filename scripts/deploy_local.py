@@ -117,5 +117,3 @@ def main():
     for i in range(0, len(weathers)):
         wwf.addWeatherMapping(weathers[i], i)
     
-    cc.refreshPhase()
-    

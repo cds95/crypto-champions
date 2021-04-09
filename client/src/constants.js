@@ -31,19 +31,19 @@ export const IN_GAME_CURRENCY_ID = 0;
 export const RACES = [
     {
         id: 0,
-        label: 'Man'
+        label: 'Human'
     },
     {
         id: 1,
-        label: 'Woman'
+        label: 'Cat'
     },
     {
         id: 2,
-        label: 'Elf Male'
+        label: 'Elf'
     },
     {
         id: 3,
-        label: 'Elf Female'
+        label: 'Frog'
     },
     {
         id: 4,
@@ -55,10 +55,6 @@ export const RACES = [
     },
     {
         id: 6,
-        label: 'Frog'
-    },
-    {
-        id: 7,
         label: 'Robot'
     }
 ];
