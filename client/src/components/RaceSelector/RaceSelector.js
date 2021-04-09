@@ -1,6 +1,6 @@
 import React from 'react';
 import { RACES } from '../../constants';
-import { getRaceGif } from '../../images/alternateRaces/images';
+import { getRaceGif } from '../../images/alternateRaces/';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 
 const text = {

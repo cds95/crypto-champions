@@ -1,6 +1,6 @@
 import React from 'react';
 import { getRaceClassLabel } from '../../AppUtils';
-import { getRaceGif } from '../../images/alternateRaces/images';
+import { getRaceGif } from '../../images/alternateRaces/';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 
 const text = {
