@@ -11,12 +11,14 @@ import { DuelModal } from '../../components/DuelModal/DuelModal';
 import { Tab, Tabs } from '@material-ui/core';
 import { WeatherDuels } from '../../components/WeatherDuels/WeatherDuels';
 import { HeroCard } from '../../components/HeroCard';
+import { PHASES } from '../../constants';
 
 const text = {
     title: 'Click on a hero below to challenge them to a duel!',
     challengeTab: 'Challenge',
     openDuels: 'Open Duels',
-    pastDuels: 'Past Duels'
+    pastDuels: 'Past Duels',
+    noDuels: 'Duels can only be fought during the action phase.'
 };
 
 const galleryTabs = {
@@ -30,7 +32,8 @@ export const GalleryComp = ({
     setDuelOpponentHero,
     setWeatherDuels,
     openUserDuels,
-    closedUserDuels
+    closedUserDuels,
+    currentPhase
 }) => {
     const { isLoading: isLoadingDuels, weatherDuels } = useGetWeatherDuels();
     useEffect(() => {
@@ -58,18 +61,21 @@ export const GalleryComp = ({
     let content;
     switch (currentTab) {
         case galleryTabs.CHALLENGE:
-            content = (
-                <React.Fragment>
-                    <ItemSelector
-                        renderItem={(hero) => <HeroCard isVertical={true} hero={hero} isSelectable={true} />}
-                        title={text.title}
-                        caption={text.caption}
-                        items={items}
-                        onSelect={onSelect}
-                    />
-                    <DuelModal isOpen={isDuelModalOpen} onClose={handleOnClose} />
-                </React.Fragment>
-            );
+            content =
+                currentPhase == PHASES.SETUP ? (
+                    <div className="gallery__no-duels">{text.noDuels}</div>
+                ) : (
+                    <React.Fragment>
+                        <ItemSelector
+                            renderItem={(hero) => <HeroCard isVertical={true} hero={hero} isSelectable={true} />}
+                            title={text.title}
+                            caption={text.caption}
+                            items={items}
+                            onSelect={onSelect}
+                        />
+                        <DuelModal isOpen={isDuelModalOpen} onClose={handleOnClose} />
+                    </React.Fragment>
+                );
             break;
         case galleryTabs.OPEN_DUELS:
             content = <WeatherDuels duels={openUserDuels} />;
@@ -83,7 +89,7 @@ export const GalleryComp = ({
     return (
         <div className="gallery">
             <Tabs className="gallery__tabs" value={currentTab} onChange={changeTabs}>
-                <Tab className="gallery__tab-item" label={text.challengeTab} value={galleryTabs.CHALLENGE} />
+                {<Tab className="gallery__tab-item" label={text.challengeTab} value={galleryTabs.CHALLENGE} />}
                 <Tab className="gallery__tab-item" label={text.openDuels} value={galleryTabs.OPEN_DUELS} />
                 <Tab className="gallery__tab-item" label={text.pastDuels} value={galleryTabs.FINISHED_DUELS} />
             </Tabs>
@@ -96,7 +102,8 @@ const mapStateToProps = (state) => {
     return {
         heroesUserCanChallenge: getHerosUserCanChallenge(state),
         openUserDuels: getOpenUserDuels(state),
-        closedUserDuels: getPastUserDuels(state)
+        closedUserDuels: getPastUserDuels(state),
+        currentPhase: state.cryptoChampions.phase
     };
 };
 
