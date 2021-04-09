@@ -3,8 +3,8 @@ pragma solidity ^0.6.0;
 
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 
-import "./LinkTokenInterface.sol";
-import "./VRFRequestIDBase.sol";
+import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.6/interfaces/LinkTokenInterface.sol";
+import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.6/VRFRequestIDBase.sol";
 
 /** ****************************************************************************
  * @notice Interface for contracts using VRF randomness
