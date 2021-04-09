@@ -62,7 +62,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     string internal constant PRICE_WARS_ID = "PRICE_WARS";
 
     // The max amount of elders that can be minted
-    uint256 public constant MAX_NUMBER_OF_ELDERS = 7;
+    uint256 public constant MAX_NUMBER_OF_ELDERS = 5;
 
     // The amount of elders minted
     // This amount cannot be greater than MAX_NUMBER_OF_ELDERS
@@ -251,7 +251,11 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     function refreshPhase() external override {
         bool phaseChanged = false;
 
-        if (currentPhase == Phase.SETUP && now >= currentPhaseStartTime + SETUP_PHASE_DURATION) {
+        if (
+            currentPhase == Phase.SETUP &&
+            eldersInGame == MAX_NUMBER_OF_ELDERS &&
+            now >= currentPhaseStartTime + SETUP_PHASE_DURATION
+        ) {
             _transitionNextPhase();
         } else if (currentPhase == Phase.ACTION && now >= currentPhaseStartTime + ACTION_PHASE_DURATION) {
             _transitionNextPhase();
