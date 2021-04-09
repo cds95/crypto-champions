@@ -864,6 +864,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         string memory roundWinningAffinity = winningAffinitiesByRound[currentRound];
         return
             !_heroRewardsClaimed[heroId][currentRound] &&
-            keccak256(bytes(hero.affinity)) == keccak256(bytes(roundWinningAffinity));
+            keccak256(bytes(hero.affinity)) == keccak256(bytes(roundWinningAffinity)) &&
+            hero.roundMinted == currentRound;
     }
 }
