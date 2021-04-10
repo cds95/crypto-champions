@@ -32,6 +32,7 @@ import { NavigationBar } from './components/NavigationBar';
 import { Gallery } from './pages/Gallery';
 import { MyCollection } from './pages/MyCollection';
 import { CircularProgress } from '@material-ui/core';
+import { Footer } from './components/Footer/Footer';
 
 export const ContentWrapperComp = ({
     setMaxElderSpirits,
@@ -101,6 +102,7 @@ export const ContentWrapperComp = ({
                     <MyCollection />
                 </Route>
             </Switch>
+            <Footer />
         </Router>
     );
 };
