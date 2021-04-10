@@ -12,13 +12,17 @@ import { Tab, Tabs } from '@material-ui/core';
 import { WeatherDuels } from '../../components/WeatherDuels/WeatherDuels';
 import { HeroCard } from '../../components/HeroCard';
 import { PHASES } from '../../constants';
+import { TokenBalance } from '../../components/TokenBalance';
+import { HorizontalHeroCard } from '../../components/HorizontalHeroCard/HorizontalHeroCard';
+import { CryptoChampionButton } from '../../components/CryptoChampionButton';
 
 const text = {
     title: 'Click on a hero below to challenge them to a duel!',
     challengeTab: 'Challenge',
     openDuels: 'Open Duels',
     pastDuels: 'Past Duels',
-    noDuels: 'Duels can only be fought during the action phase.'
+    noDuels: 'Duels can only be fought during the action phase.',
+    challenge: 'Challenge'
 };
 
 const galleryTabs = {
@@ -49,15 +53,7 @@ export const GalleryComp = ({
     const changeTabs = (_, newTab) => {
         setCurrentTab(newTab);
     };
-    const items = heroesUserCanChallenge.map((hero) => {
-        return {
-            ...hero,
-            image: getRaceImage(hero.raceId, hero.appearance),
-            isSelectable: true,
-            label: hero.heroName,
-            subLabel: getRaceClassLabel(hero.raceId, hero.classId) + ` - ${hero.affinity}`
-        };
-    });
+
     let content;
     switch (currentTab) {
         case galleryTabs.CHALLENGE:
@@ -66,13 +62,22 @@ export const GalleryComp = ({
                     <div className="gallery__no-duels">{text.noDuels}</div>
                 ) : (
                     <React.Fragment>
-                        <ItemSelector
-                            renderItem={(hero) => <HeroCard isVertical={true} hero={hero} isSelectable={true} />}
-                            title={text.title}
-                            caption={text.caption}
-                            items={items}
-                            onSelect={onSelect}
-                        />
+                        <div className="gallery__challengers">
+                            {heroesUserCanChallenge.map((hero) => (
+                                <div className="gallery__challenger-card">
+                                    <HorizontalHeroCard
+                                        hero={hero}
+                                        action={
+                                            <CryptoChampionButton
+                                                label={text.challenge}
+                                                onClick={() => onSelect(hero)}
+                                                size="small"
+                                            />
+                                        }
+                                    />
+                                </div>
+                            ))}
+                        </div>
                         <DuelModal isOpen={isDuelModalOpen} onClose={handleOnClose} />
                     </React.Fragment>
                 );
@@ -89,10 +94,11 @@ export const GalleryComp = ({
     return (
         <div className="gallery">
             <Tabs className="gallery__tabs" value={currentTab} onChange={changeTabs}>
-                {<Tab className="gallery__tab-item" label={text.challengeTab} value={galleryTabs.CHALLENGE} />}
+                <Tab className="gallery__tab-item" label={text.challengeTab} value={galleryTabs.CHALLENGE} />
                 <Tab className="gallery__tab-item" label={text.openDuels} value={galleryTabs.OPEN_DUELS} />
                 <Tab className="gallery__tab-item" label={text.pastDuels} value={galleryTabs.FINISHED_DUELS} />
             </Tabs>
+            <TokenBalance className="gallery__token-balance" />
             <div className="gallery-content">{content}</div>
         </div>
     );
