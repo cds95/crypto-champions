@@ -21,6 +21,7 @@
 @font-face {
     font-family: 'LeagueSpartan';
     src: url('./fonts/LeagueSpartan-Bold.woff') format('woff');
+    font-weight: 500;
 }
 
 @font-face {
@@ -28,8 +29,29 @@
     src: url('./fonts/Prociono-Regular.woff') format('woff');
 }
 
+.league-spartan {
+    font-family: 'LeagueSpartan';
+}
+
+.page-header {
+    font-family: 'LeagueSpartan' !important;
+    font-size: 50px;
+    color: #fff;
+    font-weight: 500 !important;
+    margin-bottom: 30px !important;
+}
+
 .pronciono {
     font-family: 'Pronciono' !important;
+}
+
+.pronciono--white {
+    font-family: 'Pronciono' !important;
+    color: #fff;
+}
+
+.black-transparent {
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .content-loading {

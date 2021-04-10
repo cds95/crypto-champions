@@ -12,6 +12,9 @@ const defaultRenderItem = (item, isSelectable, isBlackText, hasWhiteTiles) => (
         itemSublabel={item.subLabel}
         isBlackText={isBlackText}
         isWhiteTile={hasWhiteTiles}
+        actionButton={item.actionButton}
+        imageWidth={item.imageWidth || '100%'}
+        isUnavailable={item.isUnavailable}
     />
 );
 

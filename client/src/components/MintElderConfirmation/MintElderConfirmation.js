@@ -1,68 +1,59 @@
 import { FormControl, InputLabel, MenuItem, Select, Typography } from '@material-ui/core';
 import React from 'react';
 import { getRaceGif } from '../../images/alternateRaces';
-import { getClassImage } from '../../images/classes';
-import { CryptoChampionButton } from '../CryptoChampionButton';
-import { ItemGridTile } from '../ItemGridTile/ItemGridTile';
 import './MintElderConfirmation.css';
 
 const text = {
-    mint: 'Mint Elder Spirit',
-    selectAffinity: 'Select an Affinity and confirm your selection',
-    affinitySelectorPlaceholer: 'Affinity'
+    mint: 'Mint Elder',
+    selectAffinity: 'Select',
+    affinity: 'Affinity',
+    race: 'Race',
+    classLabel: 'Class',
+    affinity: 'Affinity',
+    confirm: 'Select an Affinity and confirm your selection'
 };
 
-export const MintElderConfirmation = ({
-    selectedAffinity,
-    race,
-    elderClass,
-    onConfirm,
-    onSelectAffinity,
-    affinities = []
-}) => {
+export const MintElderConfirmation = ({ selectedAffinity, race, elderClass, onSelectAffinity, affinities = [] }) => {
     const handleOnSelectAffinity = (e) => onSelectAffinity(e.target.value);
     return (
         <div className="mint-elder-confirmation">
-            <div className="mint-elder-confirmation__selections">
-                <div className="mint-elder-confirmation__selections-item">
-                    <ItemGridTile isWhiteTile={true} itemLabel={race.label} itemImage={getRaceGif(race.id)} />
+            <Typography className="pronciono--white">{text.confirm}</Typography>
+            <div className="mint-elder-confirmation__card-container black-transparent">
+                <div className="mint-elder-confirmation__card-image">
+                    <img src={getRaceGif(race.id)} />
                 </div>
-                <div className="mint-elder-confirmation__selections-item">
-                    <ItemGridTile
-                        isWhiteTile={true}
-                        itemLabel={elderClass.label}
-                        itemImage={getClassImage(elderClass.id)}
-                    />
-                </div>
-            </div>
-            <div className="mint-elder-confirmation__affinity-selector-container">
-                <Typography variant="h5" className="mint-elder-confirmation__select-affinity">
-                    {text.selectAffinity}
-                </Typography>
-                <FormControl className="mint-elder-confirmation__form-control">
-                    <InputLabel className="mint-elder-confirmation__affinity-selector-label">
-                        {text.affinitySelectorPlaceholer}
-                    </InputLabel>
-                    <Select
-                        placeholder={text.affinitySelectorPlaceholer}
-                        onChange={handleOnSelectAffinity}
-                        value={selectedAffinity}
-                        className="mint-elder-confirmation__affinity-selector"
-                    >
-                        {affinities.map((affinity) => (
-                            <MenuItem
-                                key={affinity}
-                                value={affinity}
-                                className="mint-elder-confirmation__affinity-item"
+                <div className="mint-elder-confirmation__info">
+                    <div>
+                        <Typography className="pronciono--white">{`${text.race}: ${race.label}`}</Typography>
+                        <Typography className="pronciono--white">{`${text.classLabel}: ${elderClass.label}`}</Typography>
+                    </div>
+                    <div className="mint-elder-confirmation__affinity">
+                        <Typography className="pronciono--white mint-elder-confirmation__affinity-label">
+                            {text.affinity}
+                        </Typography>
+                        <FormControl className="mint-elder-confirmation__form-control">
+                            <InputLabel className="mint-elder-confirmation__affinity-selector-label">
+                                {text.select}
+                            </InputLabel>
+                            <Select
+                                placeholder={text.selectAffinity}
+                                onChange={handleOnSelectAffinity}
+                                value={selectedAffinity}
+                                className="mint-elder-confirmation__affinity-selector"
                             >
-                                {affinity}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-            </div>
-            <div className="mint-elder-confirmation__confirmation-container">
-                <CryptoChampionButton disabled={!selectedAffinity} onClick={onConfirm} label={text.mint} />
+                                {affinities.map((affinity) => (
+                                    <MenuItem
+                                        key={affinity}
+                                        value={affinity}
+                                        className="mint-elder-confirmation__affinity-item"
+                                    >
+                                        {affinity}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -23,13 +23,41 @@ import { StoneSelector } from '../StoneSelector';
 import { useHistory } from 'react-router-dom';
 import { routeDefinitions } from '../../routeDefinitions';
 import { CryptoChampionButton } from '../CryptoChampionButton';
+import { ProgressIndicator } from '../ProgressIndicator';
 
 const text = {
-    confirmation: 'Successfully purchased elder',
-    processing: 'Processing...',
+    confirmation: 'Successfully minted elder',
+    processing: 'Minting...',
     back: 'Back',
-    next: 'Next'
+    next: 'Next',
+    mintStone: {
+        paragraphOne:
+            'During Setup, you can only mint Elder Spirits.  To summon an Elder Spirit, you will need to select a Race, Class, and Affinity. Once all Elder Spirits have been minted for this round, Phase 2 will begin and Champions can then be trained.',
+        paragraphTwo:
+            "Please note: Elder Spirits are ephemeral.  It takes a lot of mystical energies to keep them in this plane of existence.  Therefore, they will disappear at the end of the round.  But don't worry - though you will lose your Elder Spirit, you will keep all royalties gained from training Champions!"
+    },
+    mintElderSpirit: 'Mint Elder Spirit',
+    failedToMint: 'Failed to mint elder spirit'
 };
+
+const MINT_ELDER_WORKFLOW_STEPS = [
+    {
+        id: MINT_ELDER_SPIRIT_STEPS.CHOOSE_STONE,
+        label: 'Summon Elder Spirit'
+    },
+    {
+        id: MINT_ELDER_SPIRIT_STEPS.CHOOSE_RACE,
+        label: 'Select Race'
+    },
+    {
+        id: MINT_ELDER_SPIRIT_STEPS.CHOOSE_CLASS,
+        label: 'Select Class'
+    },
+    {
+        id: MINT_ELDER_SPIRIT_STEPS.MINT,
+        label: 'Select Affinity and Mint'
+    }
+];
 
 export const MintElderSpirintWorkflowComp = ({
     affinities,
@@ -46,12 +74,12 @@ export const MintElderSpirintWorkflowComp = ({
     selectedClass,
     selectedRace,
     selectedAffinity,
-    selectedStone,
     setIsMinting,
     isMinting,
     resetMintingElderSpiritWorkflow
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAbleToMint, setIsAbleToMint] = useState(false);
     useEffect(() => {
         const numSteps = Object.keys(MINT_ELDER_SPIRIT_STEPS).length;
         setMaxSteps(numSteps);
@@ -73,7 +101,12 @@ export const MintElderSpirintWorkflowComp = ({
         const classId = selectedClass.id;
         const affinity = selectedAffinity;
         setIsMinting(true);
-        await mintElderSpirit(raceId, classId, affinity);
+        try {
+            await mintElderSpirit(raceId, classId, affinity);
+            setIsAbleToMint(true);
+        } catch (e) {
+            setIsAbleToMint(false);
+        }
         setIsMinting(false);
     };
     const history = useHistory();
@@ -89,9 +122,9 @@ export const MintElderSpirintWorkflowComp = ({
                 <StoneSelector
                     maxStones={maxElderSpirits}
                     onSelect={handleOnSelectStone}
-                    selectedStoneId={selectedStone ? selectedStone.id : ''}
                     elderSpirits={elderSpirits}
                     maxElderSpirits={maxElderSpirits}
+                    captions={[text.mintStone.paragraphOne, text.mintStone.paragraphTwo]}
                 />
             );
             break;
@@ -130,25 +163,45 @@ export const MintElderSpirintWorkflowComp = ({
         default:
             content = <></>;
     }
+
+    const isNextButtonDisabled = () => {
+        return (
+            (currentStep === MINT_ELDER_SPIRIT_STEPS.CHOOSE_RACE && !selectedRace) ||
+            (currentStep === MINT_ELDER_SPIRIT_STEPS.CHOOSE_CLASS && !selectedClass) ||
+            (currentStep === MINT_ELDER_SPIRIT_STEPS.MINT && !selectedAffinity)
+        );
+    };
+
     return (
         <React.Fragment>
             <Confirmation
                 isOpen={isModalOpen}
                 isLoading={isMinting}
-                text={text.confirmation}
+                text={isAbleToMint ? text.confirmation : text.failedToMint}
                 loadingText={text.processing}
                 onConfirm={handleOnCloseModal}
             />
-            {content}
+            <ProgressIndicator
+                steps={MINT_ELDER_WORKFLOW_STEPS}
+                currentStep={currentStep}
+                maxSteps={MINT_ELDER_WORKFLOW_STEPS.length}
+            />
+            <div className="mint-elder-spirit__content">{content}</div>
             <div className="mint-elder-spirit__actions">
                 {currentStep > 0 && (
                     <div className="mint-elder-spirit__nav">
                         <CryptoChampionButton label={text.back} onClick={decrementCurrentStep} />
                     </div>
                 )}
-                {currentStep >= 1 && currentStep < Object.keys(MINT_ELDER_SPIRIT_STEPS).length - 1 && (
+                {currentStep >= 1 && (
                     <div className="mint-elder-spirit__nav">
-                        <CryptoChampionButton label={text.next} onClick={incrementCurrentStep} />
+                        <CryptoChampionButton
+                            label={currentStep === MINT_ELDER_SPIRIT_STEPS.MINT ? text.mintElderSpirit : text.next}
+                            onClick={
+                                currentStep === MINT_ELDER_SPIRIT_STEPS.MINT ? handleOnConfirm : incrementCurrentStep
+                            }
+                            disabled={isNextButtonDisabled()}
+                        />
                     </div>
                 )}
             </div>

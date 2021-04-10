@@ -12,15 +12,23 @@ export const RaceSelector = ({ onSelect, selectedRaceId, mintedRaces = [] }) => 
     const items = RACES.map((race) => ({
         ...race,
         image: getRaceGif(race.id),
-        isSelectable: true
-    })).filter((race) => mintedRaces.indexOf(race.id) === -1);
+        isSelectable: mintedRaces.indexOf(race.id) === -1,
+        isUnavailable: mintedRaces.indexOf(race.id) !== -1
+    }));
+
+    const handleOnSelect = (race) => {
+        if (race.isUnavailable) {
+            return;
+        }
+        onSelect(race);
+    };
 
     return (
         <ItemSelector
             title={text.title}
             caption={text.caption}
             items={items}
-            onSelect={onSelect}
+            onSelect={handleOnSelect}
             selectedItemId={selectedRaceId}
         />
     );

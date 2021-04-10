@@ -20,7 +20,7 @@ export const getClass = (classId) => CLASSES[classId];
 export const getRaceClassLabel = (raceId, classId) => {
     const race = getRace(raceId);
     const elderClass = getClass(classId);
-    return `${race.label} - ${elderClass.label}`;
+    return `${race.label} ${elderClass.label}`;
 };
 
 export const isZeroAddress = (address) => address && address === ZERO_ADDRESS;

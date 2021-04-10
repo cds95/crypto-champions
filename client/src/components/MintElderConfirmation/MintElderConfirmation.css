@@ -1,11 +1,38 @@
 .mint-elder-confirmation {
     text-align: center;
-}
-
-.mint-elder-confirmation__selections {
     display: flex;
     justify-content: center;
-    margin-bottom: 100px;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.mint-elder-confirmation__card-container {
+    display: flex;
+    padding: 15px;
+    margin-top: 50px;
+}
+
+.mint-elder-confirmation__card-image img {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.mint-elder-confirmation__info {
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.mint-elder-confirmation__affinity {
+    display: flex;
+    align-items: flex-end;
+}
+
+.mint-elder-confirmation .mint-elder-confirmation__affinity-label {
+    margin-right: 15px;
+    padding-bottom: 6px;
 }
 
 .mint-elder-confirmation__selections-item {
@@ -22,7 +49,6 @@
     justify-content: space-between;
 }
 
-h5.mint-elder-confirmation__select-affinity,
 .mint-elder-confirmation .mint-elder-confirmation__affinity-selector-label,
 .mint-elder-confirmation .mint-elder-confirmation__affinity-selector {
     color: #fff !important;
@@ -34,13 +60,11 @@ h5.mint-elder-confirmation__select-affinity,
 
 .mint-elder-confirmation .mint-elder-confirmation__form-control {
     min-width: 200px;
-    margin: 50px 0;
 }
 
 .mint-elder-confirmation .mint-elder-confirmation__affinity-selector-label,
 li.mint-elder-confirmation__affinity-item,
 .mint-elder-confirmation__affinity-selector-label,
-.mint-elder-confirmation .mint-elder-confirmation__select-affinity,
 .mint-elder-confirmation .mint-elder-confirmation__affinity-selector {
     font-family: 'Pronciono';
 }

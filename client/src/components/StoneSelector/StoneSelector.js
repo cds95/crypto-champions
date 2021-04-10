@@ -2,14 +2,13 @@ import React from 'react';
 import { getRaceClassLabel } from '../../AppUtils';
 import { getRaceGif } from '../../images/alternateRaces/';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
+import { CryptoChampionButton } from '../CryptoChampionButton';
 
 const text = {
-    title: '1st Cycle Summoning Elder Spirits',
-    caption: 'Elder spirits are to be summoned to be our champions',
-    subCaption: 'Elder spirits will determine the Race, Class and Afinity of the Champions they gather'
+    summon: 'Summon'
 };
 
-export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElderSpirits }) => {
+export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElderSpirits, captions }) => {
     const items = elderSpirits.map((spirit) => ({
         id: spirit.id,
         label: getRaceClassLabel(spirit.raceId, spirit.classId),
@@ -19,19 +18,11 @@ export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElde
     const availableElderSpots = maxElderSpirits - items.length;
     for (let i = 0; i < availableElderSpots; i++) {
         items.push({
+            imageWidth: '65%',
             id: items.length + i + 1,
             label: '',
-            isSelectable: true
+            actionButton: <CryptoChampionButton onClick={onSelect} label={text.summon} />
         });
     }
-    return (
-        <ItemSelector
-            title={text.title}
-            caption={text.caption}
-            items={items}
-            onSelect={onSelect}
-            subCaption={text.subCaption}
-            selectedItemId={selectedStoneId}
-        />
-    );
+    return <ItemSelector items={items} onSelect={onSelect} selectedItemId={selectedStoneId} captions={captions} />;
 };
