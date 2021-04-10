@@ -205,3 +205,36 @@ export const setWeatherDuelsAction = (weatherDuels) => {
         weatherDuels
     };
 };
+
+export const SET_ROUND_WINNING_AFFINITY = 'SET_ROUND_WINNING_AFFINITY';
+export const setRoundWinningAffinity = (winningAffinity) => {
+    return {
+        type: SET_ROUND_WINNING_AFFINITY,
+        winningAffinity
+    };
+};
+
+export const SET_CURRENT_ROUND = 'SET_CURRENT_ROUND';
+export const setCurrentRoundAction = (currentRound) => {
+    return {
+        type: SET_CURRENT_ROUND,
+        currentRound
+    };
+};
+
+export const SET_SELECTED_COLLECTION_HERO = 'SET_SELECTED_COLLECTION_HERO';
+export const setSelectedCollectionHero = (heroId) => {
+    return {
+        type: SET_SELECTED_COLLECTION_HERO,
+        heroId
+    };
+};
+
+export const UPDATE_HERO = 'UPDATE_HERO';
+export const updateHeroAction = (heroId, params) => {
+    return {
+        type: UPDATE_HERO,
+        heroId,
+        params
+    };
+};

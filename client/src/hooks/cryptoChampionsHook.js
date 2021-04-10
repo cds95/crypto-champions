@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import {
     getAffinities,
+    getCurrentRound,
     getElderSpirits,
     getHeroes,
     getMaxElderSpirits,
     getNumMintedElderSpirits,
     getPhase,
+    getRoundWinningAffinity,
     getUserTokenBalance
 } from '../services/cryptoChampions';
 import { getAllWeatherDuels } from '../services/weatherWars';
@@ -201,6 +203,58 @@ export const useGetUserTokenBalance = () => {
                 setState({
                     isLoading: false,
                     userTokenBalance
+                });
+            } catch (e) {
+                setState({
+                    isLoading: false,
+                    isInErrorState: true
+                });
+            }
+        })();
+    }, []);
+    return state;
+};
+
+export const useGetCurrentRoundWinningAffinity = () => {
+    const [state, setState] = useState({
+        isLoading: false,
+        isInErrorState: false,
+        affinity: ''
+    });
+    useEffect(() => {
+        (async () => {
+            setState({ isLoading: true });
+            try {
+                const affinity = await getRoundWinningAffinity();
+                setState({
+                    isLoading: false,
+                    affinity
+                });
+            } catch (e) {
+                setState({
+                    isLoading: false,
+                    isInErrorState: true
+                });
+            }
+        })();
+    }, []);
+    return state;
+};
+
+export const useGetCurrentRound = () => {
+    const [state, setState] = useState({
+        isLoading: false,
+        isInErrorState: false,
+        currentRound: 0
+    });
+    useEffect(() => {
+        (async () => {
+            setState({ isLoading: true });
+            try {
+                const currentRound = await getCurrentRound();
+                setState({
+                    isLoading: false,
+                    currentRound
                 });
             } catch (e) {
                 setState({

@@ -10,7 +10,8 @@ const text = {
     links: {
         home: 'Home',
         play: 'Play',
-        gallery: 'Gallery'
+        gallery: 'Gallery',
+        collection: 'My Collection'
     }
 };
 
@@ -27,6 +28,9 @@ export const NavigationBar = ({ userTokenBalance }) => {
                     </Link>
                     <Link className="navigation-bar__link navigation-bar__text" to={routeDefinitions.PLAY}>
                         <Typography variant="h6">{text.links.play}</Typography>
+                    </Link>
+                    <Link to={routeDefinitions.COLLECTION} className="navigation-bar__link navigation-bar__text">
+                        <Typography variant="h6">{text.links.collection}</Typography>
                     </Link>
                     <Link to={routeDefinitions.GALLERY} className="navigation-bar__link navigation-bar__text">
                         <Typography variant="h6">{text.links.gallery}</Typography>

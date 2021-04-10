@@ -1,73 +1,71 @@
-pragma solidity ^0.6.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.4.11;
 
-import "./token/LinkERC20.sol";
-import "./ERC677Token.sol";
+import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.4/ERC677Token.sol";
+import {
+    StandardToken as linkStandardToken
+} from "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.4/vendor/StandardToken.sol";
 
-contract LinkToken is LinkERC20, ERC677Token {
-    uint256 private constant TOTAL_SUPPLY = 10**27;
-    string private constant NAME = "ChainLink Token";
-    string private constant SYMBOL = "LINK";
+contract LinkToken is linkStandardToken, ERC677Token {
+    uint256 public constant totalSupply = 10**27;
+    string public constant name = "ChainLink Token";
+    uint8 public constant decimals = 18;
+    string public constant symbol = "LINK";
 
-    constructor() public ERC20(NAME, SYMBOL) {
-        _onCreate();
+    function LinkToken() public {
+        balances[msg.sender] = totalSupply;
     }
 
     /**
-     * @dev Hook that is called when this contract is created.
-     * Useful to override constructor behaviour in child contracts (e.g., LINK bridge tokens).
-     * @notice Default implementation mints 10**27 tokens to msg.sender
+     * @dev transfer token to a specified address with additional data if the recipient is a contract.
+     * @param _to The address to transfer to.
+     * @param _value The amount to be transferred.
+     * @param _data The extra data to be passed to the receiving contract.
      */
-    function _onCreate() internal virtual {
-        _mint(msg.sender, TOTAL_SUPPLY);
+    function transferAndCall(
+        address _to,
+        uint256 _value,
+        bytes _data
+    ) public validRecipient(_to) returns (bool success) {
+        return super.transferAndCall(_to, _value, _data);
     }
 
     /**
-     * @dev Moves tokens `amount` from `sender` to `recipient`.
-     *
-     * This is internal function is equivalent to {transfer}, and can be used to
-     * e.g. implement automatic token fees, slashing mechanisms, etc.
-     *
-     * Emits a {Transfer} event.
-     *
-     * Requirements:
-     *
-     * - `sender` cannot be the zero address.
-     * - `recipient` cannot be the zero address.
-     * - `sender` must have a balance of at least `amount`.
+     * @dev transfer token to a specified address.
+     * @param _to The address to transfer to.
+     * @param _value The amount to be transferred.
      */
-    function _transfer(
-        address sender,
-        address recipient,
-        uint256 amount
-    ) internal virtual override validAddress(recipient) {
-        super._transfer(sender, recipient, amount);
+    function transfer(address _to, uint256 _value) public validRecipient(_to) returns (bool success) {
+        return super.transfer(_to, _value);
     }
 
     /**
-     * @dev Sets `amount` as the allowance of `spender` over the `owner`s tokens.
-     *
-     * This is internal function is equivalent to `approve`, and can be used to
-     * e.g. set automatic allowances for certain subsystems, etc.
-     *
-     * Emits an {Approval} event.
-     *
-     * Requirements:
-     *
-     * - `owner` cannot be the zero address.
-     * - `spender` cannot be the zero address.
+     * @dev Approve the passed address to spend the specified amount of tokens on behalf of msg.sender.
+     * @param _spender The address which will spend the funds.
+     * @param _value The amount of tokens to be spent.
      */
-    function _approve(
-        address owner,
-        address spender,
-        uint256 amount
-    ) internal virtual override validAddress(spender) {
-        super._approve(owner, spender, amount);
+    function approve(address _spender, uint256 _value) public validRecipient(_spender) returns (bool) {
+        return super.approve(_spender, _value);
+    }
+
+    /**
+     * @dev Transfer tokens from one address to another
+     * @param _from address The address which you want to send tokens from
+     * @param _to address The address which you want to transfer to
+     * @param _value uint256 the amount of tokens to be transferred
+     */
+    function transferFrom(
+        address _from,
+        address _to,
+        uint256 _value
+    ) public validRecipient(_to) returns (bool) {
+        return super.transferFrom(_from, _to, _value);
     }
 
     // MODIFIERS
 
-    modifier validAddress(address _recipient) {
-        require(_recipient != address(this), "LinkToken: transfer/approve to this contract address");
+    modifier validRecipient(address _recipient) {
+        require(_recipient != address(0) && _recipient != address(this));
         _;
     }
 }
