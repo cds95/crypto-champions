@@ -10,6 +10,7 @@ import { getSelectedHero, getUserOwnedElders, getUserOwnedHeroes, getWinningHero
 import { claimRoundReward } from '../../services/cryptoChampions';
 import './MyCollection.css';
 import { CryptoChampionButton } from '../../components/CryptoChampionButton';
+import { ElderCard } from '../../components/ElderCard/ElderCard';
 
 const text = {
     ok: 'Ok',
@@ -73,8 +74,13 @@ export const MyCollectionComp = ({
                 <CircularProgress />
             ) : (
                 <div className="my-collection__heroes">
+                    {userElderSpirits.map((elder) => (
+                        <div key={`elder-${elder.id}`} className="my-collection__heroes-item">
+                            <ElderCard elder={elder} />
+                        </div>
+                    ))}
                     {userHeroes.map((hero) => (
-                        <div key={hero.id} className="my-collection__heroes-item">
+                        <div key={`hero-${hero.id}`} className="my-collection__heroes-item">
                             <HeroCard
                                 hero={hero}
                                 action={

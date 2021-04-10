@@ -62,7 +62,7 @@ const getElderSpirit = async (elderSpiritId, currentRound) => {
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
     const elderSpirit = await artifact.methods.getElderSpirit(elderSpiritId).call();
     const canBeMinted = await artifact.methods.getElderSpawnsAmount(currentRound, elderSpiritId).call();
-    const owner = await artifact.methods.getElderSpiritOwner(elderSpiritId).call();
+    const owner = await artifact.methods.getElderOwner(elderSpiritId).call();
     return {
         id: elderSpiritId,
         valid: elderSpirit[0],

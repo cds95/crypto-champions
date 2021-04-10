@@ -144,6 +144,7 @@ export const MintElderSpirintWorkflowComp = ({
             break;
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_CLASS:
             const mintedClasses = elderSpirits.map((spirit) => spirit.classId);
+            console.log(mintedClasses);
             content = (
                 <ClassSelector
                     onSelect={handleOnSelectClass}

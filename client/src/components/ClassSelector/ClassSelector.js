@@ -11,9 +11,9 @@ const text = {
 export const ClassSelector = ({ onSelect, selectedClassId, mintedClasses }) => {
     const items = CLASSES.map((classItem) => ({
         ...classItem,
-        isSelectable: mintedClasses.indexOf(classItem.id) !== -1,
+        isSelectable: mintedClasses.indexOf(classItem.id) === -1,
         image: getClassImage(classItem.id),
-        isUnavailable: mintedClasses.indexOf(classItem.id) === -1,
+        isUnavailable: mintedClasses.indexOf(classItem.id) !== -1,
         imageWidth: '60%'
     }));
     return (
