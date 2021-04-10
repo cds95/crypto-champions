@@ -1,5 +1,5 @@
 export const GITHUB_LINK = 'https://github.com/cds95/crypto-champions';
-export const TWITTER_LINK = '';
+export const TWITTER_LINK = 'https://twitter.com/cryptochampz';
 
 export const CHAINS = {
     DEV: 'dev'
