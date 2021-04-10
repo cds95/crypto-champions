@@ -275,7 +275,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         if (
             currentPhase == Phase.SETUP &&
             eldersInGame == MAX_NUMBER_OF_ELDERS &&
-            now >= currentPhaseStartTime + SETUP_PHASE_DURATION
+            now >= currentPhaseStartTime + _setupPhaseDuration
         ) {
             _transitionNextPhase();
         } else if (currentPhase == Phase.ACTION && now >= currentPhaseStartTime + _actionPhaseDuration) {
