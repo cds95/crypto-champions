@@ -72,48 +72,9 @@ def main():
     MOCK_ORACLE_ADD = "0xA5A407B4c0f32c621521d8556212fC22B5410E6A" 
     WEATHER_API_KEY = ""
     JOB_ID = "0x6237323835643438353964613462323839633738363164623937316261663061"
+    SEED = 13563
 
-    wwf = WeatherWarsFactory.deploy(MOCK_ORACLE_ADD, vrfCoordinatorMock.address, linkToken.address, fee, keyHash, WEATHER_API_KEY, JOB_ID, cc.address, { "from": accounts[0] })
+    wwf = WeatherWarsFactory.deploy(cc.address, linkToken.address, MOCK_ORACLE_ADD, vrfCoordinatorMock.address, JOB_ID, keyHash, fee, SEED, fee, WEATHER_API_KEY, { "from": accounts[0] })
     linkToken.transfer(wwf.address, 1 * 10**18, { "from": accounts[0] })
     minigameFactoryRegistry.registerMinigame(WEATHER_WARS, wwf.address)
-    cities = [
-        "6173331",
-        "4671654",
-        "4887398",
-        "4164138",
-        "5128581",
-        "5391811",
-        "5391959",
-        "5809844",
-        "3530597",
-        "3435907",
-        "993800",
-        "360630",
-        "2643743",
-        "524894",
-        "2950158",
-        "2968815",
-        "2759794",
-        "2673722",
-        "1850147",
-        "1275339",
-        "1796236",
-        "1835847",
-        "1880252",
-        "2158177"
-    ]
-    for i in range(0, len(cities)):
-        wwf.addCityMapping(cities[i], i)
-    
-    weathers = [
-        "Clouds",
-        "Clear",
-        "Atmosphere",
-        "Snow",
-        "Rain",
-        "Drizzle",
-        "Thunderstorm"
-    ]
-    for i in range(0, len(weathers)):
-        wwf.addWeatherMapping(weathers[i], i)
     

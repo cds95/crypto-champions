@@ -2,6 +2,7 @@
 pragma solidity ^0.6.0;
 
 import "./WeatherWars.sol";
+import "./WeatherWarsRandomizer.sol";
 import "../../../../interfaces/ICryptoChampions.sol";
 
 import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.6/interfaces/LinkTokenInterface.sol";
@@ -68,17 +69,24 @@ contract WeatherWarsFactory {
         address opponent,
         uint256 opponentHeroId
     ) external {
+        // Create the WeatherWarsRandomizer contract
+        WeatherWarsRandomizer randomizer =
+            new WeatherWarsRandomizer(_keyHash, _vrfCoordinateAddress, _linkTokenAddress, _vrfFee, _vrfSeed);
+
+        // Send link amount to randomizer
+        LinkTokenInterface(_linkTokenAddress).transfer(address(randomizer), _vrfFee);
+
+        // Request the randomness from the randomizer
+        randomizer.requestRandomness();
+
         // Create the WeatherWars contract
         WeatherWars newGame =
             new WeatherWars(
                 _cryptoChampionsAddress,
                 _linkTokenAddress,
                 _oracleAddress,
-                _vrfCoordinateAddress,
+                address(randomizer),
                 _jobId,
-                _keyHash,
-                _vrfFee,
-                _vrfSeed,
                 _oracleFee,
                 _buyin,
                 GAME_NAME,
