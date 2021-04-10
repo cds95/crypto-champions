@@ -8,6 +8,7 @@ import './NavigationBar.css';
 const text = {
     cryptoChampions: 'Crypto Champions',
     links: {
+        about: 'About',
         home: 'Home',
         play: 'Mint',
         gallery: 'Battle',
@@ -25,6 +26,9 @@ export const NavigationBar = ({ userAccount }) => {
                 <div className="navigation-bar__options">
                     <Link className="navigation-bar__link navigation-bar__text" to={routeDefinitions.ROOT}>
                         <Typography variant="h6">{text.links.home}</Typography>
+                    </Link>
+                    <Link className="navigation-bar__link navigation-bar__text" to={routeDefinitions.ABOUT}>
+                        <Typography variant="h6">{text.links.about}</Typography>
                     </Link>
                     <Link className="navigation-bar__link navigation-bar__text" to={routeDefinitions.PLAY}>
                         <Typography variant="h6">{text.links.play}</Typography>

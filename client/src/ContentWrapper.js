@@ -34,6 +34,7 @@ import { MyCollection } from './pages/MyCollection';
 import { CircularProgress } from '@material-ui/core';
 import { Footer } from './components/Footer/Footer';
 import { Banner } from './components/Banner';
+import { About } from './pages/About';
 
 const text = {
     failedToConnect:
@@ -91,6 +92,9 @@ export const ContentWrapperComp = ({
                 <Switch>
                     <Route path={routeDefinitions.ROOT} exact={true}>
                         <LandingPage />
+                    </Route>
+                    <Route path={routeDefinitions.ABOUT}>
+                        <About />
                     </Route>
                     {!isInErrorState && (
                         <React.Fragment>
