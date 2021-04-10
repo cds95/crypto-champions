@@ -1,6 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, Typography } from '@material-ui/core';
 import React from 'react';
-import { getRaceImage } from '../../images/races';
+import { getRaceGif } from '../../images/alternateRaces';
+import { getClassImage } from '../../images/classes';
 import { CryptoChampionButton } from '../CryptoChampionButton';
 import { ItemGridTile } from '../ItemGridTile/ItemGridTile';
 import './MintElderConfirmation.css';
@@ -24,10 +25,14 @@ export const MintElderConfirmation = ({
         <div className="mint-elder-confirmation">
             <div className="mint-elder-confirmation__selections">
                 <div className="mint-elder-confirmation__selections-item">
-                    <ItemGridTile itemLabel={race.label} itemImage={getRaceImage(race.id)} />
+                    <ItemGridTile isWhiteTile={true} itemLabel={race.label} itemImage={getRaceGif(race.id)} />
                 </div>
                 <div className="mint-elder-confirmation__selections-item">
-                    <ItemGridTile itemLabel={elderClass.label} />
+                    <ItemGridTile
+                        isWhiteTile={true}
+                        itemLabel={elderClass.label}
+                        itemImage={getClassImage(elderClass.id)}
+                    />
                 </div>
             </div>
             <div className="mint-elder-confirmation__affinity-selector-container">
@@ -57,7 +62,7 @@ export const MintElderConfirmation = ({
                 </FormControl>
             </div>
             <div className="mint-elder-confirmation__confirmation-container">
-                <CryptoChampionButton onClick={onConfirm} label={text.mint} />
+                <CryptoChampionButton disabled={!selectedAffinity} onClick={onConfirm} label={text.mint} />
             </div>
         </div>
     );

@@ -1,9 +1,11 @@
 import {
     SET_AFFINITIES,
+    SET_CURRENT_ROUND,
     SET_ELDER_SPIRITS,
     SET_MAX_ELDER_SPIRITS,
     SET_NUM_MINTED_ELDER_SPIRITS,
     SET_PHASE,
+    SET_ROUND_WINNING_AFFINITY,
     SET_USER_ACCOUNT
 } from '../actions';
 
@@ -14,7 +16,9 @@ const initialState = {
     elderSpirits: [],
     affinities: [],
     mintedAffinities: [],
-    userAccount: null
+    userAccount: null,
+    winningAffinity: '',
+    phase: 0
 };
 
 export const cryptoChampions = (state = initialState, action) => {
@@ -50,6 +54,16 @@ export const cryptoChampions = (state = initialState, action) => {
             return {
                 ...state,
                 affinities: action.affinities
+            };
+        case SET_ROUND_WINNING_AFFINITY:
+            return {
+                ...state,
+                winningAffinity: action.winningAffinity
+            };
+        case SET_CURRENT_ROUND:
+            return {
+                ...state,
+                currentRound: action.currentRound
             };
         default:
             return state;

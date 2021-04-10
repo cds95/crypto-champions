@@ -7,7 +7,7 @@ export const getAllowedAffinities = (state) => {
     return affinities.filter((a) => !mintedAffinities.includes(a));
 };
 
-export const getUserOwnedHeros = (state) => {
+export const getUserOwnedHeroes = (state) => {
     const {
         heroes: { heroes },
         cryptoChampions: { userAccount }
@@ -15,7 +15,7 @@ export const getUserOwnedHeros = (state) => {
     return heroes.filter(({ owner }) => owner === userAccount);
 };
 
-export const getNonUserOwnedHeros = (state) => {
+export const getNonUserOwnedHeroes = (state) => {
     const {
         heroes: { heroes },
         cryptoChampions: { userAccount }
@@ -98,4 +98,19 @@ export const getOpenUserDuels = (state) => {
     return weatherDuels.filter(
         (duel) => !duel.winner && (duel.opponent == userAccount || duel.initiator == userAccount)
     );
+};
+
+export const getWinningHeroes = (state) => {
+    const {
+        cryptoChampions: { userAccount },
+        heroes: { heroes }
+    } = state;
+    return heroes.filter((hero) => hero.owner === userAccount && hero.hasRoundReward);
+};
+
+export const getSelectedHero = (state) => {
+    const {
+        collection: { selectedHeroId }
+    } = state;
+    return getHero(state, selectedHeroId);
 };

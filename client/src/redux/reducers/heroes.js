@@ -1,4 +1,4 @@
-import { SET_HEROES, SET_IS_LOADING_HEROES } from '../actions';
+import { SET_HEROES, SET_IS_LOADING_HEROES, UPDATE_HERO } from '../actions';
 
 const initialState = {
     heroes: [],
@@ -16,6 +16,19 @@ export const heroes = (state = initialState, action) => {
             return {
                 ...state,
                 heroes: action.heroes
+            };
+        case UPDATE_HERO:
+            return {
+                ...state,
+                heroes: state.heroes.map((hero) => {
+                    if (hero.id === action.heroId) {
+                        return {
+                            ...hero,
+                            ...action.params
+                        };
+                    }
+                    return hero;
+                })
             };
         default:
             return state;

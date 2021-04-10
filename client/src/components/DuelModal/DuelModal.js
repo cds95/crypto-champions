@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { DuelModalConfirmStep } from './DuelModalConfirmStep';
 import './DuelModal.css';
-import { getHero, getUserOwnedHeros } from '../../redux/selectors';
+import { getHero, getUserOwnedHeroes } from '../../redux/selectors';
 import { resetDuelAction, setDuelBetAmountAction, setDuelInitiatorHeroAction } from '../../redux/actions';
 import { DuelForm } from './DuelForm';
 import { CryptoChampionButton } from '../CryptoChampionButton';
@@ -135,7 +135,7 @@ const mapStateToProps = (state) => {
     } = state;
     return {
         opponentHero: getHero(state, opponentHeroId),
-        userHeroes: getUserOwnedHeros(state),
+        userHeroes: getUserOwnedHeroes(state),
         bet,
         initiatorHeroId,
         opponentAddress

@@ -78,8 +78,8 @@ export const MintElderSpirintWorkflowComp = ({
     };
     const history = useHistory();
     const handleOnCloseModal = () => {
-        history.push(routeDefinitions.ROOT);
         resetMintingElderSpiritWorkflow();
+        history.push(routeDefinitions.ROOT);
     };
 
     let content;
@@ -106,8 +106,13 @@ export const MintElderSpirintWorkflowComp = ({
             );
             break;
         case MINT_ELDER_SPIRIT_STEPS.CHOOSE_CLASS:
+            const mintedClasses = elderSpirits.map((spirit) => spirit.classId);
             content = (
-                <ClassSelector onSelect={handleOnSelectClass} selectedClassId={selectedClass ? selectedClass.id : ''} />
+                <ClassSelector
+                    onSelect={handleOnSelectClass}
+                    selectedClassId={selectedClass ? selectedClass.id : ''}
+                    mintedClasses={mintedClasses}
+                />
             );
             break;
         case MINT_ELDER_SPIRIT_STEPS.MINT:

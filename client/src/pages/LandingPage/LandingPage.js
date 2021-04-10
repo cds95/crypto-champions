@@ -10,9 +10,6 @@ export const LandingPageComp = () => {
     return (
         <div className="landing-page">
             <div className="landing-page__content">
-                <div className="landing-page__header">
-                    <div className="landing-page__caption">sdfsdfs</div>
-                </div>
                 <Link
                     to={routeDefinitions.PLAY}
                     component={(props) => <CryptoChampionButton {...props} label="Get Started" />}
