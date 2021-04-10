@@ -1,6 +1,9 @@
 .item-grid {
     display: flex;
     flex-wrap: wrap;
+}
+
+.item-grid.item-grid--centered {
     justify-content: center;
 }
 
@@ -11,6 +14,7 @@
 .item-grid__item {
     width: calc(50% - 25px);
     padding: 12.5px;
+    display: flex;
 }
 
 @media (min-width: 768px) {

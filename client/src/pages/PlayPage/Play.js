@@ -1,34 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './Play.css';
 import { connect } from 'react-redux';
-import { useGetPhase } from '../../hooks/cryptoChampionsHook';
-import { setPhaseAction } from '../../redux/actions';
 import { PHASES } from '../../constants';
 import { MintElderSpirintWorkflow } from '../../components/MintElderSpiritWorkflow/MintElderSpiritWorkflow';
 import { MintHeroWorkflow } from '../../components/MintHeroWorkflow';
 
-export const PlayComp = ({ setPhase }) => {
-    const { isLoading, phase, isInErrorState } = useGetPhase();
-    useEffect(() => {
-        setPhase(phase);
-    }, [phase]);
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-    if (isInErrorState) {
-        return (
-            <div>
-                Failed to get current phase. Make sure you're MetaMask wallet is connected as we can't connect to the
-                blockchain without it.
-            </div>
-        );
-    }
+export const PlayComp = ({ phase }) => {
     let content;
     switch (phase) {
-        case PHASES.MINT_ELDER:
+        case PHASES.SETUP:
             content = <MintElderSpirintWorkflow />;
             break;
-        case PHASES.MINT_HERO:
+        case PHASES.ACTION:
             content = <MintHeroWorkflow />;
             break;
         default:
@@ -38,12 +21,13 @@ export const PlayComp = ({ setPhase }) => {
     return <div className="play">{content}</div>;
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
+    const {
+        cryptoChampions: { phase }
+    } = state;
     return {
-        setPhase: (phase) => {
-            dispatch(setPhaseAction(phase));
-        }
+        phase
     };
 };
 
-export const Play = connect(null, mapDispatchToProps)(PlayComp);
+export const Play = connect(mapStateToProps)(PlayComp);
