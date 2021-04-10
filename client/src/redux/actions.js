@@ -238,3 +238,11 @@ export const updateHeroAction = (heroId, params) => {
         params
     };
 };
+
+export const SET_USER_BALANCE = 'SET_USER_BALANCE';
+export const setUserBalanceAction = (balance) => {
+    return {
+        type: SET_USER_BALANCE,
+        balance
+    };
+};

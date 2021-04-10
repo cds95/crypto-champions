@@ -7,7 +7,7 @@ def main():
     INIT_DOT_PRICE = 34
     INIT_BNB_PRICE = 310
 
-    CURRENT_BTC_PRICE = 60000
+    CURRENT_BTC_PRICE = 100000
     CURRENT_ETH_PRICE = 2000
     CURRENT_LINK_PRICE = 30
     CURRENT_DOT_PRICE = 39
@@ -78,3 +78,4 @@ def main():
     linkToken.transfer(wwf.address, 1 * 10**18, { "from": accounts[0] })
     minigameFactoryRegistry.registerMinigame(WEATHER_WARS, wwf.address)
     
+    cc.refreshPhase()

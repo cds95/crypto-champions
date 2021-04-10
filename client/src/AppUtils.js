@@ -36,5 +36,5 @@ export const getHometown = (hometownId) => {
 };
 
 export const getAlignment = (alignment) => {
-    return ALIGNMENTS[alignment];
+    return ALIGNMENTS[Math.max(1, alignment)];
 };

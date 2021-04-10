@@ -23,7 +23,8 @@ import {
     setCurrentRoundAction,
     setHeroesAction,
     setIsLoadingHeroesAction,
-    setPhaseAction
+    setPhaseAction,
+    setUserBalanceAction
 } from './redux/actions';
 import { Route, HashRouter as Router, Switch } from 'react-router-dom';
 import { routeDefinitions } from './routeDefinitions';
@@ -51,6 +52,7 @@ export const ContentWrapperComp = ({
     setCurrentRound,
     setHeroes,
     setIsLoadingHeroes,
+    setUserBalance,
     setPhase
 }) => {
     const { maxElderSpirits } = useGetMaxElderSpirits();
@@ -73,6 +75,7 @@ export const ContentWrapperComp = ({
     useEffect(() => setUserAccount(userAccount), [userAccount]);
     useEffect(() => setWinningAffinity(affinity), [affinity]);
     useEffect(() => setCurrentRound(currentRound), [currentRound]);
+    useEffect(() => setUserBalance(userTokenBalance), [userTokenBalance]);
     useEffect(() => {
         setIsLoadingHeroes(isLoadingHeroes);
         setHeroes(heroes);
@@ -148,6 +151,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setPhase: (phase) => {
             dispatch(setPhaseAction(phase));
+        },
+        setUserBalance: (balance) => {
+            dispatch(setUserBalanceAction(balance));
         }
     };
 };

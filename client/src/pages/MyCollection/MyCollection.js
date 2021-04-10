@@ -1,67 +1,94 @@
-import { CircularProgress, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import React from 'react';
+import { CircularProgress, Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { Banner } from '../../components/Banner/Banner';
 import { HeroCard } from '../../components/HeroCard';
-import { Rewards } from '../../components/Rewards/Rewards';
+import { TokenBalance } from '../../components/TokenBalance/TokenBalance';
 import { PHASES } from '../../constants';
 import { setSelectedCollectionHero, updateHeroAction } from '../../redux/actions';
-import { getSelectedHero, getUserOwnedHeroes, getWinningHeroes } from '../../redux/selectors';
+import { getSelectedHero, getUserOwnedElders, getUserOwnedHeroes, getWinningHeroes } from '../../redux/selectors';
 import { claimRoundReward } from '../../services/cryptoChampions';
 import './MyCollection.css';
+import { CryptoChampionButton } from '../../components/CryptoChampionButton';
 
 const text = {
-    heroes: 'Your Heroes'
+    ok: 'Ok',
+    claimimg: 'Claiming reward...',
+    claimRewardSuccess: 'Successfully claimed reward',
+    claimRewardError: 'Failed to claim reward',
+    claimReward: 'Claim Reward',
+    heroes: 'Your Heroes',
+    hasRewards: 'Congratulations! One of your Champions is eligible to claim rewards from the Affinity Loyalty Program!'
 };
 
 export const MyCollectionComp = ({
     userHeroes,
-    selectedHeroId,
-    setSelectedHero,
     winningHeroes,
     phase,
     updateHero,
-    winningAffinity,
-    selectedHero,
-    isLoadingHeroes
+    isLoadingHeroes,
+    userElderSpirits
 }) => {
-    const handleOnSelect = (e) => setSelectedHero(e.target.value);
+    const [isClaimRewardModalOpen, setIsClaimRewardModalOpen] = useState(false);
+    const [isClaimingReward, setIsClaimingReward] = useState(false);
+    const [hasSuccessfullyClaimedReward, setHasSuccessfullyClaimedReward] = useState(false);
     const claimReward = async (heroId) => {
-        await claimRoundReward(heroId);
-        updateHero(heroId, {
-            hasRoundReward: false
-        });
+        setIsClaimingReward(true);
+        setIsClaimRewardModalOpen(true);
+        try {
+            await claimRoundReward(heroId);
+            updateHero(heroId, {
+                hasRoundReward: false
+            });
+            setHasSuccessfullyClaimedReward(true);
+        } catch (e) {
+            setHasSuccessfullyClaimedReward(false);
+        }
+        setIsClaimingReward(false);
+    };
+    const closeModal = () => setIsClaimRewardModalOpen(false);
+    const getModalContent = () => {
+        if (isClaimingReward) {
+            return (
+                <React.Fragment>
+                    {text.claimimg}
+                    <CircularProgress />
+                </React.Fragment>
+            );
+        } else if (hasSuccessfullyClaimedReward) {
+            return text.claimRewardSuccess;
+        } else {
+            return text.claimRewardError;
+        }
     };
     return (
         <div className="my-collection">
+            <Dialog open={isClaimRewardModalOpen} onClose={closeModal} className="my-collection__reward-modal">
+                <DialogContent>{getModalContent()}</DialogContent>
+                <DialogActions>{<CryptoChampionButton onClick={closeModal} label={text.ok} />}</DialogActions>
+            </Dialog>
+            {phase == PHASES.SETUP && winningHeroes.length > 0 && <Banner text={text.hasRewards} />}
+            <TokenBalance className="my-collection__token-balance" />
             {isLoadingHeroes ? (
                 <CircularProgress />
             ) : (
-                <React.Fragment>
-                    {phase == PHASES.SETUP && (
-                        <Rewards
-                            className="my-collection__rewards"
-                            winningHeroes={winningHeroes}
-                            onClaim={claimReward}
-                            winningAffinity={winningAffinity}
-                        />
-                    )}
-                    <FormControl className="my-collection__selector pronciono">
-                        <InputLabel>{text.heroes}</InputLabel>
-                        <Select
-                            id="hero-selector"
-                            value={selectedHeroId || ''}
-                            onChange={handleOnSelect}
-                            className="my-collection__selector-comp"
-                        >
-                            {userHeroes.map((hero) => (
-                                <MenuItem id={hero.id} value={hero.id} key={hero.id}>
-                                    {hero.heroName}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <div className="my-collection__hero-card">{selectedHero && <HeroCard hero={selectedHero} />}</div>
-                </React.Fragment>
+                <div className="my-collection__heroes">
+                    {userHeroes.map((hero) => (
+                        <div key={hero.id} className="my-collection__heroes-item">
+                            <HeroCard
+                                hero={hero}
+                                action={
+                                    hero.hasRoundReward && (
+                                        <CryptoChampionButton
+                                            onClick={() => claimReward(hero.id)}
+                                            label={text.claimReward}
+                                        />
+                                    )
+                                }
+                            />
+                        </div>
+                    ))}
+                </div>
             )}
         </div>
     );
@@ -82,7 +109,8 @@ const mapStateToProps = (state) => {
         phase,
         winningAffinity,
         selectedHero: getSelectedHero(state),
-        isLoadingHeroes
+        isLoadingHeroes,
+        userElderSpirits: getUserOwnedElders(state)
     };
 };
 

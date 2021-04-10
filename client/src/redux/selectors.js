@@ -1,5 +1,3 @@
-import { GAME_PHASE } from '../constants';
-
 export const getAllowedAffinities = (state) => {
     const {
         cryptoChampions: { affinities, mintedAffinities }
@@ -108,9 +106,17 @@ export const getWinningHeroes = (state) => {
     return heroes.filter((hero) => hero.owner === userAccount && hero.hasRoundReward);
 };
 
+export const getUserOwnedElders = (state) => {
+    const {
+        cryptoChampions: { userAccount, elderSpirits }
+    } = state;
+    return elderSpirits.filter((elder) => elder.owner === userAccount);
+};
 export const getSelectedHero = (state) => {
     const {
         collection: { selectedHeroId }
     } = state;
     return getHero(state, selectedHeroId);
 };
+
+export const getUserBalance = (state) => state.cryptoChampions.userBalance;

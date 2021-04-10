@@ -1,7 +1,6 @@
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { displayToken } from '../../AppUtils';
 import { routeDefinitions } from '../../routeDefinitions';
 import './NavigationBar.css';
 

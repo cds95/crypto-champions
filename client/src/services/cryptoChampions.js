@@ -62,6 +62,7 @@ const getElderSpirit = async (elderSpiritId, currentRound) => {
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
     const elderSpirit = await artifact.methods.getElderSpirit(elderSpiritId).call();
     const canBeMinted = await artifact.methods.getElderSpawnsAmount(currentRound, elderSpiritId).call();
+    const owner = await artifact.methods.getElderSpiritOwner(elderSpiritId).call();
     return {
         id: elderSpiritId,
         valid: elderSpirit[0],
@@ -69,7 +70,8 @@ const getElderSpirit = async (elderSpiritId, currentRound) => {
         classId: parseInt(elderSpirit[2]),
         affinity: elderSpirit[3],
         affinityPrice: parseInt(elderSpirit[4]),
-        canBeMinted: !!canBeMinted
+        canBeMinted: !!canBeMinted,
+        owner
     };
 };
 
@@ -112,7 +114,6 @@ export const getHeroes = async () => {
     for (let i = firstHeroId; i < firstHeroId + parseInt(numMintedHeroes); i++) {
         const { 0: heroName, 1: raceId, 2: classId, 3: appearance } = await artifact.methods.getHeroVisuals(i).call();
         const { 0: isValid, 1: affinity, 3: roundMinted } = await artifact.methods.getHeroGameData(i).call();
-        const { 0: level, 1: hp, 2: mana, 3: stamina } = await artifact.methods.getHeroVitals(i).call();
         const {
             0: strength,
             1: dexterity,
@@ -133,8 +134,7 @@ export const getHeroes = async () => {
                 affinity,
                 owner,
                 roundMinted: parseInt(roundMinted),
-                hasRoundReward:
-                    owner === userAccount ? (await hasRoundReward(i)) && roundMinted === currentRound : false,
+                hasRoundReward: owner === userAccount ? await hasRoundReward(i) : false,
                 appearance,
                 strength,
                 dexterity,
@@ -144,11 +144,7 @@ export const getHeroes = async () => {
                 charisma,
                 hometown,
                 weather,
-                alignment,
-                level,
-                hp,
-                mana,
-                stamina
+                alignment
             });
         }
     }

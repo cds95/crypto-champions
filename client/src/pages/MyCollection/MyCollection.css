@@ -1,19 +1,12 @@
 .my-collection {
     min-height: 100%;
-    background: #333333;
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-top: 50px;
 }
 
-.my-collection .my-collection__selector {
-    width: 200px;
-}
-
-.my-collection__rewards {
-    position: fixed;
-    right: 0;
+.my-collection .my-collection__token-balance {
+    margin-top: 50px;
 }
 
 .my-collection__hero-card {
@@ -34,4 +27,16 @@
 .my-collection__selector-comp::before,
 .my-collection__selector-comp::after {
     border-bottom: 1px solid white !important;
+}
+
+.my-collection__heroes {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 800px;
+    width: 80%;
+}
+
+.my-collection__heroes-item {
+    width: calc(50% - 100px);
+    margin: 50px;
 }

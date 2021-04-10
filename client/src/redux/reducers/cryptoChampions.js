@@ -6,7 +6,8 @@ import {
     SET_NUM_MINTED_ELDER_SPIRITS,
     SET_PHASE,
     SET_ROUND_WINNING_AFFINITY,
-    SET_USER_ACCOUNT
+    SET_USER_ACCOUNT,
+    SET_USER_BALANCE
 } from '../actions';
 
 const initialState = {
@@ -18,11 +19,17 @@ const initialState = {
     mintedAffinities: [],
     userAccount: null,
     winningAffinity: '',
-    phase: 0
+    phase: 0,
+    userBalance: 0
 };
 
 export const cryptoChampions = (state = initialState, action) => {
     switch (action.type) {
+        case SET_USER_BALANCE:
+            return {
+                ...state,
+                userBalance: action.balance
+            };
         case SET_USER_ACCOUNT:
             return {
                 ...state,
