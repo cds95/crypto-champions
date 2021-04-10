@@ -47,6 +47,18 @@ contract WeatherWarsRandomizer is VRFConsumerBase {
         _seed = seed;
 
         _isInitialized = false;
+    }
+
+    // Limits to only the owner
+    modifier onlyOwner {
+        require(msg.sender == _owner); // dev: Not contract owner.
+        _;
+    }
+
+    /// @notice Request randomness from the VRF
+    /// @dev Limited to only the owner, or in this case the contract deployer
+    function requestRandomness() external onlyOwner {
+        require(LINK.balanceOf(address(this)) >= _linkFee); // dev: Not enough LINK.
         requestRandomness(_keyHash, _linkFee, _seed);
     }
 
@@ -63,7 +75,7 @@ contract WeatherWarsRandomizer is VRFConsumerBase {
     /// @dev Requires the randomness to be fulfilled
     /// @return The city id
     function getCityId() public view returns (uint256) {
-        require(_requestId != 0); // dev: Randomness has yet to be fulfilled.
+        require(_isInitialized); // dev: Not initialized.
         return _cityId;
     }
 

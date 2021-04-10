@@ -23,11 +23,7 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
     address private _cryptoChampionsAddress;
     address private _linkTokenAddress;
     address private _oracleAddress;
-    address private _vrfCoordinateAddress;
     bytes32 private _jobId; // The job ID to make a GET call and retrieve a bytes32 result
-    bytes32 private _keyHash;
-    uint256 private _vrfFee;
-    uint256 private _vrfSeed;
     uint256 private _oracleFee;
     uint256 private _buyin;
     string private _gameName;
@@ -63,11 +59,8 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
         address cryptoChampionsAddress,
         address linkTokenAddress,
         address oracleAddress,
-        address vrfCoordinateAddress,
+        address randomizerAddress,
         bytes32 jobId,
-        bytes32 keyHash,
-        uint256 vrfFee,
-        uint256 vrfSeed,
         uint256 oracleFee,
         uint256 buyin,
         string memory gameName,
@@ -76,15 +69,12 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
         _cryptoChampionsAddress = cryptoChampionsAddress;
         _linkTokenAddress = linkTokenAddress;
         _oracleAddress = oracleAddress;
-        _vrfCoordinateAddress = vrfCoordinateAddress;
         _jobId = jobId;
-        _keyHash = keyHash;
-        _vrfFee = vrfFee;
-        _vrfSeed = vrfSeed;
         _oracleFee = oracleFee;
         _buyin = buyin;
         _gameName = gameName;
         _weatherApiKey = weatherApiKey;
+        _randomizer = WeatherWarsRandomizer(randomizerAddress);
 
         CITIES[0] = "6173331";
         CITIES[0] = "4671654";
@@ -118,9 +108,6 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
         WEATHERS["Rain"] = 4;
         WEATHERS["Drizzle"] = 5;
         WEATHERS["Thunderstorm"] = 6;
-
-        // Create the randomizer
-        _randomizer = new WeatherWarsRandomizer(keyHash, vrfCoordinateAddress, linkTokenAddress, vrfFee, vrfSeed);
 
         setChainlinkToken(linkTokenAddress);
     }
