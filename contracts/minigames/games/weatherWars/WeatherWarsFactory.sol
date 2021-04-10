@@ -2,127 +2,87 @@
 pragma solidity ^0.6.0;
 
 import "./WeatherWars.sol";
-import "alphachainio/chainlink-contracts@1.1.3/contracts/src/v0.6/VRFConsumerBase.sol";
-import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 import "../../../../interfaces/ICryptoChampions.sol";
 
-contract WeatherWarsFactory is VRFConsumerBase {
-    WeatherWars[] public games;
+import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.6/interfaces/LinkTokenInterface.sol";
 
-    uint8 private constant MAX_CITIES = 24;
+import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 
-    uint8 private constant MAX_WEATHERS = 7;
-
-    uint256 private _fee;
-
-    bytes32 internal _keyHash;
-
-    string private _nextCity;
-
-    uint256 constant SEED = 13563;
-
-    address private _linkTokenAddress;
-
-    address public oracle;
-
-    string private _weatherApiKey;
-
-    bytes32 public jobId;
-
-    mapping(string => uint8) public weatherMapping;
-
-    mapping(uint8 => bool) private weatherMapIds;
-
-    mapping(string => uint8) public cities;
-
-    string[] private _openWeatherCityIds;
-
-    mapping(uint8 => bool) private _cityIds;
+contract WeatherWarsFactory {
+    using SafeMath for uint256;
 
     address private _cryptoChampionsAddress;
+    address private _linkTokenAddress;
+    address private _oracleAddress;
+    address private _vrfCoordinateAddress;
+    bytes32 private _jobId;
+    bytes32 private _keyHash;
+    uint256 private _vrfFee;
+    uint256 private _vrfSeed;
+    uint256 private _oracleFee;
+    string private _weatherApiKey;
+    WeatherWars[] public games;
 
     event GameCreated(string gameName, string city);
 
     event CreatingGame(string city);
 
+    // Creates the WeatherWarsFactory contract
     constructor(
-        address oracleAddress,
-        address vrfCoordinateAdddress,
+        address cryptoChampionsAddress,
         address linkTokenAddress,
-        uint256 feeInLink,
+        address oracleAddress,
+        address vrfCoordinatorAddress,
+        bytes32 jobId,
         bytes32 keyHash,
-        string memory weatherApiKey,
-        bytes32 oracleJobId,
-        address cryptoChampionsAddress
-    ) public VRFConsumerBase(vrfCoordinateAdddress, linkTokenAddress) {
-        _fee = feeInLink;
-        _keyHash = keyHash;
-        _linkTokenAddress = linkTokenAddress;
-        _weatherApiKey = weatherApiKey;
-        oracle = oracleAddress;
-        jobId = oracleJobId;
+        uint256 vrfFee,
+        uint256 vrfSeed,
+        uint256 oracleFee,
+        string calldata weatherApiKey
+    ) public {
         _cryptoChampionsAddress = cryptoChampionsAddress;
+        _linkTokenAddress = linkTokenAddress;
+        _oracleAddress = oracleAddress;
+        _vrfCoordinateAddress = vrfCoordinatorAddress;
+        _jobId = jobId;
+        _keyHash = keyHash;
+        _vrfFee = vrfFee;
+        _vrfSeed = vrfSeed;
+        _oracleFee = oracleFee;
+        _weatherApiKey = weatherApiKey;
     }
 
-    function init() external {
-        requestNextCity();
-    }
-
-    function addWeatherMapping(string calldata weather, uint8 id) external {
-        require(!weatherMapIds[id]); // dev: Weather ID already taken
-        require(id >= 0 && id < MAX_WEATHERS); // dev: Weather ID is invalid.
-        weatherMapping[weather] = id;
-        weatherMapIds[id] = true;
-    }
-
-    function addCityMapping(string calldata openWeatherCityId, uint8 cityId) external {
-        require(!_cityIds[cityId]); // dev: City already taken
-        require(cityId >= 0 && cityId < MAX_CITIES); // dev: City ID is invalid.
-        cities[openWeatherCityId] = cityId;
-        _cityIds[cityId] = true;
-        _openWeatherCityIds.push(openWeatherCityId);
-    }
-
+    /// @notice Creates the weather wars contract
+    /// @param buyinAmount The buyinAmount
+    /// @param initiatorHeroId The initiator hero id
+    /// @param opponent The opponent address
+    /// @param opponentHeroId The opponent hero id
     function createWeatherWars(
-        uint256 _buyinAmount,
+        uint256 buyinAmount,
         uint256 initiatorHeroId,
         address opponent,
         uint256 opponentHeroId
-    ) external returns (bytes32) {
-        WeatherWars newGame =
-            new WeatherWars(
-                oracle,
-                _linkTokenAddress,
-                _fee,
-                "weather-wars",
-                _cryptoChampionsAddress,
-                _buyinAmount,
-                _nextCity,
-                jobId,
-                _weatherApiKey,
-                address(this)
-            );
+    ) external {
+        // TODO: uncomment once weather wars is finalized
+        // Create the WeatherWars contract
+        // WeatherWars newGame =
+        //     new WeatherWars(oracle, _fee, "weather-wars", _cryptoChampionsAddress, _buyinAmount, jobId, _weatherApiKey);
+
+        // Delegate player tokens to WeatherWars
         ICryptoChampions cc = ICryptoChampions(_cryptoChampionsAddress);
-        cc.delegatedTransferInGameTokens(msg.sender, address(newGame), _buyinAmount);
+        cc.delegatedTransferInGameTokens(msg.sender, address(newGame), buyinAmount);
+
+        // Set the player information
         newGame.setPlayerInformation(msg.sender, initiatorHeroId, opponent, opponentHeroId);
 
         // Transfer some link to the newly created game so that it can interact with Chainlink
-        LINK.transfer(address(newGame), _fee);
+        LinkTokenInterface(_linkTokenAddress).transfer(address(newGame), _oracleFee.add(_vrfFee));
 
         games.push(newGame);
-        requestNextCity();
     }
 
-    function requestNextCity() internal {
-        require(LINK.balanceOf(address(this)) >= _fee);
-        requestRandomness(_keyHash, _fee, SEED);
-    }
-
-    function fulfillRandomness(bytes32 requestId, uint256 randomNum) internal override {
-        uint256 cityIdx = randomNum % MAX_CITIES;
-        _nextCity = _openWeatherCityIds[cityIdx];
-    }
-
+    /// @notice Gets the number of games
+    /// @return The number of games
     function getNumGames() external returns (uint256) {
         return games.length;
     }

@@ -31,11 +31,11 @@ contract WeatherWarsRandomizer is VRFConsumerBase {
     // Creates the WeatherWarsRandomizer contract
     constructor(
         bytes32 keyHash,
-        address vrfCoordinateAdddress,
+        address vrfCoordinateAddress,
         address linkTokenAddress,
         uint256 linkFee,
         uint256 seed
-    ) public VRFConsumerBase(vrfCoordinateAdddress, linkTokenAddress) {
+    ) public VRFConsumerBase(vrfCoordinateAddress, linkTokenAddress) {
         // Owner of contract is deployer
         _owner = msg.sender;
 
