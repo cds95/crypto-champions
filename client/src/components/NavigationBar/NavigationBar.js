@@ -5,7 +5,7 @@ import { routeDefinitions } from '../../routeDefinitions';
 import './NavigationBar.css';
 
 const text = {
-    cryptoChampions: 'Crypto Champions',
+    cryptoChampions: 'Crypto Champz',
     links: {
         about: 'About',
         home: 'Home',
