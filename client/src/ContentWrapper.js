@@ -33,6 +33,12 @@ import { Gallery } from './pages/Gallery';
 import { MyCollection } from './pages/MyCollection';
 import { CircularProgress } from '@material-ui/core';
 import { Footer } from './components/Footer/Footer';
+import { Banner } from './components/Banner';
+
+const text = {
+    failedToConnect:
+        'Network Error: Please make sure to connect your wallet to the correct network and refresh the page'
+};
 
 export const ContentWrapperComp = ({
     setMaxElderSpirits,
@@ -70,38 +76,38 @@ export const ContentWrapperComp = ({
         setIsLoadingHeroes(isLoadingHeroes);
         setHeroes(heroes);
     }, [isLoadingHeroes]);
-    if (isLoading || isLoadingHeroes || isLoadingElderSpirits) {
+    if (!isInErrorState && (isLoading || isLoadingHeroes || isLoadingElderSpirits)) {
         return (
             <div className="content-loading">
                 <CircularProgress />
             </div>
         );
     }
-    if (isInErrorState) {
-        return (
-            <div>
-                Failed to get current phase. Make sure you're MetaMask wallet is connected as we can't connect to the
-                blockchain without it.
-            </div>
-        );
-    }
     return (
         <Router>
             <NavigationBar userAccount={userAccount} />
-            <Switch>
-                <Route path={routeDefinitions.ROOT} exact={true}>
-                    <LandingPage />
-                </Route>
-                <Route path={routeDefinitions.PLAY}>
-                    <Play />
-                </Route>
-                <Route path={routeDefinitions.GALLERY}>
-                    <Gallery />
-                </Route>
-                <Route path={routeDefinitions.COLLECTION}>
-                    <MyCollection />
-                </Route>
-            </Switch>
+            {isInErrorState && <Banner text={text.failedToConnect} isError={isInErrorState} />}
+            <div className="app-content">
+                <Switch>
+                    <Route path={routeDefinitions.ROOT} exact={true}>
+                        <LandingPage />
+                    </Route>
+                    {!isInErrorState && (
+                        <React.Fragment>
+                            {' '}
+                            <Route path={routeDefinitions.PLAY}>
+                                <Play />
+                            </Route>
+                            <Route path={routeDefinitions.GALLERY}>
+                                <Gallery />
+                            </Route>
+                            <Route path={routeDefinitions.COLLECTION}>
+                                <MyCollection />
+                            </Route>
+                        </React.Fragment>
+                    )}
+                </Switch>
+            </div>
             <Footer />
         </Router>
     );
