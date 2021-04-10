@@ -111,8 +111,12 @@ export const MintElderSpirintWorkflowComp = ({
     };
     const history = useHistory();
     const handleOnCloseModal = () => {
-        resetMintingElderSpiritWorkflow();
-        history.push(routeDefinitions.ROOT);
+        if (isAbleToMint) {
+            resetMintingElderSpiritWorkflow();
+            history.push(routeDefinitions.ROOT);
+        } else {
+            setIsModalOpen(false);
+        }
     };
 
     let content;

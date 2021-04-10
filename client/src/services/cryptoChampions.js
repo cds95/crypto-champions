@@ -50,23 +50,26 @@ export const mintElderSpirit = async (raceId, classId, affinity) => {
 
 export const getElderSpirits = async (numElderSpirits) => {
     const elderSpirits = [];
+    const currentRound = await getCurrentRound();
     for (let id = 1; id <= numElderSpirits; id++) {
-        const spirit = await getElderSpirit(id);
+        const spirit = await getElderSpirit(id, currentRound);
         elderSpirits.push(spirit);
     }
     return elderSpirits;
 };
 
-export const getElderSpirit = async (elderSpiritId) => {
+const getElderSpirit = async (elderSpiritId, currentRound) => {
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
     const elderSpirit = await artifact.methods.getElderSpirit(elderSpiritId).call();
+    const canBeMinted = await artifact.methods.getElderSpawnsAmount(currentRound, elderSpiritId).call();
     return {
         id: elderSpiritId,
         valid: elderSpirit[0],
         raceId: parseInt(elderSpirit[1]),
         classId: parseInt(elderSpirit[2]),
         affinity: elderSpirit[3],
-        affinityPrice: parseInt(elderSpirit[4])
+        affinityPrice: parseInt(elderSpirit[4]),
+        canBeMinted: !!canBeMinted
     };
 };
 

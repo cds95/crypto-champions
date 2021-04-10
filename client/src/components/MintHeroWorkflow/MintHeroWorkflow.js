@@ -1,4 +1,4 @@
-import { TextField } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -18,10 +18,13 @@ import { ElderSelector } from '../ElderSelector/ElderSelector';
 import './MintHeroWorkflow.css';
 
 const text = {
-    fieldLabel: "Enter your Hero's name",
-    mintHero: 'Train with elder spirit and mint your champion',
-    processing: 'Processing...',
-    confirmation: 'Successfully purchased character'
+    fieldLabel: "What will your champion's name be?",
+    mintHero: 'Mint and train champion',
+    processing: 'Minting...',
+    confirmation: 'Successfully minted champion',
+    select: 'Select',
+    full: 'Full',
+    failedToMint: 'Failed to mint champion'
 };
 
 export const MintHeroWorkflowComp = ({
@@ -35,6 +38,7 @@ export const MintHeroWorkflowComp = ({
     isMinting
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [hasFailedToMint, setHasFailedToMint] = useState(false);
     const history = useHistory();
     if (!elderSpirits) {
         return <></>;
@@ -47,19 +51,35 @@ export const MintHeroWorkflowComp = ({
                 label: getRaceClassLabel(elder.raceId, elder.classId),
                 subLabel: elder.affinity,
                 image: getRaceGif(elder.raceId),
-                isSelectable: true
+                isSelectable: true,
+                actionButton: (
+                    <CryptoChampionButton
+                        disabled={!elder.canBeMinted}
+                        label={elder.canBeMinted ? text.select : text.full}
+                        onClick={() => setElderSpiritForHero(elder)}
+                    />
+                )
             };
         });
     const handleOnHeroNameChange = (e) => setHeroName(e.target.value);
     const handleOnSubmit = async () => {
         setIsMinting(true);
         setIsModalOpen(true);
-        await mintHero(selectedElderSpirit.id, heroName);
+        try {
+            await mintHero(selectedElderSpirit.id, heroName);
+            setHasFailedToMint(false);
+        } catch (e) {
+            setHasFailedToMint(true);
+        }
         setIsMinting(false);
     };
     const handleOnClose = () => {
-        history.push(routeDefinitions.ROOT);
-        resetWorkflow();
+        if (hasFailedToMint) {
+            setIsModalOpen(false);
+        } else {
+            history.push(routeDefinitions.ROOT);
+            resetWorkflow();
+        }
     };
     return (
         <div className="mint-hero-workflow">
@@ -69,17 +89,13 @@ export const MintHeroWorkflowComp = ({
                 selectedElderId={selectedElderSpirit ? selectedElderSpirit.id : ''}
             />
             <div className="mint-hero-workflow__bottom">
-                <TextField
-                    value={heroName}
-                    label={text.fieldLabel}
-                    onChange={handleOnHeroNameChange}
-                    className="mint-hero-workflow__name"
-                />
+                <Typography className="pronciono--white">{text.fieldLabel}</Typography>
+                <TextField value={heroName} onChange={handleOnHeroNameChange} className="mint-hero-workflow__name" />
                 <CryptoChampionButton onClick={handleOnSubmit} label={text.mintHero} />
             </div>
             <Confirmation
                 isOpen={isModalOpen}
-                text={text.confirmation}
+                text={hasFailedToMint ? text.failedToMint : text.confirmation}
                 isLoading={isMinting}
                 loadingText={text.processing}
                 onConfirm={handleOnClose}

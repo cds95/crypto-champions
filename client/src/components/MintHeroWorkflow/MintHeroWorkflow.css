@@ -2,21 +2,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 50px;
 }
 
 .mint-hero-workflow .mint-hero-workflow__name {
     width: 300px;
-    margin: 50px 0;
+    margin: 0 0 50px;
     color: #fff;
 }
 
-.mint-hero-workflow .mint-hero-workflow__name label,
-.mint-hero-workflow .mint-hero-workflow__name label + .MuiInput-formControl {
+.mint-hero-workflow .mint-hero-workflow__name .MuiInput-formControl {
     color: #fff;
     font-family: 'Pronciono';
 }
 
-.mint-hero-workflow .mint-hero-workflow__name label + .MuiInput-formControl:before,
-.mint-hero-workflow .mint-hero-workflow__name label + .MuiInput-formControl:after {
+.mint-hero-workflow .mint-hero-workflow__name .MuiInput-formControl:before,
+.mint-hero-workflow .mint-hero-workflow__name .MuiInput-formControl:after {
     border-bottom: 1px solid #fff;
 }

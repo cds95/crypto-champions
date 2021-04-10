@@ -7,7 +7,8 @@ import { MintHeroWorkflow } from '../../components/MintHeroWorkflow';
 import { Typography } from '@material-ui/core';
 
 const text = {
-    phaseOne: 'Phase 1: Setup'
+    phaseOne: 'Phase 1: Setup',
+    phaseTwo: 'Phase 2: Action'
 };
 
 export const PlayComp = ({ phase }) => {
@@ -26,7 +27,7 @@ export const PlayComp = ({ phase }) => {
     return (
         <div className="play">
             <Typography className="page-header play__header" variant="h2">
-                {text.phaseOne}
+                {phase === PHASES.SETUP ? text.phaseOne : text.phaseTwo}
             </Typography>
             {content}
         </div>

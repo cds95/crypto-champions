@@ -2,17 +2,15 @@ import React from 'react';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 
 const text = {
-    title: '2nd Cycle Gathering of Champions',
-    caption: 'Select an Elder Spirit to train with.  You will inherit some properties from that Elder Spirit.'
+    mintChampion:
+        'Champions can be minted during the Action Phase.  Select an Elder Spirit with whom you would like to train your Champion.  You will inherit that Elder’s Race, Class, and Affinity. The rest of your Champion’s attributes will be randomly generated.'
 };
-export const ElderSelector = ({ onSelect, items, selectedElderId }) => {
+export const ElderSelector = ({ items, selectedElderId }) => {
     return (
         <ItemSelector
-            title={text.title}
-            caption={text.caption}
             items={items}
-            onSelect={onSelect}
             selectedItemId={selectedElderId}
+            captions={[text.mintChampion]}
         />
     );
 };

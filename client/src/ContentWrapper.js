@@ -60,7 +60,7 @@ export const ContentWrapperComp = ({
     }, [phase]);
     useEffect(() => setMaxElderSpirits(maxElderSpirits), [maxElderSpirits]);
     useEffect(() => setNumMintedElderSpirits(numMintedElderSpirits), [numMintedElderSpirits]);
-    useEffect(() => setElderSpirits(elderSpirits), [isLoadingElderSpirits]);
+    useEffect(() => setElderSpirits(elderSpirits), [elderSpirits.length]);
     useEffect(() => setAffinities(affinities), [isLoadingAffinities]);
     useEffect(() => setUserAccount(userAccount), [userAccount]);
     useEffect(() => setWinningAffinity(affinity), [affinity]);
