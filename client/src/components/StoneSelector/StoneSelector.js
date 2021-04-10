@@ -1,6 +1,6 @@
 import React from 'react';
-import { getElderSpiritLabel } from '../../AppUtils';
-import { getRaceImage } from '../../images/races';
+import { getRaceClassLabel } from '../../AppUtils';
+import { getRaceGif } from '../../images/alternateRaces/';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 
 const text = {
@@ -12,8 +12,8 @@ const text = {
 export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElderSpirits }) => {
     const items = elderSpirits.map((spirit) => ({
         id: spirit.id,
-        label: getElderSpiritLabel(spirit),
-        image: getRaceImage(spirit.raceId),
+        label: getRaceClassLabel(spirit.raceId, spirit.classId),
+        image: getRaceGif(spirit.raceId),
         subLabel: spirit.affinity
     }));
     const availableElderSpots = maxElderSpirits - items.length;

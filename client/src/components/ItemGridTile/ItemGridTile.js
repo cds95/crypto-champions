@@ -4,13 +4,25 @@ import clsx from 'clsx';
 import { Typography } from '@material-ui/core';
 import emptySpace from '../../images/not-summoned.png';
 
-export const ItemGridTile = ({ itemLabel, itemImage, isSelectable, isSelected, itemSublabel }) => {
+export const ItemGridTile = ({
+    itemLabel,
+    itemImage,
+    isSelectable,
+    isSelected,
+    itemSublabel,
+    isBlackText,
+    decorator,
+    isWhiteTile
+}) => {
     const classNames = clsx('item-grid-tile', {
         'item-grid-tile--selectable': isSelectable,
-        'item-grid-tile--selected': isSelected
+        'item-grid-tile--selected': isSelected,
+        'item-grid-tile--black-text': isBlackText,
+        'item-grid-tile--white': isWhiteTile
     });
     return (
         <div className={classNames}>
+            {decorator && <div className="item-grid-tile__decorator">{decorator}</div>}
             <img src={itemImage || emptySpace} className="item-grid-tile__image" />
             <Typography variant="body1" className="item-grid-tile__label">
                 {itemLabel}

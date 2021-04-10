@@ -141,3 +141,100 @@ export const resetMintingHeroWorkflowAction = () => {
         type: RESET_MINTING_HERO_WORKFLOW
     };
 };
+
+export const SET_HEROES = 'SET_HEROES';
+export const setHeroesAction = (heroes) => {
+    return {
+        type: SET_HEROES,
+        heroes
+    };
+};
+
+export const SET_IS_LOADING_HEROES = 'SET_IS_LOADING_HEROES';
+export const setIsLoadingHeroesAction = (isLoading) => {
+    return {
+        type: SET_IS_LOADING_HEROES,
+        isLoading
+    };
+};
+
+export const SET_USER_ACCOUNT = 'SET_USER_ACCOUNT';
+export const setUserAccountAction = (account) => {
+    return {
+        type: SET_USER_ACCOUNT,
+        account
+    };
+};
+
+export const SET_DUEL_INITIATOR_HERO = 'SET_DUEL_INITIATOR_HERO';
+export const setDuelInitiatorHeroAction = (heroId) => {
+    return {
+        type: SET_DUEL_INITIATOR_HERO,
+        heroId
+    };
+};
+
+export const SET_DUEL_OPPONENT_HERO = 'SET_DUEL_OPPONENT_HERO';
+export const setDuelOpponentHeroAction = (heroId, opponentAddress) => {
+    return {
+        type: SET_DUEL_OPPONENT_HERO,
+        heroId,
+        opponentAddress
+    };
+};
+
+export const SET_DUEL_BET_AMOUNT = 'SET_DUEL_BET_AMOUNT';
+export const setDuelBetAmountAction = (bet) => {
+    return {
+        type: SET_DUEL_BET_AMOUNT,
+        bet
+    };
+};
+
+export const RESET_DUEL = 'RESET_DUEL';
+export const resetDuelAction = () => {
+    return {
+        type: RESET_DUEL
+    };
+};
+
+export const SET_WEATHER_DUELS = 'SET_WEATHER_DUELS';
+export const setWeatherDuelsAction = (weatherDuels) => {
+    return {
+        type: SET_WEATHER_DUELS,
+        weatherDuels
+    };
+};
+
+export const SET_ROUND_WINNING_AFFINITY = 'SET_ROUND_WINNING_AFFINITY';
+export const setRoundWinningAffinity = (winningAffinity) => {
+    return {
+        type: SET_ROUND_WINNING_AFFINITY,
+        winningAffinity
+    };
+};
+
+export const SET_CURRENT_ROUND = 'SET_CURRENT_ROUND';
+export const setCurrentRoundAction = (currentRound) => {
+    return {
+        type: SET_CURRENT_ROUND,
+        currentRound
+    };
+};
+
+export const SET_SELECTED_COLLECTION_HERO = 'SET_SELECTED_COLLECTION_HERO';
+export const setSelectedCollectionHero = (heroId) => {
+    return {
+        type: SET_SELECTED_COLLECTION_HERO,
+        heroId
+    };
+};
+
+export const UPDATE_HERO = 'UPDATE_HERO';
+export const updateHeroAction = (heroId, params) => {
+    return {
+        type: UPDATE_HERO,
+        heroId,
+        params
+    };
+};

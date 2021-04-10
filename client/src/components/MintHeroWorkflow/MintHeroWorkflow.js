@@ -2,7 +2,8 @@ import { TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import { getElderSpiritImage, getElderSpiritLabel } from '../../AppUtils';
+import { getRaceClassLabel } from '../../AppUtils';
+import { getRaceGif } from '../../images/alternateRaces';
 import {
     resetMintingHeroWorkflowAction,
     setElderSpiritForHeroAction,
@@ -36,16 +37,16 @@ export const MintHeroWorkflowComp = ({
     const [isModalOpen, setIsModalOpen] = useState(false);
     const history = useHistory();
     if (!elderSpirits) {
-        return <div>Loading...</div>;
+        return <></>;
     }
     const items = elderSpirits
         .filter(({ valid }) => valid)
         .map((elder) => {
             return {
                 id: elder.id,
-                label: getElderSpiritLabel(elder),
+                label: getRaceClassLabel(elder.raceId, elder.classId),
                 subLabel: elder.affinity,
-                image: getElderSpiritImage(elder),
+                image: getRaceGif(elder.raceId),
                 isSelectable: true
             };
         });

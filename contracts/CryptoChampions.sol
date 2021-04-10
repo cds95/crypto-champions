@@ -3,10 +3,11 @@ pragma solidity ^0.6.0;
 
 import "../interfaces/ICryptoChampions.sol";
 import "../interfaces/IMinigameFactoryRegistry.sol";
-import "./chainlink_contracts/AggregatorV3Interface.sol";
-import "./chainlink_contracts/VRFConsumerBase.sol";
 import "./minigames/games/priceWars/PriceWarsFactory.sol";
 import "./minigames/games/priceWars/PriceWars.sol";
+import "./chainlink_contracts/VRFConsumerBase.sol";
+
+import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/access/AccessControl.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
@@ -25,9 +26,12 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     // The current phase the contract is in.
     Phase public currentPhase;
 
+    // Number of tokens minted whenever a user mints a hero
+    uint256 internal constant NUM_TOKENS_MINTED = 500 * 10**18;
+
     // The duration of each phase in days
-    uint256 internal SETUP_PHASE_DURATION = 2 days;
-    uint256 internal ACTION_PHASE_DURATION = 2 days;
+    uint256 internal _setupPhaseDuration;
+    uint256 internal _actionPhaseDuration;
 
     // The current phase start time
     uint256 public currentPhaseStartTime;
@@ -164,6 +168,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         _keyHash = keyhash;
         _fee = 0.1 * 10**18; // 0.1 LINK
 
+        // Set phase durations
+        _setupPhaseDuration = 2 days;
+        _actionPhaseDuration = 2 days;
+
         _minigameFactoryRegistry = IMinigameFactoryRegistry(minigameFactoryRegistry);
     }
 
@@ -196,6 +204,18 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         _;
     }
 
+    /// @notice Sets the duration of the setup phase
+    /// @param numDays Number of days for the setup phase duration
+    function setSetupPhaseDuration(uint256 numDays) external onlyAdmin {
+        _setupPhaseDuration = numDays * 1 days;
+    }
+
+    /// @notice Sets the duration of the action phase
+    /// @param numDays Number of days for the action phase
+    function setActionPhaseDuration(uint256 numDays) external onlyAdmin {
+        _actionPhaseDuration = numDays * 1 days;
+    }
+
     /// @notice Transitions to the next phase
     function _transitionNextPhase() internal {
         if (currentPhase == Phase.SETUP) {
@@ -223,7 +243,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
             for (; i <= eldersInGame; ++i) {
                 if (
                     keccak256(bytes(_elderSpirits[i].affinity)) ==
-                    keccak256(bytes(winningAffinitiesByRound[currentRound]))
+                    keccak256(bytes(winningAffinitiesByRound[currentRound])) &&
+                    getElderSpawnsAmount(currentRound, i) > 0
                 ) {
                     _heroRewardsShare = rewardsPoolAmount.div(getElderSpawnsAmount(currentRound, i));
                     break;
@@ -254,10 +275,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         if (
             currentPhase == Phase.SETUP &&
             eldersInGame == MAX_NUMBER_OF_ELDERS &&
-            now >= currentPhaseStartTime + SETUP_PHASE_DURATION
+            now >= currentPhaseStartTime + _setupPhaseDuration
         ) {
             _transitionNextPhase();
-        } else if (currentPhase == Phase.ACTION && now >= currentPhaseStartTime + ACTION_PHASE_DURATION) {
+        } else if (currentPhase == Phase.ACTION && now >= currentPhaseStartTime + _actionPhaseDuration) {
             _transitionNextPhase();
         }
 
@@ -409,6 +430,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         // Mint the NFT
         _mint(_msgSender(), heroId, 1, ""); // TODO: give the URI
 
+        // Mint in game currency tokens
+        _mint(_msgSender(), IN_GAME_CURRENCY_ID, NUM_TOKENS_MINTED, "");
+
         // Assign the hero id with the owner and with the hero
         _heroOwners[heroId] = _msgSender();
 
@@ -476,7 +500,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         (_heroes[heroId].alignment, newRandomNumber) = _rollDice(9, newRandomNumber); // 1 out of 9
         (_heroes[heroId].background, newRandomNumber) = _rollDice(30, newRandomNumber); // 1 out of 30
         (_heroes[heroId].hometown, newRandomNumber) = _rollDice(24, newRandomNumber); // 1 out of 24
-        (_heroes[heroId].weather, newRandomNumber) = _rollDice(5, newRandomNumber); // 1 ouf of 5
+        (_heroes[heroId].weather, newRandomNumber) = _rollDice(7, newRandomNumber); // 1 ouf of 7
 
         (_heroes[heroId].hp, newRandomNumber) = _rollDice(21, newRandomNumber); // Roll 10-30
         _heroes[heroId].hp = uint8(_heroes[heroId].hp.add(9));
@@ -815,5 +839,37 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         PriceWars priceWar = priceWarsFactory.createPriceWar(address(this));
         grantRole(ROLE_GAME_ADMIN, address(priceWar));
         priceWar.startGame();
+    }
+
+    /// @notice Transfers in game currency tokens from one address to another
+    /// @param to The receiving address
+    /// @param amount The amount to transfer
+    function transferInGameTokens(address to, uint256 amount) external override {
+        bytes memory data;
+        safeTransferFrom(msg.sender, to, IN_GAME_CURRENCY_ID, amount, data);
+    }
+
+    /// @notice Transfers in game currency tokens from one address to another.
+    /// @param from The sending address.  Note that the sender must be authorized to transfer funds if the sender is different from the from address.
+    /// @param to The receiving address
+    /// @param amount The amount to transfer
+    function delegatedTransferInGameTokens(
+        address from,
+        address to,
+        uint256 amount
+    ) external override {
+        bytes memory data;
+        safeTransferFrom(from, to, IN_GAME_CURRENCY_ID, amount, data);
+    }
+
+    /// @notice Returns whether or not hero has reward for the round
+    /// @param heroId The id of the hero being searched for
+    function hasRoundReward(uint256 heroId) external view returns (bool) {
+        Hero memory hero = _heroes[heroId];
+        string memory roundWinningAffinity = winningAffinitiesByRound[currentRound];
+        return
+            !_heroRewardsClaimed[heroId][currentRound] &&
+            keccak256(bytes(hero.affinity)) == keccak256(bytes(roundWinningAffinity)) &&
+            hero.roundMinted == currentRound;
     }
 }

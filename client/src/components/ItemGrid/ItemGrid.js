@@ -1,25 +1,40 @@
 import React from 'react';
 import { ItemGridTile } from '../ItemGridTile/ItemGridTile';
 import './ItemGrid.css';
+import clsx from 'clsx';
 
-const defaultRenderItem = (item, isSelectable) => (
+const defaultRenderItem = (item, isSelectable, isBlackText, hasWhiteTiles) => (
     <ItemGridTile
         itemImage={item.image}
         itemLabel={item.label}
         isSelectable={isSelectable}
         isSelected={item.isSelected}
         itemSublabel={item.subLabel}
+        isBlackText={isBlackText}
+        isWhiteTile={hasWhiteTiles}
     />
 );
 
-export const ItemGrid = ({ items = [], onSelect, renderItem = defaultRenderItem }) => {
+export const ItemGrid = ({
+    items = [],
+    onSelect,
+    renderItem = defaultRenderItem,
+    isMini,
+    isBlackText,
+    hasWhiteTiles,
+    isCentered = true
+}) => {
+    const className = clsx('item-grid', {
+        'item-grid--mini': isMini,
+        'item-grid--centered': isCentered
+    });
     return (
-        <div className="item-grid">
+        <div className={className}>
             {items.map((item) => {
                 const handleOnClick = () => item.isSelectable && onSelect && onSelect(item);
                 return (
                     <div className="item-grid__item" key={item.id} onClick={handleOnClick}>
-                        {renderItem(item, !!onSelect && item.isSelectable)}
+                        {renderItem(item, !!onSelect && item.isSelectable, isBlackText, hasWhiteTiles)}
                     </div>
                 );
             })}

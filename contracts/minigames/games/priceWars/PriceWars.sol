@@ -2,8 +2,10 @@
 pragma solidity ^0.6.0;
 
 import "../../Minigame.sol";
-import "../../../chainlink_contracts/AggregatorV3Interface.sol";
 import "../../../../interfaces/ICryptoChampions.sol";
+
+import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SignedSafeMath.sol";
 
 /// @title PriceWars

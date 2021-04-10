@@ -1,0 +1,86 @@
+.hero-card {
+    width: 100%;
+    background: #874630;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+}
+
+.hero-card--selectable {
+    cursor: pointer;
+}
+
+.hero-card,
+.hero-card__content {
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.hero-card__content {
+    background: #502415;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+}
+
+.hero-card img {
+    max-width: 100%;
+}
+
+.hero-card__image-container {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    margin-top: 70px;
+}
+
+.hero-card__extension {
+    position: absolute;
+    left: 20px;
+    text-align: left;
+}
+
+.hero-card__affinity {
+    position: absolute;
+    right: 20px;
+    color: #fff;
+}
+
+.hero-card__extension .hero-card__extension-item {
+    color: #fff;
+}
+
+.hero-card__name {
+    margin-top: 15px;
+}
+
+.hero-card__name-pill .MuiChip-label {
+    font-size: 22px;
+    font-family: 'Pronciono';
+}
+
+.hero-card__stats {
+    margin-top: 20px;
+    width: calc(100% - 40px);
+    padding: 15px;
+    border-radius: 15px;
+    background: #e1b6a8;
+}
+
+.hero-card__stats-bot {
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.hero-card--vertical .hero-card__stats-bot {
+    flex-direction: column;
+}
+
+.hero-card.hero-card--selected {
+    border: 2px solid #000;
+}

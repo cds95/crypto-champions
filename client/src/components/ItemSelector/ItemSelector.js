@@ -3,9 +3,21 @@ import { Typography } from '@material-ui/core';
 import { ItemGrid } from '../ItemGrid';
 import './ItemSelector.css';
 
-export const ItemSelector = ({ items = [], title, caption, subCaption, onSelect, selectedItemId }) => {
+export const ItemSelector = ({
+    items = [],
+    title,
+    caption,
+    subCaption,
+    onSelect,
+    selectedItemId,
+    isBlackText,
+    isMini,
+    renderItem,
+    hasWhiteTiles,
+    isCentered
+}) => {
     items = items.map((item) => {
-        if (item.id === selectedItemId) {
+        if (selectedItemId !== null && selectedItemId !== undefined && item.id === selectedItemId) {
             item.isSelected = true;
         }
         return item;
@@ -19,7 +31,15 @@ export const ItemSelector = ({ items = [], title, caption, subCaption, onSelect,
                 {caption}
             </Typography>
             <div className="item-selector__items">
-                <ItemGrid items={items} onSelect={onSelect} />
+                <ItemGrid
+                    isCentered={isCentered}
+                    isBlackText={isBlackText}
+                    items={items}
+                    onSelect={onSelect}
+                    isMini={isMini}
+                    renderItem={renderItem}
+                    hasWhiteTiles={hasWhiteTiles}
+                />
             </div>
             {subCaption && (
                 <Typography variant="h6" className="item-selector__sub__caption">

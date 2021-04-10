@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.0;
 
-import "../../chainlink_contracts/AggregatorV3Interface.sol";
+import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
 /**
  * @title MockV3Aggregator
@@ -21,7 +21,7 @@ contract MockV3Aggregator is AggregatorV3Interface {
 
     mapping(uint256 => int256) public getAnswer;
     mapping(uint256 => uint256) public getTimestamp;
-    mapping(uint256 => uint256) private getStartedAt;
+    mapping(uint256 => uint256) public getStartedAt;
 
     constructor(uint8 _decimals, int256 _initialAnswer) public {
         decimals = _decimals;

@@ -1,4 +1,10 @@
-import { DECREMENT_ACTIVE_STEP, INCREMENT_ACTIVE_STEP, SET_ACTIVE_STEP, SET_MAX_STEPS } from '../actions';
+import {
+    DECREMENT_ACTIVE_STEP,
+    INCREMENT_ACTIVE_STEP,
+    RESET_MINTING_ELDER_SPIRIT_WORKFLOW,
+    SET_ACTIVE_STEP,
+    SET_MAX_STEPS
+} from '../actions';
 
 const initialState = {
     currentStep: 0,
@@ -7,6 +13,12 @@ const initialState = {
 
 export const workflow = (state = initialState, action) => {
     switch (action.type) {
+        case RESET_MINTING_ELDER_SPIRIT_WORKFLOW: {
+            return {
+                ...state,
+                currentStep: 0
+            };
+        }
         case INCREMENT_ACTIVE_STEP: {
             return {
                 ...state,
