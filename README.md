@@ -1,10 +1,38 @@
-# Crypto Champions
+# Crypto Champions: A Universal Character Generator and Gaming Ecosystem
+
+## Description
+Crypto Champz is a Universal Character Generator that takes advantage of NFT composability to create robust characters that are playable in an endless variety of games.  NFTs are exploding in popularity but a lot of the current use cases revolve around speculative artwork.  Owners of NFTs often purchase them with the hope that the price will increase.  Instead of being purely collectible, we hope to create NFTs that have practical use cases - and that are just plain **fun!**.  
+
+Crypto Champz serve as NFT primitives that can be used to traverse the Metaverse of blockchain games.  For example, your Champion might be used in a card game, a virtual board game, a farming simulator, or even your next D&D campaign!  Of course, it can also be traded as a collectible.  Over the next few years, we envision a wide Metaverse of blockchain based games that are an evolution of the early browser based games of the 2000s.
+
+### Prototyping and Templating
+Instead of minting Champions directly, players must "train" their Champions through Elder Spirits.  Elder Spirits act as prototypes and templates from which Champions will inherit certain properties.  Every Round, a new set of Elder Spirits is available to choose from.  For example, Round 1 might have a Human Paladin, Elf Mage, and Bull Warrior to choose from.  Round 2 might instead have options for a Bear Bard, a Human Mage, and a Robot Rogue.  This keeps things fresh and adds a reason to keep coming back to the game.
+
+### Royalty Mechanism
+When a Champion trains with a certain Elder, the owner of that Elder gets paid a royalty fee.  Because Elders are rotated out (i.e. burned) every round, players always have the opportunity to earn fees without the system consolidating rent-seeking behavior in a few early participants.
+
+### Character Randomization
+While Champions inherit a few foundational features (Race, Class, Affinity) from their Elder Spirit, most of their properties are randomly generated using Chainlink VRF.  Additional properties might be related to Lore (Hometown, Background, Alignment), Skills (Class Abilities, Racial Traits), or Core Stats (Health, Mana, Strength, Dexterity, etc.).  There are trillions of unique combinations of Champions available!
+
+### Mini Games
+To jump start our gaming ecosystem, we have created two Mini Games that leverage exciting blockchain technologies.  
+* One of our Mini Games uses Chainlink Price Feeds to link the price of an asset to a Champion.  Players loyal to a high perform asset may earn rewards!
+* Another Mini Game allows Champions to duel each other.  We use Chainlink Oracles to retrieve real time weather data which is used as input for Tournament conditions, and Chainlink VRF to randomize additional conditions.  
+
+## Project Overview on Figma
+https://www.figma.com/file/rvuFWE67GUzT9tX5YCnAXL/Untitled?node-id=0%3A1
+
+### Demo Video
+
+### Live Demo (Kovan Network)
+
+## How to build and run this repo
 
 This is the repo for the Crypto Champions application. The code is based off brownie's react mix.
 
 https://github.com/brownie-mix/react-mix
 
-## Installation
+### Installation
 
 1. [Install Brownie](https://eth-brownie.readthedocs.io/en/stable/install.html), if you haven't already. You must be using version `1.9.0` or newer.
 
@@ -45,7 +73,7 @@ https://github.com/brownie-mix/react-mix
 2. Run the [deployment script](scripts/deploy.py) to deploy the project's smart contracts.
 
    ```python
-   >>> run("deploy")
+   >>> run("deploy_local")
    Running 'scripts.deploy.main'...
    Transaction sent: 0xd1000d04fe99a07db864bcd1095ddf5cb279b43be8e159f94dbff9d4e4809c70
    Gas price: 0.0 gwei   Gas limit: 6721975
@@ -73,16 +101,6 @@ https://github.com/brownie-mix/react-mix
    http://localhost:8545
    ```
 
-5. Interact with the smart contracts using the web interface or via the Brownie console.
-
-   ```python
-   # get the newest vyper storage contract
-   >>> vyper_storage = VyperStorage[-1]
-
-   # the default sender of the transaction is the contract creator
-   >>> vyper_storage.set(1337)
-   ```
-
    Any changes to the contracts from the console should show on the website after a refresh, and vice versa.
 
 ## Ending a Session
@@ -101,19 +119,13 @@ To run the test suite:
 brownie test
 ```
 
-### Deploying to a Live Network
+## Goals for the future
 
-To deploy your contracts to the mainnet or one of the test nets, first modify [`scripts/deploy.py`](`scripts/deploy.py`) to [use a funded account](https://eth-brownie.readthedocs.io/en/stable/account-management.html).
-
-Then:
-
-```bash
-brownie run deploy --network kovan
-```
-
-Replace `kovan` with the name of the network you wish you use. You may also wish to adjust Brownie's [network settings](https://eth-brownie.readthedocs.io/en/stable/network-management.html).
-
-For contracts deployed on a live network, the deployment information is stored permanently unless you:
-
-- Delete or rename the contract file or
-- Manually remove the `client/src/artifacts/` directory
+We hope to expand upon this project with additional ideas such as:
+* Dynamically evolving NFTs based on smart contract outcomes (such as leveling up your Experience after adventures)
+* IPFS integration
+* Community incentives to grow the ecosystem
+* Token marketplace
+* Multiple artists
+* More advanced UI / Web App
+* More character customization
