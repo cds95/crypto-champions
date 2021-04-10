@@ -86,7 +86,7 @@ export const ContentWrapperComp = ({
     }
     return (
         <Router>
-            <NavigationBar userTokenBalance={userTokenBalance} />
+            <NavigationBar userAccount={userAccount} />
             <Switch>
                 <Route path={routeDefinitions.ROOT} exact={true}>
                     <LandingPage />

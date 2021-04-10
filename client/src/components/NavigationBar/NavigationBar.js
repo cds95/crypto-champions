@@ -9,13 +9,13 @@ const text = {
     cryptoChampions: 'Crypto Champions',
     links: {
         home: 'Home',
-        play: 'Play',
-        gallery: 'Gallery',
-        collection: 'My Collection'
+        play: 'Mint',
+        gallery: 'Battle',
+        collection: 'My Champz'
     }
 };
 
-export const NavigationBar = ({ userTokenBalance }) => {
+export const NavigationBar = ({ userAccount }) => {
     return (
         <AppBar position="static" className="navigation-bar">
             <Toolbar>
@@ -35,9 +35,9 @@ export const NavigationBar = ({ userTokenBalance }) => {
                     <Link to={routeDefinitions.GALLERY} className="navigation-bar__link navigation-bar__text">
                         <Typography variant="h6">{text.links.gallery}</Typography>
                     </Link>
-                    <Typography className="navigation-bar__text" variant="h6">{`Token Balance: ${displayToken(
-                        userTokenBalance
-                    )} CC`}</Typography>
+                    <Typography className="navigation-bar__text navigation-bar__user-account" variant="h6">
+                        {userAccount}
+                    </Typography>
                 </div>
             </Toolbar>
         </AppBar>
