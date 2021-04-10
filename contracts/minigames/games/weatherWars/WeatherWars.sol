@@ -1,52 +1,53 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.6.0;
 
+import "./WeatherWarsFactory.sol";
+import "./WeatherWarsRandomizer.sol";
 import "../../Minigame.sol";
-import "../../../chainlink_contracts/ChainlinkClient.sol";
+
+import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.6/ChainlinkClient.sol";
+
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC1155Receiver.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
-import "./WeatherWarsFactory.sol";
 
 contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
+    using SafeMath for uint256;
     using SafeMath for uint8;
 
     uint256 private constant MAX_PLAYERS = 2;
 
+    mapping(uint256 => string) private CITIES;
+
+    mapping(string => uint256) private WEATHERS;
+
+    address private _cryptoChampionsAddress;
     address private _linkTokenAddress;
+    address private _oracleAddress;
+    address private _vrfCoordinateAddress;
+    bytes32 private _jobId; // The job ID to make a GET call and retrieve a bytes32 result
+    bytes32 private _keyHash;
+    uint256 private _vrfFee;
+    uint256 private _vrfSeed;
+    uint256 private _oracleFee;
+    uint256 private _buyin;
+    string private _gameName;
+    string private _weatherApiKey; // API key to make call to get weather
+    WeatherWarsRandomizer private _randomizer;
+    uint256 private cityWeatherId;
 
-    uint256 private _fee;
-
-    string public city;
-
-    address private _oracle;
-
-    string public cityWeather;
-
-    // The amount of ether required to join the game
-    uint256 public buyinAmount;
-
-    // The mapping from hero id to the player's balance
     mapping(address => uint256) public balances;
 
-    // The job ID to make a GET call and retrieve a bytes32 result
-    bytes32 private _jobId;
-
-    // API key to make call to get weather
-    string private _apiKey;
-
-    WeatherWarsFactory private _weatherWarsFactory;
+    mapping(address => uint256) public playerHero;
 
     address public initiator;
 
     address public opponent;
 
+    address public winner;
+
     uint256 public initiatorScore;
 
     uint256 public opponentScore;
-
-    address public winner;
-
-    mapping(address => uint256) public playerHero;
 
     bool public isDuelAccepted;
 
@@ -54,27 +55,74 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
 
     bool public isFetchingWeather;
 
+    string public city;
+
+    string public cityWeather;
+
     constructor(
-        address oracle,
+        address cryptoChampionsAddress,
         address linkTokenAddress,
-        uint256 fee,
-        string memory _gameName,
-        address _cryptoChampionsContractAddress,
-        uint256 _buyinAmount,
-        string memory _city,
+        address oracleAddress,
+        address vrfCoordinateAddress,
         bytes32 jobId,
-        string memory apiKey,
-        address weatherWarsFactoryAddress
-    ) public Minigame(gameName, _cryptoChampionsContractAddress) {
-        setPublicChainlinkToken();
+        bytes32 keyHash,
+        uint256 vrfFee,
+        uint256 vrfSeed,
+        uint256 oracleFee,
+        uint256 buyin,
+        string memory gameName,
+        string memory weatherApiKey
+    ) public Minigame(gameName, cryptoChampionsAddress) {
+        _cryptoChampionsAddress = cryptoChampionsAddress;
         _linkTokenAddress = linkTokenAddress;
-        _fee = fee;
-        _oracle = oracle;
-        city = _city;
-        buyinAmount = _buyinAmount;
+        _oracleAddress = oracleAddress;
+        _vrfCoordinateAddress = vrfCoordinateAddress;
         _jobId = jobId;
-        _apiKey = apiKey;
-        _weatherWarsFactory = WeatherWarsFactory(weatherWarsFactoryAddress);
+        _keyHash = keyHash;
+        _vrfFee = vrfFee;
+        _vrfSeed = vrfSeed;
+        _oracleFee = oracleFee;
+        _buyin = buyin;
+        _gameName = gameName;
+        _weatherApiKey = weatherApiKey;
+
+        CITIES[0] = "6173331";
+        CITIES[0] = "4671654";
+        CITIES[0] = "4887398";
+        CITIES[0] = "4164138";
+        CITIES[0] = "5128581";
+        CITIES[0] = "5391811";
+        CITIES[0] = "5391959";
+        CITIES[0] = "5809844";
+        CITIES[0] = "3530597";
+        CITIES[0] = "3435907";
+        CITIES[0] = "993800";
+        CITIES[0] = "360630";
+        CITIES[0] = "2643743";
+        CITIES[0] = "524894";
+        CITIES[0] = "2950158";
+        CITIES[0] = "2968815";
+        CITIES[0] = "2759794";
+        CITIES[0] = "2673722";
+        CITIES[0] = "1850147";
+        CITIES[0] = "1275339";
+        CITIES[0] = "1796236";
+        CITIES[0] = "1835847";
+        CITIES[0] = "1880252";
+        CITIES[0] = "2158177";
+
+        WEATHERS["Clouds"] = 0;
+        WEATHERS["Clear"] = 1;
+        WEATHERS["Atmosphere"] = 2;
+        WEATHERS["Snow"] = 3;
+        WEATHERS["Rain"] = 4;
+        WEATHERS["Drizzle"] = 5;
+        WEATHERS["Thunderstorm"] = 6;
+
+        // Create the randomizer
+        _randomizer = new WeatherWarsRandomizer(keyHash, vrfCoordinateAddress, linkTokenAddress, vrfFee, vrfSeed);
+
+        setChainlinkToken(linkTokenAddress);
     }
 
     function setPlayerInformation(
@@ -90,6 +138,8 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
     }
 
     function play() internal override {
+        require(_randomizer.isInitialized()); // dev: Randomizer not initialized.
+        city = CITIES[_randomizer.getCityId()];
         mockGameplay();
     }
 
@@ -106,14 +156,14 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
         // Build URL
         string memory reqUrlWithCity = concatenate("http://api.openweathermap.org/data/2.5/weather?id=", city);
         reqUrlWithCity = concatenate(reqUrlWithCity, "&appid=");
-        reqUrlWithCity = concatenate(reqUrlWithCity, _apiKey);
+        reqUrlWithCity = concatenate(reqUrlWithCity, _weatherApiKey);
 
         // Send Request
         request.add("get", reqUrlWithCity);
         request.add("path", "weather.0.main");
 
         isFetchingWeather = true;
-        sendChainlinkRequestTo(_oracle, request, _fee);
+        sendChainlinkRequestTo(_oracleAddress, request, _oracleFee);
     }
 
     // TODO:  Move to it's own library
@@ -188,15 +238,15 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
         return (winner, winnerHeroId);
     }
 
-    function getHeroScore(uint256 heroId) internal returns (uint256) {
+    function getHeroScore(uint256 heroId) internal view returns (uint256) {
         (, , uint8 hometown, uint8 weather) = cryptoChampions.getHeroLore(heroId);
         uint256 score = 1;
 
         // Weather and hometown are 1 based in the crypto champions contract and 0 based in weather factory
-        if (hometown - 1 == _weatherWarsFactory.cities(city)) {
+        if (hometown - 1 == _randomizer.getCityId()) {
             score = score.mul(2); // Multiply by 2
         }
-        if (weather - 1 == _weatherWarsFactory.weatherMapping(cityWeather)) {
+        if (weather - 1 == WEATHERS[cityWeather]) {
             score = score.mul(2); // Multiply by 2
         }
         uint256 classStatScore = getClassStatScore(heroId);
@@ -207,7 +257,7 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
         return score;
     }
 
-    function getHighestNonClassStat(uint256 heroId) private returns (uint256) {
+    function getHighestNonClassStat(uint256 heroId) private view returns (uint256) {
         (uint8 traitOne, uint8 traitTwo, uint8 skillOne, uint8 skillTwo) = cryptoChampions.getHeroTraitsSkills(heroId);
         uint256 highest = traitOne;
         if (traitTwo > highest) {
@@ -222,7 +272,7 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
         return highest;
     }
 
-    function getClassStatScore(uint256 heroId) private returns (uint256) {
+    function getClassStatScore(uint256 heroId) private view returns (uint256) {
         (uint8 strength, uint8 dexterity, uint8 constitution, uint8 intelligence, uint8 wisdom, uint8 charisma) =
             cryptoChampions.getHeroStats(heroId);
         (, , uint256 classId, ) = cryptoChampions.getHeroVisuals(heroId);
@@ -263,7 +313,7 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
         uint256 value,
         bytes calldata data
     ) external override returns (bytes4) {
-        require(value == buyinAmount); // dev: Must send the exact buyin amount
+        require(value == _buyin); // dev: Must send the exact buyin amount
         if (from == opponent) {
             isDuelAccepted = true;
         }
@@ -305,7 +355,7 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
             currentPhase,
             winner,
             isDuelAccepted,
-            buyinAmount,
+            _buyin,
             hasBeenPlayed,
             isFetchingWeather
         );
