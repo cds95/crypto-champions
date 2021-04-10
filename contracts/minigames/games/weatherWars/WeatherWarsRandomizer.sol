@@ -22,11 +22,14 @@ contract WeatherWarsRandomizer is VRFConsumerBase {
     // The seed for the VRF
     uint256 private _seed;
 
-    // The request id used to verify if randomness has been fulfilled
+    // The request id used for the VRF
     bytes32 private _requestId;
 
     // The city id which is the result of the VRF
     uint256 private _cityId;
+
+    // Set to true once random number has been generated
+    bool private _isInitialized;
 
     // Creates the WeatherWarsRandomizer contract
     constructor(
@@ -43,6 +46,7 @@ contract WeatherWarsRandomizer is VRFConsumerBase {
         _linkFee = linkFee;
         _seed = seed;
 
+        _isInitialized = false;
         requestRandomness(_keyHash, _linkFee, _seed);
     }
 
@@ -52,6 +56,7 @@ contract WeatherWarsRandomizer is VRFConsumerBase {
     function fulfillRandomness(bytes32 requestId, uint256 randomNum) internal override {
         _requestId = requestId;
         _cityId = randomNum % MAX_CITIES;
+        _isInitialized = true;
     }
 
     /// @notice Gets the city id
@@ -60,5 +65,11 @@ contract WeatherWarsRandomizer is VRFConsumerBase {
     function getCityId() public view returns (uint256) {
         require(_requestId != 0); // dev: Randomness has yet to be fulfilled.
         return _cityId;
+    }
+
+    /// @notice Checks to see if the randomizer is initialized which happens once the random number is generated
+    /// @return True if the randomizer has been initialized, false otherwise
+    function isInitialized() public view returns (bool) {
+        return _isInitialized;
     }
 }

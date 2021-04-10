@@ -11,6 +11,8 @@ import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 contract WeatherWarsFactory {
     using SafeMath for uint256;
 
+    string internal constant GAME_NAME = "weather-wars";
+
     address private _cryptoChampionsAddress;
     address private _linkTokenAddress;
     address private _oracleAddress;
@@ -20,12 +22,15 @@ contract WeatherWarsFactory {
     uint256 private _vrfFee;
     uint256 private _vrfSeed;
     uint256 private _oracleFee;
+    uint256 private _buyin;
     string private _weatherApiKey;
+
+    // All the games this factory has created
     WeatherWars[] public games;
 
-    event GameCreated(string gameName, string city);
-
-    event CreatingGame(string city);
+    /// @notice Emit when a game has been created
+    /// @param gameName The name of the game
+    event GameCreated(string gameName);
 
     // Creates the WeatherWarsFactory contract
     constructor(
@@ -38,7 +43,7 @@ contract WeatherWarsFactory {
         uint256 vrfFee,
         uint256 vrfSeed,
         uint256 oracleFee,
-        string calldata weatherApiKey
+        string memory weatherApiKey
     ) public {
         _cryptoChampionsAddress = cryptoChampionsAddress;
         _linkTokenAddress = linkTokenAddress;
@@ -63,10 +68,22 @@ contract WeatherWarsFactory {
         address opponent,
         uint256 opponentHeroId
     ) external {
-        // TODO: uncomment once weather wars is finalized
         // Create the WeatherWars contract
-        // WeatherWars newGame =
-        //     new WeatherWars(oracle, _fee, "weather-wars", _cryptoChampionsAddress, _buyinAmount, jobId, _weatherApiKey);
+        WeatherWars newGame =
+            new WeatherWars(
+                _cryptoChampionsAddress,
+                _linkTokenAddress,
+                _oracleAddress,
+                _vrfCoordinateAddress,
+                _jobId,
+                _keyHash,
+                _vrfFee,
+                _vrfSeed,
+                _oracleFee,
+                _buyin,
+                GAME_NAME,
+                _weatherApiKey
+            );
 
         // Delegate player tokens to WeatherWars
         ICryptoChampions cc = ICryptoChampions(_cryptoChampionsAddress);
@@ -79,11 +96,13 @@ contract WeatherWarsFactory {
         LinkTokenInterface(_linkTokenAddress).transfer(address(newGame), _oracleFee.add(_vrfFee));
 
         games.push(newGame);
+
+        emit GameCreated(GAME_NAME);
     }
 
     /// @notice Gets the number of games
     /// @return The number of games
-    function getNumGames() external returns (uint256) {
+    function getNumGames() external view returns (uint256) {
         return games.length;
     }
 }
