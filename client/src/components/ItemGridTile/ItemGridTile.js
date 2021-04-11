@@ -16,7 +16,8 @@ export const ItemGridTile = ({
     isWhiteTile,
     actionButton,
     imageWidth,
-    isUnavailable
+    isUnavailable,
+    sublabelTwo
 }) => {
     const classNames = clsx('item-grid-tile', 'black-transparent', {
         'item-grid-tile--selectable': isSelectable,
@@ -52,6 +53,11 @@ export const ItemGridTile = ({
             {itemLabel && (
                 <Typography variant="body1" className="item-grid-tile__label">
                     {itemLabel}
+                </Typography>
+            )}
+            {sublabelTwo && (
+                <Typography variant="body1" className="item-grid-tile__label">
+                    {sublabelTwo}
                 </Typography>
             )}
             {actionButton && <div className="item-grid-tile__action">{actionButton}</div>}

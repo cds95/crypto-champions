@@ -63,6 +63,7 @@ const getElderSpirit = async (elderSpiritId, currentRound) => {
     const elderSpirit = await artifact.methods.getElderSpirit(elderSpiritId).call();
     const canBeMinted = await artifact.methods.getElderSpawnsAmount(currentRound, elderSpiritId).call();
     const owner = await artifact.methods.getElderOwner(elderSpiritId).call();
+    const mintPrice = await getHeroPrice(elderSpiritId);
     return {
         id: elderSpiritId,
         valid: elderSpirit[0],
@@ -71,7 +72,8 @@ const getElderSpirit = async (elderSpiritId, currentRound) => {
         affinity: elderSpirit[3],
         affinityPrice: parseInt(elderSpirit[4]),
         canBeMinted: !!canBeMinted,
-        owner
+        owner,
+        mintPrice
     };
 };
 

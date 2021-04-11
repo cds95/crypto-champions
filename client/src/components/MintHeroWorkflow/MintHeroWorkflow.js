@@ -2,7 +2,7 @@ import { TextField, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import { getRaceClassLabel } from '../../AppUtils';
+import { displayToken, getRaceClassLabel } from '../../AppUtils';
 import { getRaceGif } from '../../images/alternateRaces';
 import { getCoinLogo } from '../../images/cryptoIcons';
 import {
@@ -51,6 +51,7 @@ export const MintHeroWorkflowComp = ({
                 id: elder.id,
                 label: getRaceClassLabel(elder.raceId, elder.classId),
                 sublabelImage: getCoinLogo(elder.affinity),
+                sublabelTwo: `Price: ${displayToken(elder.mintPrice)} ETH`,
                 image: getRaceGif(elder.raceId),
                 isSelectable: true,
                 actionButton: (
