@@ -12,6 +12,8 @@ import bullMale from './Bull_A.png';
 import bullFemale from './Bull_B.png';
 import robotMale from './Robot_A.png';
 import robotFemale from './Robot_B.png';
+import demonMale from './Demon_A.png';
+import demonFemale from './Demon_B.png';
 
 export const images = [
     [humanMale, humanFemale],
@@ -20,7 +22,8 @@ export const images = [
     [frogMale, frogFemale],
     [bearMale, bearFemale],
     [bullMale, bullFemale],
-    [robotMale, robotFemale]
+    [robotMale, robotFemale],
+    [demonMale, demonFemale]
 ];
 
 export const getRaceImage = (id, appearance) => {

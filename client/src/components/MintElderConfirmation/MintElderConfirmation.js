@@ -17,7 +17,7 @@ export const MintElderConfirmation = ({ selectedAffinity, race, elderClass, onSe
     const handleOnSelectAffinity = (e) => onSelectAffinity(e.target.value);
     return (
         <div className="mint-elder-confirmation">
-            <Typography>{text.confirm}</Typography>
+            <Typography className="mint-elder-confirmation__confirm">{text.confirm}</Typography>
             <div className="mint-elder-confirmation__card-container black-transparent">
                 <div className="mint-elder-confirmation__card-image">
                     <img src={getRaceGif(race.id)} />
