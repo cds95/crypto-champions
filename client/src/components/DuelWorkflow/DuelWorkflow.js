@@ -30,7 +30,7 @@ const text = {
     select: 'Select',
     selectHeroLabel: 'Which Champion do you want to duel with?',
     createDuel: 'Confirm',
-    hasCreatedDuel: 'Duel Successfully created.'
+    hasCreatedDuel: 'Duel Successfully created.  Come back in a few minutes to see it in the UI.'
 };
 
 const DUEL_WORKFLOW_STEPS = [
@@ -78,6 +78,7 @@ export const DuelWorkflowComp = ({
         try {
             await allowWeatherWarToTransferBet();
         } catch (e) {
+            // TODO:  Show error state
             console.error(e);
         }
         setIsAuthorizing(false);
@@ -85,9 +86,14 @@ export const DuelWorkflowComp = ({
     };
     const createDuel = async () => {
         setIsCreatingDuel(true);
-        await challengeToDuel(bet, initiatorHeroId, opponentAddress, opponent.id);
+        try {
+            await challengeToDuel(bet, initiatorHeroId, opponentAddress, opponent.id);
+            setHasCreatedDuel(true);
+        } catch (e) {
+            // TODO:  Show error state
+            console.log(e);
+        }
         setIsCreatingDuel(false);
-        closeCreateDuelModal();
     };
     const goToNextStep = () => setDuelStep(currentStep + 1);
     let content;
