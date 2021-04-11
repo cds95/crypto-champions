@@ -109,7 +109,6 @@ export const getHeroes = async () => {
     const userAccount = await getUserAccount();
     const heroes = [];
     const maxElderSpirits = await getMaxElderSpirits();
-    const currentRound = await getCurrentRound();
     const firstHeroId = maxElderSpirits + 1;
     for (let i = firstHeroId; i < firstHeroId + parseInt(numMintedHeroes); i++) {
         const { 0: heroName, 1: raceId, 2: classId, 3: appearance } = await artifact.methods.getHeroVisuals(i).call();
@@ -123,7 +122,6 @@ export const getHeroes = async () => {
             5: charisma
         } = await artifact.methods.getHeroStats(i).call();
         const { 0: alignment, 2: hometown, 3: weather } = await artifact.methods.getHeroLore(i).call();
-
         const owner = await artifact.methods.getHeroOwner(i).call();
         if (isValid) {
             heroes.push({
@@ -134,7 +132,7 @@ export const getHeroes = async () => {
                 affinity,
                 owner,
                 roundMinted: parseInt(roundMinted),
-                hasRoundReward: owner === userAccount ? await hasRoundReward(i) : false,
+                hasRoundReward: owner === userAccount && (await hasRoundReward(i)),
                 appearance,
                 strength,
                 dexterity,
@@ -153,7 +151,12 @@ export const getHeroes = async () => {
 
 const hasRoundReward = async (heroId) => {
     const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
-    return await artifact.methods.hasRoundReward(heroId).call();
+    try {
+        return await artifact.methods.hasRoundReward(heroId).call();
+    } catch (e) {
+        console.log(e);
+        return false;
+    }
 };
 
 export const allowWeatherWarToTransferBet = async () => {
