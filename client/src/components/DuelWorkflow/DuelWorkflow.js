@@ -232,7 +232,11 @@ export const DuelWorkflowComp = ({
             <div className="duel-workflow__actions">
                 {currentStep > 0 && (
                     <div className="duel-workflow__nav">
-                        <CryptoChampionButton label={text.back} onClick={() => setDuelStep(currentStep - 1)} />
+                        <CryptoChampionButton
+                            isSecondary={true}
+                            label={text.back}
+                            onClick={() => setDuelStep(currentStep - 1)}
+                        />
                     </div>
                 )}
                 {currentStep >= 1 && (

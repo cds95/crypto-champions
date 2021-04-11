@@ -45,7 +45,7 @@ def main():
     cc.mintElderSpirit(2, 2, "ETH", { "from": accounts[1], "value": 0.3 * 10 ** 18 })
     cc.mintElderSpirit(3, 3, "LINK", { "from": accounts[2], "value": 0.3 * 10 ** 18 })
     cc.mintElderSpirit(4, 4, "DOT", { "from": accounts[0], "value": 0.3 * 10 ** 18 })
-    cc.mintElderSpirit(5, 5, "BNB", { "from": accounts[1], "value": 0.3 * 10 ** 18 })
+    # cc.mintElderSpirit(5, 5, "BNB", { "from": accounts[1], "value": 0.3 * 10 ** 18 })
 
     # Transition to ACTION phase
     cc.refreshPhase()

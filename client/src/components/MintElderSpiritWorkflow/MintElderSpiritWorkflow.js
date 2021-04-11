@@ -194,7 +194,7 @@ export const MintElderSpirintWorkflowComp = ({
             <div className="mint-elder-spirit__actions">
                 {currentStep > 0 && (
                     <div className="mint-elder-spirit__nav">
-                        <CryptoChampionButton label={text.back} onClick={decrementCurrentStep} />
+                        <CryptoChampionButton label={text.back} onClick={decrementCurrentStep} isSecondary={true} />
                     </div>
                 )}
                 {currentStep >= 1 && (

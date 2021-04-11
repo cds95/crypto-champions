@@ -16,6 +16,7 @@ const defaultRenderItem = (item, isSelectable, isBlackText, hasWhiteTiles) => (
         imageWidth={item.imageWidth || '100%'}
         isUnavailable={item.isUnavailable}
         sublabelImage={item.sublabelImage}
+        imageWidth={item.imageWidth}
     />
 );
 
