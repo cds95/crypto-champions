@@ -300,11 +300,15 @@ contract WeatherWars is Minigame, ChainlinkClient, ERC1155Receiver {
         uint256 value,
         bytes calldata data
     ) external override returns (bytes4) {
-        require(value == _buyin); // dev: Must send the exact buyin amount
+        require(value >= _buyin); // dev: Must at least send the buyin amount
         if (from == opponent) {
             isDuelAccepted = true;
         }
         balances[from] = value;
+        if (value > _buyin) {
+            uint256 refundAmount = value.sub(_buyin);
+            cryptoChampions.transferInGameTokens(from, refundAmount);
+        }
         return this.onERC1155Received.selector;
     }
 

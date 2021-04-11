@@ -7,6 +7,7 @@ import {
     useGetElderSpirits,
     useGetHeroes,
     useGetMaxElderSpirits,
+    useGetMintElderSpiritPrice,
     useGetNumMintedElderSpirits,
     useGetPhase,
     useGetUserAccount,
@@ -23,7 +24,9 @@ import {
     setCurrentRoundAction,
     setHeroesAction,
     setIsLoadingHeroesAction,
-    setPhaseAction
+    setPhaseAction,
+    setUserBalanceAction,
+    setMintElderSpiritPriceAction
 } from './redux/actions';
 import { Route, HashRouter as Router, Switch } from 'react-router-dom';
 import { routeDefinitions } from './routeDefinitions';
@@ -32,6 +35,14 @@ import { NavigationBar } from './components/NavigationBar';
 import { Gallery } from './pages/Gallery';
 import { MyCollection } from './pages/MyCollection';
 import { CircularProgress } from '@material-ui/core';
+import { Footer } from './components/Footer/Footer';
+import { Banner } from './components/Banner';
+import { About } from './pages/About';
+
+const text = {
+    failedToConnect:
+        'Network Error: Please make sure to connect your wallet to the correct network and refresh the page'
+};
 
 export const ContentWrapperComp = ({
     setMaxElderSpirits,
@@ -43,7 +54,9 @@ export const ContentWrapperComp = ({
     setCurrentRound,
     setHeroes,
     setIsLoadingHeroes,
-    setPhase
+    setUserBalance,
+    setPhase,
+    setMintElderSpiritPrice
 }) => {
     const { maxElderSpirits } = useGetMaxElderSpirits();
     const { numMintedElderSpirits } = useGetNumMintedElderSpirits();
@@ -55,52 +68,59 @@ export const ContentWrapperComp = ({
     const { currentRound } = useGetCurrentRound();
     const { isLoading: isLoadingHeroes, heroes = [] } = useGetHeroes();
     const { isLoading, phase, isInErrorState } = useGetPhase();
+    const { price } = useGetMintElderSpiritPrice();
     useEffect(() => {
         setPhase(phase);
     }, [phase]);
     useEffect(() => setMaxElderSpirits(maxElderSpirits), [maxElderSpirits]);
     useEffect(() => setNumMintedElderSpirits(numMintedElderSpirits), [numMintedElderSpirits]);
-    useEffect(() => setElderSpirits(elderSpirits), [isLoadingElderSpirits]);
+    useEffect(() => setElderSpirits(elderSpirits), [elderSpirits.length]);
     useEffect(() => setAffinities(affinities), [isLoadingAffinities]);
     useEffect(() => setUserAccount(userAccount), [userAccount]);
     useEffect(() => setWinningAffinity(affinity), [affinity]);
     useEffect(() => setCurrentRound(currentRound), [currentRound]);
+    useEffect(() => setUserBalance(userTokenBalance), [userTokenBalance]);
     useEffect(() => {
         setIsLoadingHeroes(isLoadingHeroes);
         setHeroes(heroes);
     }, [isLoadingHeroes]);
-    if (isLoading || isLoadingHeroes || isLoadingElderSpirits) {
+    useEffect(() => setMintElderSpiritPrice(price), [price]);
+    if (!isInErrorState && (isLoading || isLoadingHeroes || isLoadingElderSpirits)) {
         return (
             <div className="content-loading">
                 <CircularProgress />
             </div>
         );
     }
-    if (isInErrorState) {
-        return (
-            <div>
-                Failed to get current phase. Make sure you're MetaMask wallet is connected as we can't connect to the
-                blockchain without it.
-            </div>
-        );
-    }
     return (
         <Router>
-            <NavigationBar userTokenBalance={userTokenBalance} />
-            <Switch>
-                <Route path={routeDefinitions.ROOT} exact={true}>
-                    <LandingPage />
-                </Route>
-                <Route path={routeDefinitions.PLAY}>
-                    <Play />
-                </Route>
-                <Route path={routeDefinitions.GALLERY}>
-                    <Gallery />
-                </Route>
-                <Route path={routeDefinitions.COLLECTION}>
-                    <MyCollection />
-                </Route>
-            </Switch>
+            <NavigationBar userAccount={userAccount} />
+            {isInErrorState && <Banner text={text.failedToConnect} isError={isInErrorState} />}
+            <div className="app-content">
+                <Switch>
+                    <Route path={routeDefinitions.ROOT} exact={true}>
+                        <LandingPage />
+                    </Route>
+                    <Route path={routeDefinitions.ABOUT}>
+                        <About />
+                    </Route>
+                    {!isInErrorState && (
+                        <React.Fragment>
+                            {' '}
+                            <Route path={routeDefinitions.PLAY}>
+                                <Play />
+                            </Route>
+                            <Route path={routeDefinitions.GALLERY}>
+                                <Gallery />
+                            </Route>
+                            <Route path={routeDefinitions.COLLECTION}>
+                                <MyCollection />
+                            </Route>
+                        </React.Fragment>
+                    )}
+                </Switch>
+            </div>
+            <Footer />
         </Router>
     );
 };
@@ -136,6 +156,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         setPhase: (phase) => {
             dispatch(setPhaseAction(phase));
+        },
+        setUserBalance: (balance) => {
+            dispatch(setUserBalanceAction(balance));
+        },
+        setMintElderSpiritPrice: (price) => {
+            dispatch(setMintElderSpiritPriceAction(price));
         }
     };
 };

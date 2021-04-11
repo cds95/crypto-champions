@@ -1,7 +1,6 @@
 import { CircularProgress, Dialog, DialogActions, DialogContent, Modal } from '@material-ui/core';
 import React from 'react';
 import { CryptoChampionButton } from '../CryptoChampionButton';
-import './Confirmation.css';
 
 export const Confirmation = ({ isOpen, text, isLoading, actionText = 'ok', onConfirm, loadingText }) => {
     return (

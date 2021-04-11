@@ -1,0 +1,69 @@
+.horizontal-hero-card {
+    padding: 10px;
+    background: #000;
+    border-radius: 5px;
+    display: flex;
+}
+
+.horizontal-hero-card img {
+    max-width: 200px;
+}
+
+.horizontal-hero-card__information {
+    background: #fff;
+    flex: 1;
+    min-height: 100%;
+    display: flex;
+    padding: 10px;
+}
+
+.horizontal-hero-card__stats {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+}
+
+.horizontal-hero-card__stats-list {
+    text-align: center;
+}
+
+.horizontal-hero-card__lore {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.horizontal-hero-card__lore {
+    flex: 1;
+    height: 100%;
+    border-right: 1px solid #c2c6cd;
+}
+
+.horizontal-hero-card__basic-information {
+    flex: 3;
+}
+
+.horizontal-hero-card__stats {
+    flex: 1;
+    margin-left: 15px;
+}
+
+.horizontal-hero-card__item-group {
+    font-size: 14px;
+}
+
+.horizontal-hero-card__class-affinity {
+    margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.horizontal-hero-card .horizontal-hero-card__class-image {
+    max-width: 50px;
+}
+
+.horizontal-hero-card__action {
+    margin-top: 15px;
+}

@@ -12,6 +12,12 @@ const defaultRenderItem = (item, isSelectable, isBlackText, hasWhiteTiles) => (
         itemSublabel={item.subLabel}
         isBlackText={isBlackText}
         isWhiteTile={hasWhiteTiles}
+        actionButton={item.actionButton}
+        imageWidth={item.imageWidth || '100%'}
+        isUnavailable={item.isUnavailable}
+        sublabelImage={item.sublabelImage}
+        imageWidth={item.imageWidth}
+        sublabelTwo={item.sublabelTwo}
     />
 );
 
@@ -22,11 +28,14 @@ export const ItemGrid = ({
     isMini,
     isBlackText,
     hasWhiteTiles,
-    isCentered = true
+    isCentered = true,
+    numPerRow = 4
 }) => {
     const className = clsx('item-grid', {
         'item-grid--mini': isMini,
-        'item-grid--centered': isCentered
+        'item-grid--centered': isCentered,
+        'item-grid--three': numPerRow === 3,
+        'item-grid--five': numPerRow == 5
     });
     return (
         <div className={className}>

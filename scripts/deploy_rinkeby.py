@@ -29,10 +29,6 @@ def main():
     cc.createAffinity("BNB", V3_BNB)
     cc.createAffinity("XRP", V3_XRP)
     cc.createAffinity("ZRX", V3_ZRX)
-    
-    ## Set phase durations to 0 for dev purposes
-    cc.setSetupPhaseDuration(0, { "from": accounts[0] });
-    cc.setActionPhaseDuration(0, { "from": accounts[0] });
 
     ## Setup price wars
     PRICE_WARS = "PRICE_WARS"
@@ -40,62 +36,7 @@ def main():
     minigameFactoryRegistry.registerMinigame(PRICE_WARS, pwf.address)
     linkToken.transfer(pwf.address, 10 * FEE_IN_LINK, { "from": accounts[0] })
 
-    ## Setup WeatherWars
-    # NEED TO UPDATE THESE.  THESE ARE FROM KOVAN.  RINKEBY ORACLES ARE UNDER MAINTENANCE SO THIS FEATURE DOES NOT WORK ON RINKEBY.
-    ORACLE = "0xAA1DC356dc4B18f30C347798FD5379F3D77ABC5b";
-    JOB_ID = "0x6237323835643438353964613462323839633738363164623937316261663061" #"b7285d4859da4b289c7861db971baf0a";
-
-    WEATHER_WARS = "WEATHER_WARS"
-    WEATHER_API_KEY = ""; # Can get from openweather website 
-    if len(WEATHER_API_KEY) == 0:
-        raise "Don't forget to set your Weather API Key"
-    
-    wwf = WeatherWarsFactory.deploy(ORACLE, VRF_ADDRESS, linkToken.address, fee, VRF_KEY_HASH, WEATHER_API_KEY, JOB_ID, cc.address, { "from": accounts[0] })
-    linkToken.transfer(wwf.address, 10 * FEE_IN_LINK, { "from": accounts[0] })
-    minigameFactoryRegistry.registerMinigame(WEATHER_WARS, wwf.address)
-    cities = [
-        "6173331",
-        "4671654",
-        "4887398",
-        "4164138",
-        "5128581",
-        "5391811",
-        "5391959",
-        "5809844",
-        "3530597",
-        "3435907",
-        "993800",
-        "360630",
-        "2643743",
-        "524894",
-        "2950158",
-        "2968815",
-        "2759794",
-        "2673722",
-        "1850147",
-        "1275339",
-        "1796236",
-        "1835847",
-        "1880252",
-        "2158177"
-    ]
-    for i in range(0, len(cities)):
-        wwf.addCityMapping(cities[i], i)
-    
-    weathers = [
-        "Clouds",
-        "Clear",
-        "Atmosphere",
-        "Snow",
-        "Rain",
-        "Drizzle",
-        "Thunderstorm"
-    ]
-    for i in range(0, len(weathers)):
-        wwf.addWeatherMapping(weathers[i], i)
-
-    wwf.init()
-
     
 
+    
     

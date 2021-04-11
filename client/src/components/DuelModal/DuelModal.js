@@ -120,7 +120,7 @@ export const DuelModalComp = ({
     return (
         <Dialog className="duel-modal" open={isOpen} onClose={handleOnClose}>
             <DialogTitle className="duel-modal__title">{title}</DialogTitle>
-            <DialogContent className="duel-modal__content pronciono">{content}</DialogContent>
+            <DialogContent className="duel-modal__content">{content}</DialogContent>
             <DialogActions>
                 <CryptoChampionButton label={text.cancel} onClick={handleOnClose} />
                 {actions}

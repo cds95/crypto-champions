@@ -1,5 +1,4 @@
 .weather-duel-tile .weather-duel-tile__action {
-    font-family: 'Pronciono';
     margin-top: 5px;
     cursor: pointer;
 }
@@ -19,14 +18,51 @@
     align-items: center;
 }
 
+.weather-duel-tile .weather-duel-tile__action {
+    color: #fff;
+}
+
 .weather-duel-tile .weather-duel-tile__action--green {
-    color: #bada55;
+    color: #6dff96;
 }
 
 .weather-duel-tile .weather-duel-tile__action--red {
-    color: #fa3a3a;
+    color: #dc4949;
 }
 
-.weather-duel-tile__modal {
-    font-family: 'Pronciono';
+.weather-duel__image {
+    max-width: 200px;
+}
+
+.weather-duel__battle-image {
+    width: 100px;
+    margin: 0 20px;
+}
+
+.weather-duel-tile__players {
+    display: flex;
+}
+
+.weather-duel-tile__participant {
+    display: flex;
+    flex-direction: column;
+}
+
+.weather-duel-tile .weather-duel-tile__hero-name {
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 700;
+    display: block;
+}
+
+.weather-duel__center {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+    align-items: center;
+}
+
+.weather-duel__actions {
+    margin-top: 15px;
 }

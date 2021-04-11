@@ -5,10 +5,22 @@ import './LandingPage.css';
 import { Link } from 'react-router-dom';
 import { routeDefinitions } from '../../routeDefinitions';
 import { CryptoChampionButton } from '../../components/CryptoChampionButton';
+import { Typography } from '@material-ui/core';
+
+const text = {
+    welcome: 'Welcome to Crypto Champz!',
+    caption: 'A Universal Character Generator and Minigame Playground'
+};
 
 export const LandingPageComp = () => {
     return (
         <div className="landing-page">
+            <Typography variant="h2" className="page-header landing-page__header">
+                {text.welcome}
+            </Typography>
+            <Typography variant="h2" className="page-header landing-page__header">
+                {text.caption}
+            </Typography>
             <div className="landing-page__content">
                 <Link
                     to={routeDefinitions.PLAY}

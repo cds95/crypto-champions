@@ -4,7 +4,8 @@ import {
     SET_ELDER_CLASS,
     SET_ELDER_RACE,
     SET_ELDER_STONE,
-    SET_IS_MINTING_ELDER_SPIRIT
+    SET_IS_MINTING_ELDER_SPIRIT,
+    SET_MINT_ELDER_SPIRIT_PRICE
 } from '../actions';
 
 const initialState = {
@@ -12,11 +13,17 @@ const initialState = {
     race: null,
     elderClass: null,
     affinity: null,
-    isMinting: false
+    isMinting: false,
+    mintPrice: 0
 };
 
 export const mintElderSpiritWorkflow = (state = initialState, action) => {
     switch (action.type) {
+        case SET_MINT_ELDER_SPIRIT_PRICE:
+            return {
+                ...state,
+                mintPrice: action.price
+            };
         case SET_ELDER_STONE:
             return {
                 ...state,

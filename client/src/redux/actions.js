@@ -238,3 +238,27 @@ export const updateHeroAction = (heroId, params) => {
         params
     };
 };
+
+export const SET_USER_BALANCE = 'SET_USER_BALANCE';
+export const setUserBalanceAction = (balance) => {
+    return {
+        type: SET_USER_BALANCE,
+        balance
+    };
+};
+
+export const SET_DUEL_WORKFLOW_STEP = 'SET_DUEL_WORKFLOW_STEP';
+export const setDuelWorkflowStepAction = (step) => {
+    return {
+        type: SET_DUEL_WORKFLOW_STEP,
+        step
+    };
+};
+
+export const SET_MINT_ELDER_SPIRIT_PRICE = 'SET_MINT_ELDER_SPIRIT_PRICE';
+export const setMintElderSpiritPriceAction = (price) => {
+    return {
+        type: SET_MINT_ELDER_SPIRIT_PRICE,
+        price
+    };
+};

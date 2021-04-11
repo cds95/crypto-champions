@@ -39,8 +39,8 @@ export const AcceptDuelModal = ({ isOpen, onClose, bet, duelAddress }) => {
 
     return (
         <Dialog open={isOpen} onClose={onClose} className="accept-duel-modal">
-            <DialogTitle className="accept-duel-modal__title pronciono">{text.accept}</DialogTitle>
-            <DialogContent className="accept-duel-modal__content pronciono">{content}</DialogContent>
+            <DialogTitle className="accept-duel-modal__title">{text.accept}</DialogTitle>
+            <DialogContent className="accept-duel-modal__content">{content}</DialogContent>
             <DialogActions>
                 <CryptoChampionButton onClick={onClose} label={text.cancel} />
                 {actions}

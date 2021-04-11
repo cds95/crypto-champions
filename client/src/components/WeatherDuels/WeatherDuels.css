@@ -1,12 +1,20 @@
 .weather-duels {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     margin-top: 50px;
+    flex-direction: column;
+    align-items: center;
 }
 
-.weather-duels > div {
-    width: 25%;
-    max-width: 250px;
-    margin: 15px;
+.weather-duels .weather-duel-tile {
+    max-width: 750px;
+}
+
+.weather-duels .weather-duel-tile:not(:last-child) {
+    border-bottom: 1px solid #827b7b;
+    padding-bottom: 50px;
+}
+
+.weather-duels .weather-duel-tile:not(:first-child) {
+    padding-top: 50px;
 }

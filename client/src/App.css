@@ -21,6 +21,7 @@
 @font-face {
     font-family: 'LeagueSpartan';
     src: url('./fonts/LeagueSpartan-Bold.woff') format('woff');
+    font-weight: 500;
 }
 
 @font-face {
@@ -28,8 +29,25 @@
     src: url('./fonts/Prociono-Regular.woff') format('woff');
 }
 
-.pronciono {
-    font-family: 'Pronciono' !important;
+.league-spartan {
+    font-family: 'LeagueSpartan' !important;
+}
+
+.league-spartan--white {
+    font-family: 'LeagueSpartan';
+    color: #fff;
+}
+
+.page-header {
+    font-family: 'LeagueSpartan' !important;
+    font-size: 50px;
+    color: #fff;
+    font-weight: 500 !important;
+    margin-bottom: 30px !important;
+}
+
+.black-transparent {
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .content-loading {
@@ -39,6 +57,7 @@
     padding-top: 100px;
 }
 
-.MuiListItem-button {
-    font-family: 'Pronciono' !important;
+.app-content {
+    min-height: 100%;
+    background: #212936;
 }

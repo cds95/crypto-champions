@@ -1,4 +1,4 @@
-import { CHAINS, RACES, CLASSES, ZERO_ADDRESS, CITIES, ALIGNMENTS } from './constants';
+import { CHAINS, RACES, CLASSES, ZERO_ADDRESS, CITIES, ALIGNMENTS, BACKGROUNDS } from './constants';
 import { getRaceImage } from './images/races';
 import getWeb3 from './services/web3';
 import map from './artifacts/deployments/map.json';
@@ -20,7 +20,7 @@ export const getClass = (classId) => CLASSES[classId];
 export const getRaceClassLabel = (raceId, classId) => {
     const race = getRace(raceId);
     const elderClass = getClass(classId);
-    return `${race.label} - ${elderClass.label}`;
+    return `${race.label} ${elderClass.label}`;
 };
 
 export const isZeroAddress = (address) => address && address === ZERO_ADDRESS;
@@ -36,5 +36,9 @@ export const getHometown = (hometownId) => {
 };
 
 export const getAlignment = (alignment) => {
-    return ALIGNMENTS[alignment];
+    return ALIGNMENTS[Math.max(1, alignment)];
+};
+
+export const getBackground = (background) => {
+    return BACKGROUNDS[Math.max(1, background)];
 };

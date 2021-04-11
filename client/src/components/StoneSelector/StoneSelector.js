@@ -2,36 +2,36 @@ import React from 'react';
 import { getRaceClassLabel } from '../../AppUtils';
 import { getRaceGif } from '../../images/alternateRaces/';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
+import { CryptoChampionButton } from '../CryptoChampionButton';
+import { getCoinLogo } from '../../images/cryptoIcons';
 
 const text = {
-    title: '1st Cycle Summoning Elder Spirits',
-    caption: 'Elder spirits are to be summoned to be our champions',
-    subCaption: 'Elder spirits will determine the Race, Class and Afinity of the Champions they gather'
+    summon: 'Summon'
 };
 
-export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElderSpirits }) => {
+export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElderSpirits, captions }) => {
     const items = elderSpirits.map((spirit) => ({
         id: spirit.id,
         label: getRaceClassLabel(spirit.raceId, spirit.classId),
         image: getRaceGif(spirit.raceId),
-        subLabel: spirit.affinity
+        sublabelImage: getCoinLogo(spirit.affinity)
     }));
     const availableElderSpots = maxElderSpirits - items.length;
     for (let i = 0; i < availableElderSpots; i++) {
         items.push({
+            imageWidth: '65%',
             id: items.length + i + 1,
             label: '',
-            isSelectable: true
+            actionButton: <CryptoChampionButton onClick={onSelect} label={text.summon} />
         });
     }
     return (
         <ItemSelector
-            title={text.title}
-            caption={text.caption}
+            numPerRow={5}
             items={items}
             onSelect={onSelect}
-            subCaption={text.subCaption}
             selectedItemId={selectedStoneId}
+            captions={captions}
         />
     );
 };

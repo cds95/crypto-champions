@@ -1,17 +1,19 @@
-import humanMale from './FP01-human_male.png';
-import humanFemale from './FP02-human_female.png';
-import catMale from './FP13-cat_male.png';
-import catFemale from './FP14-cat_female.png';
-import elfMale from './FP03-elf_male.png';
-import elfFemale from './FP04-elf_female.png';
-import frogMale from './FP11-frog_male.png';
-import frogFemale from './FP12-frog_female.png';
-import bearMale from './FP09-bear_male.png';
-import bearFemale from './FP10-bear_female.png';
-import bullMale from './FP05-bull_male.png';
-import bullFemale from './FP06-bull_female.png';
-import robotMale from './FP07-robot_male.png';
-import robotFemale from './FP08-robot_female.png';
+import humanMale from './Human_A.png';
+import humanFemale from './Human_B.png';
+import catMale from './Cat_A.png';
+import catFemale from './Cat_B.png';
+import elfMale from './Elf_A.png';
+import elfFemale from './Elf_B.png';
+import frogMale from './Pepe_A.png';
+import frogFemale from './Pepe_B.png';
+import bearMale from './Bear_A.png';
+import bearFemale from './Bear_B.png';
+import bullMale from './Bull_A.png';
+import bullFemale from './Bull_B.png';
+import robotMale from './Robot_A.png';
+import robotFemale from './Robot_B.png';
+import demonMale from './Demon_A.png';
+import demonFemale from './Demon_B.png';
 
 export const images = [
     [humanMale, humanFemale],
@@ -20,7 +22,8 @@ export const images = [
     [frogMale, frogFemale],
     [bearMale, bearFemale],
     [bullMale, bullFemale],
-    [robotMale, robotFemale]
+    [robotMale, robotFemale],
+    [demonMale, demonFemale]
 ];
 
 export const getRaceImage = (id, appearance) => {

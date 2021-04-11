@@ -3,10 +3,28 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    padding: 10px;
+    min-width: 100%;
+    align-items: center;
 }
 
 .item-grid-tile .item-grid-tile__label {
-    font-family: 'Pronciono';
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.item-grid-tile .item-grid-tile__sub-label {
+    background: #c5c9d8;
+    padding: 5px 0;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.item-grid-tile__sub-label-image img {
+    width: 35px;
 }
 
 .item-grid-tile:not(.item-grid-tile--black-text) .item-grid-tile__label {
@@ -22,11 +40,11 @@
 }
 
 .item-grid-tile--selected {
-    border: 5px solid #ebd81a;
+    outline: 5px solid #ebd81a;
 }
 
 .item-grid-tile--black-text.item-grid-tile--selected {
-    border: 1px solid #000;
+    outline: 1px solid #000;
 }
 
 .item-grid-tile__decorator {
@@ -35,17 +53,32 @@
     top: 0;
     background: #fff;
     color: #000;
-    font-family: 'Pronciono';
     padding: 5px;
     font-weight: 10px;
 }
 
-.item-grid-tile--white {
+.item-grid-tile--white .item-grid-tile__image-container {
     background: #fff;
     padding: 15px;
-    border-radius: 15px;
 }
 
 .item-grid-tile--white .item-grid-tile__label {
-    color: #000 !important;
+    padding: 10px 0;
+}
+
+.item-grid-tile__action {
+    margin-top: 10px;
+}
+
+.item-grid-tile__image-container {
+    position: relative;
+    width: 100%;
+}
+
+.item-grid-tile__unavailable {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
 }

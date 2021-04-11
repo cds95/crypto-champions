@@ -26,6 +26,14 @@
 
 @media (min-width: 1200px) {
     .item-grid:not(.item-grid--mini) .item-grid__item {
+        width: calc(25% - 50px);
+    }
+
+    .item-grid--three.item-grid:not(.item-grid--mini) .item-grid__item {
+        width: calc(33.333% - 50px);
+    }
+
+    .item-grid--five.item-grid:not(.item-grid--mini) .item-grid__item {
         width: calc(20% - 50px);
     }
 }

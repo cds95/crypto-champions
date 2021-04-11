@@ -1,0 +1,22 @@
+.progress-indicator {
+    display: flex;
+    color: #fff;
+    justify-content: center;
+}
+
+.progress-indicator__step {
+    display: flex;
+    align-items: center;
+}
+
+.progress-indicator__step .progress-indicator__step-label {
+    padding: 10px;
+}
+
+.progress-indicator__step--selected .progress-indicator__step-label {
+    border: 1px solid #fff;
+}
+
+.progress-indicator__arrow {
+    margin: 0 15px;
+}

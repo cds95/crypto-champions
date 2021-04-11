@@ -88,7 +88,7 @@ contract WeatherWarsFactory {
                 address(randomizer),
                 _jobId,
                 _oracleFee,
-                _buyin,
+                buyinAmount,
                 GAME_NAME,
                 _weatherApiKey
             );

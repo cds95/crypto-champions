@@ -1,6 +1,7 @@
 export const routeDefinitions = {
     ROOT: '/',
-    PLAY: '/play',
-    GALLERY: '/gallery',
-    COLLECTION: '/collection'
+    PLAY: '/mint',
+    GALLERY: '/battle',
+    COLLECTION: '/champz',
+    ABOUT: '/about'
 };

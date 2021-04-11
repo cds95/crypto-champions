@@ -1,52 +1,62 @@
 .hero-card {
     width: 100%;
-    background: #874630;
+    max-width: 400px;
+}
+
+.hero-card--image-only .hero-card__top,
+.hero-card--image-only .hero-card__stats,
+.hero-card--image-only .hero-card__footer {
+    display: none;
+}
+
+.hero-card--image-only .hero-card__content {
+    background: transparent;
+}
+
+.hero-card__content {
+    max-width: 100%;
+    background: #242424;
     display: flex;
     flex-direction: column;
-    max-width: 400px;
+    border-radius: 15px;
+    padding: 20px 20px 0;
 }
 
 .hero-card--selectable {
     cursor: pointer;
 }
 
-.hero-card,
-.hero-card__content {
-    border-radius: 15px;
-    padding: 20px;
-}
-
-.hero-card__content {
-    background: #502415;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    flex: 1;
-}
-
 .hero-card img {
     max-width: 100%;
 }
 
-.hero-card__image-container {
-    overflow: hidden;
+.hero-card__top {
     display: flex;
-    justify-content: center;
-    width: 80%;
-    margin-top: 70px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.hero-card .hero-card__name {
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+    width: 100%;
+    display: block;
 }
 
 .hero-card__extension {
-    position: absolute;
-    left: 20px;
     text-align: left;
 }
 
 .hero-card__affinity {
-    position: absolute;
-    right: 20px;
     color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-card__affinity img {
+    max-width: 30px;
 }
 
 .hero-card__extension .hero-card__extension-item {
@@ -57,30 +67,53 @@
     margin-top: 15px;
 }
 
-.hero-card__name-pill .MuiChip-label {
-    font-size: 22px;
-    font-family: 'Pronciono';
-}
-
 .hero-card__stats {
     margin-top: 20px;
-    width: calc(100% - 40px);
     padding: 15px;
     border-radius: 15px;
-    background: #e1b6a8;
+    background: #f6f8ff;
+}
+
+.hero-card__stats-top {
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .hero-card__stats-bot {
-    padding: 10px 0;
     display: flex;
-    justify-content: space-between;
-    position: relative;
 }
 
-.hero-card--vertical .hero-card__stats-bot {
+.hero-card__stats-left {
+    flex: 3;
+    border-right: 1px solid #c2c6cd;
+}
+
+.hero-card__stats-right {
+    flex: 1;
+    display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .hero-card.hero-card--selected {
-    border: 2px solid #000;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.hero-card__footer {
+    display: flex;
+    justify-content: flex-end;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.hero-card__basic-stat,
+.hero-card__stats_list-item,
+.hero-card__stats-top {
+    font-size: 13px;
+}
+
+.hero-card__action {
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
 }

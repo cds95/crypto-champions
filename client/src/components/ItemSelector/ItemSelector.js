@@ -14,7 +14,9 @@ export const ItemSelector = ({
     isMini,
     renderItem,
     hasWhiteTiles,
-    isCentered
+    isCentered,
+    captions,
+    numPerRow = 4
 }) => {
     items = items.map((item) => {
         if (selectedItemId !== null && selectedItemId !== undefined && item.id === selectedItemId) {
@@ -24,14 +26,26 @@ export const ItemSelector = ({
     });
     return (
         <div className="item-selector">
-            <Typography variant="h5" className="item-selector__title">
-                {title}
-            </Typography>
-            <Typography variant="h6" className="item-selector__caption">
-                {caption}
-            </Typography>
+            {title && (
+                <Typography variant="h5" className="item-selector__title">
+                    {title}
+                </Typography>
+            )}
+            {caption && (
+                <Typography variant="h6" className="item-selector__caption">
+                    {caption}
+                </Typography>
+            )}
+            {captions && (
+                <div className="item-selector__captions">
+                    {captions.map((captionText) => (
+                        <p className="item-selector__caption-paragraph">{captionText}</p>
+                    ))}
+                </div>
+            )}
             <div className="item-selector__items">
                 <ItemGrid
+                    numPerRow={numPerRow}
                     isCentered={isCentered}
                     isBlackText={isBlackText}
                     items={items}
