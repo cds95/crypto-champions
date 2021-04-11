@@ -26,11 +26,14 @@ export const ItemGrid = ({
     isMini,
     isBlackText,
     hasWhiteTiles,
-    isCentered = true
+    isCentered = true,
+    numPerRow = 4
 }) => {
     const className = clsx('item-grid', {
         'item-grid--mini': isMini,
-        'item-grid--centered': isCentered
+        'item-grid--centered': isCentered,
+        'item-grid--three': numPerRow === 3,
+        'item-grid--five': numPerRow == 5
     });
     return (
         <div className={className}>

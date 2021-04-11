@@ -25,5 +25,13 @@ export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElde
             actionButton: <CryptoChampionButton onClick={onSelect} label={text.summon} />
         });
     }
-    return <ItemSelector items={items} onSelect={onSelect} selectedItemId={selectedStoneId} captions={captions} />;
+    return (
+        <ItemSelector
+            numPerRow={5}
+            items={items}
+            onSelect={onSelect}
+            selectedItemId={selectedStoneId}
+            captions={captions}
+        />
+    );
 };

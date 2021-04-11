@@ -15,7 +15,8 @@ export const ItemSelector = ({
     renderItem,
     hasWhiteTiles,
     isCentered,
-    captions
+    captions,
+    numPerRow = 4
 }) => {
     items = items.map((item) => {
         if (selectedItemId !== null && selectedItemId !== undefined && item.id === selectedItemId) {
@@ -44,6 +45,7 @@ export const ItemSelector = ({
             )}
             <div className="item-selector__items">
                 <ItemGrid
+                    numPerRow={numPerRow}
                     isCentered={isCentered}
                     isBlackText={isBlackText}
                     items={items}
