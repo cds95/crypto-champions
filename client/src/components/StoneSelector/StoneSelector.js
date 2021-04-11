@@ -34,7 +34,7 @@ export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElde
             onSelect={onSelect}
             selectedItemId={selectedStoneId}
             captions={captions}
-            action={<RefreshPhaseButton currentPhase={PHASES.SETUP} />}
+            action={availableElderSpots === 0 && <RefreshPhaseButton currentPhase={PHASES.SETUP} />}
         />
     );
 };
