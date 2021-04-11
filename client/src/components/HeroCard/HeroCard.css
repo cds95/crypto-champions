@@ -3,6 +3,16 @@
     max-width: 400px;
 }
 
+.hero-card--image-only .hero-card__top,
+.hero-card--image-only .hero-card__stats,
+.hero-card--image-only .hero-card__footer {
+    display: none;
+}
+
+.hero-card--image-only .hero-card__content {
+    background: transparent;
+}
+
 .hero-card__content {
     max-width: 100%;
     background: #242424;
@@ -79,7 +89,7 @@
 }
 
 .hero-card.hero-card--selected {
-    border: 2px solid #000;
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .hero-card__footer {

@@ -1,0 +1,68 @@
+.duel-workflow {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.duel-workflow__card {
+    max-width: 750px;
+    margin: 20px 0;
+}
+
+.duel-workflow__content {
+    margin-top: 50px;
+    width: 80%;
+    max-width: 750px;
+}
+
+.duel-workflow__actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.duel-workflow__nav {
+    margin: 0 15px;
+}
+
+.duel-workflow__progress {
+    margin-top: 50px;
+}
+
+.duel-workflow__wager-label {
+    font-weight: 700;
+    color: #fff;
+}
+
+.duel-workflow__wager-form {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.duel-worfklow__bet input {
+    color: #fff;
+}
+
+.duel-worfklow__bet .MuiInput-underline:before,
+.duel-worfklow__bet .MuiInput-underline:after {
+    border-bottom: 2px solid #fff;
+}
+
+.duel-worfklow__select-hero {
+    display: flex;
+    margin-left: -25px;
+    margin-right: -25px;
+}
+
+.duel-workflow__select-hero-item {
+    width: calc(25% - 12.5px);
+    margin: 25px;
+}
+
+.duel-workflow .duel-workflow__select-hero-label {
+    text-align: center;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 50px;
+    font-size: 20px;
+}

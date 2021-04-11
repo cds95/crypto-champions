@@ -246,3 +246,11 @@ export const setUserBalanceAction = (balance) => {
         balance
     };
 };
+
+export const SET_DUEL_WORKFLOW_STEP = 'SET_DUEL_WORKFLOW_STEP';
+export const setDuelWorkflowStepAction = (step) => {
+    return {
+        type: SET_DUEL_WORKFLOW_STEP,
+        step
+    };
+};

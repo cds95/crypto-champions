@@ -151,3 +151,9 @@ export const RACE_APPEARANCES = [
     ['Bull Male', 'Bull Female'],
     ['Robot Male', 'Robot Female']
 ];
+
+export const DUEL_WORKFLOW_STEPS_MAP = {
+    SELECT_OPPONENT: 0,
+    WAGER: 1,
+    CONFIRM: 2
+};

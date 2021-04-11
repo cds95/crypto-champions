@@ -6,7 +6,7 @@ import { WEATHERS } from '../../constants';
 import clsx from 'clsx';
 import { getRaceImage } from '../../images/races';
 
-export const HeroCard = ({ hero, isVertical, isSelectable, isSelected, onSelect, action }) => {
+export const HeroCard = ({ hero, isVertical, isSelectable, isSelected, onSelect, action, shouldOnlyShowImage }) => {
     const {
         affinity,
         alignment,
@@ -27,7 +27,8 @@ export const HeroCard = ({ hero, isVertical, isSelectable, isSelected, onSelect,
     const className = clsx('hero-card', {
         'hero-card--vertical': isVertical,
         'hero-card--selectable': isSelectable,
-        'hero-card--selected': isSelected
+        'hero-card--selected': isSelected,
+        'hero-card--image-only': shouldOnlyShowImage
     });
     return (
         <div className={className} onClick={() => isSelectable && onSelect && onSelect(hero)}>
