@@ -92,7 +92,6 @@ export const MintHeroWorkflowComp = ({
                 items={items}
                 onSelect={setElderSpiritForHero}
                 selectedElderId={selectedElderSpirit ? selectedElderSpirit.id : ''}
-                action={<RefreshPhaseButton currentPhase={PHASES.ACTION} />}
             />
             <div className="mint-hero-workflow__bottom">
                 <Typography className="mint-hero-workflow__name-label">{text.fieldLabel}</Typography>
