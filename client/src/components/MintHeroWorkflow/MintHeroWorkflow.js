@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import { displayToken, getRaceClassLabel } from '../../AppUtils';
+import { PHASES } from '../../constants';
 import { getRaceGif } from '../../images/alternateRaces';
 import { getCoinLogo } from '../../images/cryptoIcons';
 import {
@@ -16,13 +17,15 @@ import { mintHero } from '../../services/cryptoChampions';
 import { Confirmation } from '../Confirmation';
 import { CryptoChampionButton } from '../CryptoChampionButton';
 import { ElderSelector } from '../ElderSelector/ElderSelector';
+import { RefreshPhaseButton } from '../RefreshPhaseButton';
 import './MintHeroWorkflow.css';
 
 const text = {
     fieldLabel: "What will your champion's name be?",
     mintHero: 'Mint and train champion',
     processing: 'Minting...',
-    confirmation: 'Successfully minted champion',
+    confirmation:
+        'Successfully minted champion.  Refresh your page and head to the MyChampz page to view your champion.',
     select: 'Select',
     full: 'Full',
     failedToMint: 'Failed to mint champion'
@@ -79,7 +82,7 @@ export const MintHeroWorkflowComp = ({
         if (hasFailedToMint) {
             setIsModalOpen(false);
         } else {
-            history.push(routeDefinitions.ROOT);
+            history.push(routeDefinitions.COLLECTION);
             resetWorkflow();
         }
     };
@@ -89,6 +92,7 @@ export const MintHeroWorkflowComp = ({
                 items={items}
                 onSelect={setElderSpiritForHero}
                 selectedElderId={selectedElderSpirit ? selectedElderSpirit.id : ''}
+                action={<RefreshPhaseButton currentPhase={PHASES.ACTION} />}
             />
             <div className="mint-hero-workflow__bottom">
                 <Typography className="mint-hero-workflow__name-label">{text.fieldLabel}</Typography>

@@ -4,6 +4,8 @@ import { getRaceGif } from '../../images/alternateRaces/';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 import { CryptoChampionButton } from '../CryptoChampionButton';
 import { getCoinLogo } from '../../images/cryptoIcons';
+import { RefreshPhaseButton } from '../RefreshPhaseButton';
+import { PHASES } from '../../constants';
 
 const text = {
     summon: 'Summon'
@@ -32,6 +34,7 @@ export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElde
             onSelect={onSelect}
             selectedItemId={selectedStoneId}
             captions={captions}
+            action={availableElderSpots === 0 && <RefreshPhaseButton currentPhase={PHASES.SETUP} />}
         />
     );
 };
