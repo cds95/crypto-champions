@@ -42,7 +42,7 @@ import { About } from './pages/About';
 const text = {
     failedToConnect:
         'Network Error: Please make sure to connect your wallet to the correct network and refresh the page',
-    loading: 'Loading CryptoChampz'
+    loading: 'Loading Crypto Champz'
 };
 
 export const ContentWrapperComp = ({
@@ -87,12 +87,29 @@ export const ContentWrapperComp = ({
         setHeroes(heroes);
     }, [isLoadingHeroes]);
     useEffect(() => setMintElderSpiritPrice(price), [price]);
-    if (!isInErrorState && (isLoadingWeb3 || isLoading || isLoadingHeroes || isLoadingElderSpirits)) {
-        return (
+    const isLoadingScreen = isLoadingWeb3 || isLoading || isLoadingHeroes || isLoadingElderSpirits;
+    let content;
+    if (!isInErrorState && isLoadingScreen) {
+        content = (
             <div className="content-loading">
-                <Typography>{text.loading}</Typography>{' '}
+                <Typography class="content-loading__text">{text.loading}</Typography>{' '}
                 <CircularProgress className="content-loading__loading-spinner" />
             </div>
+        );
+    } else if (!isInErrorState) {
+        content = (
+            <React.Fragment>
+                {' '}
+                <Route path={routeDefinitions.PLAY}>
+                    <Play />
+                </Route>
+                <Route path={routeDefinitions.GALLERY}>
+                    <Gallery />
+                </Route>
+                <Route path={routeDefinitions.COLLECTION}>
+                    <MyCollection />
+                </Route>
+            </React.Fragment>
         );
     }
     return (
@@ -107,20 +124,7 @@ export const ContentWrapperComp = ({
                     <Route path={routeDefinitions.ABOUT}>
                         <About />
                     </Route>
-                    {!isInErrorState && (
-                        <React.Fragment>
-                            {' '}
-                            <Route path={routeDefinitions.PLAY}>
-                                <Play />
-                            </Route>
-                            <Route path={routeDefinitions.GALLERY}>
-                                <Gallery />
-                            </Route>
-                            <Route path={routeDefinitions.COLLECTION}>
-                                <MyCollection />
-                            </Route>
-                        </React.Fragment>
-                    )}
+                    {content}
                 </Switch>
             </div>
             <Footer />

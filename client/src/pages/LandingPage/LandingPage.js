@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { routeDefinitions } from '../../routeDefinitions';
 import { CryptoChampionButton } from '../../components/CryptoChampionButton';
 import { Typography } from '@material-ui/core';
-import { VIDEO_LINK } from '../../constants';
 
 const text = {
     welcome: 'Welcome to Crypto Champz!',
