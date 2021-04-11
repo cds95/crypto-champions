@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useGetWeatherDuels } from '../../hooks/cryptoChampionsHook';
-import { setDuelOpponentHeroAction, setWeatherDuelsAction } from '../../redux/actions';
+import { setWeatherDuelsAction } from '../../redux/actions';
 import './Gallery.css';
-import { ItemSelector } from '../../components/ItemSelector';
-import { getRaceImage } from '../../images/races';
-import { getRaceClassLabel } from '../../AppUtils';
-import { getHerosUserCanChallenge, getOpenUserDuels, getPastUserDuels } from '../../redux/selectors';
-import { DuelModal } from '../../components/DuelModal/DuelModal';
-import { Tab, Tabs } from '@material-ui/core';
+import { getOpenUserDuels, getPastUserDuels } from '../../redux/selectors';
+import { CircularProgress, Tab, Tabs, Typography } from '@material-ui/core';
 import { WeatherDuels } from '../../components/WeatherDuels/WeatherDuels';
-import { HeroCard } from '../../components/HeroCard';
 import { PHASES } from '../../constants';
 import { TokenBalance } from '../../components/TokenBalance';
-import { HorizontalHeroCard } from '../../components/HorizontalHeroCard/HorizontalHeroCard';
-import { CryptoChampionButton } from '../../components/CryptoChampionButton';
 import { DuelWorkflow } from '../../components/DuelWorkflow/DuelWorkflow';
 
 const text = {
@@ -22,8 +15,11 @@ const text = {
     challengeTab: 'Challenge',
     openDuels: 'Open Duels',
     pastDuels: 'Past Duels',
-    noDuels: 'Duels can only be fought during the action phase.',
-    challenge: 'Challenge'
+    duelsNotAllowed: 'Duels can only be fought during the action phase.',
+    challenge: 'Challenge',
+    noPastDuels: 'You have no past duels',
+    noDuels: 'You have no open duels',
+    loadingDuels: 'Loading Duels'
 };
 
 const galleryTabs = {
@@ -32,7 +28,7 @@ const galleryTabs = {
     OPEN_DUELS: 2
 };
 
-export const GalleryComp = ({ setDuelOpponentHero, setWeatherDuels, openUserDuels, closedUserDuels, currentPhase }) => {
+export const GalleryComp = ({ setWeatherDuels, openUserDuels, closedUserDuels, currentPhase }) => {
     const { isLoading: isLoadingDuels, weatherDuels } = useGetWeatherDuels();
     useEffect(() => {
         setWeatherDuels(weatherDuels);
@@ -47,16 +43,16 @@ export const GalleryComp = ({ setDuelOpponentHero, setWeatherDuels, openUserDuel
         case galleryTabs.CHALLENGE:
             content =
                 currentPhase == PHASES.SETUP ? (
-                    <div className="gallery__no-duels">{text.noDuels}</div>
+                    <div className="gallery__no-duels">{text.duelsNotAllowed}</div>
                 ) : (
                     <DuelWorkflow />
                 );
             break;
         case galleryTabs.OPEN_DUELS:
-            content = <WeatherDuels duels={openUserDuels} />;
+            content = <WeatherDuels duels={openUserDuels} emptyStateText={text.noDuels} />;
             break;
         case galleryTabs.FINISHED_DUELS:
-            content = <WeatherDuels duels={closedUserDuels} />;
+            content = <WeatherDuels duels={closedUserDuels} emptyStateText={text.noPastDuels} />;
             break;
         default:
             break;
@@ -69,7 +65,16 @@ export const GalleryComp = ({ setDuelOpponentHero, setWeatherDuels, openUserDuel
                 <Tab className="gallery__tab-item" label={text.pastDuels} value={galleryTabs.FINISHED_DUELS} />
             </Tabs>
             <TokenBalance className="gallery__token-balance" />
-            <div className="gallery-content">{!isLoadingDuels && content}</div>
+            <div className="gallery-content">
+                {isLoadingDuels ? (
+                    <div className="gallery-content__loading">
+                        <Typography className="gallery-content__loading-label">{text.loadingDuels}</Typography>
+                        <CircularProgress />
+                    </div>
+                ) : (
+                    content
+                )}
+            </div>
         </div>
     );
 };
