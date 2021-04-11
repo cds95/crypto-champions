@@ -31,7 +31,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     Phase public currentPhase;
 
     // Number of tokens minted whenever a user mints a hero
-    uint256 internal constant NUM_TOKENS_MINTED = 500;
+    uint256 internal constant NUM_TOKENS_MINTED = 500 * 10**18;
 
     // Reserved id for the in game currency
     uint256 internal constant IN_GAME_CURRENCY_ID = 0;
