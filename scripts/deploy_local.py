@@ -77,5 +77,3 @@ def main():
     wwf = WeatherWarsFactory.deploy(cc.address, linkToken.address, MOCK_ORACLE_ADD, vrfCoordinatorMock.address, JOB_ID, keyHash, fee, SEED, fee, WEATHER_API_KEY, { "from": accounts[0] })
     linkToken.transfer(wwf.address, 1 * 10**18, { "from": accounts[0] })
     minigameFactoryRegistry.registerMinigame(WEATHER_WARS, wwf.address)
-
-    cc.refreshPhase()
