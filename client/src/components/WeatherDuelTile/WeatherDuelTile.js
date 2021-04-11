@@ -1,31 +1,22 @@
-import {
-    Card,
-    CardContent,
-    CircularProgress,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    Typography
-} from '@material-ui/core';
+import { CircularProgress, Dialog, DialogActions, DialogContent, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { displayToken, getRaceClassLabel } from '../../AppUtils';
 import { getRaceImage } from '../../images/races';
 import { getHero } from '../../redux/selectors';
 import { AcceptDuelModal } from '../AcceptDuelModal';
-import { ItemGridTile } from '../ItemGridTile/ItemGridTile';
 import './WeatherDuelTile.css';
 import { determineWeatherDuelWinner, startWeatherDuel } from '../../services/weatherWars';
-import { GAME_PHASE } from '../../constants';
+import { CITIES, GAME_PHASE, OPENWEATHER_CITY_IDS } from '../../constants';
 import { CryptoChampionButton } from '../CryptoChampionButton';
+import { getImage, imageNames } from '../../images';
 
 const text = {
     ok: 'Ok',
     accept: 'Accept Challenge',
     begin: 'Start Duel',
     challenged: 'Challenged',
-    victory: 'Victory',
-    defeat: 'Defeat',
+    victory: 'You won!',
+    defeat: 'You lost!',
     waitingForResponse: 'Waiting for challenger to accept',
     waitForResult: 'Waiting for initiator to start the duel',
     determineWinner: 'Reveal Winner',
@@ -36,7 +27,18 @@ const text = {
 };
 
 export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAccount }) => {
-    const { isDuelAccepted, initiator, winner, address, bet, phase, hasBeenPlayed, isFetchingWeather } = duel;
+    const {
+        isDuelAccepted,
+        initiator,
+        winner,
+        address,
+        bet,
+        phase,
+        hasBeenPlayed,
+        isFetchingWeather,
+        city,
+        cityWeather
+    } = duel;
     const isInitiator = userAccount == initiator;
 
     const [isAcceptModalOpen, setIsSetAcceptModalOpen] = useState(false);
@@ -61,21 +63,35 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
         setIsWaitingForContractResponse(false);
     };
 
+    let resultText;
+    if (winner == userAccount) {
+        resultText = (
+            <Typography className="weather-duel-tile__action weather-duel-tile__action--green" variant="body1">
+                {text.victory}
+            </Typography>
+        );
+    } else if (winner) {
+        resultText = (
+            <Typography className="weather-duel-tile__action weather-duel-tile__action--red" variant="body1">
+                {text.defeat}
+            </Typography>
+        );
+    }
+
     let actions;
     if (winner) {
-        if (winner == userAccount) {
-            actions = (
-                <Typography className="weather-duel-tile__action weather-duel-tile__action-green" variant="body1">
-                    {text.victory}
+        actions = (
+            <React.Fragment>
+                <Typography className="weather-duel-tile__action" variant="body1">
+                    <strong>Arena: </strong>
+                    {OPENWEATHER_CITY_IDS[`${city}`]}
                 </Typography>
-            );
-        } else {
-            actions = (
-                <Typography className="weather-duel-tile__action weather-duel-tile__action--red" variant="body1">
-                    {text.defeat}
+                <Typography className="weather-duel-tile__action" variant="body1">
+                    <strong>Weather: </strong>
+                    {cityWeather}
                 </Typography>
-            );
-        }
+            </React.Fragment>
+        );
     } else {
         if (phase == GAME_PHASE.CLOSED && hasBeenPlayed) {
             actions = (
@@ -84,6 +100,7 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
                     className="weather-duel-tile__action"
                     onClick={determineWinner}
                     disabled={hasWinnerBeenRevealed}
+                    variant="small"
                 />
             );
         } else if (phase == GAME_PHASE.OPEN && isDuelAccepted && !hasBeenPlayed) {
@@ -93,11 +110,16 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
                     className="weather-duel-tile__action"
                     disabled={hasDuelBeenStarted}
                     onClick={startDuel}
+                    variant="small"
                 />
             );
         } else if (phase == GAME_PHASE.OPEN && isFetchingWeather) {
             actions = (
-                <CryptoChampionButton label={text.fetchingWeatherInformation} className="weather-duel-tile__action" />
+                <CryptoChampionButton
+                    label={text.fetchingWeatherInformation}
+                    className="weather-duel-tile__action"
+                    variant="small"
+                />
             );
         } else if (!isInitiator && !isDuelAccepted) {
             actions = (
@@ -111,6 +133,7 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
                     <CryptoChampionButton
                         className="weather-duel-tile__action"
                         label={text.accept}
+                        variant="small"
                         onClick={() => setIsSetAcceptModalOpen(true)}
                     />
                 </React.Fragment>
@@ -135,49 +158,39 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
                     <CryptoChampionButton label={text.ok} onClick={closeModal} />
                 </DialogActions>
             </Dialog>
-            <Card className="weather-duel-tile">
-                <CardContent>
-                    {isLoading ? (
-                        <CircularProgress />
-                    ) : (
-                        <React.Fragment>
-                            <div className="weather-duel-tile__players">
-                                <ItemGridTile
-                                    itemImage={getRaceImage(initiatorHero.raceId, initiatorHero.appearance)}
-                                    itemLabel={initiatorHero.heroName}
-                                    itemSublabel={
-                                        getRaceClassLabel(initiatorHero.raceId, initiatorHero.classId) +
-                                        ` - ${initiatorHero.affinity}`
-                                    }
-                                    isBlackText={true}
-                                    decorator={isInitiator ? text.yourHero : ''}
+            <div className="weather-duel-tile">
+                {isLoading ? (
+                    <CircularProgress />
+                ) : (
+                    <React.Fragment>
+                        <div className="weather-duel-tile__players">
+                            <div className="weather-duel-tile__participant">
+                                <img
+                                    className="weather-duel__image"
+                                    src={getRaceImage(initiatorHero.raceId, initiatorHero.appearance)}
                                 />
-                                <Typography className="weather-duel-tile__challenge" variant="body1">
-                                    {text.challenged}
+                                <Typography className="weather-duel-tile__hero-name">
+                                    {initiatorHero.heroName}
                                 </Typography>
-                                <ItemGridTile
-                                    itemImage={getRaceImage(opponentHero.raceId, opponentHero.appearance)}
-                                    itemLabel={opponentHero.heroName}
-                                    itemSublabel={
-                                        getRaceClassLabel(opponentHero.raceId, opponentHero.classId) +
-                                        ` - ${opponentHero.affinity}`
-                                    }
-                                    isBlackText={true}
-                                    decorator={!isInitiator ? text.yourHero : ''}
+                            </div>
+                            <div className="weather-duel__center">
+                                {resultText}
+                                <img className="weather-duel__battle-image" src={getImage(imageNames.BATTLE)} />
+                                {actions && <div className="weather-duel__actions">{actions}</div>}
+                            </div>
+                            <div className="weather-duel-tile__participant">
+                                <img
+                                    className="weather-duel__image"
+                                    src={getRaceImage(opponentHero.raceId, opponentHero.appearance)}
                                 />
+                                <Typography className="weather-duel-tile__hero-name">
+                                    {opponentHero.heroName}
+                                </Typography>
                             </div>
-                            <div className="weather-duel-tile__actions">
-                                <div>{actions}</div>
-                                <div>
-                                    <Typography className="weather-duel-tile__action" variant="body1">
-                                        {`Minimum bet: ${displayToken(bet)} CC`}
-                                    </Typography>
-                                </div>
-                            </div>
-                        </React.Fragment>
-                    )}
-                </CardContent>
-            </Card>
+                        </div>
+                    </React.Fragment>
+                )}
+            </div>
         </React.Fragment>
     );
 };

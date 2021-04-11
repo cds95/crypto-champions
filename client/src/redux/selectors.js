@@ -62,6 +62,7 @@ export const getHerosUserCanChallenge = (state) => {
     if (!userAccount) {
         return [];
     }
+    console.log(weatherDuels);
     return heroes.filter((hero) => {
         const duel = weatherDuels.find(
             ({ winner, initiatorHeroId, opponentHeroId }) =>

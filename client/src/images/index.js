@@ -1,9 +1,11 @@
 import Fire from './fire.png';
 import Unavailable from './unavailable.png';
+import Battle from './battle.png';
 
 const images = {
     Fire,
-    Unavailable
+    Unavailable,
+    Battle
 };
 
 export const getImage = (image) => {
@@ -12,5 +14,6 @@ export const getImage = (image) => {
 
 export const imageNames = {
     FIRE: 'Fire',
-    UNAVAILABLE: 'Unavailable'
+    UNAVAILABLE: 'Unavailable',
+    BATTLE: 'Battle'
 };

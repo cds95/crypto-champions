@@ -48,6 +48,8 @@ export const getAllWeatherDuels = async () => {
     for (let i = 0; i < numDuels; i++) {
         const gameAddress = await artifact.methods.games(i).call();
         const weatherWar = await loadWeatherWarContract(gameAddress);
+        const city = await weatherWar.methods.city().call();
+        const cityWeather = await weatherWar.methods.cityWeather().call();
         const {
             0: initiator,
             1: opponent,
@@ -71,7 +73,9 @@ export const getAllWeatherDuels = async () => {
             isDuelAccepted,
             bet,
             hasBeenPlayed,
-            isFetchingWeather
+            isFetchingWeather,
+            city,
+            cityWeather
         };
         duels.push(weatherWarObj);
     }

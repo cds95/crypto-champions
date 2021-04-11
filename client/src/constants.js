@@ -157,3 +157,30 @@ export const DUEL_WORKFLOW_STEPS_MAP = {
     WAGER: 1,
     CONFIRM: 2
 };
+
+export const OPENWEATHER_CITY_IDS = {
+    6173331: 'Vancouver, Canada',
+    4671654: 'Austin, USA',
+    4887398: 'Chicago, USA',
+    4164138: 'Miami. USA',
+    5128581: 'NYC, USA',
+    5391811: 'San Diego, USA',
+    5391959: 'San Francisco, USA',
+    5809844: 'Seattle, USA',
+    3530597: 'Mexico City, Mexico',
+    3435907: 'Buenos Aires, Argentina',
+    993800: 'Johannesburg, South Africa',
+    360630: 'Cairo, Egypt',
+    2643743: 'London, UK',
+    524894: 'Moscow, Russia',
+    2950158: 'Berlin, Germany',
+    2968815: 'Paris, France',
+    2759794: 'Amsterdam, The Netherlands',
+    2673722: 'Stockholm, Sweden',
+    1850147: 'Tokyo, Japan',
+    1275339: 'Mumbai, India',
+    1796236: 'Shanhai, China',
+    1835847: 'Seoul, South Korea',
+    1880252: 'Singapore, Singapore',
+    2158177: 'Melbourne, Australia'
+};

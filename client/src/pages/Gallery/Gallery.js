@@ -69,7 +69,7 @@ export const GalleryComp = ({ setDuelOpponentHero, setWeatherDuels, openUserDuel
                 <Tab className="gallery__tab-item" label={text.pastDuels} value={galleryTabs.FINISHED_DUELS} />
             </Tabs>
             <TokenBalance className="gallery__token-balance" />
-            <div className="gallery-content">{content}</div>
+            <div className="gallery-content">{!isLoadingDuels && content}</div>
         </div>
     );
 };
