@@ -1,11 +1,13 @@
 import React from 'react';
 import { RACES } from '../../constants';
 import { getRaceGif } from '../../images/alternateRaces/';
+import { CryptoChampionButton } from '../CryptoChampionButton';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 
 const text = {
     title: 'For what people do you seek redemption?',
-    caption: 'Select a race'
+    caption: 'Select a race',
+    select: 'Select'
 };
 
 export const RaceSelector = ({ onSelect, selectedRaceId, mintedRaces = [] }) => {
@@ -13,7 +15,10 @@ export const RaceSelector = ({ onSelect, selectedRaceId, mintedRaces = [] }) => 
         ...race,
         image: getRaceGif(race.id),
         isSelectable: mintedRaces.indexOf(race.id) === -1,
-        isUnavailable: mintedRaces.indexOf(race.id) !== -1
+        isUnavailable: mintedRaces.indexOf(race.id) !== -1,
+        actionButton: mintedRaces.indexOf(race.id) === -1 && (
+            <CryptoChampionButton label={text.select} onClick={() => onSelect(race)} />
+        )
     }));
 
     const handleOnSelect = (race) => {

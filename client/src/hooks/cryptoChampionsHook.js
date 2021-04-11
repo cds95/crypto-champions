@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import {
     getAffinities,
     getCurrentRound,
+    getElderSpiritPrice,
     getElderSpirits,
     getHeroes,
     getMaxElderSpirits,
@@ -130,6 +131,32 @@ export const useGetUserAccount = () => {
                 isLoading: false,
                 userAccount
             });
+        })();
+    }, []);
+    return state;
+};
+
+export const useGetMintElderSpiritPrice = () => {
+    const [state, setState] = useState({
+        isLoading: false,
+        isInErrorState: false,
+        price: 0
+    });
+    useEffect(() => {
+        (async () => {
+            setState({ isLoading: true });
+            try {
+                const price = await getElderSpiritPrice();
+                setState({
+                    isLoading: false,
+                    price
+                });
+            } catch (e) {
+                setState({
+                    isLoading: false,
+                    isInErrorState: true
+                });
+            }
         })();
     }, []);
     return state;

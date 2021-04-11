@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { MINT_ELDER_SPIRIT_STEPS } from '../../constants';
+import { displayToken } from '../../AppUtils';
 import {
     incrementActiveStepAction,
     setActiveStepAction,
@@ -37,7 +38,9 @@ const text = {
             "Please note: Elder Spirits are ephemeral.  It takes a lot of mystical energies to keep them in this plane of existence.  Therefore, they will disappear at the end of the round.  But don't worry - though you will lose your Elder Spirit, you will keep all royalties gained from training Champions!"
     },
     mintElderSpirit: 'Mint Elder Spirit',
-    failedToMint: 'Failed to mint elder spirit'
+    failedToMint: 'Failed to mint elder spirit',
+    mintPrice: (price) => `Elder Spirit Minting Price: ${displayToken(price)} ETH`,
+    royalty: 'Elder Spirit Royalty Rate: 50% for Champions they train'
 };
 
 const MINT_ELDER_WORKFLOW_STEPS = [
@@ -76,7 +79,8 @@ export const MintElderSpirintWorkflowComp = ({
     selectedAffinity,
     setIsMinting,
     isMinting,
-    resetMintingElderSpiritWorkflow
+    resetMintingElderSpiritWorkflow,
+    mintPrice
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAbleToMint, setIsAbleToMint] = useState(false);
@@ -128,7 +132,12 @@ export const MintElderSpirintWorkflowComp = ({
                     onSelect={handleOnSelectStone}
                     elderSpirits={elderSpirits}
                     maxElderSpirits={maxElderSpirits}
-                    captions={[text.mintStone.paragraphOne, text.mintStone.paragraphTwo]}
+                    captions={[
+                        text.mintStone.paragraphOne,
+                        text.mintStone.paragraphTwo,
+                        text.mintPrice(mintPrice),
+                        text.royalty
+                    ]}
                 />
             );
             break;
@@ -216,7 +225,7 @@ export const MintElderSpirintWorkflowComp = ({
 const mapStateToProps = (state) => {
     const {
         workflow: { currentStep, maxSteps },
-        mintElderSpiritWorkflow: { race, elderClass, stone, affinity, isMinting },
+        mintElderSpiritWorkflow: { race, elderClass, stone, affinity, isMinting, mintPrice },
         cryptoChampions: { maxElderSpirits, elderSpirits }
     } = state;
     return {
@@ -229,7 +238,8 @@ const mapStateToProps = (state) => {
         maxElderSpirits,
         elderSpirits,
         affinities: getAllowedAffinities(state),
-        isMinting
+        isMinting,
+        mintPrice
     };
 };
 

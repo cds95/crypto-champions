@@ -254,3 +254,11 @@ export const setDuelWorkflowStepAction = (step) => {
         step
     };
 };
+
+export const SET_MINT_ELDER_SPIRIT_PRICE = 'SET_MINT_ELDER_SPIRIT_PRICE';
+export const setMintElderSpiritPriceAction = (price) => {
+    return {
+        type: SET_MINT_ELDER_SPIRIT_PRICE,
+        price
+    };
+};

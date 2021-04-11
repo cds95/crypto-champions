@@ -23,7 +23,7 @@ export const MintElderConfirmation = ({ selectedAffinity, race, elderClass, onSe
                     <img src={getRaceGif(race.id)} />
                 </div>
                 <div className="mint-elder-confirmation__info">
-                    <div>
+                    <div className="mint-elder-confirmation__selections">
                         <Typography>{`${text.race}: ${race.label}`}</Typography>
                         <Typography>{`${text.classLabel}: ${elderClass.label}`}</Typography>
                     </div>

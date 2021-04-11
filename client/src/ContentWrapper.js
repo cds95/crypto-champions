@@ -7,6 +7,7 @@ import {
     useGetElderSpirits,
     useGetHeroes,
     useGetMaxElderSpirits,
+    useGetMintElderSpiritPrice,
     useGetNumMintedElderSpirits,
     useGetPhase,
     useGetUserAccount,
@@ -24,7 +25,8 @@ import {
     setHeroesAction,
     setIsLoadingHeroesAction,
     setPhaseAction,
-    setUserBalanceAction
+    setUserBalanceAction,
+    setMintElderSpiritPriceAction
 } from './redux/actions';
 import { Route, HashRouter as Router, Switch } from 'react-router-dom';
 import { routeDefinitions } from './routeDefinitions';
@@ -53,7 +55,8 @@ export const ContentWrapperComp = ({
     setHeroes,
     setIsLoadingHeroes,
     setUserBalance,
-    setPhase
+    setPhase,
+    setMintElderSpiritPrice
 }) => {
     const { maxElderSpirits } = useGetMaxElderSpirits();
     const { numMintedElderSpirits } = useGetNumMintedElderSpirits();
@@ -65,6 +68,7 @@ export const ContentWrapperComp = ({
     const { currentRound } = useGetCurrentRound();
     const { isLoading: isLoadingHeroes, heroes = [] } = useGetHeroes();
     const { isLoading, phase, isInErrorState } = useGetPhase();
+    const { price } = useGetMintElderSpiritPrice();
     useEffect(() => {
         setPhase(phase);
     }, [phase]);
@@ -80,6 +84,7 @@ export const ContentWrapperComp = ({
         setIsLoadingHeroes(isLoadingHeroes);
         setHeroes(heroes);
     }, [isLoadingHeroes]);
+    useEffect(() => setMintElderSpiritPrice(price), [price]);
     if (!isInErrorState && (isLoading || isLoadingHeroes || isLoadingElderSpirits)) {
         return (
             <div className="content-loading">
@@ -154,6 +159,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setUserBalance: (balance) => {
             dispatch(setUserBalanceAction(balance));
+        },
+        setMintElderSpiritPrice: (price) => {
+            dispatch(setMintElderSpiritPriceAction(price));
         }
     };
 };
