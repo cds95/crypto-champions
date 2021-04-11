@@ -61,7 +61,6 @@ export const DuelWorkflowComp = ({
     userHeroes,
     setDuelInitiatorHero
 }) => {
-    console.log(heroesUserCanChallenge);
     const [isAuthorizeModalOpen, setIsAuthorizeModalOpen] = useState(false);
     const [isAuthorizing, setIsAuthorizing] = useState(false);
     const [hasAuthorized, setHasAuthorized] = useState(false);

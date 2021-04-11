@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
-import { getAlignment, getClass, getHometown, getRace } from '../../AppUtils';
+import { getAlignment, getBackground, getClass, getHometown, getRace } from '../../AppUtils';
 import './HeroCard.css';
 import { WEATHERS } from '../../constants';
 import clsx from 'clsx';
@@ -20,7 +20,8 @@ export const HeroCard = ({ hero, isVertical, isSelectable, isSelected, onSelect,
         hometown,
         weather,
         appearance,
-        roundMinted
+        roundMinted,
+        background
     } = hero;
     const image = getRaceImage(hero.raceId, appearance);
     const race = getRace(hero.raceId);
@@ -47,7 +48,7 @@ export const HeroCard = ({ hero, isVertical, isSelectable, isSelected, onSelect,
                 <strong className="hero-card__name">{hero.heroName}</strong>
                 <div className="hero-card__stats">
                     <div className="hero-card__stats-top">
-                        <strong>{getAlignment(alignment)}</strong>
+                        <strong>{`${getAlignment(alignment)} ${getBackground(background)}`}</strong>
                     </div>
                     <div className="hero-card__stats-bot">
                         <div className="hero-card__stats-left">

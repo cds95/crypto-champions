@@ -1,4 +1,4 @@
-import { CHAINS, RACES, CLASSES, ZERO_ADDRESS, CITIES, ALIGNMENTS } from './constants';
+import { CHAINS, RACES, CLASSES, ZERO_ADDRESS, CITIES, ALIGNMENTS, BACKGROUNDS } from './constants';
 import { getRaceImage } from './images/races';
 import getWeb3 from './services/web3';
 import map from './artifacts/deployments/map.json';
@@ -37,4 +37,8 @@ export const getHometown = (hometownId) => {
 
 export const getAlignment = (alignment) => {
     return ALIGNMENTS[Math.max(1, alignment)];
+};
+
+export const getBackground = (background) => {
+    return BACKGROUNDS[Math.max(1, background)];
 };

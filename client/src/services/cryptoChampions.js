@@ -123,7 +123,7 @@ export const getHeroes = async () => {
             4: wisdom,
             5: charisma
         } = await artifact.methods.getHeroStats(i).call();
-        const { 0: alignment, 2: hometown, 3: weather } = await artifact.methods.getHeroLore(i).call();
+        const { 0: alignment, 1: background, 2: hometown, 3: weather } = await artifact.methods.getHeroLore(i).call();
         const owner = await artifact.methods.getHeroOwner(i).call();
         if (isValid) {
             heroes.push({
@@ -144,7 +144,8 @@ export const getHeroes = async () => {
                 charisma,
                 hometown,
                 weather,
-                alignment
+                alignment,
+                background
             });
         }
     }

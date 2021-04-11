@@ -188,3 +188,37 @@ export const OPENWEATHER_CITY_IDS = {
     1880252: 'Singapore, Singapore',
     2158177: 'Melbourne, Australia'
 };
+
+export const BACKGROUNDS = [
+    'DUMMY',
+    'Anon',
+    'Art Collector',
+    'Bounty Hunter',
+    'Charlatan',
+    'Connoisseur of Memes',
+    'Contrarian',
+    'Criminal',
+    'D List Internet Celebrity',
+    'Entertainer',
+    'E-girl',
+    'E-boy',
+    'Farmer',
+    'Fundamentalist',
+    'Flipper',
+    'Gambler',
+    'Hermit',
+    'Marine',
+    'Mercenary',
+    'Merchant',
+    'Memecoin Maximalist',
+    'NEET',
+    'NFT Artist',
+    'Noble',
+    'Pirate',
+    'Programmer',
+    'Protocol Politician',
+    'Soldier',
+    'Spy',
+    'TA Savant',
+    'Whale watcher'
+];

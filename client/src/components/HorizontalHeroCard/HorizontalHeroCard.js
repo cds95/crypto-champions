@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAlignment, getHometown } from '../../AppUtils';
+import { getAlignment, getBackground, getHometown } from '../../AppUtils';
 import { WEATHERS } from '../../constants';
 import { getClassImage } from '../../images/classes';
 import { getCoinLogo } from '../../images/cryptoIcons';
@@ -53,7 +53,10 @@ export const HorizontalHeroCard = ({ hero, action }) => {
                                 <strong>{text.alignment}: </strong>
                                 <span>{getAlignment(alignment)}</span>
                             </div>
-                            <div>{`${text.background} ${background}`}</div>
+                            <div>
+                                <strong>{text.background}: </strong>
+                                <span>{getBackground(background)}</span>
+                            </div>
                         </div>
                         <div className="horizontal-hero-card__item-group">
                             <div>
