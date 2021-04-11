@@ -35,11 +35,11 @@ https://www.youtube.com/watch?v=KyIWXI5WxxE
 
 https://crypto-championz.herokuapp.com/#/
 
-## Project Overview on Figma
+### Project Overview on Figma
 
 https://www.figma.com/file/rvuFWE67GUzT9tX5YCnAXL/Untitled?node-id=0%3A1
 
-## Web App Overview on Figma
+### Web App Overview on Figma
 
 https://www.figma.com/file/kl3gSohf3aPAibUwoNlKNG/Crypto-Champz-Web-App?node-id=0%3A1
 

@@ -40,3 +40,25 @@ header.navigation-bar .navigation-bar__text .MuiTypography-h6 {
     font-weight: 700;
     font-size: 1.25rem;
 }
+
+.navigation-bar__menu--mobile {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: calc(100vw - 40px);
+    left: 0;
+    background: #212936;
+    z-index: 10;
+    padding: 20px;
+}
+
+.navigation-bar__menu-mobile__close {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding-right: 20px;
+}
+
+.navigation-bar__menu--mobile .navigation-bar__text.navigation-bar__user-account {
+    max-width: none;
+}
