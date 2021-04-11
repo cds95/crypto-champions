@@ -124,6 +124,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     // The registry of minigame factories
     IMinigameFactoryRegistry internal _minigameFactoryRegistry;
 
+    // Optional mapping for token URIs
+    mapping(uint256 => string) private _tokenURIs;
+
     /// @notice Triggered when an elder spirit gets minted
     /// @param elderId The elder id belonging to the minted elder
     /// @param owner The address of the owner
@@ -138,13 +141,12 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     event ElderSpiritsBurned();
 
     // Initializes a new CryptoChampions contract
-    // TODO: need to provide the proper uri
     constructor(
         bytes32 keyhash,
         address vrfCoordinator,
         address linkToken,
         address minigameFactoryRegistry
-    ) public ERC1155("uri") VRFConsumerBase(vrfCoordinator, linkToken) {
+    ) public ERC1155("") VRFConsumerBase(vrfCoordinator, linkToken) {
         // Set up administrative roles
         _setRoleAdmin(ROLE_OWNER, ROLE_OWNER);
         _setRoleAdmin(ROLE_ADMIN, ROLE_OWNER);
@@ -287,6 +289,21 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         }
     }
 
+    /// @notice Sets the token uri for the given id
+    /// @dev Only the admin can set URIs
+    /// @param id The token id (either hero or elder)
+    /// @param uri The uri of the token id
+    function setTokenURI(uint256 id, string calldata uri) external override onlyAdmin {
+        _tokenURIs[id] = uri;
+    }
+
+    /// @notice Override of the uri getter function
+    /// @param tokenId The token id for which the URI is mapped to
+    /// @return The token id uri
+    function uri(uint256 tokenId) external view override returns (string memory) {
+        return _tokenURIs[tokenId];
+    }
+
     /// @notice Makes a request for a random number
     /// @param userProvidedSeed The seed for the random request
     /// @return requestId The request id
@@ -360,7 +377,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         elder.affinityPrice = affinityPrice;
 
         // Mint the NFT
-        _mint(_msgSender(), elderId, 1, ""); // TODO: give the URI
+        _mint(_msgSender(), elderId, 1, "");
 
         // Assign the elder id with the owner and its spirit
         _elderOwners[elderId] = _msgSender();
@@ -428,7 +445,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         _heroRandomRequest[requestId] = heroId;
 
         // Mint the NFT
-        _mint(_msgSender(), heroId, 1, ""); // TODO: give the URI
+        _mint(_msgSender(), heroId, 1, "");
 
         // Mint in game currency tokens
         _mint(_msgSender(), IN_GAME_CURRENCY_ID, NUM_TOKENS_MINTED, "");
