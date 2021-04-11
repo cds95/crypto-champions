@@ -95,7 +95,7 @@ contract WeatherWarsFactory {
 
         // Delegate player tokens to WeatherWars
         ICryptoChampions cc = ICryptoChampions(_cryptoChampionsAddress);
-        // cc.delegatedTransferInGameTokens(msg.sender, address(newGame), buyinAmount);
+        cc.delegatedTransferInGameTokens(msg.sender, address(newGame), buyinAmount);
 
         // Set the player information
         newGame.setPlayerInformation(msg.sender, initiatorHeroId, opponent, opponentHeroId);
