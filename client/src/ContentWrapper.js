@@ -56,7 +56,8 @@ export const ContentWrapperComp = ({
     setIsLoadingHeroes,
     setUserBalance,
     setPhase,
-    setMintElderSpiritPrice
+    setMintElderSpiritPrice,
+    isLoadingWeb3
 }) => {
     const { maxElderSpirits } = useGetMaxElderSpirits();
     const { numMintedElderSpirits } = useGetNumMintedElderSpirits();
@@ -85,7 +86,7 @@ export const ContentWrapperComp = ({
         setHeroes(heroes);
     }, [isLoadingHeroes]);
     useEffect(() => setMintElderSpiritPrice(price), [price]);
-    if (!isInErrorState && (isLoading || isLoadingHeroes || isLoadingElderSpirits)) {
+    if (!isInErrorState && (isLoadingWeb3 || isLoading || isLoadingHeroes || isLoadingElderSpirits)) {
         return (
             <div className="content-loading">
                 <CircularProgress />

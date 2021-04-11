@@ -8,7 +8,11 @@ import './App.css';
 
 const App = () => {
     const { isLoading } = useWeb3();
-    return <Provider store={store}>{isLoading ? 'Loading' : <ContentWrapper />}</Provider>;
+    return (
+        <Provider store={store}>
+            <ContentWrapper isLoadingWeb3={isLoading} />
+        </Provider>
+    );
 };
 
 export default App;
