@@ -30,7 +30,7 @@ export const LandingPageComp = () => {
                         title="Crypto Champz Demo"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
+                        allowFullScreen={true}
                         className="landing-page__content-video"
                     ></iframe>
                 </div>
