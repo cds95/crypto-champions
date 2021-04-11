@@ -34,6 +34,9 @@ https://www.youtube.com/watch?v=KyIWXI5WxxE
 ### Live Demo (Rinkeby Network)
 
 https://crypto-championz.herokuapp.com/#/
+https://testnets.opensea.io/collection/unidentified-contract-fqpwyj1ot8
+
+NOTE: It is normal if the metadata is empty or outdated on opeasea. For the time being the token URIs are updated periodically.
 
 ### Project Overview on Figma
 

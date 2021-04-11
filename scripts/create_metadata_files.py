@@ -4,7 +4,7 @@ import json
 import os 
 from requests import Request, Session
 
-CRYPTO_CHAMPIONS_ADDRESS = "0x15b92D166389cD5aeB1154a727f70B3a2d8eF4a3" # latest rinkeby contract
+CRYPTO_CHAMPIONS_ADDRESS = "0xC8305aE3d6674306FF68c4620c03496D490AE072" # latest rinkeby contract
 cc = CryptoChampions.at(CRYPTO_CHAMPIONS_ADDRESS)
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -227,71 +227,68 @@ def createHeroMetadata(id):
 def main():
     account = accounts.load("dev")
     
-    # If the game is not in the action phase, do not create metadata files
-    if (cc.currentPhase() == 1):
-        # Iterate through all elders
-        for i in range(1, cc.MAX_NUMBER_OF_ELDERS() + 1):
-            if cc.uri(i) == "":
-                # create the elder metadata json file
-                elderMetadataFile = createElderMetadata(i)
+    # Iterate through all elders
+    for i in range(1, cc.eldersInGame() + 1):
+        # create the elder metadata json file
+        elderMetadataFile = createElderMetadata(i)
 
-                # use the pinata api to upload and pin file
-                with open(os.path.join(dir_path, "../.PinataAdminKey")) as adminKeyFile:
-                    # get the api keys which are on the top two lines of the file
-                    pinata_api_key = adminKeyFile.readline()
-                    pinata_secret_api_key = adminKeyFile.readline()
+        # use the pinata api to upload and pin file
+        with open(os.path.join(dir_path, "../.PinataAdminKey")) as adminKeyFile:
+            # get the api keys which are on the top two lines of the file
+            pinata_api_key = adminKeyFile.readline().strip()
+            pinata_secret_api_key = adminKeyFile.readline().strip()
 
-                    # authenticate with pinata
-                    session = Session()
-                    h = {
-                        "pinata_api_key": pinata_api_key,
-                        "pinata_secret_api_key": pinata_secret_api_key
-                    }
-                    session.headers.update(h)
+            # authenticate with pinata
+            session = Session()
+            h = {
+                "pinata_api_key": pinata_api_key,
+                "pinata_secret_api_key": pinata_secret_api_key
+            }
+            session.headers.update(h)
 
-                    authenticateUrl = pinata_base_url + "data/testAuthentication"
-                    r = session.get(authenticateUrl)
-                    rJson = json.loads(r.text)
-                    
-                    # pin file to ipfs with pinata
-                    pinUrl = pinata_base_url + "pinning/pinFileToIPFS"
-                    files = {'file': open(elderMetadataFile, 'rb')}
-                    r = session.post(pinUrl, files=files)
-                    rJson = json.loads(r.text)
+            authenticateUrl = pinata_base_url + "data/testAuthentication"
+            r = session.get(authenticateUrl)
+            rJson = json.loads(r.text)
+            
+            # pin file to ipfs with pinata
+            pinUrl = pinata_base_url + "pinning/pinFileToIPFS"
+            files = {'file': open(elderMetadataFile, 'rb')}
+            r = session.post(pinUrl, files=files)
+            rJson = json.loads(r.text)
 
-                    # set the token uri
-                    uri = "ipfs://" + rJson["IpfsHash"]
-                    cc.setTokenURI(i, uri, {"from": account})
+            # set the token uri
+            uri = "ipfs://" + rJson["IpfsHash"]
+            cc.setTokenURI(i, uri, {"from": account})
 
-        for i in range(cc.MAX_NUMBER_OF_ELDERS() + 1, cc.MAX_NUMBER_OF_ELDERS() + cc.heroesMinted() + 1):
-            if cc.uri(i) == "":
-                heroMetaData = createHeroMetadata(i)
-                # use the pinata api to upload and pin file
-                with open(os.path.join(dir_path, "../.PinataAdminKey")) as adminKeyFile:
-                    # get the api keys which are on the top two lines of the file
-                    pinata_api_key = adminKeyFile.readline().strip()
-                    pinata_secret_api_key = adminKeyFile.readline().strip()
+    for i in range(cc.MAX_NUMBER_OF_ELDERS() + 1, cc.MAX_NUMBER_OF_ELDERS() + cc.heroesMinted() + 1):
+        if cc.uri(i) == "":
+            heroMetaData = createHeroMetadata(i)
+            # use the pinata api to upload and pin file
+            with open(os.path.join(dir_path, "../.PinataAdminKey")) as adminKeyFile:
+                # get the api keys which are on the top two lines of the file
+                pinata_api_key = adminKeyFile.readline().strip()
+                pinata_secret_api_key = adminKeyFile.readline().strip()
 
-                    # authenticate with pinata
-                    session = Session()
-                    h = {
-                        "pinata_api_key": pinata_api_key,
-                        "pinata_secret_api_key": pinata_secret_api_key
-                    }
-                    session.headers.update(h)
+                # authenticate with pinata
+                session = Session()
+                h = {
+                    "pinata_api_key": pinata_api_key,
+                    "pinata_secret_api_key": pinata_secret_api_key
+                }
+                session.headers.update(h)
 
-                    authenticateUrl = pinata_base_url + "data/testAuthentication"
-                    r = session.get(authenticateUrl)
-                    rJson = json.loads(r.text)
-                    
-                    # pin file to ipfs with pinata
-                    pinUrl = pinata_base_url + "pinning/pinFileToIPFS"
-                    
-                    files = {'file': open(heroMetaData, 'rb')}
-                    r = session.post(pinUrl, files=files)
-                    rJson = json.loads(r.text)
+                authenticateUrl = pinata_base_url + "data/testAuthentication"
+                r = session.get(authenticateUrl)
+                rJson = json.loads(r.text)
+                
+                # pin file to ipfs with pinata
+                pinUrl = pinata_base_url + "pinning/pinFileToIPFS"
+                
+                files = {'file': open(heroMetaData, 'rb')}
+                r = session.post(pinUrl, files=files)
+                rJson = json.loads(r.text)
 
-                    # set the token uri
-                    uri = "ipfs://" + rJson["IpfsHash"]
-                    cc.setTokenURI(i, uri, {"from": account})
+                # set the token uri
+                uri = "ipfs://" + rJson["IpfsHash"]
+                cc.setTokenURI(i, uri, {"from": account})
 
