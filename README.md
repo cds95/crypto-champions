@@ -19,16 +19,19 @@ To jump start our gaming ecosystem, we have created two Mini Games that leverage
 * One of our Mini Games uses Chainlink Price Feeds to link the price of an asset to a Champion.  Players loyal to a high performing asset may earn rewards!
 * Another Mini Game allows Champions to duel each other.  We use Chainlink Oracles to retrieve real time weather data which is used as input for Tournament conditions, and Chainlink VRF to randomize additional conditions.  Those conditions plus the Champions' stats are used as input to determine the winner of the duel!  
 
+## Hands on:
+
 ### Demo Video
+https://www.youtube.com/watch?v=KyIWXI5WxxE
+
+### Live Demo (Kovan Network)
+https://crypto-championz.herokuapp.com/#/
 
 ## Project Overview on Figma
 https://www.figma.com/file/rvuFWE67GUzT9tX5YCnAXL/Untitled?node-id=0%3A1
 
 ## Web App Overview on Figma
 https://www.figma.com/file/kl3gSohf3aPAibUwoNlKNG/Crypto-Champz-Web-App?node-id=0%3A1
-
-### Live Demo (Kovan Network)
-https://crypto-championz.herokuapp.com/#/
 
 ## How to build and run this repo
 
