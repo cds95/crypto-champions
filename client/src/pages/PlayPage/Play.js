@@ -7,8 +7,8 @@ import { MintHeroWorkflow } from '../../components/MintHeroWorkflow';
 import { Typography } from '@material-ui/core';
 
 const text = {
-    phaseOne: 'Phase 1: Setup',
-    phaseTwo: 'Phase 2: Action'
+    phaseOne: 'Setup',
+    phaseTwo: 'Action'
 };
 
 export const PlayComp = ({ phase }) => {
