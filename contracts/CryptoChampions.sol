@@ -20,6 +20,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     using SafeMath for uint256;
     using SafeMath for uint8;
 
+    /***********************************|
+    |        Variables and Events       |
+    |__________________________________*/
+
     // Possible phases the contract can be in.  Phase one is when users can mint elder spirits and two is when they can mint heros.
     enum Phase { SETUP, ACTION }
 
@@ -27,7 +31,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     Phase public currentPhase;
 
     // Number of tokens minted whenever a user mints a hero
-    uint256 internal constant NUM_TOKENS_MINTED = 500 * 10**18;
+    uint256 internal constant NUM_TOKENS_MINTED = 500;
+
+    // Reserved id for the in game currency
+    uint256 internal constant IN_GAME_CURRENCY_ID = 0;
 
     // The duration of each phase in days
     uint256 internal _setupPhaseDuration;
@@ -36,34 +43,25 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     // The current phase start time
     uint256 public currentPhaseStartTime;
 
-    // The owner role is used to globally govern the contract
+    // The contract roles
     bytes32 internal constant ROLE_OWNER = keccak256("ROLE_OWNER");
-
-    // The admin role is used for administrator duties and reports to the owner
     bytes32 internal constant ROLE_ADMIN = keccak256("ROLE_ADMIN");
-
-    // The role to declare round winners
     bytes32 internal constant ROLE_GAME_ADMIN = keccak256("ROLE_GAME_ADMIN");
-
-    // Reserved id for the in game currency
-    uint256 internal constant IN_GAME_CURRENCY_ID = 0;
 
     // Constants used to determine fee proportions in percentage
     // Usage: fee.mul(proportion).div(100)
     uint8 internal constant HERO_MINT_ROYALTY_PERCENT = 25;
     uint8 internal constant HERO_MINT_DEV_PERCENT = 25;
 
-    // The amount of ETH contained in the rewards pool
+    // The amount of ETH contained in the pools
     uint256 public rewardsPoolAmount = 0;
-
-    // The amount of ETH contained in the dev fund
     uint256 public devFund = 0;
 
     // The rewards share for every hero with the winning affinity calculated at the end of every round
     uint256 internal _heroRewardsShare = 0;
 
-    // The identifier for the price wars game
-    string internal constant PRICE_WARS_ID = "PRICE_WARS";
+    // Mapping of hero id to a mapping of round to a bool of the rewards claim
+    mapping(uint256 => mapping(uint256 => bool)) internal _heroRewardsClaimed;
 
     // The max amount of elders that can be minted
     uint256 public constant MAX_NUMBER_OF_ELDERS = 5;
@@ -103,6 +101,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     // List of available affinities
     string[] public affinities;
 
+    // The list of affinities that won in a round
+    mapping(uint256 => string) public winningAffinitiesByRound;
+
     // The key hash used for VRF
     bytes32 internal _keyHash;
 
@@ -115,11 +116,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     // Mapping of request id to random result
     mapping(bytes32 => uint256) internal _randomResultsVRF;
 
-    // The list of affinities that won in a round
-    mapping(uint256 => string) public winningAffinitiesByRound;
-
-    // Mapping of hero id to a mapping of round to a bool of the rewards claim
-    mapping(uint256 => mapping(uint256 => bool)) internal _heroRewardsClaimed;
+    // The identifier for the price wars game
+    string internal constant PRICE_WARS_ID = "PRICE_WARS";
 
     // The registry of minigame factories
     IMinigameFactoryRegistry internal _minigameFactoryRegistry;
@@ -139,6 +137,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
     /// @notice Triggered when the elder spirits have been burned
     event ElderSpiritsBurned();
+
+    /***********************************|
+    |            Constuctor             |
+    |__________________________________*/
 
     // Initializes a new CryptoChampions contract
     constructor(
@@ -177,6 +179,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         _minigameFactoryRegistry = IMinigameFactoryRegistry(minigameFactoryRegistry);
     }
 
+    /***********************************|
+    |         Function Modifiers        |
+    |__________________________________*/
+
     modifier isValidElderSpiritId(uint256 elderId) {
         require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
         _;
@@ -204,6 +210,16 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     modifier atPhase(Phase phase) {
         require(currentPhase == phase); // dev: Current phase prohibits action.
         _;
+    }
+
+    /***********************************|
+    |       Game Management/Setup       |
+    |__________________________________*/
+
+    /// @notice Check if msg.sender has the role
+    /// @param role The role to verify
+    function _hasRole(bytes32 role) internal view {
+        require(hasRole(role, msg.sender)); // dev: Access denied.
     }
 
     /// @notice Sets the duration of the setup phase
@@ -304,28 +320,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         return _tokenURIs[tokenId];
     }
 
-    /// @notice Makes a request for a random number
-    /// @param userProvidedSeed The seed for the random request
-    /// @return requestId The request id
-    function _getRandomNumber(uint256 userProvidedSeed) internal returns (bytes32 requestId) {
-        require(LINK.balanceOf(address(this)) >= _fee); // dev: Not enough LINK - fill contract with faucet
-        return requestRandomness(_keyHash, _fee, userProvidedSeed);
-    }
-
-    /// @notice Callback function used by the VRF coordinator
-    /// @param requestId The request id
-    /// @param randomness The randomness
-    function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
-        _randomResultsVRF[requestId] = randomness;
-        _trainHero(requestId);
-    }
-
-    /// @notice Check if msg.sender has the role
-    /// @param role The role to verify
-    function _hasRole(bytes32 role) internal view {
-        require(hasRole(role, msg.sender)); // dev: Access denied.
-    }
-
     /// @notice Creates a new token affinity
     /// @dev This will be called by a priviledged address. It will allow to create new affinities. May need to add a
     /// remove affinity function as well.
@@ -342,6 +336,30 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     function setElderMintPrice(uint256 price) external override onlyAdmin {
         elderMintPrice = price;
     }
+
+    /***********************************|
+    |            VRF Functions          |
+    |__________________________________*/
+
+    /// @notice Makes a request for a random number
+    /// @param userProvidedSeed The seed for the random request
+    /// @return requestId The request id
+    function _getRandomNumber(uint256 userProvidedSeed) internal returns (bytes32 requestId) {
+        require(LINK.balanceOf(address(this)) >= _fee); // dev: Not enough LINK - fill contract with faucet
+        return requestRandomness(_keyHash, _fee, userProvidedSeed);
+    }
+
+    /// @notice Callback function used by the VRF coordinator
+    /// @param requestId The request id
+    /// @param randomness The randomness
+    function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+        _randomResultsVRF[requestId] = randomness;
+        _trainHero(requestId);
+    }
+
+    /***********************************|
+    |         Champion Minting          |
+    |__________________________________*/
 
     /// @notice Mints an elder spirit
     /// @dev For now only race, class, and token (affinity) are needed. This will change. The race and class ids will
@@ -476,6 +494,15 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         return heroId;
     }
 
+    /// @notice Get the hero owner for the given hero id
+    /// @param heroId The hero id
+    /// @return The owner address
+    function getHeroOwner(uint256 heroId) public view override isValidHero(heroId) returns (address) {
+        require(_heroOwners[heroId] != address(0)); // dev: Given hero id has not been minted.
+
+        return _heroOwners[heroId];
+    }
+
     /// @notice Checks to see if a hero can be minted for a given elder
     /// @dev (n < 4) || (n <= 2 * m)
     ///     n is number of champions already minted for elder
@@ -548,15 +575,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         return (uint8(randomNumber.mod(maxNumber).add(1)), randomNumber.div(10));
     }
 
-    /// @notice Get the hero owner for the given hero id
-    /// @param heroId The hero id
-    /// @return The owner address
-    function getHeroOwner(uint256 heroId) public view override isValidHero(heroId) returns (address) {
-        require(_heroOwners[heroId] != address(0)); // dev: Given hero id has not been minted.
-
-        return _heroOwners[heroId];
-    }
-
     /// @notice Burns all the elder spirits in game
     function _burnElders() internal {
         for (uint256 i = 1; i <= MAX_NUMBER_OF_ELDERS; ++i) {
@@ -612,6 +630,15 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         return price;
     }
 
+    /// @notice Refunds the sender if they sent too much
+    /// @param cost The cost
+    function _refundSender(uint256 cost) internal {
+        if (msg.value.sub(cost) > 0) {
+            (bool success, ) = msg.sender.call{ value: msg.value.sub(cost) }("");
+            require(success); // dev: Refund failed.
+        }
+    }
+
     /// @dev Hook function called before every token transfer
     function _beforeTokenTransfer(
         address operator,
@@ -634,6 +661,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         }
     }
 
+    /***********************************|
+    |         Getter Functions          |
+    |__________________________________*/
+
     /// @notice Gets the amount of heroes spawn from the elder with the specified id during the specified round
     /// @param round The round the elder was created
     /// @param elderId The elder id
@@ -647,15 +678,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     {
         require(round <= currentRound); // dev: Invalid round.
         return _roundElderSpawns[round][elderId];
-    }
-
-    /// @notice Refunds the sender if they sent too much
-    /// @param cost The cost
-    function _refundSender(uint256 cost) internal {
-        if (msg.value.sub(cost) > 0) {
-            (bool success, ) = msg.sender.call{ value: msg.value.sub(cost) }("");
-            require(success); // dev: Refund failed.
-        }
     }
 
     /// @notice Fetches the data of a single elder spirit
@@ -825,6 +847,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     function getNumEldersInGame() external view override returns (uint256) {
         return eldersInGame;
     }
+
+    /***********************************|
+    |            Price Game             |
+    |__________________________________*/
 
     /// @notice Declares a winning affinity for a round
     /// @dev This can only be called by a game admin contract
