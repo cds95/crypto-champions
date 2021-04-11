@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { routeDefinitions } from '../../routeDefinitions';
 import { CryptoChampionButton } from '../../components/CryptoChampionButton';
 import { Typography } from '@material-ui/core';
+import { VIDEO_LINK } from '../../constants';
 
 const text = {
     welcome: 'Welcome to Crypto Champz!',
@@ -22,6 +23,17 @@ export const LandingPageComp = () => {
                 {text.caption}
             </Typography>
             <div className="landing-page__content">
+                <div className="landing-page__video-container">
+                    <div className="landing-page__video-container-inside" />
+                    <iframe
+                        src="https://www.youtube.com/embed/KyIWXI5WxxE"
+                        title="Crypto Champz Demo"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen={true}
+                        className="landing-page__content-video"
+                    ></iframe>
+                </div>
                 <Link
                     to={routeDefinitions.PLAY}
                     component={(props) => <CryptoChampionButton {...props} label="Get Started" />}

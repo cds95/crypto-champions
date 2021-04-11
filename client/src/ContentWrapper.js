@@ -34,14 +34,15 @@ import { Play } from './pages/PlayPage';
 import { NavigationBar } from './components/NavigationBar';
 import { Gallery } from './pages/Gallery';
 import { MyCollection } from './pages/MyCollection';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Typography } from '@material-ui/core';
 import { Footer } from './components/Footer/Footer';
 import { Banner } from './components/Banner';
 import { About } from './pages/About';
 
 const text = {
     failedToConnect:
-        'Network Error: Please make sure to connect your wallet to the correct network and refresh the page'
+        'Network Error: Please make sure to connect your wallet to the correct network and refresh the page',
+    loading: 'Loading CryptoChampz'
 };
 
 export const ContentWrapperComp = ({
@@ -56,7 +57,8 @@ export const ContentWrapperComp = ({
     setIsLoadingHeroes,
     setUserBalance,
     setPhase,
-    setMintElderSpiritPrice
+    setMintElderSpiritPrice,
+    isLoadingWeb3
 }) => {
     const { maxElderSpirits } = useGetMaxElderSpirits();
     const { numMintedElderSpirits } = useGetNumMintedElderSpirits();
@@ -85,10 +87,11 @@ export const ContentWrapperComp = ({
         setHeroes(heroes);
     }, [isLoadingHeroes]);
     useEffect(() => setMintElderSpiritPrice(price), [price]);
-    if (!isInErrorState && (isLoading || isLoadingHeroes || isLoadingElderSpirits)) {
+    if (!isInErrorState && (isLoadingWeb3 || isLoading || isLoadingHeroes || isLoadingElderSpirits)) {
         return (
             <div className="content-loading">
-                <CircularProgress />
+                <Typography>{text.loading}</Typography>{' '}
+                <CircularProgress className="content-loading__loading-spinner" />
             </div>
         );
     }
