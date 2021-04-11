@@ -10,6 +10,7 @@ export const ItemGridTile = ({
     isSelectable,
     isSelected,
     itemSublabel,
+    sublabelImage,
     isBlackText,
     decorator,
     isWhiteTile,
@@ -42,6 +43,11 @@ export const ItemGridTile = ({
                 <Typography variant="body1" className="item-grid-tile__label item-grid-tile__sub-label">
                     {itemSublabel}
                 </Typography>
+            )}
+            {sublabelImage && (
+                <div className="item-grid-tile__sub-label item-grid-tile__sub-label-image">
+                    <img src={sublabelImage} />
+                </div>
             )}
             {itemLabel && (
                 <Typography variant="body1" className="item-grid-tile__label">

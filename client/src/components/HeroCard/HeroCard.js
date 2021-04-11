@@ -5,6 +5,7 @@ import './HeroCard.css';
 import { WEATHERS } from '../../constants';
 import clsx from 'clsx';
 import { getRaceImage } from '../../images/races';
+import { getCoinLogo } from '../../images/cryptoIcons';
 
 export const HeroCard = ({ hero, isVertical, isSelectable, isSelected, onSelect, action, shouldOnlyShowImage }) => {
     const {
@@ -39,7 +40,7 @@ export const HeroCard = ({ hero, isVertical, isSelectable, isSelected, onSelect,
                         <Typography className="hero-card__extension-item">{heroClass.label}</Typography>
                     </div>
                     <div className="hero-card__affinity">
-                        <Typography>{affinity}</Typography>
+                        <img src={getCoinLogo(affinity)} />
                     </div>
                 </div>
                 <img src={image} />

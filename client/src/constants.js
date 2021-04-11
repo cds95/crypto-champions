@@ -38,7 +38,7 @@ export const RACES = [
     },
     {
         id: 1,
-        label: 'Cat'
+        label: 'Kittie'
     },
     {
         id: 2,
@@ -46,19 +46,23 @@ export const RACES = [
     },
     {
         id: 3,
-        label: 'Frog'
+        label: 'Froggen'
     },
     {
         id: 4,
-        label: 'Bear'
+        label: 'Bera'
     },
     {
         id: 5,
-        label: 'Bull'
+        label: 'Bully'
     },
     {
         id: 6,
-        label: 'Robot'
+        label: 'Robo'
+    },
+    {
+        id: 7,
+        label: 'Demon'
     }
 ];
 

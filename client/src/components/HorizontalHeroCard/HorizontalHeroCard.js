@@ -2,6 +2,7 @@ import React from 'react';
 import { getAlignment, getHometown } from '../../AppUtils';
 import { WEATHERS } from '../../constants';
 import { getClassImage } from '../../images/classes';
+import { getCoinLogo } from '../../images/cryptoIcons';
 import { getRaceImage } from '../../images/races';
 import './HorizontalHeroCard.css';
 
@@ -30,7 +31,8 @@ export const HorizontalHeroCard = ({ hero, action }) => {
         wisdom,
         charisma,
         background,
-        classId
+        classId,
+        affinity
     } = hero;
     return (
         <div className="horizontal-hero-card">
@@ -38,6 +40,7 @@ export const HorizontalHeroCard = ({ hero, action }) => {
             <div className="horizontal-hero-card__information">
                 <div className="horizontal-hero-card__class-affinity">
                     <img src={getClassImage(classId)} className="horizontal-hero-card__class-image" />
+                    <img src={getCoinLogo(affinity)} className="horizontal-hero-card__class-image" />
                 </div>
                 <div className="horizontal-hero-card__basic-information">
                     <div className="horizontal-hero-card__lore">

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import { getRaceClassLabel } from '../../AppUtils';
 import { getRaceGif } from '../../images/alternateRaces';
+import { getCoinLogo } from '../../images/cryptoIcons';
 import {
     resetMintingHeroWorkflowAction,
     setElderSpiritForHeroAction,
@@ -49,7 +50,7 @@ export const MintHeroWorkflowComp = ({
             return {
                 id: elder.id,
                 label: getRaceClassLabel(elder.raceId, elder.classId),
-                subLabel: elder.affinity,
+                sublabelImage: getCoinLogo(elder.affinity),
                 image: getRaceGif(elder.raceId),
                 isSelectable: true,
                 actionButton: (

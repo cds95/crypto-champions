@@ -3,6 +3,7 @@ import { getRaceClassLabel } from '../../AppUtils';
 import { getRaceGif } from '../../images/alternateRaces/';
 import { ItemSelector } from '../ItemSelector/ItemSelector';
 import { CryptoChampionButton } from '../CryptoChampionButton';
+import { getCoinLogo } from '../../images/cryptoIcons';
 
 const text = {
     summon: 'Summon'
@@ -13,7 +14,7 @@ export const StoneSelector = ({ onSelect, selectedStoneId, elderSpirits, maxElde
         id: spirit.id,
         label: getRaceClassLabel(spirit.raceId, spirit.classId),
         image: getRaceGif(spirit.raceId),
-        subLabel: spirit.affinity
+        sublabelImage: getCoinLogo(spirit.affinity)
     }));
     const availableElderSpots = maxElderSpirits - items.length;
     for (let i = 0; i < availableElderSpots; i++) {
