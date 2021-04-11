@@ -21,7 +21,9 @@ export const HeroCard = ({ hero, isVertical, isSelectable, isSelected, onSelect,
         weather,
         appearance,
         roundMinted,
-        background
+        background,
+        traitOne,
+        skillOne
     } = hero;
     const image = getRaceImage(hero.raceId, appearance);
     const race = getRace(hero.raceId);
@@ -52,6 +54,16 @@ export const HeroCard = ({ hero, isVertical, isSelectable, isSelected, onSelect,
                     </div>
                     <div className="hero-card__stats-bot">
                         <div className="hero-card__stats-left">
+                            <div>
+                                <div className="hero-card__basic-stat">
+                                    <strong>Skill: </strong>
+                                    {heroClass.skills[skillOne]}
+                                </div>
+                                <div className="hero-card__basic-stat">
+                                    <strong>Trait: </strong>
+                                    {race.traits[traitOne]}
+                                </div>
+                            </div>
                             <div>
                                 <div className="hero-card__basic-stat">
                                     <strong>Hometown: </strong>

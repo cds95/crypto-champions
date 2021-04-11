@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAlignment, getBackground, getHometown } from '../../AppUtils';
+import { getAlignment, getBackground, getClass, getHometown, getRace } from '../../AppUtils';
 import { WEATHERS } from '../../constants';
 import { getClassImage } from '../../images/classes';
 import { getCoinLogo } from '../../images/cryptoIcons';
@@ -13,7 +13,9 @@ const text = {
     weather: 'Weather Preference',
     skill: 'Skill',
     trait: 'Trait',
-    hometown: 'Hometown'
+    hometown: 'Hometown',
+    trait: 'Trait',
+    skill: 'Skill'
 };
 
 export const HorizontalHeroCard = ({ hero, action }) => {
@@ -32,8 +34,12 @@ export const HorizontalHeroCard = ({ hero, action }) => {
         charisma,
         background,
         classId,
-        affinity
+        affinity,
+        traitOne,
+        skillOne
     } = hero;
+    const race = getRace(hero.raceId);
+    const heroClass = getClass(hero.classId);
     return (
         <div className="horizontal-hero-card">
             <img src={getRaceImage(raceId, appearance)} className="horizontal-hero-card__image" />
@@ -66,6 +72,16 @@ export const HorizontalHeroCard = ({ hero, action }) => {
                             <div>
                                 <strong>{text.weather}: </strong>
                                 <span>{WEATHERS[parseInt(weather)]}</span>
+                            </div>
+                        </div>
+                        <div className="horizontal-hero-card__item-group">
+                            <div>
+                                <strong>{text.skill}: </strong>
+                                <span>{heroClass.skills[skillOne]}</span>
+                            </div>
+                            <div>
+                                <strong>{text.trait}: </strong>
+                                <span>{race.traits[traitOne]}</span>
                             </div>
                         </div>
                     </div>

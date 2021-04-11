@@ -34,70 +34,92 @@ export const IN_GAME_CURRENCY_ID = 0;
 export const RACES = [
     {
         id: 0,
-        label: 'Human'
+        label: 'Human',
+        traits: ['DUMMY', 'Shrewd diplomacy', 'Beast taming', 'Ardent Explorer', 'Opposable thumbs']
     },
     {
         id: 1,
-        label: 'Kittie'
+        label: 'Kittie',
+        traits: ['DUMMY', 'Meme scene', "It's not a phase", 'Meow', 'Add me on DeviantArt']
     },
     {
         id: 2,
-        label: 'Elf'
+        label: 'Elf',
+        traits: ['DUMMY', 'Arcane affinity', 'One with nature', 'Into the shadows', 'Light footed']
     },
     {
         id: 3,
-        label: 'Froggen'
+        label: 'Froggen',
+        traits: [
+            'DUMMY',
+            "We're all in this together",
+            'The future of France',
+            'In it for the tech',
+            "What's a whitepaper"
+        ]
     },
     {
         id: 4,
-        label: 'Bera'
+        label: 'Bera',
+        traits: ['DUMMY', 'Just wait and see', 'Perpetual pessimist', 'Bubble popper', 'See, I told you']
     },
     {
         id: 5,
-        label: 'Bully'
+        label: 'Bully',
+        traits: ['DUMMY', 'Only up', 'Throw a dart', 'To the moon', 'Day trader']
     },
     {
         id: 6,
-        label: 'Robo'
+        label: 'Robo',
+        traits: ['DUMMY', 'Built to last', 'Deep Blue', 'Plug in Baby', 'Static Shock']
     },
     {
         id: 7,
-        label: 'Demon'
+        label: 'Demon',
+        traits: ['DUMMY', 'Bloodlist', 'Dark vision', 'The floor is lava', 'A tempting offer']
     }
 ];
 
 export const CLASSES = [
     {
         id: 0,
-        label: 'Warrior'
+        label: 'Warrior',
+        skills: ['DUMMY', 'Whirlwind', 'Shield Block', 'Fury', 'Comradery']
     },
     {
         id: 1,
-        label: 'Mage'
+        label: 'Mage',
+        skills: ['DUMMY', 'Arcane blast', 'Fireball', 'Frost bite', 'Two for one']
     },
     {
         id: 2,
-        label: 'Druid'
+        label: 'Druid',
+        skills: ['DUMMY', 'Maul', 'Rejuvenation', 'Shapeshift', 'Enchant']
     },
     {
         id: 3,
-        label: 'Paladin'
+        label: 'Paladin',
+        skills: ['DUMMY', 'Smite', 'Guiding Light', 'Wall of justice', 'Lay on Hands']
     },
     {
         id: 4,
-        label: 'Bard'
+        label: 'Bard',
+        skills: ['DUMMY', 'Song of rest', 'Jack of all trades', 'Free compliments', 'A twinkling eye']
     },
     {
         id: 5,
-        label: 'Necromancer'
+        label: 'Necromancer',
+        skills: ['DUMMY', 'Skeleton Army', 'Brittle bones', 'Suspicious Pet', 'Pestilence']
     },
     {
         id: 6,
-        label: 'Priest'
+        label: 'Priest',
+        skills: ['DUMMY', 'Healing Prayer', 'Tough of light', 'Soothing Aura', 'Shackles from above']
     },
     {
         id: 7,
-        label: 'Rogue'
+        label: 'Rogue',
+        skills: ['DUMMY', 'Pickpocket', 'Fan of knives', 'Shadow strike', 'Poisoned blade']
     }
 ];
 
