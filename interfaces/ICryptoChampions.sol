@@ -44,6 +44,8 @@ interface ICryptoChampions {
 
     function setElderMintPrice(uint256 price) external;
 
+    function setTokenURI(uint256 id, string calldata uri) external;
+
     function mintElderSpirit(
         uint256 raceId,
         uint256 classId,
