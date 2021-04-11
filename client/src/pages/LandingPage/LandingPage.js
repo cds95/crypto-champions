@@ -26,7 +26,7 @@ export const LandingPageComp = () => {
                 <div className="landing-page__video-container">
                     <div className="landing-page__video-container-inside" />
                     <iframe
-                        src="https://www.youtube.com/embed/rhbxx49EsYk"
+                        src="https://www.youtube.com/embed/KyIWXI5WxxE"
                         title="Crypto Champz Demo"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
