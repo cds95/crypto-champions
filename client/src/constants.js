@@ -35,48 +35,42 @@ export const RACES = [
     {
         id: 0,
         label: 'Human',
-        traits: ['DUMMY', 'Shrewd diplomacy', 'Beast taming', 'Ardent Explorer', 'Opposable thumbs']
+        traits: ['', 'Shrewd diplomacy', 'Beast taming', 'Ardent Explorer', 'Opposable thumbs']
     },
     {
         id: 1,
         label: 'Kittie',
-        traits: ['DUMMY', 'Meme scene', "It's not a phase", 'Meow', 'Add me on DeviantArt']
+        traits: ['', 'Meme scene', "It's not a phase", 'Meow', 'Add me on DeviantArt']
     },
     {
         id: 2,
         label: 'Elf',
-        traits: ['DUMMY', 'Arcane affinity', 'One with nature', 'Into the shadows', 'Light footed']
+        traits: ['', 'Arcane affinity', 'One with nature', 'Into the shadows', 'Light footed']
     },
     {
         id: 3,
         label: 'Froggen',
-        traits: [
-            'DUMMY',
-            "We're all in this together",
-            'The future of France',
-            'In it for the tech',
-            "What's a whitepaper"
-        ]
+        traits: ['', "We're all in this together", 'The future of France', 'In it for the tech', "What's a whitepaper"]
     },
     {
         id: 4,
         label: 'Bera',
-        traits: ['DUMMY', 'Just wait and see', 'Perpetual pessimist', 'Bubble popper', 'See, I told you']
+        traits: ['', 'Just wait and see', 'Perpetual pessimist', 'Bubble popper', 'See, I told you']
     },
     {
         id: 5,
         label: 'Bully',
-        traits: ['DUMMY', 'Only up', 'Throw a dart', 'To the moon', 'Day trader']
+        traits: ['', 'Only up', 'Throw a dart', 'To the moon', 'Day trader']
     },
     {
         id: 6,
         label: 'Robo',
-        traits: ['DUMMY', 'Built to last', 'Deep Blue', 'Plug in Baby', 'Static Shock']
+        traits: ['', 'Built to last', 'Deep Blue', 'Plug in Baby', 'Static Shock']
     },
     {
         id: 7,
         label: 'Demon',
-        traits: ['DUMMY', 'Bloodlist', 'Dark vision', 'The floor is lava', 'A tempting offer']
+        traits: ['', 'Bloodlist', 'Dark vision', 'The floor is lava', 'A tempting offer']
     }
 ];
 
@@ -84,49 +78,49 @@ export const CLASSES = [
     {
         id: 0,
         label: 'Warrior',
-        skills: ['DUMMY', 'Whirlwind', 'Shield Block', 'Fury', 'Comradery']
+        skills: ['', 'Whirlwind', 'Shield Block', 'Fury', 'Comradery']
     },
     {
         id: 1,
         label: 'Mage',
-        skills: ['DUMMY', 'Arcane blast', 'Fireball', 'Frost bite', 'Two for one']
+        skills: ['', 'Arcane blast', 'Fireball', 'Frost bite', 'Two for one']
     },
     {
         id: 2,
         label: 'Druid',
-        skills: ['DUMMY', 'Maul', 'Rejuvenation', 'Shapeshift', 'Enchant']
+        skills: ['', 'Maul', 'Rejuvenation', 'Shapeshift', 'Enchant']
     },
     {
         id: 3,
         label: 'Paladin',
-        skills: ['DUMMY', 'Smite', 'Guiding Light', 'Wall of justice', 'Lay on Hands']
+        skills: ['', 'Smite', 'Guiding Light', 'Wall of justice', 'Lay on Hands']
     },
     {
         id: 4,
         label: 'Bard',
-        skills: ['DUMMY', 'Song of rest', 'Jack of all trades', 'Free compliments', 'A twinkling eye']
+        skills: ['', 'Song of rest', 'Jack of all trades', 'Free compliments', 'A twinkling eye']
     },
     {
         id: 5,
         label: 'Necromancer',
-        skills: ['DUMMY', 'Skeleton Army', 'Brittle bones', 'Suspicious Pet', 'Pestilence']
+        skills: ['', 'Skeleton Army', 'Brittle bones', 'Suspicious Pet', 'Pestilence']
     },
     {
         id: 6,
         label: 'Priest',
-        skills: ['DUMMY', 'Healing Prayer', 'Tough of light', 'Soothing Aura', 'Shackles from above']
+        skills: ['', 'Healing Prayer', 'Tough of light', 'Soothing Aura', 'Shackles from above']
     },
     {
         id: 7,
         label: 'Rogue',
-        skills: ['DUMMY', 'Pickpocket', 'Fan of knives', 'Shadow strike', 'Poisoned blade']
+        skills: ['', 'Pickpocket', 'Fan of knives', 'Shadow strike', 'Poisoned blade']
     }
 ];
 
 // TODO: Move these to backend.  Note that everything is 1 based in the contract.  That's why there is a DUMMY in index 0
-export const WEATHERS = ['DUMMY', 'Clouds', 'Clear', 'Atmosphere', 'Snow', 'Rain', 'Drizzle', 'Thunderstorm'];
+export const WEATHERS = ['', 'Clouds', 'Clear', 'Atmosphere', 'Snow', 'Rain', 'Drizzle', 'Thunderstorm'];
 export const CITIES = [
-    'DUMMY',
+    '',
     'Vancouver, Canada',
     'Austin, USA',
     'Chicago, USA',
@@ -154,7 +148,7 @@ export const CITIES = [
 ];
 
 export const ALIGNMENTS = [
-    'DUMMY',
+    '',
     'Lawful Good',
     'Neutral Good',
     'Chaotic Good',
@@ -212,7 +206,7 @@ export const OPENWEATHER_CITY_IDS = {
 };
 
 export const BACKGROUNDS = [
-    'DUMMY',
+    '',
     'Anon',
     'Art Collector',
     'Bounty Hunter',
