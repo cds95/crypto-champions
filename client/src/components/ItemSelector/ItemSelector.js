@@ -16,6 +16,7 @@ export const ItemSelector = ({
     hasWhiteTiles,
     isCentered,
     captions,
+    action,
     numPerRow = 4
 }) => {
     items = items.map((item) => {
@@ -43,6 +44,7 @@ export const ItemSelector = ({
                     ))}
                 </div>
             )}
+            {action && <div className="item-selector__action">{action}</div>}
             <div className="item-selector__items">
                 <ItemGrid
                     numPerRow={numPerRow}

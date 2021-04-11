@@ -193,3 +193,11 @@ export const claimRoundReward = async (heroId) => {
         from: userAccount
     });
 };
+
+export const refreshPhase = async () => {
+    const artifact = await loadContract(CONTRACTS.CRYPTO_CHAMPIONS);
+    const userAccount = await getUserAccount();
+    await artifact.methods.refreshPhase().send({
+        from: userAccount
+    });
+};
