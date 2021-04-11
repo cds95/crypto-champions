@@ -130,7 +130,7 @@ brownie test
 
 We hope to expand upon this project with additional ideas such as:
 * Dynamically evolving NFTs based on smart contract outcomes (such as leveling up your Experience after adventures)
-* IPFS integration
+* L2 Scaling (Polygon)
 * Community incentives to grow the ecosystem
 * Token marketplace
 * Multiple artists
