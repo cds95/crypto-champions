@@ -145,7 +145,7 @@ export const WeatherDuelTileComp = ({ duel, initiatorHero, opponentHero, userAcc
     return (
         <React.Fragment>
             <Dialog open={isWaitModalOpen} onClose={closeModal}>
-                <DialogContent className="weather-duel-tile__modal pronciono">
+                <DialogContent className="weather-duel-tile__modal">
                     {isWaitingForContractResponse ? (
                         <CircularProgress />
                     ) : hasWinnerBeenRevealed ? (

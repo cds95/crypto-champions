@@ -13,7 +13,7 @@ export const ProgressIndicator = ({ steps, currentStep, maxSteps }) => {
                 });
                 return (
                     <div className={stepClassName} key={s.id}>
-                        <Typography className="pronciono progress-indicator__step-label">{s.label}</Typography>
+                        <Typography className="progress-indicator__step-label">{s.label}</Typography>
                         {index + 1 < maxSteps && (
                             <ArrowRightAltIcon fontSize="large" className="progress-indicator__arrow" />
                         )}

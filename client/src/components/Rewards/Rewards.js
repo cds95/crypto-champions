@@ -15,18 +15,14 @@ export const Rewards = ({ winningAffinity, winningHeroes = [], className, onClai
     const elementClassName = clsx('rewards', className);
     return (
         <Card className={elementClassName}>
-            <Typography className="pronciono" variant="h4">
-                {winningHeroes.length > 0 ? text.caption : text.noRewards}
-            </Typography>
+            <Typography variant="h4">{winningHeroes.length > 0 ? text.caption : text.noRewards}</Typography>
             <CardContent>
-                <Typography className="pronciono" variant="h6">
-                    {text.previousRoundWinner(winningAffinity)}
-                </Typography>
+                <Typography variant="h6">{text.previousRoundWinner(winningAffinity)}</Typography>
                 {winningHeroes.map((hero) => {
                     const claimReward = () => onClaim(hero.id);
                     return (
                         <div className="rewards__item">
-                            <Typography variant="body1" className="rewards__heroName pronciono">
+                            <Typography variant="body1" className="rewards__heroName">
                                 {hero.heroName}
                             </Typography>
                             <CryptoChampionButton size="small" onClick={claimReward} label={text.claim} />

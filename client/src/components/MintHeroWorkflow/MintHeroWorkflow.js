@@ -90,7 +90,7 @@ export const MintHeroWorkflowComp = ({
                 selectedElderId={selectedElderSpirit ? selectedElderSpirit.id : ''}
             />
             <div className="mint-hero-workflow__bottom">
-                <Typography className="pronciono--white">{text.fieldLabel}</Typography>
+                <Typography>{text.fieldLabel}</Typography>
                 <TextField value={heroName} onChange={handleOnHeroNameChange} className="mint-hero-workflow__name" />
                 <CryptoChampionButton onClick={handleOnSubmit} label={text.mintHero} />
             </div>

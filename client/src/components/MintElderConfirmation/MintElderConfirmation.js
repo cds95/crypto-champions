@@ -17,20 +17,18 @@ export const MintElderConfirmation = ({ selectedAffinity, race, elderClass, onSe
     const handleOnSelectAffinity = (e) => onSelectAffinity(e.target.value);
     return (
         <div className="mint-elder-confirmation">
-            <Typography className="pronciono--white">{text.confirm}</Typography>
+            <Typography>{text.confirm}</Typography>
             <div className="mint-elder-confirmation__card-container black-transparent">
                 <div className="mint-elder-confirmation__card-image">
                     <img src={getRaceGif(race.id)} />
                 </div>
                 <div className="mint-elder-confirmation__info">
                     <div>
-                        <Typography className="pronciono--white">{`${text.race}: ${race.label}`}</Typography>
-                        <Typography className="pronciono--white">{`${text.classLabel}: ${elderClass.label}`}</Typography>
+                        <Typography>{`${text.race}: ${race.label}`}</Typography>
+                        <Typography>{`${text.classLabel}: ${elderClass.label}`}</Typography>
                     </div>
                     <div className="mint-elder-confirmation__affinity">
-                        <Typography className="pronciono--white mint-elder-confirmation__affinity-label">
-                            {text.affinity}
-                        </Typography>
+                        <Typography className="mint-elder-confirmation__affinity-label">{text.affinity}</Typography>
                         <FormControl className="mint-elder-confirmation__form-control">
                             <InputLabel className="mint-elder-confirmation__affinity-selector-label">
                                 {text.select}

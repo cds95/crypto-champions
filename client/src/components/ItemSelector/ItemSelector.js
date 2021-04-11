@@ -39,7 +39,7 @@ export const ItemSelector = ({
             {captions && (
                 <div className="item-selector__captions">
                     {captions.map((captionText) => (
-                        <p className="item-selector__caption-paragraph pronciono">{captionText}</p>
+                        <p className="item-selector__caption-paragraph">{captionText}</p>
                     ))}
                 </div>
             )}
