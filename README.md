@@ -31,7 +31,7 @@ To jump start our gaming ecosystem, we have created two Mini Games that leverage
 
 https://www.youtube.com/watch?v=KyIWXI5WxxE
 
-### Live Demo (Kovan Network)
+### Live Demo (Rinkeby Network)
 
 https://crypto-championz.herokuapp.com/#/
 
