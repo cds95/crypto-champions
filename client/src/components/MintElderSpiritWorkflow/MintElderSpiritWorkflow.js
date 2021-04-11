@@ -27,7 +27,8 @@ import { CryptoChampionButton } from '../CryptoChampionButton';
 import { ProgressIndicator } from '../ProgressIndicator';
 
 const text = {
-    confirmation: 'Successfully minted elder',
+    confirmation:
+        'Successfully minted elder spirit.  Refresh the page and go to the MyChampz page to view your elder spirit.',
     processing: 'Minting...',
     back: 'Back',
     next: 'Next',
@@ -117,7 +118,7 @@ export const MintElderSpirintWorkflowComp = ({
     const handleOnCloseModal = () => {
         if (isAbleToMint) {
             resetMintingElderSpiritWorkflow();
-            history.push(routeDefinitions.ROOT);
+            history.push(routeDefinitions.COLLECTION);
         } else {
             setIsModalOpen(false);
         }

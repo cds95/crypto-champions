@@ -24,7 +24,8 @@ const text = {
     fieldLabel: "What will your champion's name be?",
     mintHero: 'Mint and train champion',
     processing: 'Minting...',
-    confirmation: 'Successfully minted champion',
+    confirmation:
+        'Successfully minted champion.  Refresh your page and head to the MyChampz page to view your champion.',
     select: 'Select',
     full: 'Full',
     failedToMint: 'Failed to mint champion'
@@ -81,7 +82,7 @@ export const MintHeroWorkflowComp = ({
         if (hasFailedToMint) {
             setIsModalOpen(false);
         } else {
-            history.push(routeDefinitions.ROOT);
+            history.push(routeDefinitions.COLLECTION);
             resetWorkflow();
         }
     };
