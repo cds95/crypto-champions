@@ -21,7 +21,7 @@ contract PriceWars is Minigame {
     function play() internal override {
         string memory winningAffinity;
         int256 greatestPercentageChange;
-        for (uint256 elderId = 1; elderId <= cryptoChampions.getNumEldersInGame(); elderId++) {
+        for (uint256 elderId = 0; elderId < cryptoChampions.getNumEldersInGame(); elderId++) {
             string memory affinity;
             int256 startAffinityPrice;
             (, , , affinity, startAffinityPrice) = cryptoChampions.getElderSpirit(elderId);

@@ -11,12 +11,12 @@ import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.6/in
 
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/access/AccessControl.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
-import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC1155/ERC1155.sol";
+import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC721/ERC721.sol";
 
 /// @title Crypto Champions Interface
 /// @author Oozyx
 /// @notice This is the crypto champions class
-contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsumerBase {
+contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumerBase {
     using SafeMath for uint256;
     using SafeMath for uint8;
 
@@ -32,9 +32,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
     // Number of tokens minted whenever a user mints a hero
     uint256 internal constant NUM_TOKENS_MINTED = 500 * 10**18;
-
-    // Reserved id for the in game currency
-    uint256 internal constant IN_GAME_CURRENCY_ID = 0;
 
     // The duration of each phase in days
     uint256 internal _setupPhaseDuration;
@@ -70,18 +67,11 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     // This amount cannot be greater than MAX_NUMBER_OF_ELDERS
     uint256 public eldersInGame = 0;
 
-    // The mapping of elder id to elder owner, ids can only be in the range of [1, MAX_NUMBER OF ELDERS]
-    mapping(uint256 => address) internal _elderOwners;
-
     // The mapping of elder id to the elder spirit
     mapping(uint256 => ElderSpirit) internal _elderSpirits;
 
     // The amount of heros minted
     uint256 public heroesMinted = 0;
-
-    // The mapping of hero id to owner, ids can only be in the range of
-    // [1 + MAX_NUMBER_OF_ELDERS, ]
-    mapping(uint256 => address) internal _heroOwners;
 
     // The mapping of hero id to the hero
     mapping(uint256 => Hero) internal _heroes;
@@ -122,9 +112,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     // The registry of minigame factories
     IMinigameFactoryRegistry internal _minigameFactoryRegistry;
 
-    // Optional mapping for token URIs
-    mapping(uint256 => string) private _tokenURIs;
-
     /// @notice Triggered when an elder spirit gets minted
     /// @param elderId The elder id belonging to the minted elder
     /// @param owner The address of the owner
@@ -148,7 +135,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         address vrfCoordinator,
         address linkToken,
         address minigameFactoryRegistry
-    ) public ERC1155("") VRFConsumerBase(vrfCoordinator, linkToken) {
+    ) public ERC721("", "") VRFConsumerBase(vrfCoordinator, linkToken) {
+        // TODO: args for ERC721
         // Set up administrative roles
         _setRoleAdmin(ROLE_OWNER, ROLE_OWNER);
         _setRoleAdmin(ROLE_ADMIN, ROLE_OWNER);
@@ -184,12 +172,12 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     |__________________________________*/
 
     modifier isValidElderSpiritId(uint256 elderId) {
-        require(elderId > IN_GAME_CURRENCY_ID && elderId <= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+        require(elderId < MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
         _;
     }
 
     modifier isValidHero(uint256 heroId) {
-        require(heroId > MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+        require(heroId >= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
         require(_heroes[heroId].valid); // dev: Hero is not valid.
         _;
     }
@@ -257,8 +245,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
             // Calculate hero rewards.
             // Start by finding which elder had the winning affinity
-            uint256 i = 1;
-            for (; i <= eldersInGame; ++i) {
+            uint256 i = 0;
+            for (; i < eldersInGame; ++i) {
                 if (
                     keccak256(bytes(_elderSpirits[i].affinity)) ==
                     keccak256(bytes(winningAffinitiesByRound[currentRound])) &&
@@ -310,14 +298,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     /// @param id The token id (either hero or elder)
     /// @param uri The uri of the token id
     function setTokenURI(uint256 id, string calldata uri) external override onlyAdmin {
-        _tokenURIs[id] = uri;
-    }
-
-    /// @notice Override of the uri getter function
-    /// @param tokenId The token id for which the URI is mapped to
-    /// @return The token id uri
-    function uri(uint256 tokenId) external view override returns (string memory) {
-        return _tokenURIs[tokenId];
+        _setTokenURI(id, uri);
     }
 
     /// @notice Creates a new token affinity
@@ -378,8 +359,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         require(_affinities[affinity] != address(0)); // dev: Affinity does not exist.
 
         // Generate the elderId and make sure it doesn't already exists
-        uint256 elderId = eldersInGame.add(1);
-        assert(_elderOwners[elderId] == address(0)); // dev: Elder with id already has owner.
+        uint256 elderId = eldersInGame;
+        assert(!_exists(elderId)); // dev: Elder with id already exists.
         assert(_elderSpirits[elderId].valid == false); // dev: Elder spirit with id has already been generated.
 
         // Get the price data of affinity
@@ -395,10 +376,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         elder.affinityPrice = affinityPrice;
 
         // Mint the NFT
-        _mint(_msgSender(), elderId, 1, "");
+        _safeMint(_msgSender(), elderId);
 
         // Assign the elder id with the owner and its spirit
-        _elderOwners[elderId] = _msgSender();
         _elderSpirits[elderId] = elder;
 
         // Increment elders minted
@@ -415,13 +395,14 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         return elderId;
     }
 
+    /// TODO: Delete
     /// @notice Gets the elder owner for the given elder id
     /// @param elderId The elder id
     /// @return The owner of the elder
     function getElderOwner(uint256 elderId) public view override isValidElderSpiritId(elderId) returns (address) {
-        require(_elderOwners[elderId] != address(0)); // dev: Given elder id has not been minted.
+        require(_exists(elderId)); // dev: Given elder id has not been minted.
 
-        return _elderOwners[elderId];
+        return ownerOf(elderId);
     }
 
     /// @notice Mints a hero based on an elder spirit
@@ -443,8 +424,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         require(msg.value >= mintPrice); // dev: Insufficient payment.
 
         // Generate the hero id
-        uint256 heroId = heroesMinted.add(1) + MAX_NUMBER_OF_ELDERS;
-        assert(_heroOwners[heroId] == address(0)); // dev: Hero with id already has an owner.
+        uint256 heroId = heroesMinted + MAX_NUMBER_OF_ELDERS;
+        assert(!_exists(heroId)); // dev: Hero with id already has an owner.
         assert(_heroes[heroId].valid == false); // dev: Hero with id has already been generated.
 
         // Create the hero
@@ -463,13 +444,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         _heroRandomRequest[requestId] = heroId;
 
         // Mint the NFT
-        _mint(_msgSender(), heroId, 1, "");
+        _safeMint(_msgSender(), heroId);
 
-        // Mint in game currency tokens
-        _mint(_msgSender(), IN_GAME_CURRENCY_ID, NUM_TOKENS_MINTED, "");
-
-        // Assign the hero id with the owner and with the hero
-        _heroOwners[heroId] = _msgSender();
+        // Mint in game currency tokens (TODO with ERC20 token)
+        //_mint(_msgSender(), IN_GAME_CURRENCY_ID, NUM_TOKENS_MINTED, "");
 
         // Increment the heroes minted and the elder spawns
         heroesMinted = heroesMinted.add(1);
@@ -477,7 +455,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
         // Disburse royalties
         uint256 royaltyFee = mintPrice.mul(HERO_MINT_ROYALTY_PERCENT).div(100);
-        address seedOwner = _elderOwners[elderId];
+        address seedOwner = ownerOf(elderId);
         (bool success, ) = seedOwner.call{ value: royaltyFee }("");
         require(success, "Payment failed");
 
@@ -494,13 +472,14 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         return heroId;
     }
 
+    /// TODO: DELETE and maybe override ownerOf()
     /// @notice Get the hero owner for the given hero id
     /// @param heroId The hero id
     /// @return The owner address
     function getHeroOwner(uint256 heroId) public view override isValidHero(heroId) returns (address) {
-        require(_heroOwners[heroId] != address(0)); // dev: Given hero id has not been minted.
+        require(_exists(heroId)); // dev: Given hero id has not been minted.
 
-        return _heroOwners[heroId];
+        return ownerOf(heroId);
     }
 
     /// @notice Checks to see if a hero can be minted for a given elder
@@ -517,7 +496,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
         // Find the elder with the least amount of heroes minted
         uint256 smallestElderAmount = _roundElderSpawns[currentRound][elderId];
-        for (uint256 i = 1; i <= eldersInGame; ++i) {
+        for (uint256 i = 0; i < eldersInGame; ++i) {
             if (_roundElderSpawns[currentRound][i] < smallestElderAmount) {
                 smallestElderAmount = _roundElderSpawns[currentRound][i];
             }
@@ -577,7 +556,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
 
     /// @notice Burns all the elder spirits in game
     function _burnElders() internal {
-        for (uint256 i = 1; i <= MAX_NUMBER_OF_ELDERS; ++i) {
+        for (uint256 i = 0; i < MAX_NUMBER_OF_ELDERS; ++i) {
             if (_elderSpirits[i].valid) {
                 _burnElder(i);
             }
@@ -592,11 +571,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     function _burnElder(uint256 elderId) internal isValidElderSpiritId(elderId) {
         require(_elderSpirits[elderId].valid); // dev: Cannot burn elder that does not exist.
 
-        _burn(_elderOwners[elderId], elderId, 1);
+        _burn(elderId);
 
         // Reset elder values for elder id
         eldersInGame = eldersInGame.sub(1);
-        _elderOwners[elderId] = address(0);
         _elderSpirits[elderId].valid = false;
     }
 
@@ -636,28 +614,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         if (msg.value.sub(cost) > 0) {
             (bool success, ) = msg.sender.call{ value: msg.value.sub(cost) }("");
             require(success); // dev: Refund failed.
-        }
-    }
-
-    /// @dev Hook function called before every token transfer
-    function _beforeTokenTransfer(
-        address operator,
-        address from,
-        address to,
-        uint256[] memory ids,
-        uint256[] memory amounts,
-        bytes memory data
-    ) internal virtual override {
-        super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
-
-        for (uint256 i = 0; i < ids.length; i++) {
-            // If token is an elder spirit, update owners so can send them royalties
-            if (ids[i] > IN_GAME_CURRENCY_ID && ids[i] <= MAX_NUMBER_OF_ELDERS) {
-                _elderOwners[ids[i]] = payable(to);
-            }
-            if (ids[i] > MAX_NUMBER_OF_ELDERS) {
-                _heroOwners[ids[i]] = to;
-            }
         }
     }
 
@@ -868,7 +824,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         require(keccak256(bytes(_heroes[heroId].affinity)) == keccak256(bytes(winningAffinitiesByRound[currentRound]))); // dev: Hero does not have the winning affinity.
         require(_heroRewardsClaimed[heroId][currentRound] == false); // dev: Reward has already been claimed.
 
-        (bool success, ) = _heroOwners[heroId].call{ value: _heroRewardsShare }("");
+        (bool success, ) = ownerOf(heroId).call{ value: _heroRewardsShare }("");
         require(success, "Payment failed");
         rewardsPoolAmount = rewardsPoolAmount.sub(_heroRewardsShare);
         _heroRewardsClaimed[heroId][currentRound] = true;
@@ -888,8 +844,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
     /// @param to The receiving address
     /// @param amount The amount to transfer
     function transferInGameTokens(address to, uint256 amount) external override {
-        bytes memory data;
-        safeTransferFrom(msg.sender, to, IN_GAME_CURRENCY_ID, amount, data);
+        // TODO: make it work with ERC20
+        // bytes memory data;
+        // safeTransferFrom(msg.sender, to, IN_GAME_CURRENCY_ID, amount, data);
     }
 
     /// @notice Transfers in game currency tokens from one address to another.
@@ -901,8 +858,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC1155, VRFConsume
         address to,
         uint256 amount
     ) external override {
-        bytes memory data;
-        safeTransferFrom(from, to, IN_GAME_CURRENCY_ID, amount, data);
+        // TODO: make it work with ERC20
+        // bytes memory data;
+        // safeTransferFrom(from, to, IN_GAME_CURRENCY_ID, amount, data);
     }
 
     /// @notice Returns whether or not hero has reward for the round

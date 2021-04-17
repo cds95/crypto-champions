@@ -14,20 +14,20 @@ def test_burn_max_elders(accounts, crypto_champions, mint_max_elders):
 
 
 def test_burn_first_elder_owner(accounts, crypto_champions, mint_first_elder):
-    assert crypto_champions.getElderOwner(1) == accounts[0]
+    assert crypto_champions.getElderOwner(0) == accounts[0]
     crypto_champions.burnElders({"from": accounts[0]})
-    with brownie.reverts("dev: Given elder id has not been minted."):
-        crypto_champions.getElderOwner(1)
+    with brownie.reverts(""):
+        crypto_champions.getElderOwner(0)
 
 
 def test_burn_internal_non_existent_elder(accounts, crypto_champions): 
     with brownie.reverts("dev: Cannot burn elder that does not exist."):
-        crypto_champions.burnElder(1, {"from": accounts[0]})
+        crypto_champions.burnElder(0, {"from": accounts[0]})
 
 
 def test_burn_internal_first_elder(accounts, crypto_champions, mint_first_elder):
-    assert crypto_champions.eldersInGame() == 1 and crypto_champions.getElderOwner(1) == accounts[0]
-    crypto_champions.burnElder(1)
+    assert crypto_champions.eldersInGame() == 1 and crypto_champions.getElderOwner(0) == accounts[0]
+    crypto_champions.burnElder(0)
     assert crypto_champions.eldersInGame() == 0
-    with brownie.reverts("dev: Given elder id has not been minted."):
-        crypto_champions.getElderOwner(1)
+    with brownie.reverts(""):
+        crypto_champions.getElderOwner(0)
