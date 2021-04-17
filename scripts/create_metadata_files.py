@@ -228,7 +228,7 @@ def main():
     account = accounts.load("dev")
     
     # Iterate through all elders
-    for i in range(1, cc.eldersInGame() + 1):
+    for i in range(0, cc.eldersInGame()):
         # create the elder metadata json file
         elderMetadataFile = createElderMetadata(i)
 
@@ -260,7 +260,7 @@ def main():
             uri = "ipfs://" + rJson["IpfsHash"]
             cc.setTokenURI(i, uri, {"from": account})
 
-    for i in range(cc.MAX_NUMBER_OF_ELDERS() + 1, cc.MAX_NUMBER_OF_ELDERS() + cc.heroesMinted() + 1):
+    for i in range(cc.MAX_NUMBER_OF_ELDERS(), cc.MAX_NUMBER_OF_ELDERS() + cc.heroesMinted()):
         if cc.uri(i) == "":
             heroMetaData = createHeroMetadata(i)
             # use the pinata api to upload and pin file

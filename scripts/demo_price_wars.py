@@ -35,9 +35,9 @@ def main():
 
     cc.refreshPhase()
 
-    cc.mintHero(1, "hero 2", { "from": accounts[2], "value": 0.271 * 10**18 })
-    cc.mintHero(2, "hero 1", { "from": accounts[1], "value": 0.271 * 10**18 })
-    cc.mintHero(3, "hero 0", { "from": accounts[0], "value": 0.271 * 10**18 })
+    cc.mintHero(0, "hero 2", { "from": accounts[2], "value": 0.271 * 10**18 })
+    cc.mintHero(1, "hero 1", { "from": accounts[1], "value": 0.271 * 10**18 })
+    cc.mintHero(2, "hero 0", { "from": accounts[0], "value": 0.271 * 10**18 })
     
     btcV3Aggregator.updateAnswer(CURRENT_BTC_PRICE)
     ethV3Aggregator.updateAnswer(CURRENT_ETH_PRICE)
