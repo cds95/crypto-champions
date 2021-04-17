@@ -7,11 +7,11 @@ import "./minigames/games/priceWars/PriceWarsFactory.sol";
 import "./minigames/games/priceWars/PriceWars.sol";
 import "./chainlink/VRFConsumerBase.sol";
 import "./openZeppelin/AccessControl.sol";
+import "./openZeppelin/ERC721.sol";
 
 import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
-import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC721/ERC721.sol";
 
 /// @title Crypto Champions Interface
 /// @author Oozyx
