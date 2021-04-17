@@ -135,8 +135,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         address vrfCoordinator,
         address linkToken,
         address minigameFactoryRegistry
-    ) public ERC721("", "") VRFConsumerBase(vrfCoordinator, linkToken) {
-        // TODO: args for ERC721
+    ) public ERC721("CryptoChampz", "CHMPZ") VRFConsumerBase(vrfCoordinator, linkToken) {
         // Set up administrative roles
         _setRoleAdmin(ROLE_OWNER, ROLE_OWNER);
         _setRoleAdmin(ROLE_ADMIN, ROLE_OWNER);
