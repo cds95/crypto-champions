@@ -5,11 +5,11 @@ import "../interfaces/ICryptoChampions.sol";
 import "../interfaces/IMinigameFactoryRegistry.sol";
 import "./minigames/games/priceWars/PriceWarsFactory.sol";
 import "./minigames/games/priceWars/PriceWars.sol";
-import "./chainlink_contracts/VRFConsumerBase.sol";
+import "./chainlink/VRFConsumerBase.sol";
+import "./openZeppelin/AccessControl.sol";
 
 import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
-import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/access/AccessControl.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/token/ERC721/ERC721.sol";
 
@@ -183,13 +183,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
 
     // Restrict to only price war addresses
     modifier onlyGameAdmin {
-        _hasRole(ROLE_GAME_ADMIN);
+        require(hasRole(ROLE_GAME_ADMIN, msg.sender)); // dev: Access denied.
         _;
     }
 
     // Restrict to only admins
     modifier onlyAdmin {
-        _hasRole(ROLE_ADMIN);
+        require(hasRole(ROLE_ADMIN, msg.sender)); // dev: Access denied.
         _;
     }
 
@@ -202,12 +202,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
     /***********************************|
     |       Game Management/Setup       |
     |__________________________________*/
-
-    /// @notice Check if msg.sender has the role
-    /// @param role The role to verify
-    function _hasRole(bytes32 role) internal view {
-        require(hasRole(role, msg.sender)); // dev: Access denied.
-    }
 
     /// @notice Sets the duration of the setup phase
     /// @param numDays Number of days for the setup phase duration
