@@ -3,8 +3,8 @@ pragma solidity ^0.6.0;
 
 struct ElderSpirit {
     bool valid;
-    uint256 raceId;
-    uint256 classId;
+    uint8 raceId;
+    uint8 classId;
     string affinity;
     int256 affinityPrice;
 }
@@ -16,8 +16,8 @@ struct Hero {
     int256 affinityPrice;
     uint256 roundMinted;
     uint256 elderId;
-    uint256 raceId;
-    uint256 classId;
+    uint8 raceId;
+    uint8 classId;
     uint8 appearance;
     uint8 trait1;
     uint8 trait2;
@@ -47,8 +47,8 @@ interface ICryptoChampions {
     function setTokenURI(uint256 id, string calldata uri) external;
 
     function mintElderSpirit(
-        uint256 raceId,
-        uint256 classId,
+        uint8 raceId,
+        uint8 classId,
         string calldata affinity
     ) external payable returns (uint256);
 
@@ -63,8 +63,8 @@ interface ICryptoChampions {
         view
         returns (
             bool,
-            uint256,
-            uint256,
+            uint8,
+            uint8,
             string memory,
             int256
         );
@@ -85,8 +85,8 @@ interface ICryptoChampions {
         view
         returns (
             string memory, // name
-            uint256, // race id
-            uint256, // class id
+            uint8, // race id
+            uint8, // class id
             uint8 // appearance
         );
 

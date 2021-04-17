@@ -349,8 +349,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
     /// @param affinity The affinity of the minted hero
     /// @return The elder spirit id
     function mintElderSpirit(
-        uint256 raceId,
-        uint256 classId,
+        uint8 raceId,
+        uint8 classId,
         string calldata affinity
     ) external payable override atPhase(Phase.SETUP) returns (uint256) {
         require(eldersInGame < MAX_NUMBER_OF_ELDERS); // dev: Max number of elders already minted.
@@ -394,7 +394,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         return elderId;
     }
 
-    /// TODO: Delete
     /// @notice Gets the elder owner for the given elder id
     /// @param elderId The elder id
     /// @return The owner of the elder
@@ -524,9 +523,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         (_heroes[heroId].hometown, newRandomNumber) = _rollDice(24, newRandomNumber); // 1 out of 24
         (_heroes[heroId].weather, newRandomNumber) = _rollDice(7, newRandomNumber); // 1 ouf of 7
 
-        (_heroes[heroId].hp, newRandomNumber) = _rollDice(21, newRandomNumber); // Roll 10-30
+        (_heroes[heroId].hp, newRandomNumber) = _rollDice(_getHpRoll(_heroes[heroId].classId), newRandomNumber); // Roll 10-30
         _heroes[heroId].hp = uint8(_heroes[heroId].hp.add(9));
-        (_heroes[heroId].mana, newRandomNumber) = _rollDice(21, newRandomNumber); // Roll 10-30
+        (_heroes[heroId].mana, newRandomNumber) = _rollDice(_getManaRoll(_heroes[heroId].classId), newRandomNumber); // Roll 10-30
         _heroes[heroId].mana = uint8(_heroes[heroId].mana.add(9));
         (_heroes[heroId].stamina, newRandomNumber) = _rollDice(31, newRandomNumber); // Roll 10-40
         _heroes[heroId].stamina = uint8(_heroes[heroId].stamina.add(9));
@@ -543,6 +542,42 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         _heroes[heroId].wisdom = uint8(_heroes[heroId].wisdom.add(2));
         (_heroes[heroId].charisma, newRandomNumber) = _rollDice(16, newRandomNumber); // Roll 3-18
         _heroes[heroId].charisma = uint8(_heroes[heroId].charisma.add(2));
+    }
+
+    /// @notice Gets the roll value for the hp attribute of a hero
+    /// @param class The hero's class id
+    /// @return The roll value for hp
+    function _getHpRoll(uint8 class) internal pure returns (uint8) {
+        // Warrior
+        if (class == 0) {
+            return 41;
+        }
+        // Mage, Necromancer, Priest
+        else if (class == 1 || class == 5 || class == 6) {
+            return 21;
+        }
+        // Druid, Paladin, Bard, Rogue
+        else {
+            return 31;
+        }
+    }
+
+    /// @notice Gets the roll value for the mana attribute of a hero
+    /// @param class The hero's class id
+    /// @return The roll value for mana
+    function _getManaRoll(uint8 class) internal pure returns (uint8) {
+        // Warrior
+        if (class == 0) {
+            return 21;
+        }
+        // Mage, Necromancer, Priest
+        else if (class == 1 || class == 5 || class == 6) {
+            return 41;
+        }
+        // Druid, Paladin, Bard, Rogue
+        else {
+            return 31;
+        }
     }
 
     /// @notice Simulates rolling dice
@@ -645,8 +680,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         isValidElderSpiritId(elderId)
         returns (
             bool,
-            uint256,
-            uint256,
+            uint8,
+            uint8,
             string memory,
             int256
         )
@@ -696,8 +731,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         isValidHero(heroId)
         returns (
             string memory, // name
-            uint256, // race id
-            uint256, // class id
+            uint8, // race id
+            uint8, // class id
             uint8 // appearance
         )
     {
