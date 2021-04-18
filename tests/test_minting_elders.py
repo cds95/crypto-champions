@@ -10,7 +10,7 @@ def test_mint_first_elder_variable_elders_minted(accounts, crypto_champions, min
 
 
 def test_mint_elder_owner_initial_state(accounts, crypto_champions):
-    with brownie.reverts("dev: Given elder id has not been minted."):
+    with brownie.reverts(""):
         crypto_champions.getElderOwner(1)
 
 def test_mint_elder_no_affinity(accounts, crypto_champions):
@@ -18,7 +18,7 @@ def test_mint_elder_no_affinity(accounts, crypto_champions):
         crypto_champions.mintElderSpirit(0, 0, "affinity", {"from": accounts[0], "value": crypto_champions.elderMintPrice()})
 
 def test_mint_first_elder_owner(accounts, crypto_champions, mint_first_elder):
-    assert crypto_champions.getElderOwner(crypto_champions.eldersInGame()) == accounts[0]
+    assert crypto_champions.getElderOwner(crypto_champions.eldersInGame() - 1) == accounts[0]
 
 
 def test_mint_max_number_elders(accounts, crypto_champions, mint_max_elders):

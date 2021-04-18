@@ -3,7 +3,7 @@ import brownie
 
 def test_mint_hero_owner_initial_state(accounts, crypto_champions):
     with brownie.reverts():
-        crypto_champions.getHeroOwner(crypto_champions.MAX_NUMBER_OF_ELDERS() + 1)
+        crypto_champions.getHeroOwner(crypto_champions.MAX_NUMBER_OF_ELDERS())
 
 
 def test_mint_hero_non_existent_elder(accounts, crypto_champions, set_phase_to_mint_hero):
@@ -12,7 +12,7 @@ def test_mint_hero_non_existent_elder(accounts, crypto_champions, set_phase_to_m
 
 
 def test_mint_first_hero_owner(accounts, crypto_champions, mint_first_hero):
-    assert crypto_champions.getHeroOwner(crypto_champions.MAX_NUMBER_OF_ELDERS() + crypto_champions.heroesMinted()) == accounts[0]
+    assert crypto_champions.getHeroOwner(crypto_champions.MAX_NUMBER_OF_ELDERS()) == accounts[0]
 
 
 def test_mint_hero_initial_state_variable_heroes_minted(accounts, crypto_champions):
@@ -25,15 +25,15 @@ def test_mint_first_hero_heroes_minted(accounts, crypto_champions, mint_first_he
 
 def test_mint_hero_insufficient_payment(accounts, crypto_champions, mint_first_elder, set_phase_to_mint_hero):
     with brownie.reverts("dev: Insufficient payment."):
-        crypto_champions.mintHero(1, "test hero", {"from": accounts[0], "value": crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), 1) - 1000})
+        crypto_champions.mintHero(0, "test hero", {"from": accounts[0], "value": crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), 0) - 1000})
 
 
 def test_mint_hero_refund(accounts, crypto_champions, mint_first_elder, set_phase_to_mint_hero):
-    ethSent = crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), 1) + 1000
-    tx = crypto_champions.mintHero(1, "test hero", {"from": accounts[1], "value": ethSent})
+    ethSent = crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), 0) + 1000
+    tx = crypto_champions.mintHero(0, "test hero", {"from": accounts[1], "value": ethSent})
     assert tx.internal_transfers[1]["to"] == accounts[1]
     assert tx.internal_transfers[1]["value"] == 1000
 
 
 def test_mint_hero_elder_spawns(accounts, crypto_champions, mint_first_hero):
-    assert crypto_champions.getElderSpawnsAmount(crypto_champions.currentRound(), 1) == 1
+    assert crypto_champions.getElderSpawnsAmount(crypto_champions.currentRound(), 0) == 1

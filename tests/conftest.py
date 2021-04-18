@@ -115,7 +115,7 @@ def mint_first_hero(accounts, crypto_champions, mint_first_elder, set_phase_to_m
     """
     Mint the first hero for the CryptoChampions contract. Hero is based on the first elder minted.
     """
-    lastMintedElderId = crypto_champions.eldersInGame()
+    lastMintedElderId = crypto_champions.eldersInGame() - 1
     heroName = "Test Hero"
     crypto_champions.mintHero(lastMintedElderId, heroName, {"from": accounts[0], "value": crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), lastMintedElderId)})
 

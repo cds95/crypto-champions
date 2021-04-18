@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.6.0;
 
-import "../../../chainlink_contracts/VRFConsumerBase.sol";
+import "../../../chainlink/VRFConsumerBase.sol";
 
 /// @title WeatherWarsRandomizer
 /// @author Oozyx
