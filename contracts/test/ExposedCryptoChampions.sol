@@ -2,6 +2,7 @@
 pragma solidity ^0.6.0;
 
 import "../CryptoChampions.sol";
+import "../token/ChampzToken.sol";
 
 /// @title Exposed version of CryptoChampions
 /// @author Oozyx
@@ -16,8 +17,9 @@ contract ExposedCryptoChampions is CryptoChampions {
         bytes32 keyhash,
         address vrfCoordinator,
         address linkToken,
-        address minigameFactoryRegistry
-    ) public CryptoChampions(keyhash, vrfCoordinator, linkToken, minigameFactoryRegistry) {}
+        address minigameFactoryRegistry,
+        ChampzToken champzToken
+    ) public CryptoChampions(keyhash, vrfCoordinator, linkToken, minigameFactoryRegistry, champzToken) {}
 
     /// See CryptoChampions::_getRandomNumber
     function getRandomNumber(uint256 seed) public {

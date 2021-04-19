@@ -13,6 +13,8 @@ import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.6/in
 
 import "OpenZeppelin/openzeppelin-contracts@3.4.0/contracts/math/SafeMath.sol";
 
+import "./token/ChampzToken.sol";
+
 /// @title Crypto Champions Interface
 /// @author Oozyx
 /// @notice This is the crypto champions class
@@ -31,7 +33,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
     Phase public currentPhase;
 
     // Number of tokens minted whenever a user mints a hero
-    uint256 internal constant NUM_TOKENS_MINTED = 500 * 10**18;
+    uint256 internal constant NUM_CHAMPZ_MINTED_ON_HERO_MINTED = 500 * 10**18;
 
     // The duration of each phase in days
     uint256 internal _setupPhaseDuration;
@@ -112,6 +114,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
     // The registry of minigame factories
     IMinigameFactoryRegistry internal _minigameFactoryRegistry;
 
+    // Pointer to ChampzToken
+    ChampzToken public champzToken;
+
     /// @notice Triggered when an elder spirit gets minted
     /// @param elderId The elder id belonging to the minted elder
     /// @param owner The address of the owner
@@ -134,7 +139,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         bytes32 keyhash,
         address vrfCoordinator,
         address linkToken,
-        address minigameFactoryRegistry
+        address minigameFactoryRegistry,
+        ChampzToken champzTokenInstance
     ) public ERC721("CryptoChampz", "CHMPZ") VRFConsumerBase(vrfCoordinator, linkToken) {
         // Set up administrative roles
         _setRoleAdmin(ROLE_OWNER, ROLE_OWNER);
@@ -164,6 +170,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         _actionPhaseDuration = 2 days;
 
         _minigameFactoryRegistry = IMinigameFactoryRegistry(minigameFactoryRegistry);
+        champzToken = champzTokenInstance;
     }
 
     /***********************************|
@@ -409,7 +416,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         returns (uint256)
     {
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
-
+        require(address(champzToken) != address(0)); // dev: ChampzToken not yet initialized
         require(_canMintHero(elderId)); // dev: Can't mint hero. Too mnay heroes minted for elder.
 
         uint256 mintPrice = getHeroMintPrice(currentRound, elderId);
@@ -438,8 +445,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         // Mint the NFT
         _safeMint(_msgSender(), heroId);
 
-        // Mint in game currency tokens (TODO with ERC20 token)
-        //_mint(_msgSender(), IN_GAME_CURRENCY_ID, NUM_TOKENS_MINTED, "");
+        // Mint in game currency tokens
+        champzToken.mintTokens(_msgSender(), NUM_CHAMPZ_MINTED_ON_HERO_MINTED);
 
         // Increment the heroes minted and the elder spawns
         heroesMinted = heroesMinted.add(1);

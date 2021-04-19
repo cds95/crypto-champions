@@ -1,4 +1,4 @@
-from brownie import CryptoChampions, PriceWarsFactory, MockV3Aggregator, MinigameFactoryRegistry,  accounts
+from brownie import ChampzToken, CryptoChampions, PriceWarsFactory, MockV3Aggregator, MinigameFactoryRegistry,  accounts
 
 def main():
     LINK_TOKEN_ADDRESS = "0xa36085F69e2889c224210F603D836748e7dC0088"
@@ -15,7 +15,10 @@ def main():
 
     minigameFactoryRegistry = MinigameFactoryRegistry.deploy({ "from": accounts[0] })
     pwf = PriceWarsFactory.deploy({ "from": accounts[0] })
-    cc = CryptoChampions.deploy(VRF_KEY_HASH, VRF_ADDRESS, LINK_TOKEN_ADDRESS, minigameFactoryRegistry.address, { "from": accounts[0] })
+
+    champzToken = ChampzToken.deploy({ "from": accounts[0] })
+    cc = CryptoChampions.deploy(VRF_KEY_HASH, VRF_ADDRESS, LINK_TOKEN_ADDRESS, minigameFactoryRegistry.address, champzToken, { "from": accounts[0] })
+    champzToken.transferOwnership(cc.address, { "from": accounts[0] })
 
     PRICE_WARS = "PRICE_WARS"
     minigameFactoryRegistry.registerMinigame(PRICE_WARS, pwf.address)

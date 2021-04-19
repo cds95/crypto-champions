@@ -8,10 +8,12 @@ def main():
 
     minigameFactoryRegistry = MinigameFactoryRegistry.deploy({ "from": accounts[0] })
     linkToken = LinkToken.at(LINK_TOKEN_ADDRESS)
+    champzToken = ChampzToken.deploy({ "from": accounts[0] })
 
     ## Setup CryptoChampions
-    cc = CryptoChampions.deploy(VRF_KEY_HASH, VRF_ADDRESS, linkToken.address, minigameFactoryRegistry.address, { "from": accounts[0] })
+    cc = CryptoChampions.deploy(VRF_KEY_HASH, VRF_ADDRESS, linkToken.address, minigameFactoryRegistry.address, champzToken, { "from": accounts[0] })
     linkToken.transfer(cc.address, 10 * FEE_IN_LINK, { "from": accounts[0] })
+    champzToken.transferOwnership(cc.address, { "from": accounts[0] })
 
     ## Setup price feeds
     V3_BTC = "0xECe365B379E1dD183B20fc5f022230C044d51404"
