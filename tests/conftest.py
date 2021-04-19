@@ -62,7 +62,6 @@ def crypto_champions(accounts, ExposedCryptoChampions, minigame_factory_registry
     """
     crypto_champions = accounts[0].deploy(ExposedCryptoChampions, key_hash, vrf_coordinator.address, link_token.address, minigame_factory_registry, champz_token)
     champz_token.transferOwnership(crypto_champions.address, { "from": accounts[0] })
-    print(champz_token.owner())
     yield crypto_champions
 
 @pytest.fixture(scope="module")
