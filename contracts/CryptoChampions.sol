@@ -130,9 +130,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
     /// @notice Triggered when the elder spirits have been burned
     event ElderSpiritsBurned();
 
-    /// @notice Triggered when the ChampzToken has been initialized
-    event ChampzTokenInitialized(address tokenAddress);
-
     /***********************************|
     |            Constuctor             |
     |__________________________________*/
@@ -142,7 +139,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         bytes32 keyhash,
         address vrfCoordinator,
         address linkToken,
-        address minigameFactoryRegistry
+        address minigameFactoryRegistry,
+        ChampzToken champzTokenInstance
     ) public ERC721("CryptoChampz", "CHMPZ") VRFConsumerBase(vrfCoordinator, linkToken) {
         // Set up administrative roles
         _setRoleAdmin(ROLE_OWNER, ROLE_OWNER);
@@ -172,6 +170,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         _actionPhaseDuration = 2 days;
 
         _minigameFactoryRegistry = IMinigameFactoryRegistry(minigameFactoryRegistry);
+        champzToken = champzTokenInstance;
     }
 
     /***********************************|
@@ -207,20 +206,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         _;
     }
 
-    modifier isChampzTokenInitialized() {
-        require(address(champzToken) != address(0)); // dev:  ChampzToken not yet initialized
-        _;
-    }
-
     /***********************************|
     |       Game Management/Setup       |
     |__________________________________*/
-
-    /// @notice Initializes the champz token
-    function initChampzToken() external onlyAdmin {
-        champzToken = new ChampzToken();
-        emit ChampzTokenInitialized(address(champzToken));
-    }
 
     /// @notice Sets the duration of the setup phase
     /// @param numDays Number of days for the setup phase duration
@@ -425,11 +413,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         override
         isValidElderSpiritId(elderId)
         atPhase(Phase.ACTION)
-        isChampzTokenInitialized
         returns (uint256)
     {
         require(_elderSpirits[elderId].valid); // dev: Elder with id doesn't exists or not valid.
-
+        require(address(champzToken) != address(0)); // dev: ChampzToken not yet initialized
         require(_canMintHero(elderId)); // dev: Can't mint hero. Too mnay heroes minted for elder.
 
         uint256 mintPrice = getHeroMintPrice(currentRound, elderId);

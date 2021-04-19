@@ -37,3 +37,7 @@ def test_mint_hero_refund(accounts, crypto_champions, mint_first_elder, set_phas
 
 def test_mint_hero_elder_spawns(accounts, crypto_champions, mint_first_hero):
     assert crypto_champions.getElderSpawnsAmount(crypto_champions.currentRound(), 0) == 1
+
+def test_champz_token_correctly_minted(accounts, mint_first_hero, champz_token):
+    accountZeroBalance = champz_token.balanceOf(accounts[0])
+    assert accountZeroBalance == 500 * 10**18

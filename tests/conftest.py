@@ -48,14 +48,22 @@ def key_hash(accounts, link_token):
     """
     return 0
 
+@pytest.fixture(scope="module")
+def champz_token(accounts, ChampzToken):
+    """
+    Yield a `Contract` object for the ChampzToken contract.
+    """
+    yield accounts[0].deploy(ChampzToken);
 
 @pytest.fixture(scope="module")
-def crypto_champions(accounts, ExposedCryptoChampions, minigame_factory_registry, link_token, vrf_coordinator, key_hash):
+def crypto_champions(accounts, ExposedCryptoChampions, minigame_factory_registry, link_token, vrf_coordinator, key_hash, champz_token):
     """
     Yield a `Contract` object for the CryptoChampions contract.
     """
-    yield accounts[0].deploy(ExposedCryptoChampions, key_hash, vrf_coordinator.address, link_token.address, minigame_factory_registry)
-
+    crypto_champions = accounts[0].deploy(ExposedCryptoChampions, key_hash, vrf_coordinator.address, link_token.address, minigame_factory_registry, champz_token)
+    champz_token.transferOwnership(crypto_champions.address, { "from": accounts[0] })
+    print(champz_token.owner())
+    yield crypto_champions
 
 @pytest.fixture(scope="module")
 def chainlink_fee():
@@ -128,5 +136,7 @@ def mint_max_elders(accounts, crypto_champions, create_affinities):
     maxElders = crypto_champions.MAX_NUMBER_OF_ELDERS()
     for _ in range(maxElders):
         crypto_champions.mintElderSpirit(0, 0, "ETH", {"from": accounts[0], "value": crypto_champions.elderMintPrice()})
+
+
 
 
