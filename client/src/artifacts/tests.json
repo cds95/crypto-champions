@@ -56,7 +56,7 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": "......",
-      "sha1": "e7bf0a37a24cd1cc9e857d9953652b272068ea0d",
+      "sha1": "097046a06fb43e95d775fc3657faed3b22689fba",
       "txhash": []
     },
     "tests/test_affinity_prices.py": {
@@ -85,7 +85,7 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": "..",
-      "sha1": "a6855ef155ef85029b8c4c2aecea203d758af6fb",
+      "sha1": "dfac849700b455cbae0508c4f5a0135d45b7ed30",
       "txhash": []
     },
     "tests/test_burn_elders.py": {
@@ -114,7 +114,7 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": ".....",
-      "sha1": "41a2cb0684907f80e430beefa4b994cb23563209",
+      "sha1": "5c19ac406dc36aa5b973e4e677c9be024858a151",
       "txhash": []
     },
     "tests/test_can_mint_hero.py": {
@@ -143,7 +143,7 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": "..",
-      "sha1": "8d1a15a372a38dda28d690f13d52e0cf070ce9bc",
+      "sha1": "42bba8f4505f8db40c41b1776cfb5428ddc4acf4",
       "txhash": []
     },
     "tests/test_champz_token.py": {
@@ -171,9 +171,9 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": "..",
-      "sha1": "034db265e3b75299e2a7aaa2342caec69a97f09e",
+      "sha1": "89821d66b413daeaa9692256ab03ae3d96d6ad68",
       "txhash": [
-        "95c865af1feaf2dedd13101adcf697a12c3c6460"
+        "e4bafbfd4c0e0ce890928bfd84b3004b1e5084d1"
       ]
     },
     "tests/test_elder_spawns.py": {
@@ -202,7 +202,7 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": "..",
-      "sha1": "d33dcf58181bac04621dfe174d4c9b01e92cfd2f",
+      "sha1": "044b9d5a92ad75c5da15d7e4c453292159c4b58e",
       "txhash": []
     },
     "tests/test_getter_elders.py": {
@@ -231,7 +231,7 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": ".........",
-      "sha1": "2c26235a155eb5a4d6d9b4fbcf13dfac92352098",
+      "sha1": "4adc41fe3fb268bd8fc9a0c3add39ae1c5c262ba",
       "txhash": []
     },
     "tests/test_getter_heroes.py": {
@@ -259,7 +259,7 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": "..",
-      "sha1": "2f026dc94039027211be19898e385446183beab8",
+      "sha1": "e0cc8def0a69981e4128848399502bc8e4d3fec8",
       "txhash": []
     },
     "tests/test_hero_reward_claim.py": {
@@ -288,7 +288,7 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": "....",
-      "sha1": "ef8d2edb7300effb14bc3cfdecb6a7055b1ce10f",
+      "sha1": "607d3eb2522b968e86c852e4bfccc9edd1b7d5cb",
       "txhash": []
     },
     "tests/test_minting_elders.py": {
@@ -317,9 +317,40 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": "........",
-      "sha1": "83b016b0631f97b1e3ee73dd1caf5c83c79c5dc0",
+      "sha1": "9431e86486a32f2b6a3df2d823e7b6856cfbea19",
       "txhash": [
         "2d01f96ab399448f9d549626e26adf04fb93ab6d"
+      ]
+    },
+    "tests/test_minting_heroes.py": {
+      "coverage": false,
+      "isolated": [
+        "ChampzToken",
+        "CryptoChampions",
+        "ERC721",
+        "ExposedCryptoChampions",
+        "LinkToken",
+        "MinigameFactoryRegistry",
+        "MockV3Aggregator",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Address",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/ERC20",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableMap",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/EnumerableSet",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/SignedSafeMath",
+        "OpenZeppelin/openzeppelin-contracts@3.4.0/Strings",
+        "PriceWars",
+        "PriceWarsFactory",
+        "VRFCoordinatorMock",
+        "smartcontractkit/chainlink-brownie-contracts@1.0.2/BasicToken",
+        "smartcontractkit/chainlink-brownie-contracts@1.0.2/SafeMathChainlink",
+        "smartcontractkit/chainlink-brownie-contracts@1.0.2/StandardToken",
+        "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
+      ],
+      "results": ".........",
+      "sha1": "0d0667732a63fa28b6aba14478b2839ec17ea105",
+      "txhash": [
+        "238a560137981fc2a948f2fead95d12c7d5d33c3"
       ]
     },
     "tests/test_phase_transitions.py": {
@@ -348,7 +379,7 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": ".......",
-      "sha1": "9647a561b5f801a616a4f4e6ff3e392617d1e9b5",
+      "sha1": "4e6b9dcf004d8c49ac9ebc4371eed9fd99b1dcab",
       "txhash": []
     },
     "tests/test_pricing_mechanics.py": {
@@ -377,7 +408,7 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": ".........",
-      "sha1": "3b44583dd0ba42c8d6b45a471cbc6e26b2ecf201",
+      "sha1": "1ddb097fe9dae34683ea6dd47b64f71dce3f0208",
       "txhash": []
     },
     "tests/test_royalty_fees_mechanism.py": {
@@ -406,7 +437,7 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": "..",
-      "sha1": "811e579648ca90695cdfd352f88ba43d4c96321a",
+      "sha1": "54ecf3ffceb20ff1733770dd07f99955341cce7a",
       "txhash": []
     },
     "tests/test_train_hero.py": {
@@ -435,7 +466,7 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": "...",
-      "sha1": "d5d7c3712cec6dea1caece8a30206744484d58d2",
+      "sha1": "c952e377b10c747f3bc4ceadc3dcb7fdbed4b042",
       "txhash": []
     },
     "tests/test_vrf_functionality.py": {
@@ -463,11 +494,278 @@
         "smartcontractkit/chainlink-brownie-contracts@1.0.2/VRFRequestIDBase"
       ],
       "results": ".",
-      "sha1": "6cd8dbc401149e5587ddbc05f7f058a1871a5a52",
+      "sha1": "ce9c7d2c918ebb8bf3a9b86c672c6f11b2ada517",
       "txhash": []
     }
   },
   "tx": {
+    "238a560137981fc2a948f2fead95d12c7d5d33c3": {
+      "ChampzToken": {
+        "0": [
+          [
+            12
+          ],
+          [],
+          []
+        ],
+        "11": [
+          [
+            22
+          ],
+          [],
+          []
+        ],
+        "26": [
+          [
+            17,
+            18
+          ],
+          [],
+          []
+        ],
+        "3": [
+          [
+            35,
+            36
+          ],
+          [],
+          [
+            50
+          ]
+        ],
+        "5": [
+          [
+            37,
+            38,
+            39,
+            40,
+            41
+          ],
+          [],
+          [
+            46
+          ]
+        ]
+      },
+      "ExposedCryptoChampions": {
+        "1": [
+          [],
+          [],
+          []
+        ],
+        "10": [
+          [
+            270
+          ],
+          [],
+          []
+        ],
+        "11": [
+          [
+            132
+          ],
+          [],
+          []
+        ],
+        "12": [
+          [
+            167,
+            221,
+            224,
+            236,
+            237,
+            254,
+            255,
+            256
+          ],
+          [
+            352
+          ],
+          [
+            351
+          ]
+        ],
+        "13": [
+          [
+            216,
+            217,
+            218,
+            220,
+            223
+          ],
+          [
+            354
+          ],
+          []
+        ],
+        "15": [
+          [
+            260,
+            261
+          ],
+          [],
+          []
+        ],
+        "18": [
+          [
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            115,
+            116,
+            152,
+            156,
+            157,
+            166,
+            212,
+            213
+          ],
+          [
+            317
+          ],
+          [
+            288,
+            289,
+            290,
+            291,
+            309,
+            316,
+            318
+          ]
+        ],
+        "19": [
+          [
+            231,
+            232,
+            233
+          ],
+          [],
+          []
+        ],
+        "24": [
+          [
+            52,
+            131,
+            158,
+            234,
+            235,
+            245,
+            262,
+            263,
+            264,
+            265,
+            266,
+            267
+          ],
+          [
+            348
+          ],
+          [
+            347,
+            349,
+            350
+          ]
+        ],
+        "25": [
+          [],
+          [],
+          []
+        ],
+        "3": [
+          [
+            159,
+            161,
+            162,
+            163,
+            164,
+            165
+          ],
+          [],
+          [
+            356,
+            357,
+            358,
+            359,
+            360
+          ]
+        ]
+      },
+      "LinkToken": {
+        "0": [
+          [
+            21,
+            22,
+            23,
+            24,
+            33,
+            34
+          ],
+          [
+            37
+          ],
+          []
+        ],
+        "5": [
+          [
+            7,
+            27,
+            28,
+            29,
+            30
+          ],
+          [],
+          []
+        ],
+        "6": [
+          [
+            25,
+            26,
+            31,
+            32
+          ],
+          [],
+          []
+        ],
+        "8": [
+          [
+            2
+          ],
+          [],
+          []
+        ]
+      },
+      "VRFCoordinatorMock": {
+        "43": [
+          [
+            0
+          ],
+          [],
+          []
+        ]
+      }
+    },
     "2d01f96ab399448f9d549626e26adf04fb93ab6d": {
       "ExposedCryptoChampions": {
         "10": [
@@ -593,7 +891,7 @@
         ]
       }
     },
-    "95c865af1feaf2dedd13101adcf697a12c3c6460": {
+    "e4bafbfd4c0e0ce890928bfd84b3004b1e5084d1": {
       "ChampzToken": {
         "0": [
           [
