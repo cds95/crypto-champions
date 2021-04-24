@@ -14,22 +14,10 @@ contract ExposedCryptoChampions is CryptoChampions {
 
     /// See CryptoChampions::CryptoChampions
     constructor(
-        bytes32 keyhash,
-        address vrfCoordinator,
-        address linkToken,
+        address champz,
         address minigameFactoryRegistry,
         ChampzToken champzToken
-    ) public CryptoChampions(keyhash, vrfCoordinator, linkToken, minigameFactoryRegistry, champzToken) {}
-
-    /// See CryptoChampions::_getRandomNumber
-    function getRandomNumber(uint256 seed) public {
-        requestId = _getRandomNumber(seed);
-    }
-
-    /// See CryptoChampions::_randomResult
-    function getRandomResult() public view returns (uint256) {
-        return _randomResultsVRF[requestId];
-    }
+    ) public CryptoChampions(champz, minigameFactoryRegistry, champzToken) {}
 
     /// See CryptoChampions::_burnElders
     function burnElders() public {
@@ -47,10 +35,8 @@ contract ExposedCryptoChampions is CryptoChampions {
     }
 
     /// See CryptoChampions::_trainHero
-    function trainHero(uint256 heroId, uint256 randomNumber) public {
-        _heroRandomRequest[requestId] = heroId;
-        _randomResultsVRF[requestId] = randomNumber;
-        _trainHero(requestId);
+    function trainHero(uint256 heroId) public {
+        _trainHero(heroId);
     }
 
     /// See CryptoChampions::_startNewPriceGame

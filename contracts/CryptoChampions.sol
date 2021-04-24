@@ -5,9 +5,8 @@ import "../interfaces/ICryptoChampions.sol";
 import "../interfaces/IMinigameFactoryRegistry.sol";
 import "./minigames/games/priceWars/PriceWarsFactory.sol";
 import "./minigames/games/priceWars/PriceWars.sol";
-import "./chainlink/VRFConsumerBase.sol";
 import "./openZeppelin/AccessControl.sol";
-import "./openZeppelin/ERC721.sol";
+import "./ChampzPlatform.sol";
 
 import "smartcontractkit/chainlink-brownie-contracts@1.0.2/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 
@@ -18,7 +17,7 @@ import "./token/ChampzToken.sol";
 /// @title Crypto Champions Interface
 /// @author Oozyx
 /// @notice This is the crypto champions class
-contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumerBase {
+contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
     using SafeMath for uint256;
     using SafeMath for uint8;
 
@@ -69,6 +68,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
     // This amount cannot be greater than MAX_NUMBER_OF_ELDERS
     uint256 public eldersInGame = 0;
 
+    uint256[] internal _elderIds;
+
     // The mapping of elder id to the elder spirit
     mapping(uint256 => ElderSpirit) internal _elderSpirits;
 
@@ -95,18 +96,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
 
     // The list of affinities that won in a round
     mapping(uint256 => string) public winningAffinitiesByRound;
-
-    // The key hash used for VRF
-    bytes32 internal _keyHash;
-
-    // The fee in LINK for VRF
-    uint256 internal _fee;
-
-    // Mapping of request id to hero id
-    mapping(bytes32 => uint256) internal _heroRandomRequest;
-
-    // Mapping of request id to random result
-    mapping(bytes32 => uint256) internal _randomResultsVRF;
 
     // The identifier for the price wars game
     string internal constant PRICE_WARS_ID = "PRICE_WARS";
@@ -136,12 +125,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
 
     // Initializes a new CryptoChampions contract
     constructor(
-        bytes32 keyhash,
-        address vrfCoordinator,
-        address linkToken,
+        address champz,
         address minigameFactoryRegistry,
         ChampzToken champzTokenInstance
-    ) public ERC721("CryptoChampz", "CHMPZ") VRFConsumerBase(vrfCoordinator, linkToken) {
+    ) public ChampzPlatform(champz) {
         // Set up administrative roles
         _setRoleAdmin(ROLE_OWNER, ROLE_OWNER);
         _setRoleAdmin(ROLE_ADMIN, ROLE_OWNER);
@@ -161,10 +148,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         currentPhase = Phase.SETUP;
         currentPhaseStartTime = now;
 
-        // Set VRF fields
-        _keyHash = keyhash;
-        _fee = 0.1 * 10**18; // 0.1 LINK
-
         // Set phase durations
         _setupPhaseDuration = 2 days;
         _actionPhaseDuration = 2 days;
@@ -177,13 +160,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
     |         Function Modifiers        |
     |__________________________________*/
 
-    modifier isValidElderSpiritId(uint256 elderId) {
-        require(elderId < MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
-        _;
-    }
-
     modifier isValidHero(uint256 heroId) {
-        require(heroId >= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
         require(_heroes[heroId].valid); // dev: Hero is not valid.
         _;
     }
@@ -293,14 +270,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         }
     }
 
-    /// @notice Sets the token uri for the given id
-    /// @dev Only the admin can set URIs
-    /// @param id The token id (either hero or elder)
-    /// @param uri The uri of the token id
-    function setTokenURI(uint256 id, string calldata uri) external override onlyAdmin {
-        _setTokenURI(id, uri);
-    }
-
     /// @notice Creates a new token affinity
     /// @dev This will be called by a priviledged address. It will allow to create new affinities. May need to add a
     /// remove affinity function as well.
@@ -319,23 +288,23 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
     }
 
     /***********************************|
-    |            VRF Functions          |
+    |         Champz Platform           |
     |__________________________________*/
 
-    /// @notice Makes a request for a random number
-    /// @param userProvidedSeed The seed for the random request
-    /// @return requestId The request id
-    function _getRandomNumber(uint256 userProvidedSeed) internal returns (bytes32 requestId) {
-        require(LINK.balanceOf(address(this)) >= _fee); // dev: Not enough LINK - fill contract with faucet
-        return requestRandomness(_keyHash, _fee, userProvidedSeed);
+    /// @notice Registers an existing Champz into the contract
+    /// @dev To be called from a contract implementation for when an existing Champz wants to enter the platform
+    /// @param champzId The unique identifier of the Champz NFT
+    function _registerChampz(uint256 champzId) internal override {
+        //todo
     }
 
-    /// @notice Callback function used by the VRF coordinator
-    /// @param requestId The request id
-    /// @param randomness The randomness
-    function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
-        _randomResultsVRF[requestId] = randomness;
-        _trainHero(requestId);
+    /// @notice Callback function called by the Champz contract once it has received the verifiable random number for
+    ///     the newly minted NFT
+    /// @param champzId The unique identifier of the newly minted NFT
+    function fulfillChampzMint(uint256 champzId) internal override {
+        if (_heroes[champzId].valid) {
+            _trainHero(champzId);
+        }
     }
 
     /***********************************|
@@ -359,9 +328,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         require(_affinities[affinity] != address(0)); // dev: Affinity does not exist.
 
         // Generate the elderId and make sure it doesn't already exists
-        uint256 elderId = eldersInGame;
-        assert(!_exists(elderId)); // dev: Elder with id already exists.
-        assert(_elderSpirits[elderId].valid == false); // dev: Elder spirit with id has already been generated.
+        uint256 elderId = _mintChampz(msg.sender);
+        _elderIds.push(elderId);
 
         // Get the price data of affinity
         int256 affinityPrice;
@@ -374,9 +342,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         elder.classId = classId;
         elder.affinity = affinity;
         elder.affinityPrice = affinityPrice;
-
-        // Mint the NFT
-        _safeMint(_msgSender(), elderId);
 
         // Assign the elder id with the owner and its spirit
         _elderSpirits[elderId] = elder;
@@ -398,10 +363,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
     /// @notice Gets the elder owner for the given elder id
     /// @param elderId The elder id
     /// @return The owner of the elder
-    function getElderOwner(uint256 elderId) public view override isValidElderSpiritId(elderId) returns (address) {
-        require(_exists(elderId)); // dev: Given elder id has not been minted.
+    function getElderOwner(uint256 elderId) public view override returns (address) {
+        require(_elderSpirits[elderId].valid); // dev: Elder with given id does not exists.
 
-        return ownerOf(elderId);
+        return CHAMPZ.ownerOf(elderId);
     }
 
     /// @notice Mints a hero based on an elder spirit
@@ -411,7 +376,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         external
         payable
         override
-        isValidElderSpiritId(elderId)
         atPhase(Phase.ACTION)
         returns (uint256)
     {
@@ -419,13 +383,11 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         require(address(champzToken) != address(0)); // dev: ChampzToken not yet initialized
         require(_canMintHero(elderId)); // dev: Can't mint hero. Too mnay heroes minted for elder.
 
-        uint256 mintPrice = getHeroMintPrice(currentRound, elderId);
+        uint256 mintPrice = getHeroMintPrice(elderId);
         require(msg.value >= mintPrice); // dev: Insufficient payment.
 
         // Generate the hero id
-        uint256 heroId = heroesMinted + MAX_NUMBER_OF_ELDERS;
-        assert(!_exists(heroId)); // dev: Hero with id already has an owner.
-        assert(_heroes[heroId].valid == false); // dev: Hero with id has already been generated.
+        uint256 heroId = _mintChampz(msg.sender);
 
         // Create the hero
         Hero memory hero;
@@ -438,13 +400,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         hero.affinity = _elderSpirits[elderId].affinity;
         _heroes[heroId] = hero;
 
-        // Request the random number and set hero attributes
-        bytes32 requestId = _getRandomNumber(heroId);
-        _heroRandomRequest[requestId] = heroId;
-
-        // Mint the NFT
-        _safeMint(_msgSender(), heroId);
-
         // Mint in game currency tokens
         champzToken.mintTokens(_msgSender(), NUM_CHAMPZ_MINTED_ON_HERO_MINTED);
 
@@ -454,7 +409,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
 
         // Disburse royalties
         uint256 royaltyFee = mintPrice.mul(HERO_MINT_ROYALTY_PERCENT).div(100);
-        address seedOwner = ownerOf(elderId);
+        address seedOwner = CHAMPZ.ownerOf(elderId);
         (bool success, ) = seedOwner.call{ value: royaltyFee }("");
         require(success, "Payment failed");
 
@@ -471,14 +426,11 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         return heroId;
     }
 
-    /// TODO: DELETE and maybe override ownerOf()
     /// @notice Get the hero owner for the given hero id
     /// @param heroId The hero id
     /// @return The owner address
     function getHeroOwner(uint256 heroId) public view override isValidHero(heroId) returns (address) {
-        require(_exists(heroId)); // dev: Given hero id has not been minted.
-
-        return ownerOf(heroId);
+        return CHAMPZ.ownerOf(heroId);
     }
 
     /// @notice Checks to see if a hero can be minted for a given elder
@@ -496,8 +448,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         // Find the elder with the least amount of heroes minted
         uint256 smallestElderAmount = _roundElderSpawns[currentRound][elderId];
         for (uint256 i = 0; i < eldersInGame; ++i) {
-            if (_roundElderSpawns[currentRound][i] < smallestElderAmount) {
-                smallestElderAmount = _roundElderSpawns[currentRound][i];
+            if (_roundElderSpawns[currentRound][_elderIds[i]] < smallestElderAmount) {
+                smallestElderAmount = _roundElderSpawns[currentRound][_elderIds[i]];
             }
         }
 
@@ -505,10 +457,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
     }
 
     /// @notice Sets the hero attributes
-    /// @param requestId The request id that is mapped to a hero
-    function _trainHero(bytes32 requestId) internal isValidHero(_heroRandomRequest[requestId]) {
-        uint256 heroId = _heroRandomRequest[requestId];
-        uint256 randomNumber = _randomResultsVRF[requestId];
+    /// @param heroId The hero id
+    function _trainHero(uint256 heroId) internal isValidHero(heroId) {
+        uint256 randomNumber = CHAMPZ.getChampzRandomNumber(heroId);
         uint256 newRandomNumber;
 
         _heroes[heroId].level = 1; // 1 by default
@@ -592,8 +543,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
     /// @notice Burns all the elder spirits in game
     function _burnElders() internal {
         for (uint256 i = 0; i < MAX_NUMBER_OF_ELDERS; ++i) {
-            if (_elderSpirits[i].valid) {
-                _burnElder(i);
+            if (_elderSpirits[_elderIds[i]].valid) {
+                _burnElder(_elderIds[i]);
             }
         }
 
@@ -603,29 +554,19 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
     /// @notice Burns the elder spirit
     /// @dev This will only be able to be called by the contract
     /// @param elderId The elder id
-    function _burnElder(uint256 elderId) internal isValidElderSpiritId(elderId) {
-        require(_elderSpirits[elderId].valid); // dev: Cannot burn elder that does not exist.
-
-        _burn(elderId);
-
+    function _burnElder(uint256 elderId) internal {
         // Reset elder values for elder id
         eldersInGame = eldersInGame.sub(1);
         _elderSpirits[elderId].valid = false;
     }
 
     /// @notice Gets the minting price of a hero based on specified elder spirit
-    /// @param round The round of the hero to be minted
     /// @param elderId The elder id for which the hero will be based on
     /// @return The hero mint price
-    function getHeroMintPrice(uint256 round, uint256 elderId)
-        public
-        view
-        override
-        isValidElderSpiritId(elderId)
-        returns (uint256)
-    {
-        require(round <= currentRound); // dev: Cannot get price round has not started.
-        uint256 heroAmount = _roundElderSpawns[round][elderId].add(1);
+    function getHeroMintPrice(uint256 elderId) public view override returns (uint256) {
+        require(_elderSpirits[elderId].valid); // dev: No elder exists for given id.
+
+        uint256 heroAmount = _roundElderSpawns[currentRound][elderId].add(1);
 
         return _priceFormula(heroAmount);
     }
@@ -660,13 +601,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
     /// @param round The round the elder was created
     /// @param elderId The elder id
     /// @return The amount of heroes spawned from the elder
-    function getElderSpawnsAmount(uint256 round, uint256 elderId)
-        public
-        view
-        override
-        isValidElderSpiritId(elderId)
-        returns (uint256)
-    {
+    function getElderSpawnsAmount(uint256 round, uint256 elderId) public view override returns (uint256) {
         require(round <= currentRound); // dev: Invalid round.
         return _roundElderSpawns[round][elderId];
     }
@@ -678,7 +613,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         external
         view
         override
-        isValidElderSpiritId(elderId)
         returns (
             bool,
             uint8,
@@ -687,6 +621,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
             int256
         )
     {
+        require(_elderSpirits[elderId].valid);
         ElderSpirit memory elderSpirit = _elderSpirits[elderId];
         return (
             elderSpirit.valid,
@@ -859,7 +794,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
         require(keccak256(bytes(_heroes[heroId].affinity)) == keccak256(bytes(winningAffinitiesByRound[currentRound]))); // dev: Hero does not have the winning affinity.
         require(_heroRewardsClaimed[heroId][currentRound] == false); // dev: Reward has already been claimed.
 
-        (bool success, ) = ownerOf(heroId).call{ value: _heroRewardsShare }("");
+        (bool success, ) = CHAMPZ.ownerOf(heroId).call{ value: _heroRewardsShare }("");
         require(success, "Payment failed");
         rewardsPoolAmount = rewardsPoolAmount.sub(_heroRewardsShare);
         _heroRewardsClaimed[heroId][currentRound] = true;
@@ -900,7 +835,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ERC721, VRFConsumer
 
     /// @notice Returns whether or not hero has reward for the round
     /// @param heroId The id of the hero being searched for
-    function hasRoundReward(uint256 heroId) external view returns (bool) {
+    function hasRoundReward(uint256 heroId) external view isValidHero(heroId) returns (bool) {
         Hero memory hero = _heroes[heroId];
         string memory roundWinningAffinity = winningAffinitiesByRound[currentRound];
         return

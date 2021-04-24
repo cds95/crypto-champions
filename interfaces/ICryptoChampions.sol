@@ -44,8 +44,6 @@ interface ICryptoChampions {
 
     function setElderMintPrice(uint256 price) external;
 
-    function setTokenURI(uint256 id, string calldata uri) external;
-
     function mintElderSpirit(
         uint8 raceId,
         uint8 classId,
@@ -132,7 +130,7 @@ interface ICryptoChampions {
             uint8 // charisma
         );
 
-    function getHeroMintPrice(uint256 round, uint256 elderId) external view returns (uint256);
+    function getHeroMintPrice(uint256 elderId) external view returns (uint256);
 
     function getElderSpawnsAmount(uint256 round, uint256 elderId) external view returns (uint256);
 
