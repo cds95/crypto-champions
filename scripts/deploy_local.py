@@ -1,4 +1,4 @@
-from brownie import ChampzToken, WeatherWarsFactory, VRFCoordinatorMock, LinkToken, CryptoChampions, PriceWarsFactory, MockV3Aggregator, MinigameFactoryRegistry, LinkToken, accounts
+from brownie import ChampzToken, Champz, WeatherWarsFactory, VRFCoordinatorMock, LinkToken, CryptoChampions, PriceWarsFactory, MockV3Aggregator, MinigameFactoryRegistry, LinkToken, accounts
 
 def main():
     INIT_BTC_PRICE = 50000
@@ -30,20 +30,23 @@ def main():
     ## Setup ChampzToken
     champzToken = ChampzToken.deploy({ "from": accounts[0] })
 
+    ## Setup Champz
+    champz = Champz.deploy(vrfCoordinatorMock.address, linkToken.address, keyHash, fee, { "from": accounts[0]})
+
     ## Setup CryptoChampions
-    cc = CryptoChampions.deploy(keyHash, vrfCoordinatorMock.address, linkToken.address, minigameFactoryRegistry.address, champzToken, { "from": accounts[0] })
+    cc = CryptoChampions.deploy(champz.address, minigameFactoryRegistry.address, champzToken, { "from": accounts[0] })
     cc.createAffinity("BTC", btcV3Aggregator.address)
     cc.createAffinity("ETH", ethV3Aggregator.address)
     cc.createAffinity("LINK", linkV3Aggregator.address)
     cc.createAffinity("DOT", dotV3Aggregator.address)
     cc.createAffinity("BNB", bnbV3Aggregator.address)
-    linkToken.transfer(cc.address, 1 * 10**18, { "from": accounts[0] })
+    linkToken.transfer(champz.address, 1 * 10**18, { "from": accounts[0] })
 
     champzToken.transferOwnership(cc.address, { "from": accounts[0] })
     
     ## Set phase durations to 0 for dev purposes
-    cc.setSetupPhaseDuration(0, { "from": accounts[0] });
-    cc.setActionPhaseDuration(0, { "from": accounts[0] });
+    cc.setSetupPhaseDuration(0, { "from": accounts[0] })
+    cc.setActionPhaseDuration(0, { "from": accounts[0] })
 
     ## Mint Elder Spirits
     cc.mintElderSpirit(1, 1, "BTC", { "from": accounts[0], "value": 0.3 * 10 ** 18 })

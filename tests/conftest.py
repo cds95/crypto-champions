@@ -48,21 +48,6 @@ def key_hash(accounts, link_token):
     """
     return 0
 
-@pytest.fixture(scope="module")
-def champz_token(accounts, ChampzToken):
-    """
-    Yield a `Contract` object for the ChampzToken contract.
-    """
-    yield accounts[0].deploy(ChampzToken);
-
-@pytest.fixture(scope="module")
-def crypto_champions(accounts, ExposedCryptoChampions, minigame_factory_registry, link_token, vrf_coordinator, key_hash, champz_token):
-    """
-    Yield a `Contract` object for the CryptoChampions contract.
-    """
-    crypto_champions = accounts[0].deploy(ExposedCryptoChampions, key_hash, vrf_coordinator.address, link_token.address, minigame_factory_registry, champz_token)
-    champz_token.transferOwnership(crypto_champions.address, { "from": accounts[0] })
-    yield crypto_champions
 
 @pytest.fixture(scope="module")
 def chainlink_fee():
@@ -75,8 +60,34 @@ def get_seed():
 
 
 @pytest.fixture(scope="module")
-def fund_contract_with_link(accounts, crypto_champions, link_token, chainlink_fee):
-    link_token.transfer(crypto_champions.address, chainlink_fee * 100, {"from": accounts[0]})
+def champz_token(accounts, ChampzToken):
+    """
+    Yield a `Contract` object for the ChampzToken contract.
+    """
+    yield accounts[0].deploy(ChampzToken)
+
+
+@pytest.fixture(scope="module")
+def champz(accounts, Champz, link_token, vrf_coordinator, key_hash, chainlink_fee):
+    """
+    Yield a `Contract` object for the Champz contract.
+    """
+    yield accounts[0].deploy(Champz, vrf_coordinator, link_token, key_hash, chainlink_fee)
+
+
+@pytest.fixture(scope="module")
+def crypto_champions(accounts, ExposedCryptoChampions, champz, minigame_factory_registry, champz_token):
+    """
+    Yield a `Contract` object for the CryptoChampions contract.
+    """
+    crypto_champions = accounts[0].deploy(ExposedCryptoChampions, champz.address, minigame_factory_registry, champz_token)
+    champz_token.transferOwnership(crypto_champions.address, { "from": accounts[0] })
+    yield crypto_champions
+
+
+@pytest.fixture(scope="module")
+def fund_contract_with_link(accounts, champz, link_token, chainlink_fee):
+    link_token.transfer(champz.address, chainlink_fee * 100, {"from": accounts[0]})
 
 
 @pytest.fixture(scope="module")
@@ -110,7 +121,7 @@ def set_phase_to_mint_hero(accounts, crypto_champions):
 
 
 @pytest.fixture
-def mint_first_elder(accounts, crypto_champions, create_affinities):
+def mint_first_elder(accounts, crypto_champions, create_affinities, fund_contract_with_link):
     """
     Mint the first elder for the CryptoChampions contract.
     """
@@ -124,7 +135,7 @@ def mint_first_hero(accounts, crypto_champions, mint_first_elder, set_phase_to_m
     """
     lastMintedElderId = crypto_champions.eldersInGame() - 1
     heroName = "Test Hero"
-    crypto_champions.mintHero(lastMintedElderId, heroName, {"from": accounts[0], "value": crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), lastMintedElderId)})
+    crypto_champions.mintHero(lastMintedElderId, heroName, {"from": accounts[0], "value": crypto_champions.getHeroMintPrice(lastMintedElderId)})
 
 
 @pytest.fixture

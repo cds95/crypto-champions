@@ -12,8 +12,8 @@ def setup_reward_claim(accounts, crypto_champions, get_eth_usd_price_feed, get_b
     # assert the hero rewards share is 0
     assert crypto_champions.heroRewardsShare() == 0
 
-    crypto_champions.mintHero(0, "BTC Hero", {"from": accounts[1], "value": crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), 0)})
-    crypto_champions.mintHero(1, "ETH Hero", {"from": accounts[1], "value": crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), 1)})
+    crypto_champions.mintHero(0, "BTC Hero", {"from": accounts[1], "value": crypto_champions.getHeroMintPrice(0)})
+    crypto_champions.mintHero(1, "ETH Hero", {"from": accounts[1], "value": crypto_champions.getHeroMintPrice(1)})
 
     # update price
     get_btc_usd_price_feed.updateAnswer(10000) # btc is winner

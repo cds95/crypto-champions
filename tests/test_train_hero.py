@@ -3,12 +3,7 @@ import brownie
 
 def test_train_invalid_hero_id(accounts, crypto_champions, fund_contract_with_link, get_seed):
     with brownie.reverts("dev: Given id is not valid."):
-        crypto_champions.trainHero(0, 7777777777777777777777777777777, {"from": accounts[0]})
-
-
-def test_train_uninitialized_hero(accounts, crypto_champions, fund_contract_with_link, get_seed):
-    with brownie.reverts("dev: Hero is not valid."):
-        crypto_champions.trainHero(crypto_champions.MAX_NUMBER_OF_ELDERS(), 7777777777777777777777777777777, {"from": accounts[0]})
+        crypto_champions.trainHero(0, {"from": accounts[0]})
 
 
 def test_train_success(accounts, crypto_champions, mint_first_hero, vrf_coordinator, get_seed):
@@ -26,7 +21,7 @@ def test_train_success(accounts, crypto_champions, mint_first_hero, vrf_coordina
     stats = crypto_champions.getHeroStats(heroId)
     assert is_any_value_zero(stats) == True
     # Callback for the random number
-    crypto_champions.trainHero(heroId, 4567892193876471250987129359876123409, {"from": accounts[0]})
+    crypto_champions.trainHero(heroId, {"from": accounts[0]})
     # Assert all initial values are not zero or null
     visuals = crypto_champions.getHeroVisuals(heroId)
     assert is_any_value_zero([visuals[3]]) == False

@@ -68,13 +68,18 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
     // This amount cannot be greater than MAX_NUMBER_OF_ELDERS
     uint256 public eldersInGame = 0;
 
-    uint256[] internal _elderIds;
+    // The mapping of the elder id to the Champz NFT unique identifier
+    mapping(uint256 => uint256) internal _elderChampzIds;
 
     // The mapping of elder id to the elder spirit
     mapping(uint256 => ElderSpirit) internal _elderSpirits;
 
     // The amount of heros minted
     uint256 public heroesMinted = 0;
+
+    // The bidirectional mappings of the hero id and the Champz NFT unique identifier
+    mapping(uint256 => uint256) internal _heroChampzIds;
+    mapping(uint256 => uint256) internal _champzIdToHeroId;
 
     // The mapping of hero id to the hero
     mapping(uint256 => Hero) internal _heroes;
@@ -160,7 +165,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
     |         Function Modifiers        |
     |__________________________________*/
 
+    modifier validElderId(uint256 elderId) {
+        require(elderId < MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
+        _;
+    }
+
     modifier isValidHero(uint256 heroId) {
+        require(heroId >= MAX_NUMBER_OF_ELDERS); // dev: Given id is not valid.
         require(_heroes[heroId].valid); // dev: Hero is not valid.
         _;
     }
@@ -328,8 +339,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
         require(_affinities[affinity] != address(0)); // dev: Affinity does not exist.
 
         // Generate the elderId and make sure it doesn't already exists
-        uint256 elderId = _mintChampz(msg.sender);
-        _elderIds.push(elderId);
+        uint256 elderChampzId = _mintChampz(msg.sender);
+        uint256 elderId = eldersInGame;
+        _elderChampzIds[elderId] = elderChampzId;
 
         // Get the price data of affinity
         int256 affinityPrice;
@@ -363,10 +375,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
     /// @notice Gets the elder owner for the given elder id
     /// @param elderId The elder id
     /// @return The owner of the elder
-    function getElderOwner(uint256 elderId) public view override returns (address) {
+    function getElderOwner(uint256 elderId) public view override validElderId(elderId) returns (address) {
         require(_elderSpirits[elderId].valid); // dev: Elder with given id does not exists.
 
-        return CHAMPZ.ownerOf(elderId);
+        return CHAMPZ.ownerOf(_elderChampzIds[elderId]);
     }
 
     /// @notice Mints a hero based on an elder spirit
@@ -376,6 +388,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
         external
         payable
         override
+        validElderId(elderId)
         atPhase(Phase.ACTION)
         returns (uint256)
     {
@@ -387,7 +400,10 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
         require(msg.value >= mintPrice); // dev: Insufficient payment.
 
         // Generate the hero id
-        uint256 heroId = _mintChampz(msg.sender);
+        uint256 heroChampzId = _mintChampz(msg.sender);
+        uint256 heroId = heroesMinted + MAX_NUMBER_OF_ELDERS;
+        _heroChampzIds[heroId] = heroChampzId;
+        _champzIdToHeroId[heroChampzId] = heroId;
 
         // Create the hero
         Hero memory hero;
@@ -409,7 +425,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
 
         // Disburse royalties
         uint256 royaltyFee = mintPrice.mul(HERO_MINT_ROYALTY_PERCENT).div(100);
-        address seedOwner = CHAMPZ.ownerOf(elderId);
+        address seedOwner = CHAMPZ.ownerOf(_elderChampzIds[elderId]);
         (bool success, ) = seedOwner.call{ value: royaltyFee }("");
         require(success, "Payment failed");
 
@@ -430,7 +446,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
     /// @param heroId The hero id
     /// @return The owner address
     function getHeroOwner(uint256 heroId) public view override isValidHero(heroId) returns (address) {
-        return CHAMPZ.ownerOf(heroId);
+        return CHAMPZ.ownerOf(_heroChampzIds[heroId]);
     }
 
     /// @notice Checks to see if a hero can be minted for a given elder
@@ -448,8 +464,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
         // Find the elder with the least amount of heroes minted
         uint256 smallestElderAmount = _roundElderSpawns[currentRound][elderId];
         for (uint256 i = 0; i < eldersInGame; ++i) {
-            if (_roundElderSpawns[currentRound][_elderIds[i]] < smallestElderAmount) {
-                smallestElderAmount = _roundElderSpawns[currentRound][_elderIds[i]];
+            if (_roundElderSpawns[currentRound][i] < smallestElderAmount) {
+                smallestElderAmount = _roundElderSpawns[currentRound][i];
             }
         }
 
@@ -457,8 +473,9 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
     }
 
     /// @notice Sets the hero attributes
-    /// @param heroId The hero id
-    function _trainHero(uint256 heroId) internal isValidHero(heroId) {
+    /// @param champzId The champz unique identifier
+    function _trainHero(uint256 champzId) internal isValidHero(_champzIdToHeroId[champzId]) {
+        uint256 heroId = _champzIdToHeroId[champzId];
         uint256 randomNumber = CHAMPZ.getChampzRandomNumber(heroId);
         uint256 newRandomNumber;
 
@@ -543,8 +560,8 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
     /// @notice Burns all the elder spirits in game
     function _burnElders() internal {
         for (uint256 i = 0; i < MAX_NUMBER_OF_ELDERS; ++i) {
-            if (_elderSpirits[_elderIds[i]].valid) {
-                _burnElder(_elderIds[i]);
+            if (_elderSpirits[i].valid) {
+                _burnElder(i);
             }
         }
 
@@ -563,7 +580,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
     /// @notice Gets the minting price of a hero based on specified elder spirit
     /// @param elderId The elder id for which the hero will be based on
     /// @return The hero mint price
-    function getHeroMintPrice(uint256 elderId) public view override returns (uint256) {
+    function getHeroMintPrice(uint256 elderId) public view override validElderId(elderId) returns (uint256) {
         require(_elderSpirits[elderId].valid); // dev: No elder exists for given id.
 
         uint256 heroAmount = _roundElderSpawns[currentRound][elderId].add(1);
@@ -601,7 +618,13 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
     /// @param round The round the elder was created
     /// @param elderId The elder id
     /// @return The amount of heroes spawned from the elder
-    function getElderSpawnsAmount(uint256 round, uint256 elderId) public view override returns (uint256) {
+    function getElderSpawnsAmount(uint256 round, uint256 elderId)
+        public
+        view
+        override
+        validElderId(elderId)
+        returns (uint256)
+    {
         require(round <= currentRound); // dev: Invalid round.
         return _roundElderSpawns[round][elderId];
     }
@@ -613,6 +636,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
         external
         view
         override
+        validElderId(elderId)
         returns (
             bool,
             uint8,
@@ -621,7 +645,6 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
             int256
         )
     {
-        require(_elderSpirits[elderId].valid);
         ElderSpirit memory elderSpirit = _elderSpirits[elderId];
         return (
             elderSpirit.valid,
@@ -794,7 +817,7 @@ contract CryptoChampions is ICryptoChampions, AccessControl, ChampzPlatform {
         require(keccak256(bytes(_heroes[heroId].affinity)) == keccak256(bytes(winningAffinitiesByRound[currentRound]))); // dev: Hero does not have the winning affinity.
         require(_heroRewardsClaimed[heroId][currentRound] == false); // dev: Reward has already been claimed.
 
-        (bool success, ) = CHAMPZ.ownerOf(heroId).call{ value: _heroRewardsShare }("");
+        (bool success, ) = CHAMPZ.ownerOf(_heroChampzIds[heroId]).call{ value: _heroRewardsShare }("");
         require(success, "Payment failed");
         rewardsPoolAmount = rewardsPoolAmount.sub(_heroRewardsShare);
         _heroRewardsClaimed[heroId][currentRound] = true;

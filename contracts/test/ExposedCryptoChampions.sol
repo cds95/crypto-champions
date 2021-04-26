@@ -36,7 +36,7 @@ contract ExposedCryptoChampions is CryptoChampions {
 
     /// See CryptoChampions::_trainHero
     function trainHero(uint256 heroId) public {
-        _trainHero(heroId);
+        _trainHero(_heroChampzIds[heroId]);
     }
 
     /// See CryptoChampions::_startNewPriceGame

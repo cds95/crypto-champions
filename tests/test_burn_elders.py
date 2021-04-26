@@ -20,11 +20,6 @@ def test_burn_first_elder_owner(accounts, crypto_champions, mint_first_elder):
         crypto_champions.getElderOwner(0)
 
 
-def test_burn_internal_non_existent_elder(accounts, crypto_champions): 
-    with brownie.reverts("dev: Cannot burn elder that does not exist."):
-        crypto_champions.burnElder(0, {"from": accounts[0]})
-
-
 def test_burn_internal_first_elder(accounts, crypto_champions, mint_first_elder):
     assert crypto_champions.eldersInGame() == 1 and crypto_champions.getElderOwner(0) == accounts[0]
     crypto_champions.burnElder(0)

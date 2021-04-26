@@ -25,11 +25,11 @@ def test_mint_first_hero_heroes_minted(accounts, crypto_champions, mint_first_he
 
 def test_mint_hero_insufficient_payment(accounts, crypto_champions, mint_first_elder, set_phase_to_mint_hero):
     with brownie.reverts("dev: Insufficient payment."):
-        crypto_champions.mintHero(0, "test hero", {"from": accounts[0], "value": crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), 0) - 1000})
+        crypto_champions.mintHero(0, "test hero", {"from": accounts[0], "value": crypto_champions.getHeroMintPrice(0) - 1000})
 
 
 def test_mint_hero_refund(accounts, crypto_champions, mint_first_elder, set_phase_to_mint_hero):
-    ethSent = crypto_champions.getHeroMintPrice(crypto_champions.currentRound(), 0) + 1000
+    ethSent = crypto_champions.getHeroMintPrice(0) + 1000
     tx = crypto_champions.mintHero(0, "test hero", {"from": accounts[1], "value": ethSent})
     assert tx.internal_transfers[1]["to"] == accounts[1]
     assert tx.internal_transfers[1]["value"] == 1000
