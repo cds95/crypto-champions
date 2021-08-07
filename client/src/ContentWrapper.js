@@ -45,77 +45,9 @@ const text = {
     loading: 'Loading Crypto Champz'
 };
 
-export const ContentWrapperComp = ({
-    setMaxElderSpirits,
-    setNumMintedElderSpirits,
-    setElderSpirits,
-    setAffinities,
-    setUserAccount,
-    setWinningAffinity,
-    setCurrentRound,
-    setHeroes,
-    setIsLoadingHeroes,
-    setUserBalance,
-    setPhase,
-    setMintElderSpiritPrice,
-    isLoadingWeb3
-}) => {
-    const { maxElderSpirits } = useGetMaxElderSpirits();
-    const { numMintedElderSpirits } = useGetNumMintedElderSpirits();
-    const { elderSpirits, isLoading: isLoadingElderSpirits } = useGetElderSpirits(numMintedElderSpirits);
-    const { affinities, isLoading: isLoadingAffinities } = useGetAffinities(maxElderSpirits);
-    const { userAccount } = useGetUserAccount();
-    const { userTokenBalance } = useGetUserTokenBalance();
-    const { affinity } = useGetCurrentRoundWinningAffinity();
-    const { currentRound } = useGetCurrentRound();
-    const { isLoading: isLoadingHeroes, heroes = [] } = useGetHeroes();
-    const { isLoading, phase, isInErrorState } = useGetPhase();
-    const { price } = useGetMintElderSpiritPrice();
-    useEffect(() => {
-        setPhase(phase);
-    }, [phase]);
-    useEffect(() => setMaxElderSpirits(maxElderSpirits), [maxElderSpirits]);
-    useEffect(() => setNumMintedElderSpirits(numMintedElderSpirits), [numMintedElderSpirits]);
-    useEffect(() => setElderSpirits(elderSpirits), [elderSpirits.length]);
-    useEffect(() => setAffinities(affinities), [isLoadingAffinities]);
-    useEffect(() => setUserAccount(userAccount), [userAccount]);
-    useEffect(() => setWinningAffinity(affinity), [affinity]);
-    useEffect(() => setCurrentRound(currentRound), [currentRound]);
-    useEffect(() => setUserBalance(userTokenBalance), [userTokenBalance]);
-    useEffect(() => {
-        setIsLoadingHeroes(isLoadingHeroes);
-        setHeroes(heroes);
-    }, [isLoadingHeroes]);
-    useEffect(() => setMintElderSpiritPrice(price), [price]);
-    const isLoadingScreen = isLoadingWeb3 || isLoading || isLoadingHeroes || isLoadingElderSpirits;
-    let content;
-    if (!isInErrorState && isLoadingScreen) {
-        content = (
-            <div className="content-loading">
-                <Typography class="content-loading__text">{text.loading}</Typography>{' '}
-                <CircularProgress className="content-loading__loading-spinner" />
-            </div>
-        );
-    } else if (!isInErrorState) {
-        content = (
-            <React.Fragment>
-                {' '}
-                <Route path={routeDefinitions.PLAY}>
-                    <Play />
-                </Route>
-                <Route path={routeDefinitions.GALLERY}>
-                    <Gallery />
-                </Route>
-                <Route path={routeDefinitions.COLLECTION}>
-                    <MyCollection />
-                </Route>
-            </React.Fragment>
-        );
-    }
+export const ContentWrapperComp = () => {
     return (
         <Router>
-            <NavigationBar userAccount={userAccount} />
-            {isInErrorState && <Banner text={text.failedToConnect} isError={isInErrorState} />}
             <div className="app-content">
                 <Switch>
                     <Route path={routeDefinitions.ROOT} exact={true}>
@@ -124,7 +56,6 @@ export const ContentWrapperComp = ({
                     <Route path={routeDefinitions.ABOUT}>
                         <About />
                     </Route>
-                    {content}
                 </Switch>
             </div>
             <Footer />
