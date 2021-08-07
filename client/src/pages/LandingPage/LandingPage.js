@@ -6,37 +6,25 @@ import { Link } from 'react-router-dom';
 import { routeDefinitions } from '../../routeDefinitions';
 import { CryptoChampionButton } from '../../components/CryptoChampionButton';
 import { Typography } from '@material-ui/core';
-
-const text = {
-    welcome: 'Welcome to Crypto Champz!',
-    caption: 'A Universal Character Generator and Minigame Playground'
-};
+import PepeA from '../../images/races/Pepe_A.png';
 
 export const LandingPageComp = () => {
     return (
         <div className="landing-page">
-            <Typography variant="h2" className="page-header landing-page__header">
-                {text.welcome}
-            </Typography>
-            <Typography variant="h2" className="page-header landing-page__header">
-                {text.caption}
-            </Typography>
             <div className="landing-page__content">
-                <div className="landing-page__video-container">
-                    <div className="landing-page__video-container-inside" />
-                    <iframe
-                        src="https://www.youtube.com/embed/KyIWXI5WxxE"
-                        title="Crypto Champz Demo"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen={true}
-                        className="landing-page__content-video"
-                    ></iframe>
+                <div className="landing-page__text">
+                    <h1 className="landing-page__text-header">
+                        Introducing the universal standard for <span className="pink-font">interoperable</span>,{' '}
+                        <span className="pink-font">composable</span> NFT <span className="pink-font">primitives</span>
+                    </h1>
+                    <div className="landing-page__text-caption">
+                        Traverse the Metaverse with NFTs that have deep and infinitely configurable functionality.{' '}
+                    </div>
+                    <div className="landing-page__action">
+                        <CryptoChampionButton label="Coming soon..." />
+                    </div>
                 </div>
-                <Link
-                    to={routeDefinitions.PLAY}
-                    component={(props) => <CryptoChampionButton {...props} label="Get Started" />}
-                />
+                <img className="landing-page__image" src={PepeA} />
             </div>
         </div>
     );

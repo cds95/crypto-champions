@@ -1,20 +1,9 @@
 .landing-page {
     text-align: center;
-    padding-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 50px;
-}
-
-.landing-page__img {
-    max-width: 100%;
-}
-
-.landing-page__header {
-    margin-bottom: 25px;
-    font-weight: 500;
-    text-align: center;
+    padding: 50px 15px;
 }
 
 .landing-page__content {
@@ -27,42 +16,63 @@
     width: 100%;
 }
 
-.landing-page__video-container {
-    width: 100%;
-    position: relative;
-    height: 100%;
-    margin-bottom: 25px;
+.landing-page__image {
+    border-radius: 50%;
 }
 
-.landing-page__video-container-inside {
-    padding-bottom: 75%;
+.landing-page__text-header,
+.landing-page__text-caption {
+    text-align: left;
 }
 
-.landing-page__content-video {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
+.landing-page__text-header {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.landing-page__text-caption {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.landing-page__action {
+    margin-top: 50px;
 }
 
 @media (min-width: 768px) {
-    .landing-page__header {
-        margin-bottom: 50px;
-        max-width: 2000px;
-    }
-
     .landing-page__content {
-        padding-top: 100px;
+        flex-direction: row;
+        max-width: 900px;
+        align-items: flex-start;
     }
 
-    .landing-page__video-container {
-        max-width: 2000px;
-        width: 60%;
-        margin-bottom: 50px;
+    .landing-page__text {
+        margin-right: 50px;
+        text-align: left;
     }
 
-    .landing-page {
-        padding-bottom: 100px;
+    .landing-page__text-header,
+    .landing-page__text-caption {
+        text-align: left;
+    }
+
+    .landing-page__text-header {
+        font-size: 48px;
+    }
+
+    .landing-page__text-caption {
+        font-size: 18px;
+    }
+
+    .landing-page__image {
+        border-radius: 50%;
+        width: 345px;
+    }
+
+    .landing-page__action {
+        margin-top: 100px;
     }
 }
