@@ -10,7 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 
 const text = {
-    cryptoChampions: 'Crypto Champz',
+    cryptoChampions: 'Element Protocol',
     links: {
         about: 'About',
         home: 'Home',
@@ -123,10 +123,7 @@ export const NavigationBar = ({ userAccount }) => {
     return (
         <AppBar position="static" className="navigation-bar">
             <Toolbar>
-                <Typography className="navigation-bar__text" variant="h6">
-                    {text.cryptoChampions}
-                </Typography>
-                <div className="navigation-bar__options">{menu}</div>
+                <h6 className="navigation-bar__text navigation-bar__protocol-name">{text.cryptoChampions}</h6>
             </Toolbar>
         </AppBar>
     );

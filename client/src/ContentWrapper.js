@@ -1,18 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import {
-    useGetAffinities,
-    useGetCurrentRound,
-    useGetCurrentRoundWinningAffinity,
-    useGetElderSpirits,
-    useGetHeroes,
-    useGetMaxElderSpirits,
-    useGetMintElderSpiritPrice,
-    useGetNumMintedElderSpirits,
-    useGetPhase,
-    useGetUserAccount,
-    useGetUserTokenBalance
-} from './hooks/cryptoChampionsHook';
+import { useGetUserAccount } from './hooks/cryptoChampionsHook';
 import { LandingPage } from './pages/LandingPage';
 import {
     setMaxElderSpiritsAction,
@@ -30,13 +18,8 @@ import {
 } from './redux/actions';
 import { Route, HashRouter as Router, Switch } from 'react-router-dom';
 import { routeDefinitions } from './routeDefinitions';
-import { Play } from './pages/PlayPage';
 import { NavigationBar } from './components/NavigationBar';
-import { Gallery } from './pages/Gallery';
-import { MyCollection } from './pages/MyCollection';
-import { CircularProgress, Typography } from '@material-ui/core';
 import { Footer } from './components/Footer/Footer';
-import { Banner } from './components/Banner';
 import { About } from './pages/About';
 
 const text = {
@@ -46,8 +29,10 @@ const text = {
 };
 
 export const ContentWrapperComp = () => {
+    const { userAccount } = useGetUserAccount();
     return (
         <Router>
+            <NavigationBar userAccount={userAccount} />
             <div className="app-content">
                 <Switch>
                     <Route path={routeDefinitions.ROOT} exact={true}>

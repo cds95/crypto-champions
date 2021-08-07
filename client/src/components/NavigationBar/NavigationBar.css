@@ -1,5 +1,7 @@
 header.navigation-bar {
-    background-color: #1a202c;
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: none;
 }
 
 .navigation-bar__options {
@@ -14,18 +16,17 @@ header.navigation-bar {
     text-decoration: none;
 }
 
-header.navigation-bar .navigation-bar__text,
-.navigation-bar__options .navigation-bar__link {
-    color: #fff;
-    font-family: 'LeagueSpartan' !important;
-}
-
 .navigation-bar__options .navigation-bar__link.navigation-bar__link--selected {
     color: #5e9eff;
 }
 
 header.navigation-bar .navigation-bar__text {
     font-size: 30px;
+}
+
+.navigation-bar__protocol-name {
+    margin: 0;
+    color: #000;
 }
 
 header.navigation-bar .navigation-bar__text .MuiTypography-h6 {
