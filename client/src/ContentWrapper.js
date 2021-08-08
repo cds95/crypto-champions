@@ -29,10 +29,9 @@ const text = {
 };
 
 export const ContentWrapperComp = () => {
-    const { userAccount } = useGetUserAccount();
     return (
         <Router>
-            <NavigationBar userAccount={userAccount} />
+            <NavigationBar />
             <div className="app-content">
                 <Switch>
                     <Route path={routeDefinitions.ROOT} exact={true}>

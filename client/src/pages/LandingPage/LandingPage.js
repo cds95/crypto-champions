@@ -24,7 +24,9 @@ export const LandingPageComp = () => {
                         <CryptoChampionButton label="Coming soon..." />
                     </div>
                 </div>
-                <img className="landing-page__image" src={PepeA} />
+                <div className="landing-page__image-container">
+                    <img className="landing-page__image" src={PepeA} />
+                </div>
             </div>
         </div>
     );

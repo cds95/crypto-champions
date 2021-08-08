@@ -7,10 +7,9 @@ import { ContentWrapper } from './ContentWrapper';
 import './App.css';
 
 const App = () => {
-    const { isLoading } = useWeb3();
     return (
         <Provider store={store}>
-            <ContentWrapper isLoadingWeb3={isLoading} />
+            <ContentWrapper />
         </Provider>
     );
 };
